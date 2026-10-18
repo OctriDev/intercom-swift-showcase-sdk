@@ -6,10 +6,14 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension TicketsMethods {
-    /// Changes a ticket to a different ticket type and sets a state for that type. The new ticket type must be in the same category as the current type, and matching attributes transfer automatically. Values supplied in `ticket_attributes` override transferred values.
+public extension TicketsMethods {
+    /// Changes a ticket to a different ticket type and sets a state for that type. The new ticket type must be in the
+    /// same category as the current type, and matching attributes transfer automatically. Values supplied in
+    /// `ticket_attributes` override transferred values.
     ///
-    /// You can change the type of a ticket. The new ticket type must be in the same category as the current type. Attributes matching by name and type are automatically transferred from the old type; values provided in ticket_attributes override transferred values.
+    /// You can change the type of a ticket. The new ticket type must be in the same category as the current type.
+    /// Attributes matching by name and type are automatically transferred from the old type; values provided in
+    /// ticket_attributes override transferred values.
     ///
     /// - Parameters:
     /// - ticketId: The unique identifier for the ticket which is given by Intercom.
@@ -19,11 +23,33 @@ extension TicketsMethods {
     /// - ticketAttributes: The attributes to set on the ticket for the new type.
     ///   Attributes matching by name and type are transferred automatically from the
     ///   old type; values provided here override the transferred values.
-    public static func changeTicketType(config: ClientConfig, ticketId: String, ticketTypeId: String, ticketStateId: String, intercomVersion: IntercomVersion? = nil, ticketAttributes: [String: JSONValue]? = nil, requestOptions: RequestOptions? = nil) async throws -> Ticket {
-        let requestBody = ChangeTicketTypeRequestBody(ticketTypeId: ticketTypeId, ticketStateId: ticketStateId, ticketAttributes: ticketAttributes)
+    static func changeTicketType(
+        config: ClientConfig,
+        ticketId: String,
+        ticketTypeId: String,
+        ticketStateId: String,
+        intercomVersion: IntercomVersion? = nil,
+        ticketAttributes: [String: JSONValue]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Ticket {
+        let requestBody = ChangeTicketTypeRequestBody(
+            ticketTypeId: ticketTypeId,
+            ticketStateId: ticketStateId,
+            ticketAttributes: ticketAttributes
+        )
 
-        return try (await sdkRequest("POST", ["/tickets/", sdkEncodePathSegment(sdkWireString(ticketId)), "/change_type"].joined(), config: config, body: requestBody, decoder: .json, operationId: "changeTicketType", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/tickets/", sdkEncodePathSegment(sdkWireString(ticketId)), "/change_type"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "changeTicketType",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self]
+        )).data
     }
 }

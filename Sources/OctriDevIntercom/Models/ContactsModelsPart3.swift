@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Contacts domain models
+/// Contacts domain models
 /// Required object value serialized in the `add[]` wire field.
 public struct BulkCreateContactsRequestContactsItemTagsAddItem: Codable {
     /// The ID of an existing tag to add to the contact.
@@ -14,21 +14,27 @@ public struct BulkCreateContactsRequestContactsItemTagsAddItem: Codable {
         case id
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension BulkCreateContactsRequestContactsItemTagsAddItem {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.id) else {
-            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
-        }
-        self.id = try container.sdkDecodeRequired(.id)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension BulkCreateContactsRequestContactsItemTagsAddItem {
-    public init(id: String) {
+public extension BulkCreateContactsRequestContactsItemTagsAddItem {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.id) else {
+            throw SdkValidationError(
+                field: "id",
+                code: "required",
+                message: "Validation failed for 'id': value is required"
+            )
+        }
+        id = try container.sdkDecodeRequired(.id)
+    }
+}
+
+public extension BulkCreateContactsRequestContactsItemTagsAddItem {
+    init(id: String) {
         self.id = id
     }
 }
@@ -55,22 +61,22 @@ public struct ContactUnarchived: Codable {
     }
 
     init() {
-        (self.type, self.id, self.externalId, self.archived) = (nil, nil, nil, nil)
+        (type, id, externalId, archived) = (nil, nil, nil, nil)
     }
 }
 
-extension ContactUnarchived {
-    public init(from decoder: Decoder) throws {
+public extension ContactUnarchived {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.externalId = try container.sdkDecodeIfPresent(.externalId)
-        self.archived = try container.sdkDecodeIfPresent(.archived)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        externalId = try container.sdkDecodeIfPresent(.externalId)
+        archived = try container.sdkDecodeIfPresent(.archived)
     }
 }
 
-extension ContactUnarchived {
-    public init(type: ContactUnarchivedType? = nil, id: String? = nil, externalId: String? = nil, archived: Bool? = nil) {
+public extension ContactUnarchived {
+    init(type: ContactUnarchivedType? = nil, id: String? = nil, externalId: String? = nil, archived: Bool? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.externalId, self.archived) = (externalId, archived)
@@ -102,22 +108,27 @@ public struct DeletedContactList: Codable {
     }
 
     init() {
-        (self.type, self.data, self.totalCount, self.pages) = (nil, nil, nil, nil)
+        (type, data, totalCount, pages) = (nil, nil, nil, nil)
     }
 }
 
-extension DeletedContactList {
-    public init(from decoder: Decoder) throws {
+public extension DeletedContactList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.data = try container.sdkDecodeIfPresent(.data)
-        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        self.pages = try container.sdkDecodeIfPresent(.pages)
+        type = try container.sdkDecodeIfPresent(.type)
+        data = try container.sdkDecodeIfPresent(.data)
+        totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-extension DeletedContactList {
-    public init(type: DeletedContactListType? = nil, data: [DeletedContact]? = nil, totalCount: Int? = nil, pages: DeletedContactListPages? = nil) {
+public extension DeletedContactList {
+    init(
+        type: DeletedContactListType? = nil,
+        data: [DeletedContact]? = nil,
+        totalCount: Int? = nil,
+        pages: DeletedContactListPages? = nil
+    ) {
         self.init()
         (self.type, self.data) = (type, data)
         (self.totalCount, self.pages) = (totalCount, pages)
@@ -135,19 +146,19 @@ public struct ContactActivityListPagesNext: Codable {
     }
 
     init() {
-        self.startingAfter = nil
+        startingAfter = nil
     }
 }
 
-extension ContactActivityListPagesNext {
-    public init(from decoder: Decoder) throws {
+public extension ContactActivityListPagesNext {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.startingAfter = try container.sdkDecodeIfPresent(.startingAfter)
+        startingAfter = try container.sdkDecodeIfPresent(.startingAfter)
     }
 }
 
-extension ContactActivityListPagesNext {
-    public init(startingAfter: String? = nil) {
+public extension ContactActivityListPagesNext {
+    init(startingAfter: String? = nil) {
         self.init()
         self.startingAfter = startingAfter
     }
@@ -176,22 +187,22 @@ public struct ContactList: Codable {
     }
 
     init() {
-        (self.type, self.data, self.totalCount, self.pages) = (nil, nil, nil, nil)
+        (type, data, totalCount, pages) = (nil, nil, nil, nil)
     }
 }
 
-extension ContactList {
-    public init(from decoder: Decoder) throws {
+public extension ContactList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.data = try container.sdkDecodeIfPresent(.data)
-        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        self.pages = try container.sdkDecodeIfPresent(.pages)
+        type = try container.sdkDecodeIfPresent(.type)
+        data = try container.sdkDecodeIfPresent(.data)
+        totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-extension ContactList {
-    public init(type: ContactListType? = nil, data: [Contact]? = nil, totalCount: Int? = nil, pages: CursorPages? = nil) {
+public extension ContactList {
+    init(type: ContactListType? = nil, data: [Contact]? = nil, totalCount: Int? = nil, pages: CursorPages? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
         (self.totalCount, self.pages) = (totalCount, pages)
@@ -212,25 +223,35 @@ public struct MergePreviewReassignmentsTags: Codable {
         case into
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension MergePreviewReassignmentsTags {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.from) else {
-            throw SdkValidationError(field: "from", code: "required", message: "Validation failed for 'from': value is required")
-        }
-        guard container.contains(.into) else {
-            throw SdkValidationError(field: "into", code: "required", message: "Validation failed for 'into': value is required")
-        }
-        self.from = try container.sdkDecodeRequired(.from)
-        self.into = try container.sdkDecodeRequired(.into)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension MergePreviewReassignmentsTags {
-    public init(from: Int, into: Int) {
+public extension MergePreviewReassignmentsTags {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.from) else {
+            throw SdkValidationError(
+                field: "from",
+                code: "required",
+                message: "Validation failed for 'from': value is required"
+            )
+        }
+        guard container.contains(.into) else {
+            throw SdkValidationError(
+                field: "into",
+                code: "required",
+                message: "Validation failed for 'into': value is required"
+            )
+        }
+        from = try container.sdkDecodeRequired(.from)
+        into = try container.sdkDecodeRequired(.into)
+    }
+}
+
+public extension MergePreviewReassignmentsTags {
+    init(from: Int, into: Int) {
         (self.from, self.into) = (from, into)
     }
 }
@@ -249,25 +270,35 @@ public struct MergePreviewReassignmentsNotes: Codable {
         case into
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension MergePreviewReassignmentsNotes {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.from) else {
-            throw SdkValidationError(field: "from", code: "required", message: "Validation failed for 'from': value is required")
-        }
-        guard container.contains(.into) else {
-            throw SdkValidationError(field: "into", code: "required", message: "Validation failed for 'into': value is required")
-        }
-        self.from = try container.sdkDecodeRequired(.from)
-        self.into = try container.sdkDecodeRequired(.into)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension MergePreviewReassignmentsNotes {
-    public init(from: Int, into: Int) {
+public extension MergePreviewReassignmentsNotes {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.from) else {
+            throw SdkValidationError(
+                field: "from",
+                code: "required",
+                message: "Validation failed for 'from': value is required"
+            )
+        }
+        guard container.contains(.into) else {
+            throw SdkValidationError(
+                field: "into",
+                code: "required",
+                message: "Validation failed for 'into': value is required"
+            )
+        }
+        from = try container.sdkDecodeRequired(.from)
+        into = try container.sdkDecodeRequired(.into)
+    }
+}
+
+public extension MergePreviewReassignmentsNotes {
+    init(from: Int, into: Int) {
         (self.from, self.into) = (from, into)
     }
 }
@@ -283,19 +314,19 @@ public struct BulkCreateContactsRequestJob: Codable {
     }
 
     init() {
-        self.id = nil
+        id = nil
     }
 }
 
-extension BulkCreateContactsRequestJob {
-    public init(from decoder: Decoder) throws {
+public extension BulkCreateContactsRequestJob {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
+        id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-extension BulkCreateContactsRequestJob {
-    public init(id: String? = nil) {
+public extension BulkCreateContactsRequestJob {
+    init(id: String? = nil) {
         self.init()
         self.id = id
     }
@@ -311,21 +342,27 @@ public struct BulkUpdateContactsRequestContactsItemTagsAddItem: Codable {
         case id
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension BulkUpdateContactsRequestContactsItemTagsAddItem {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.id) else {
-            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
-        }
-        self.id = try container.sdkDecodeRequired(.id)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension BulkUpdateContactsRequestContactsItemTagsAddItem {
-    public init(id: String) {
+public extension BulkUpdateContactsRequestContactsItemTagsAddItem {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.id) else {
+            throw SdkValidationError(
+                field: "id",
+                code: "required",
+                message: "Validation failed for 'id': value is required"
+            )
+        }
+        id = try container.sdkDecodeRequired(.id)
+    }
+}
+
+public extension BulkUpdateContactsRequestContactsItemTagsAddItem {
+    init(id: String) {
         self.id = id
     }
 }
@@ -340,21 +377,27 @@ public struct BulkUpdateContactsRequestContactsItemTagsRemoveItem: Codable {
         case id
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension BulkUpdateContactsRequestContactsItemTagsRemoveItem {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.id) else {
-            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
-        }
-        self.id = try container.sdkDecodeRequired(.id)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension BulkUpdateContactsRequestContactsItemTagsRemoveItem {
-    public init(id: String) {
+public extension BulkUpdateContactsRequestContactsItemTagsRemoveItem {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.id) else {
+            throw SdkValidationError(
+                field: "id",
+                code: "required",
+                message: "Validation failed for 'id': value is required"
+            )
+        }
+        id = try container.sdkDecodeRequired(.id)
+    }
+}
+
+public extension BulkUpdateContactsRequestContactsItemTagsRemoveItem {
+    init(id: String) {
         self.id = id
     }
 }
@@ -382,22 +425,22 @@ public struct ContactArchived: Codable {
     }
 
     init() {
-        (self.type, self.id, self.externalId, self.archived) = (nil, nil, nil, nil)
+        (type, id, externalId, archived) = (nil, nil, nil, nil)
     }
 }
 
-extension ContactArchived {
-    public init(from decoder: Decoder) throws {
+public extension ContactArchived {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.externalId = try container.sdkDecodeIfPresent(.externalId)
-        self.archived = try container.sdkDecodeIfPresent(.archived)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        externalId = try container.sdkDecodeIfPresent(.externalId)
+        archived = try container.sdkDecodeIfPresent(.archived)
     }
 }
 
-extension ContactArchived {
-    public init(type: ContactArchivedType? = nil, id: String? = nil, externalId: String? = nil, archived: Bool? = nil) {
+public extension ContactArchived {
+    init(type: ContactArchivedType? = nil, id: String? = nil, externalId: String? = nil, archived: Bool? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.externalId, self.archived) = (externalId, archived)
@@ -427,22 +470,22 @@ public struct ContactBlocked: Codable {
     }
 
     init() {
-        (self.type, self.id, self.externalId, self.blocked) = (nil, nil, nil, nil)
+        (type, id, externalId, blocked) = (nil, nil, nil, nil)
     }
 }
 
-extension ContactBlocked {
-    public init(from decoder: Decoder) throws {
+public extension ContactBlocked {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.externalId = try container.sdkDecodeIfPresent(.externalId)
-        self.blocked = try container.sdkDecodeIfPresent(.blocked)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        externalId = try container.sdkDecodeIfPresent(.externalId)
+        blocked = try container.sdkDecodeIfPresent(.blocked)
     }
 }
 
-extension ContactBlocked {
-    public init(type: ContactBlockedType? = nil, id: String? = nil, externalId: String? = nil, blocked: Bool? = nil) {
+public extension ContactBlocked {
+    init(type: ContactBlockedType? = nil, id: String? = nil, externalId: String? = nil, blocked: Bool? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.externalId, self.blocked) = (externalId, blocked)
@@ -467,26 +510,36 @@ public struct MergeContactsRequest: Codable {
         case skipDuplicateValidation = "skip_duplicate_validation"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension MergeContactsRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.from) else {
-            throw SdkValidationError(field: "from", code: "required", message: "Validation failed for 'from': value is required")
-        }
-        guard container.contains(.into) else {
-            throw SdkValidationError(field: "into", code: "required", message: "Validation failed for 'into': value is required")
-        }
-        self.from = try container.sdkDecodeRequired(.from)
-        self.into = try container.sdkDecodeRequired(.into)
-        self.skipDuplicateValidation = try container.sdkDecodeIfPresent(.skipDuplicateValidation)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension MergeContactsRequest {
-    public init(from: String, into: String, skipDuplicateValidation: Bool? = nil) {
+public extension MergeContactsRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.from) else {
+            throw SdkValidationError(
+                field: "from",
+                code: "required",
+                message: "Validation failed for 'from': value is required"
+            )
+        }
+        guard container.contains(.into) else {
+            throw SdkValidationError(
+                field: "into",
+                code: "required",
+                message: "Validation failed for 'into': value is required"
+            )
+        }
+        from = try container.sdkDecodeRequired(.from)
+        into = try container.sdkDecodeRequired(.into)
+        skipDuplicateValidation = try container.sdkDecodeIfPresent(.skipDuplicateValidation)
+    }
+}
+
+public extension MergeContactsRequest {
+    init(from: String, into: String, skipDuplicateValidation: Bool? = nil) {
         (self.from, self.into) = (from, into)
         self.skipDuplicateValidation = skipDuplicateValidation
     }
@@ -551,8 +604,8 @@ public struct CreateContactRequest: Codable {
     }
 
     init() {
-        (self.role, self.externalId, self.emailVerified, self.email, self.phone) = (nil, nil, nil, nil, nil)
-        (self.name, self.avatar, self.signedUpAt, self.lastSeenAt, self.ownerId) = (nil, nil, nil, nil, nil)
-        (self.unsubscribedFromEmails, self.customAttributes) = (nil, nil)
+        (role, externalId, emailVerified, email, phone) = (nil, nil, nil, nil, nil)
+        (name, avatar, signedUpAt, lastSeenAt, ownerId) = (nil, nil, nil, nil, nil)
+        (unsubscribedFromEmails, customAttributes) = (nil, nil)
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Messages domain models
+/// Messages domain models
 /// The sender of the message. If not provided, the default sender will be used.
 public struct CreateMessageRequestFrom: Codable {
     /// Always `admin`.
@@ -18,25 +18,35 @@ public struct CreateMessageRequestFrom: Codable {
         case id
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateMessageRequestFrom {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.id) else {
-            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.id = try container.sdkDecodeRequired(.id)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateMessageRequestFrom {
-    public init(type: CreateMessageRequestFromType, id: Int) {
+public extension CreateMessageRequestFrom {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.id) else {
+            throw SdkValidationError(
+                field: "id",
+                code: "required",
+                message: "Validation failed for 'id': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        id = try container.sdkDecodeRequired(.id)
+    }
+}
+
+public extension CreateMessageRequestFrom {
+    init(type: CreateMessageRequestFromType, id: Int) {
         (self.type, self.id) = (type, id)
     }
 }
@@ -59,30 +69,49 @@ public struct WhatsappMessageStatusListPages: Codable {
         case next
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension WhatsappMessageStatusListPages {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.perPage) else {
-            throw SdkValidationError(field: "per_page", code: "required", message: "Validation failed for 'per_page': value is required")
-        }
-        guard container.contains(.totalPages) else {
-            throw SdkValidationError(field: "total_pages", code: "required", message: "Validation failed for 'total_pages': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.perPage = try container.sdkDecodeRequired(.perPage)
-        self.totalPages = try container.sdkDecodeRequired(.totalPages)
-        self.next = try container.sdkDecodeIfPresent(.next)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension WhatsappMessageStatusListPages {
-    public init(type: WhatsappMessageStatusListPagesType, perPage: Int, totalPages: Int, next: WhatsappMessageStatusListPagesNext? = nil) {
+public extension WhatsappMessageStatusListPages {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.perPage) else {
+            throw SdkValidationError(
+                field: "per_page",
+                code: "required",
+                message: "Validation failed for 'per_page': value is required"
+            )
+        }
+        guard container.contains(.totalPages) else {
+            throw SdkValidationError(
+                field: "total_pages",
+                code: "required",
+                message: "Validation failed for 'total_pages': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        perPage = try container.sdkDecodeRequired(.perPage)
+        totalPages = try container.sdkDecodeRequired(.totalPages)
+        next = try container.sdkDecodeIfPresent(.next)
+    }
+}
+
+public extension WhatsappMessageStatusListPages {
+    init(
+        type: WhatsappMessageStatusListPagesType,
+        perPage: Int,
+        totalPages: Int,
+        next: WhatsappMessageStatusListPagesNext? = nil
+    ) {
         (self.type, self.perPage) = (type, perPage)
         (self.totalPages, self.next) = (totalPages, next)
     }
@@ -92,12 +121,15 @@ extension WhatsappMessageStatusListPages {
 public struct WhatsappMessageStatusListPagesType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let pages = WhatsappMessageStatusListPagesType(rawValue: "pages")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -107,15 +139,19 @@ public struct WhatsappMessageStatusListPagesType: RawRepresentable, Hashable, Co
 }
 
 /// Event type
-public struct WhatsappMessageStatusListEventsItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct WhatsappMessageStatusListEventsItemType: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let broadcastOutbound = WhatsappMessageStatusListEventsItemType(rawValue: "broadcast_outbound")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -128,7 +164,10 @@ public struct WhatsappMessageStatusListEventsItemType: RawRepresentable, Hashabl
 public struct WhatsappMessageStatusStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let sent = WhatsappMessageStatusStatus(rawValue: "sent")
     public static let delivered = WhatsappMessageStatusStatus(rawValue: "delivered")
     public static let read = WhatsappMessageStatusStatus(rawValue: "read")
@@ -136,7 +175,7 @@ public struct WhatsappMessageStatusStatus: RawRepresentable, Hashable, Codable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -149,12 +188,15 @@ public struct WhatsappMessageStatusStatus: RawRepresentable, Hashable, Codable, 
 public struct CreateMessageRequestFromType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let admin = CreateMessageRequestFromType(rawValue: "admin")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -167,14 +209,17 @@ public struct CreateMessageRequestFromType: RawRepresentable, Hashable, Codable,
 public struct CreateMessageRequestMessageType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let inApp = CreateMessageRequestMessageType(rawValue: "in_app")
     public static let email = CreateMessageRequestMessageType(rawValue: "email")
     public static let whatsapp = CreateMessageRequestMessageType(rawValue: "whatsapp")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -187,13 +232,16 @@ public struct CreateMessageRequestMessageType: RawRepresentable, Hashable, Codab
 public struct RecipientType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let user = RecipientType(rawValue: "user")
     public static let lead = RecipientType(rawValue: "lead")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -206,12 +254,15 @@ public struct RecipientType: RawRepresentable, Hashable, Codable, Sendable, SdkW
 public struct WhatsappMessageStatusListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let list = WhatsappMessageStatusListType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -221,10 +272,14 @@ public struct WhatsappMessageStatusListType: RawRepresentable, Hashable, Codable
 }
 
 /// Current status of the message
-public struct WhatsappMessageStatusListEventsItemStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct WhatsappMessageStatusListEventsItemStatus: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let sent = WhatsappMessageStatusListEventsItemStatus(rawValue: "sent")
     public static let delivered = WhatsappMessageStatusListEventsItemStatus(rawValue: "delivered")
     public static let read = WhatsappMessageStatusListEventsItemStatus(rawValue: "read")
@@ -232,7 +287,7 @@ public struct WhatsappMessageStatusListEventsItemStatus: RawRepresentable, Hasha
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

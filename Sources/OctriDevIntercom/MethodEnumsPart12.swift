@@ -16,21 +16,21 @@ struct UpdateTicketTypeRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(self.description, forKey: SdkCodingKey("description"))
-        try keyedContainer.encodeIfPresent(self.category, forKey: SdkCodingKey("category"))
-        try keyedContainer.encodeIfPresent(self.icon, forKey: SdkCodingKey("icon"))
-        try keyedContainer.encodeIfPresent(self.archived, forKey: SdkCodingKey("archived"))
-        try keyedContainer.encodeIfPresent(self.isInternal, forKey: SdkCodingKey("is_internal"))
+        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(description, forKey: SdkCodingKey("description"))
+        try keyedContainer.encodeIfPresent(category, forKey: SdkCodingKey("category"))
+        try keyedContainer.encodeIfPresent(icon, forKey: SdkCodingKey("icon"))
+        try keyedContainer.encodeIfPresent(archived, forKey: SdkCodingKey("archived"))
+        try keyedContainer.encodeIfPresent(isInternal, forKey: SdkCodingKey("is_internal"))
     }
 
     init(options: TicketTypesMethods.UpdateTicketTypeOptions) {
-        self.name = options.name
-        self.description = options.description
-        self.category = options.category
-        self.icon = options.icon
-        self.archived = options.archived
-        self.isInternal = options.isInternal
+        name = options.name
+        description = options.description
+        category = options.category
+        icon = options.icon
+        archived = options.archived
+        isInternal = options.isInternal
     }
 }
 
@@ -39,7 +39,7 @@ struct ReplyTicketRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(self.skipNotifications, forKey: SdkCodingKey("skip_notifications"))
+        try keyedContainer.encodeIfPresent(skipNotifications, forKey: SdkCodingKey("skip_notifications"))
     }
 }
 
@@ -48,7 +48,7 @@ struct LinkTicketsConversationRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.conversationId, forKey: SdkCodingKey("conversation_id"))
+        try keyedContainer.encode(conversationId, forKey: SdkCodingKey("conversation_id"))
     }
 }
 
@@ -65,27 +65,27 @@ struct CreateTicketRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.ticketTypeId, forKey: SdkCodingKey("ticket_type_id"))
-        try keyedContainer.encode(self.contacts, forKey: SdkCodingKey("contacts"))
-        try keyedContainer.encodeIfPresent(self.conversationToLinkId, forKey: SdkCodingKey("conversation_to_link_id"))
-        try keyedContainer.encodeIfPresent(self.companyId, forKey: SdkCodingKey("company_id"))
-        try keyedContainer.encodeIfPresent(self.createdAt, forKey: SdkCodingKey("created_at"))
-        try keyedContainer.encodeIfPresent(self.ticketAttributes, forKey: SdkCodingKey("ticket_attributes"))
-        try keyedContainer.encodeIfPresent(self.assignment, forKey: SdkCodingKey("assignment"))
-        try keyedContainer.encodeIfPresent(self.channel, forKey: SdkCodingKey("channel"))
-        try keyedContainer.encodeIfPresent(self.skipNotifications, forKey: SdkCodingKey("skip_notifications"))
+        try keyedContainer.encode(ticketTypeId, forKey: SdkCodingKey("ticket_type_id"))
+        try keyedContainer.encode(contacts, forKey: SdkCodingKey("contacts"))
+        try keyedContainer.encodeIfPresent(conversationToLinkId, forKey: SdkCodingKey("conversation_to_link_id"))
+        try keyedContainer.encodeIfPresent(companyId, forKey: SdkCodingKey("company_id"))
+        try keyedContainer.encodeIfPresent(createdAt, forKey: SdkCodingKey("created_at"))
+        try keyedContainer.encodeIfPresent(ticketAttributes, forKey: SdkCodingKey("ticket_attributes"))
+        try keyedContainer.encodeIfPresent(assignment, forKey: SdkCodingKey("assignment"))
+        try keyedContainer.encodeIfPresent(channel, forKey: SdkCodingKey("channel"))
+        try keyedContainer.encodeIfPresent(skipNotifications, forKey: SdkCodingKey("skip_notifications"))
     }
 
     init(options: TicketsMethods.CreateTicketOptions) {
-        self.ticketTypeId = options.ticketTypeId
-        self.contacts = options.contacts
-        self.conversationToLinkId = options.conversationToLinkId
-        self.companyId = options.companyId
-        self.createdAt = options.createdAt
-        self.ticketAttributes = options.ticketAttributes
-        self.assignment = options.assignment
-        self.channel = options.channel
-        self.skipNotifications = options.skipNotifications
+        ticketTypeId = options.ticketTypeId
+        contacts = options.contacts
+        conversationToLinkId = options.conversationToLinkId
+        companyId = options.companyId
+        createdAt = options.createdAt
+        ticketAttributes = options.ticketAttributes
+        assignment = options.assignment
+        channel = options.channel
+        skipNotifications = options.skipNotifications
     }
 }
 
@@ -102,27 +102,27 @@ struct EnqueueCreateTicketRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.ticketTypeId, forKey: SdkCodingKey("ticket_type_id"))
-        try keyedContainer.encode(self.contacts, forKey: SdkCodingKey("contacts"))
-        try keyedContainer.encodeIfPresent(self.conversationToLinkId, forKey: SdkCodingKey("conversation_to_link_id"))
-        try keyedContainer.encodeIfPresent(self.companyId, forKey: SdkCodingKey("company_id"))
-        try keyedContainer.encodeIfPresent(self.createdAt, forKey: SdkCodingKey("created_at"))
-        try keyedContainer.encodeIfPresent(self.ticketAttributes, forKey: SdkCodingKey("ticket_attributes"))
-        try keyedContainer.encodeIfPresent(self.assignment, forKey: SdkCodingKey("assignment"))
-        try keyedContainer.encodeIfPresent(self.channel, forKey: SdkCodingKey("channel"))
-        try keyedContainer.encodeIfPresent(self.skipNotifications, forKey: SdkCodingKey("skip_notifications"))
+        try keyedContainer.encode(ticketTypeId, forKey: SdkCodingKey("ticket_type_id"))
+        try keyedContainer.encode(contacts, forKey: SdkCodingKey("contacts"))
+        try keyedContainer.encodeIfPresent(conversationToLinkId, forKey: SdkCodingKey("conversation_to_link_id"))
+        try keyedContainer.encodeIfPresent(companyId, forKey: SdkCodingKey("company_id"))
+        try keyedContainer.encodeIfPresent(createdAt, forKey: SdkCodingKey("created_at"))
+        try keyedContainer.encodeIfPresent(ticketAttributes, forKey: SdkCodingKey("ticket_attributes"))
+        try keyedContainer.encodeIfPresent(assignment, forKey: SdkCodingKey("assignment"))
+        try keyedContainer.encodeIfPresent(channel, forKey: SdkCodingKey("channel"))
+        try keyedContainer.encodeIfPresent(skipNotifications, forKey: SdkCodingKey("skip_notifications"))
     }
 
     init(options: TicketsMethods.EnqueueCreateTicketOptions) {
-        self.ticketTypeId = options.ticketTypeId
-        self.contacts = options.contacts
-        self.conversationToLinkId = options.conversationToLinkId
-        self.companyId = options.companyId
-        self.createdAt = options.createdAt
-        self.ticketAttributes = options.ticketAttributes
-        self.assignment = options.assignment
-        self.channel = options.channel
-        self.skipNotifications = options.skipNotifications
+        ticketTypeId = options.ticketTypeId
+        contacts = options.contacts
+        conversationToLinkId = options.conversationToLinkId
+        companyId = options.companyId
+        createdAt = options.createdAt
+        ticketAttributes = options.ticketAttributes
+        assignment = options.assignment
+        channel = options.channel
+        skipNotifications = options.skipNotifications
     }
 }
 
@@ -139,27 +139,27 @@ struct UpdateTicketRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(self.ticketAttributes, forKey: SdkCodingKey("ticket_attributes"))
-        try keyedContainer.encodeIfPresent(self.ticketStateId, forKey: SdkCodingKey("ticket_state_id"))
-        try keyedContainer.encodeIfPresent(self.companyId, forKey: SdkCodingKey("company_id"))
-        try keyedContainer.encodeIfPresent(self.open, forKey: SdkCodingKey("open"))
-        try keyedContainer.encodeIfPresent(self.isShared, forKey: SdkCodingKey("is_shared"))
-        try keyedContainer.encodeIfPresent(self.snoozedUntil, forKey: SdkCodingKey("snoozed_until"))
-        try keyedContainer.encodeIfPresent(self.adminId, forKey: SdkCodingKey("admin_id"))
-        try keyedContainer.encodeIfPresent(self.assigneeId, forKey: SdkCodingKey("assignee_id"))
-        try keyedContainer.encodeIfPresent(self.skipNotifications, forKey: SdkCodingKey("skip_notifications"))
+        try keyedContainer.encodeIfPresent(ticketAttributes, forKey: SdkCodingKey("ticket_attributes"))
+        try keyedContainer.encodeIfPresent(ticketStateId, forKey: SdkCodingKey("ticket_state_id"))
+        try keyedContainer.encodeIfPresent(companyId, forKey: SdkCodingKey("company_id"))
+        try keyedContainer.encodeIfPresent(open, forKey: SdkCodingKey("open"))
+        try keyedContainer.encodeIfPresent(isShared, forKey: SdkCodingKey("is_shared"))
+        try keyedContainer.encodeIfPresent(snoozedUntil, forKey: SdkCodingKey("snoozed_until"))
+        try keyedContainer.encodeIfPresent(adminId, forKey: SdkCodingKey("admin_id"))
+        try keyedContainer.encodeIfPresent(assigneeId, forKey: SdkCodingKey("assignee_id"))
+        try keyedContainer.encodeIfPresent(skipNotifications, forKey: SdkCodingKey("skip_notifications"))
     }
 
     init(options: TicketsMethods.UpdateTicketOptions) {
-        self.ticketAttributes = options.ticketAttributes
-        self.ticketStateId = options.ticketStateId
-        self.companyId = options.companyId
-        self.open = options.open
-        self.isShared = options.isShared
-        self.snoozedUntil = options.snoozedUntil
-        self.adminId = options.adminId
-        self.assigneeId = options.assigneeId
-        self.skipNotifications = options.skipNotifications
+        ticketAttributes = options.ticketAttributes
+        ticketStateId = options.ticketStateId
+        companyId = options.companyId
+        open = options.open
+        isShared = options.isShared
+        snoozedUntil = options.snoozedUntil
+        adminId = options.adminId
+        assigneeId = options.assigneeId
+        skipNotifications = options.skipNotifications
     }
 }
 
@@ -170,9 +170,9 @@ struct ChangeTicketTypeRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.ticketTypeId, forKey: SdkCodingKey("ticket_type_id"))
-        try keyedContainer.encode(self.ticketStateId, forKey: SdkCodingKey("ticket_state_id"))
-        try keyedContainer.encodeIfPresent(self.ticketAttributes, forKey: SdkCodingKey("ticket_attributes"))
+        try keyedContainer.encode(ticketTypeId, forKey: SdkCodingKey("ticket_type_id"))
+        try keyedContainer.encode(ticketStateId, forKey: SdkCodingKey("ticket_state_id"))
+        try keyedContainer.encodeIfPresent(ticketAttributes, forKey: SdkCodingKey("ticket_attributes"))
     }
 }
 
@@ -182,8 +182,8 @@ struct SearchTicketsRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.query, forKey: SdkCodingKey("query"))
-        try keyedContainer.encodeIfPresent(self.pagination, forKey: SdkCodingKey("pagination"))
+        try keyedContainer.encode(query, forKey: SdkCodingKey("query"))
+        try keyedContainer.encodeIfPresent(pagination, forKey: SdkCodingKey("pagination"))
     }
 }
 
@@ -195,10 +195,10 @@ struct UpdateVisitorRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(self.id, forKey: SdkCodingKey("id"))
-        try keyedContainer.encodeIfPresent(self.userId, forKey: SdkCodingKey("user_id"))
-        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(self.customAttributes, forKey: SdkCodingKey("custom_attributes"))
+        try keyedContainer.encodeIfPresent(id, forKey: SdkCodingKey("id"))
+        try keyedContainer.encodeIfPresent(userId, forKey: SdkCodingKey("user_id"))
+        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(customAttributes, forKey: SdkCodingKey("custom_attributes"))
     }
 }
 
@@ -209,8 +209,8 @@ struct ConvertVisitorRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.type, forKey: SdkCodingKey("type"))
-        try keyedContainer.encode(self.user, forKey: SdkCodingKey("user"))
-        try keyedContainer.encode(self.visitor, forKey: SdkCodingKey("visitor"))
+        try keyedContainer.encode(type, forKey: SdkCodingKey("type"))
+        try keyedContainer.encode(user, forKey: SdkCodingKey("user"))
+        try keyedContainer.encode(visitor, forKey: SdkCodingKey("visitor"))
     }
 }

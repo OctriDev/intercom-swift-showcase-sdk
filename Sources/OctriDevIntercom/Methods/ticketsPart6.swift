@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension TicketsMethods {
-    public struct UpdateTicketOptions: Codable {
+public extension TicketsMethods {
+    struct UpdateTicketOptions: Codable {
         public var ticketId: String
         public var intercomVersion: IntercomVersion?
         public var ticketAttributes: [String: JSONValue]?
@@ -25,7 +25,9 @@ extension TicketsMethods {
         }
     }
 
-    /// Updates an existing ticket's attributes, state, company, visibility, assignment, or open and snoozed status. Supply only the ticket properties you want to change, and use `skip_notifications` to control update notifications. A successful response returns the updated ticket.
+    /// Updates an existing ticket's attributes, state, company, visibility, assignment, or open and snoozed status.
+    /// Supply only the ticket properties you want to change, and use `skip_notifications` to control update
+    /// notifications. A successful response returns the updated ticket.
     ///
     /// You can update a ticket.
     ///
@@ -50,11 +52,25 @@ extension TicketsMethods {
     ///   Set this 0 to unassign it.
     /// - skipNotifications: Option to disable notifications when a Ticket is
     ///   updated.
-    public static func updateTicket(config: ClientConfig, options: UpdateTicketOptions, requestOptions: RequestOptions? = nil) async throws -> Ticket {
+    static func updateTicket(
+        config: ClientConfig,
+        options: UpdateTicketOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Ticket {
         let requestBody = UpdateTicketRequestBody(options: options)
 
-        return try (await sdkRequest("PUT", ["/tickets/", sdkEncodePathSegment(sdkWireString(options.ticketId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "updateTicket", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            ["/tickets/", sdkEncodePathSegment(sdkWireString(options.ticketId))].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "updateTicket",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self]
+        )).data
     }
 }

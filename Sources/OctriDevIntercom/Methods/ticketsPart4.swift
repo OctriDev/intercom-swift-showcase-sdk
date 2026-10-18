@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension TicketsMethods {
-    public struct CreateTicketOptions: Codable {
+public extension TicketsMethods {
+    struct CreateTicketOptions: Codable {
         public var ticketTypeId: String
         public var contacts: [CreateTicketRequestContactsItem]
         public var intercomVersion: IntercomVersion?
@@ -25,7 +25,9 @@ extension TicketsMethods {
         }
     }
 
-    /// Creates a ticket using a ticket type and one or more affected contacts. Supply `ticket_type_id` and `contacts`; you can also provide ticket attributes, assignment details, or a conversation to link. A 200 response returns the created ticket and its current state.
+    /// Creates a ticket using a ticket type and one or more affected contacts. Supply `ticket_type_id` and `contacts`;
+    /// you can also provide ticket attributes, assignment details, or a conversation to link. A 200 response returns
+    /// the created ticket and its current state.
     ///
     /// You can create a new ticket.
     ///
@@ -56,11 +58,25 @@ extension TicketsMethods {
     ///   types. Defaults to messenger if not provided.
     /// - skipNotifications: Option to disable notifications when a Ticket is
     ///   created.
-    public static func createTicket(config: ClientConfig, options: CreateTicketOptions, requestOptions: RequestOptions? = nil) async throws -> Ticket {
+    static func createTicket(
+        config: ClientConfig,
+        options: CreateTicketOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Ticket {
         let requestBody = CreateTicketRequestBody(options: options)
 
-        return try (await sdkRequest("POST", "/tickets", config: config, body: requestBody, decoder: .json, operationId: "createTicket", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/tickets",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "createTicket",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self]
+        )).data
     }
 }

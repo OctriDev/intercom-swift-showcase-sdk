@@ -7,29 +7,51 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum SegmentsMethods {
-    /// Lists segments in the workspace, which group contacts according to configured rules. Set `include_count` to include the number of contacts in each segment. Use `page` and `per_page` to paginate the results.
+    /// Lists segments in the workspace, which group contacts according to configured rules. Set `include_count` to
+    /// include the number of contacts in each segment. Use `page` and `per_page` to paginate the results.
     ///
     /// You can fetch a list of all segments.
     ///
     /// - Parameters:
     /// - includeCount: It includes the count of contacts that belong to each
     ///   segment.
-    public static func listSegments(config: ClientConfig, includeCount: Bool? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> SegmentList {
-        return try (await sdkRequest("GET", "/segments", config: config, query: [
+    public static func listSegments(
+        config: ClientConfig,
+        includeCount: Bool? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SegmentList {
+        try await (sdkRequest("GET", "/segments", config: config, query: [
             SdkQueryParameter("include_count", value: includeCount),
         ], decoder: .json, operationId: "listSegments", extraHeaders: sdkHeaders([
             ("Intercom-Version", sdkHeaderValue(intercomVersion)),
         ]), options: requestOptions, errors: ["401": Error2.self])).data
     }
-    /// Retrieves the details of a segment, a group of contacts defined by its rules. Use `segment_id` to identify the segment you want to retrieve.
+
+    /// Retrieves the details of a segment, a group of contacts defined by its rules. Use `segment_id` to identify the
+    /// segment you want to retrieve.
     ///
     /// You can fetch the details of a single segment.
     ///
     /// - Parameters:
     /// - segmentId: The unique identified of a given segment.
-    public static func retrieveSegment(config: ClientConfig, segmentId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Segment {
-        return try (await sdkRequest("GET", ["/segments/", sdkEncodePathSegment(sdkWireString(segmentId))].joined(), config: config, decoder: .json, operationId: "retrieveSegment", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
+    public static func retrieveSegment(
+        config: ClientConfig,
+        segmentId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Segment {
+        try await (sdkRequest(
+            "GET",
+            ["/segments/", sdkEncodePathSegment(sdkWireString(segmentId))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "retrieveSegment",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).data
     }
 }

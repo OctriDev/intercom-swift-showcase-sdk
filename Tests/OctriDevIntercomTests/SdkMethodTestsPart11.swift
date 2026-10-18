@@ -17,11 +17,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.messages.getWhatsAppStatus(
-            rulesetId: decoded("\"ruleset-1\""),
-            perPage: decoded("50"),
-            startingAfter: decoded("\"starting_after\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                rulesetId: decoded("\"ruleset-1\""),
+                perPage: decoded("50"),
+                startingAfter: decoded("\"starting_after\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -85,9 +85,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.jobs.status(
-            jobId: decoded("\"job-1\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                jobId: decoded("\"job-1\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -134,10 +134,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.tickets.linkConversation(
-            ticketId: decoded("\"64619700005694\""),
-            conversationId: decoded("\"204\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                ticketId: decoded("\"64619700005694\""),
+                conversationId: decoded("\"204\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -182,8 +182,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.admins.listActivityLogEventTypes(
-            intercomVersion: decoded("\"2.17\"")
-        )
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -230,10 +230,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.admins.listActivityLogs(
-            createdAtAfter: decoded("\"1677253093\""),
-            createdAtBefore: decoded("\"1677861493\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                createdAtAfter: decoded("\"1677253093\""),
+                createdAtBefore: decoded("\"1677861493\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -279,9 +279,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.admins.list(
-            displayAvatar: decoded("true"),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                displayAvatar: decoded("true"),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -326,8 +326,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.helpCenter.listAllCollections(
-            intercomVersion: decoded("\"2.17\"")
-        )
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -375,11 +375,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.companies.listAll(
-            page: decoded("1"),
-            perPage: decoded("15"),
-            order: decoded("\"desc\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                page: decoded("1"),
+                perPage: decoded("15"),
+                order: decoded("\"desc\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -424,8 +424,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.articles.list(
-            intercomVersion: decoded("\"2.17\"")
-        )
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -474,12 +474,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.articles.listVersions(
-            articleId: decoded("123"),
-            page: decoded("1"),
-            perPage: decoded("25"),
-            locale: decoded("\"en\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                articleId: decoded("123"),
+                page: decoded("1"),
+                perPage: decoded("25"),
+                locale: decoded("\"en\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -525,9 +525,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.companies.listAttachedContacts(
-            companyId: decoded("\"5f4d3c1c-7b1b-4d7d-a97e-6095715c6632\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                companyId: decoded("\"5f4d3c1c-7b1b-4d7d-a97e-6095715c6632\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

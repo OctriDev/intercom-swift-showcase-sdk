@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DataEvent domain models
+/// DataEvent domain models
 /// Pagination
 public struct DataEventListPages: Codable {
     /// Optional `string` value serialized in the `next` wire field.
@@ -22,20 +22,20 @@ public struct DataEventListPages: Codable {
     }
 
     init() {
-        (self.next, self.since) = (nil, nil)
+        (next, since) = (nil, nil)
     }
 }
 
-extension DataEventListPages {
-    public init(from decoder: Decoder) throws {
+public extension DataEventListPages {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.next = try container.sdkDecodeIfPresent(.next)
-        self.since = try container.sdkDecodeIfPresent(.since)
+        next = try container.sdkDecodeIfPresent(.next)
+        since = try container.sdkDecodeIfPresent(.since)
     }
 }
 
-extension DataEventListPages {
-    public init(next: String? = nil, since: String? = nil) {
+public extension DataEventListPages {
+    init(next: String? = nil, since: String? = nil) {
         self.init()
         (self.next, self.since) = (next, since)
     }
@@ -58,21 +58,21 @@ public struct DataEventList: Codable {
     }
 
     init() {
-        (self.type, self.events, self.pages) = (nil, nil, nil)
+        (type, events, pages) = (nil, nil, nil)
     }
 }
 
-extension DataEventList {
-    public init(from decoder: Decoder) throws {
+public extension DataEventList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.events = try container.sdkDecodeIfPresent(.events)
-        self.pages = try container.sdkDecodeIfPresent(.pages)
+        type = try container.sdkDecodeIfPresent(.type)
+        events = try container.sdkDecodeIfPresent(.events)
+        pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-extension DataEventList {
-    public init(type: DataEventListType? = nil, events: [DataEvent]? = nil, pages: DataEventListPages? = nil) {
+public extension DataEventList {
+    init(type: DataEventListType? = nil, events: [DataEvent]? = nil, pages: DataEventListPages? = nil) {
         self.init()
         (self.type, self.events) = (type, events)
         self.pages = pages
@@ -83,12 +83,15 @@ extension DataEventList {
 public struct DataEventListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let eventList = DataEventListType(rawValue: "event.list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

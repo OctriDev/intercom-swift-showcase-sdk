@@ -3,18 +3,22 @@
 
 import Foundation
 
-// TaggedModelsArticles domain models
+/// TaggedModelsArticles domain models
 /// The type of text - `highlight` or `plain`.
-public struct ArticleSearchHighlightsHighlightedTitleItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct ArticleSearchHighlightsHighlightedTitleItemType: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let highlight = ArticleSearchHighlightsHighlightedTitleItemType(rawValue: "highlight")
     public static let plain = ArticleSearchHighlightsHighlightedTitleItemType(rawValue: "plain")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -27,12 +31,15 @@ public struct ArticleSearchHighlightsHighlightedTitleItemType: RawRepresentable,
 public struct ArticleListItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let article = ArticleListItemType(rawValue: "article")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -46,13 +53,16 @@ public struct ArticleListItemType: RawRepresentable, Hashable, Codable, Sendable
 public struct ArticleVersionSummaryState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let published = ArticleVersionSummaryState(rawValue: "published")
     public static let draft = ArticleVersionSummaryState(rawValue: "draft")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -66,13 +76,16 @@ public struct ArticleVersionSummaryState: RawRepresentable, Hashable, Codable, S
 public struct ArticleVersionState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let published = ArticleVersionState(rawValue: "published")
     public static let draft = ArticleVersionState(rawValue: "draft")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -87,7 +100,10 @@ public struct ArticleVersionState: RawRepresentable, Hashable, Codable, Sendable
 public struct ArticleListItemHelpCenterAudience: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let everyone = ArticleListItemHelpCenterAudience(rawValue: "everyone")
     public static let allUsers = ArticleListItemHelpCenterAudience(rawValue: "all_users")
     public static let allVisitors = ArticleListItemHelpCenterAudience(rawValue: "all_visitors")
@@ -97,7 +113,7 @@ public struct ArticleListItemHelpCenterAudience: RawRepresentable, Hashable, Cod
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -110,12 +126,15 @@ public struct ArticleListItemHelpCenterAudience: RawRepresentable, Hashable, Cod
 public struct ArticleType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let article = ArticleType(rawValue: "article")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

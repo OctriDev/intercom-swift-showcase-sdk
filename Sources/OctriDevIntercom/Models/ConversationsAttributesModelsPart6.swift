@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ConversationsAttributes domain models
+/// ConversationsAttributes domain models
 public enum CreateConversationAttributeDecimalRequestVariant1DataType: String, CaseIterable, Codable {
     case decimal
     public init(from decoder: Decoder) throws {
@@ -22,16 +22,20 @@ public enum CreateConversationAttributeDecimalRequestVariant1DataType: String, C
 }
 
 /// The cardinality of the relationship: `one` or `many`.
-public struct CreateConversationAttributeRelationshipRequestVariant1ReferenceType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct CreateConversationAttributeRelationshipRequestVariant1ReferenceType: RawRepresentable, Hashable, Codable,
+    Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let one = CreateConversationAttributeRelationshipRequestVariant1ReferenceType(rawValue: "one")
     public static let many = CreateConversationAttributeRelationshipRequestVariant1ReferenceType(rawValue: "many")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -207,16 +211,20 @@ public enum ConversationAttributeRelationshipTypeVariant1DataType: String, CaseI
 }
 
 /// The cardinality of the relationship: `one` or `many`.
-public struct ConversationAttributeRelationshipTypeVariant1ReferenceType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct ConversationAttributeRelationshipTypeVariant1ReferenceType: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let one = ConversationAttributeRelationshipTypeVariant1ReferenceType(rawValue: "one")
     public static let many = ConversationAttributeRelationshipTypeVariant1ReferenceType(rawValue: "many")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -263,12 +271,15 @@ public enum CreateConversationAttributeRelationshipRequestVariant1DataType: Stri
 public struct ConversationAttributeBaseType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let conversationAttribute = ConversationAttributeBaseType(rawValue: "conversation_attribute")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

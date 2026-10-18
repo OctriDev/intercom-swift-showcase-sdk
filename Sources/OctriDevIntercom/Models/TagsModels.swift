@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Tags domain models
+/// Tags domain models
 /// You can create or update an existing tag.
 public struct CreateOrUpdateTagRequest: Codable {
     /// The name of the tag, which will be created if not found, or the new name for the tag if this is an update
@@ -19,22 +19,28 @@ public struct CreateOrUpdateTagRequest: Codable {
         case id
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateOrUpdateTagRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.id = try container.sdkDecodeIfPresent(.id)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateOrUpdateTagRequest {
-    public init(name: String, id: String? = nil) {
+public extension CreateOrUpdateTagRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        id = try container.sdkDecodeIfPresent(.id)
+    }
+}
+
+public extension CreateOrUpdateTagRequest {
+    init(name: String, id: String? = nil) {
         (self.name, self.id) = (name, id)
     }
 }
@@ -52,25 +58,35 @@ public struct TagMultipleUsersRequest: Codable {
         case users
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension TagMultipleUsersRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        guard container.contains(.users) else {
-            throw SdkValidationError(field: "users", code: "required", message: "Validation failed for 'users': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.users = try container.sdkDecodeRequired(.users)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension TagMultipleUsersRequest {
-    public init(name: String, users: [TagMultipleUsersRequestUsersItem]) {
+public extension TagMultipleUsersRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        guard container.contains(.users) else {
+            throw SdkValidationError(
+                field: "users",
+                code: "required",
+                message: "Validation failed for 'users': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        users = try container.sdkDecodeRequired(.users)
+    }
+}
+
+public extension TagMultipleUsersRequest {
+    init(name: String, users: [TagMultipleUsersRequestUsersItem]) {
         (self.name, self.users) = (name, users)
     }
 }
@@ -90,20 +106,20 @@ public struct TagCompanyRequestCompaniesItem: Codable {
     }
 
     init() {
-        (self.id, self.companyId) = (nil, nil)
+        (id, companyId) = (nil, nil)
     }
 }
 
-extension TagCompanyRequestCompaniesItem {
-    public init(from decoder: Decoder) throws {
+public extension TagCompanyRequestCompaniesItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.companyId = try container.sdkDecodeIfPresent(.companyId)
+        id = try container.sdkDecodeIfPresent(.id)
+        companyId = try container.sdkDecodeIfPresent(.companyId)
     }
 }
 
-extension TagCompanyRequestCompaniesItem {
-    public init(id: String? = nil, companyId: String? = nil) {
+public extension TagCompanyRequestCompaniesItem {
+    init(id: String? = nil, companyId: String? = nil) {
         self.init()
         (self.id, self.companyId) = (id, companyId)
     }
@@ -122,25 +138,35 @@ public struct TagCompanyRequest: Codable {
         case companies
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension TagCompanyRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        guard container.contains(.companies) else {
-            throw SdkValidationError(field: "companies", code: "required", message: "Validation failed for 'companies': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.companies = try container.sdkDecodeRequired(.companies)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension TagCompanyRequest {
-    public init(name: String, companies: [TagCompanyRequestCompaniesItem]) {
+public extension TagCompanyRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        guard container.contains(.companies) else {
+            throw SdkValidationError(
+                field: "companies",
+                code: "required",
+                message: "Validation failed for 'companies': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        companies = try container.sdkDecodeRequired(.companies)
+    }
+}
+
+public extension TagCompanyRequest {
+    init(name: String, companies: [TagCompanyRequestCompaniesItem]) {
         (self.name, self.companies) = (name, companies)
     }
 }
@@ -164,21 +190,21 @@ public struct UntagCompanyRequestCompaniesItem: Codable {
     }
 
     init() {
-        (self.id, self.companyId, self.untag) = (nil, nil, nil)
+        (id, companyId, untag) = (nil, nil, nil)
     }
 }
 
-extension UntagCompanyRequestCompaniesItem {
-    public init(from decoder: Decoder) throws {
+public extension UntagCompanyRequestCompaniesItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.companyId = try container.sdkDecodeIfPresent(.companyId)
-        self.untag = try container.sdkDecodeIfPresent(.untag)
+        id = try container.sdkDecodeIfPresent(.id)
+        companyId = try container.sdkDecodeIfPresent(.companyId)
+        untag = try container.sdkDecodeIfPresent(.untag)
     }
 }
 
-extension UntagCompanyRequestCompaniesItem {
-    public init(id: String? = nil, companyId: String? = nil, untag: Bool? = nil) {
+public extension UntagCompanyRequestCompaniesItem {
+    init(id: String? = nil, companyId: String? = nil, untag: Bool? = nil) {
         self.init()
         (self.id, self.companyId) = (id, companyId)
         self.untag = untag
@@ -199,20 +225,20 @@ public struct TagCreateResponseVariant1CompaniesItem: Codable {
     }
 
     init() {
-        (self.id, self.tagged) = (nil, nil)
+        (id, tagged) = (nil, nil)
     }
 }
 
-extension TagCreateResponseVariant1CompaniesItem {
-    public init(from decoder: Decoder) throws {
+public extension TagCreateResponseVariant1CompaniesItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.tagged = try container.sdkDecodeIfPresent(.tagged)
+        id = try container.sdkDecodeIfPresent(.id)
+        tagged = try container.sdkDecodeIfPresent(.tagged)
     }
 }
 
-extension TagCreateResponseVariant1CompaniesItem {
-    public init(id: String? = nil, tagged: Bool? = nil) {
+public extension TagCreateResponseVariant1CompaniesItem {
+    init(id: String? = nil, tagged: Bool? = nil) {
         self.init()
         (self.id, self.tagged) = (id, tagged)
     }
@@ -245,23 +271,29 @@ public struct TagCreateResponse: Codable {
     }
 
     init() {
-        (self.type, self.id, self.name, self.users, self.companies) = (nil, nil, nil, nil, nil)
+        (type, id, name, users, companies) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension TagCreateResponse {
-    public init(from decoder: Decoder) throws {
+public extension TagCreateResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.users = try container.sdkDecodeIfPresent(.users)
-        self.companies = try container.sdkDecodeIfPresent(.companies)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        users = try container.sdkDecodeIfPresent(.users)
+        companies = try container.sdkDecodeIfPresent(.companies)
     }
 }
 
-extension TagCreateResponse {
-    public init(type: String? = nil, id: String? = nil, name: String? = nil, users: [TagCreateResponseVariant1UsersItem]? = nil, companies: [TagCreateResponseVariant1CompaniesItem]? = nil) {
+public extension TagCreateResponse {
+    init(
+        type: String? = nil,
+        id: String? = nil,
+        name: String? = nil,
+        users: [TagCreateResponseVariant1UsersItem]? = nil,
+        companies: [TagCreateResponseVariant1CompaniesItem]? = nil
+    ) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.name, self.users) = (name, users)
@@ -283,20 +315,23 @@ public struct TagCreateResponseVariant1: Codable {
     }
 
     init() {
-        (self.users, self.companies) = (nil, nil)
+        (users, companies) = (nil, nil)
     }
 }
 
-extension TagCreateResponseVariant1 {
-    public init(from decoder: Decoder) throws {
+public extension TagCreateResponseVariant1 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.users = try container.sdkDecodeIfPresent(.users)
-        self.companies = try container.sdkDecodeIfPresent(.companies)
+        users = try container.sdkDecodeIfPresent(.users)
+        companies = try container.sdkDecodeIfPresent(.companies)
     }
 }
 
-extension TagCreateResponseVariant1 {
-    public init(users: [TagCreateResponseVariant1UsersItem]? = nil, companies: [TagCreateResponseVariant1CompaniesItem]? = nil) {
+public extension TagCreateResponseVariant1 {
+    init(
+        users: [TagCreateResponseVariant1UsersItem]? = nil,
+        companies: [TagCreateResponseVariant1CompaniesItem]? = nil
+    ) {
         self.init()
         (self.users, self.companies) = (users, companies)
     }
@@ -313,19 +348,19 @@ public struct TagMultipleUsersRequestUsersItem: Codable {
     }
 
     init() {
-        self.id = nil
+        id = nil
     }
 }
 
-extension TagMultipleUsersRequestUsersItem {
-    public init(from decoder: Decoder) throws {
+public extension TagMultipleUsersRequestUsersItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
+        id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-extension TagMultipleUsersRequestUsersItem {
-    public init(id: String? = nil) {
+public extension TagMultipleUsersRequestUsersItem {
+    init(id: String? = nil) {
         self.init()
         self.id = id
     }
@@ -344,25 +379,35 @@ public struct UntagCompanyRequest: Codable {
         case companies
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension UntagCompanyRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        guard container.contains(.companies) else {
-            throw SdkValidationError(field: "companies", code: "required", message: "Validation failed for 'companies': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.companies = try container.sdkDecodeRequired(.companies)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension UntagCompanyRequest {
-    public init(name: String, companies: [UntagCompanyRequestCompaniesItem]) {
+public extension UntagCompanyRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        guard container.contains(.companies) else {
+            throw SdkValidationError(
+                field: "companies",
+                code: "required",
+                message: "Validation failed for 'companies': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        companies = try container.sdkDecodeRequired(.companies)
+    }
+}
+
+public extension UntagCompanyRequest {
+    init(name: String, companies: [UntagCompanyRequestCompaniesItem]) {
         (self.name, self.companies) = (name, companies)
     }
 }
@@ -381,20 +426,20 @@ public struct TagCreateResponseVariant1UsersItem: Codable {
     }
 
     init() {
-        (self.id, self.tagged) = (nil, nil)
+        (id, tagged) = (nil, nil)
     }
 }
 
-extension TagCreateResponseVariant1UsersItem {
-    public init(from decoder: Decoder) throws {
+public extension TagCreateResponseVariant1UsersItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.tagged = try container.sdkDecodeIfPresent(.tagged)
+        id = try container.sdkDecodeIfPresent(.id)
+        tagged = try container.sdkDecodeIfPresent(.tagged)
     }
 }
 
-extension TagCreateResponseVariant1UsersItem {
-    public init(id: String? = nil, tagged: Bool? = nil) {
+public extension TagCreateResponseVariant1UsersItem {
+    init(id: String? = nil, tagged: Bool? = nil) {
         self.init()
         (self.id, self.tagged) = (id, tagged)
     }

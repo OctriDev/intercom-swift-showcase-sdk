@@ -3,7 +3,7 @@
 
 import Foundation
 
-// SharedLinked domain models
+/// SharedLinked domain models
 /// An object containing metadata about linked conversations and linked tickets. Up to 1000 can be returned.
 public struct LinkedObjectList: Codable {
     /// Always list.
@@ -25,31 +25,27 @@ public struct LinkedObjectList: Codable {
     }
 
     init() {
-        (self.type, self.totalCount, self.hasMore, self.data) = (nil, nil, nil, nil)
+        (type, totalCount, hasMore, data) = (nil, nil, nil, nil)
     }
 }
 
-extension LinkedObjectList {
-    public init(from decoder: Decoder) throws {
+public extension LinkedObjectList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        type = try container.sdkDecodeIfPresent(.type)
+        totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension LinkedObjectList {
-    public init(type: LinkedObjectListType? = nil, totalCount: Int? = nil, hasMore: Bool? = nil, data: [LinkedObject]? = nil) {
+public extension LinkedObjectList {
+    init(type: LinkedObjectListType? = nil, totalCount: Int? = nil, hasMore: Bool? = nil, data: [LinkedObject]? = nil) {
         self.init()
         (self.type, self.totalCount) = (type, totalCount)
         (self.hasMore, self.data) = (hasMore, data)
     }
 }
-
-
-
-
 
 /// A linked conversation or ticket.
 public struct LinkedObject: Codable {
@@ -70,21 +66,21 @@ public struct LinkedObject: Codable {
     }
 
     init() {
-        (self.type, self.id, self.category) = (nil, nil, nil)
+        (type, id, category) = (nil, nil, nil)
     }
 }
 
-extension LinkedObject {
-    public init(from decoder: Decoder) throws {
+public extension LinkedObject {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.category = try container.sdkDecodeIfPresent(.category)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        category = try container.sdkDecodeIfPresent(.category)
     }
 }
 
-extension LinkedObject {
-    public init(type: LinkedObjectType? = nil, id: String? = nil, category: LinkedObjectCategory? = nil) {
+public extension LinkedObject {
+    init(type: LinkedObjectType? = nil, id: String? = nil, category: LinkedObjectCategory? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         self.category = category
@@ -95,12 +91,15 @@ extension LinkedObject {
 public struct LinkedObjectListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let list = LinkedObjectListType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -113,13 +112,16 @@ public struct LinkedObjectListType: RawRepresentable, Hashable, Codable, Sendabl
 public struct LinkedObjectType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let ticket = LinkedObjectType(rawValue: "ticket")
     public static let conversation = LinkedObjectType(rawValue: "conversation")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -132,14 +134,17 @@ public struct LinkedObjectType: RawRepresentable, Hashable, Codable, Sendable, S
 public struct LinkedObjectCategory: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let customer = LinkedObjectCategory(rawValue: "Customer")
     public static let backOffice = LinkedObjectCategory(rawValue: "Back-office")
     public static let tracker = LinkedObjectCategory(rawValue: "Tracker")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

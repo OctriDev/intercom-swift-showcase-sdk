@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension CompaniesMethods {
-    public struct CreateOrUpdateCompanyOptions: Codable {
+public extension CompaniesMethods {
+    struct CreateOrUpdateCompanyOptions: Codable {
         public var intercomVersion: IntercomVersion?
         public var name: String?
         public var companyId: String?
@@ -23,9 +23,16 @@ extension CompaniesMethods {
         public init() {}
     }
 
-    /// Creates a company or updates the existing company identified by `company_id`. Set a unique `company_id` when creating a company because it cannot be changed later; a company appears in Intercom only when it has at least one associated user.
+    /// Creates a company or updates the existing company identified by `company_id`. Set a unique `company_id` when
+    /// creating a company because it cannot be changed later; a company appears in Intercom only when it has at least
+    /// one associated user.
     ///
-    /// You can create or update a company. Companies will be only visible in Intercom when there is at least one associated user. Companies are looked up via `company_id` in a `POST` request, if not found via `company_id`, the new company will be created, if found, that company will be updated. {% admonition type="warning" name="Using `company_id`" %} You can set a unique `company_id` value when creating a company. However, it is not possible to update `company_id`. Be sure to set a unique value once upon creation of the company. {% /admonition %}
+    /// You can create or update a company. Companies will be only visible in Intercom when there is at least one
+    /// associated user. Companies are looked up via `company_id` in a `POST` request, if not found via `company_id`,
+    /// the new company will be created, if found, that company will be updated. {% admonition type="warning"
+    /// name="Using `company_id`" %} You can set a unique `company_id` value when creating a company. However, it is not
+    /// possible to update `company_id`. Be sure to set a unique value once upon creation of the company. {% /admonition
+    /// %}
     ///
     /// - Parameters:
     /// - name: The name of the Company
@@ -45,11 +52,25 @@ extension CompaniesMethods {
     ///   Note that this will truncate floats. i.e. it only allow for whole integers,
     ///   155.98 will be truncated to 155. Note that this has an upper limit of
     ///   2**31-1 or 2147483647..
-    public static func createOrUpdateCompany(config: ClientConfig, options: CreateOrUpdateCompanyOptions, requestOptions: RequestOptions? = nil) async throws -> Company {
+    static func createOrUpdateCompany(
+        config: ClientConfig,
+        options: CreateOrUpdateCompanyOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Company {
         let requestBody = CreateOrUpdateCompanyRequestBody(options: options)
 
-        return try (await sdkRequest("POST", "/companies", config: config, body: requestBody, decoder: .json, operationId: "createOrUpdateCompany", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
-        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/companies",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "createOrUpdateCompany",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["400": Error2.self, "401": Error2.self]
+        )).data
     }
 }

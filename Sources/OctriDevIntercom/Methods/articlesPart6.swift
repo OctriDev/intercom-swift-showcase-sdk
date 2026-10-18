@@ -6,29 +6,64 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ArticlesMethods {
-    /// Deletes an article from the help center. Use the `article_id` path parameter to identify the article to remove. The response confirms whether the article was deleted.
+public extension ArticlesMethods {
+    /// Deletes an article from the help center. Use the `article_id` path parameter to identify the article to remove.
+    /// The response confirms whether the article was deleted.
     ///
     /// You can delete a single article by making a DELETE request to `https://api.intercom.io/articles/<id>`.
     ///
     /// - Parameters:
     /// - articleId: The unique identifier for the article which is given by
     ///   Intercom.
-    public static func deleteArticle(config: ClientConfig, articleId: Int, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DeletedArticleObject {
-        return try (await sdkRequest("DELETE", ["/articles/", sdkEncodePathSegment(sdkWireString(articleId))].joined(), config: config, decoder: .json, operationId: "deleteArticle", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
+    static func deleteArticle(
+        config: ClientConfig,
+        articleId: Int,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DeletedArticleObject {
+        try await (sdkRequest(
+            "DELETE",
+            ["/articles/", sdkEncodePathSegment(sdkWireString(articleId))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "deleteArticle",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).data
     }
 
-    /// Retrieves the staged draft of a published article without changing its live content. Use the `id` path parameter to identify the article; a draft exists only when unpublished changes have been staged. You need the `read_articles_scope` OAuth scope to retrieve the draft.
+    /// Retrieves the staged draft of a published article without changing its live content. Use the `id` path parameter
+    /// to identify the article; a draft exists only when unpublished changes have been staged. You need the
+    /// `read_articles_scope` OAuth scope to retrieve the draft.
     ///
-    /// Fetch the staged draft of a published article by making a GET request to `https://api.intercom.io/articles/<id>/draft`. The response is the article rendered with its draft content, leaving the live article untouched. A draft exists only when a published article has unpublished changes staged on top of it. Returns `404` when the article has no staged draft. Requires the `read_articles_scope` OAuth scope.
+    /// Fetch the staged draft of a published article by making a GET request to
+    /// `https://api.intercom.io/articles/<id>/draft`. The response is the article rendered with its draft content,
+    /// leaving the live article untouched. A draft exists only when a published article has unpublished changes staged
+    /// on top of it. Returns `404` when the article has no staged draft. Requires the `read_articles_scope` OAuth
+    /// scope.
     ///
     /// - Parameters:
     /// - id: The unique identifier for the article which is given by Intercom.
-    public static func retrieveArticleDraft(config: ClientConfig, id: Int, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Article {
-        return try (await sdkRequest("GET", ["/articles/", sdkEncodePathSegment(sdkWireString(id)), "/draft"].joined(), config: config, decoder: .json, operationId: "retrieveArticleDraft", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
+    static func retrieveArticleDraft(
+        config: ClientConfig,
+        id: Int,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Article {
+        try await (sdkRequest(
+            "GET",
+            ["/articles/", sdkEncodePathSegment(sdkWireString(id)), "/draft"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "retrieveArticleDraft",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).data
     }
 }

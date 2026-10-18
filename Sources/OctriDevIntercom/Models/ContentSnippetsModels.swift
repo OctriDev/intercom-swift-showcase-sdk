@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ContentSnippets domain models
+/// ContentSnippets domain models
 /// The request payload for updating a content snippet. All fields are optional — only provided fields will be
 /// updated. `json_blocks` and `body_markdown` are mutually exclusive.
 public struct ContentSnippetUpdateRequest: Codable {
@@ -47,30 +47,39 @@ public struct ContentSnippetUpdateRequest: Codable {
     }
 
     init() {
-        (self.title, self.jsonBlocks, self.bodyMarkdown, self.locale, self.audienceIds) = (nil, nil, nil, nil, nil)
-        (self.aiChatbotAvailability, self.aiCopilotAvailability, self.aiSalesAgentAvailability) = (nil, nil, nil)
+        (title, jsonBlocks, bodyMarkdown, locale, audienceIds) = (nil, nil, nil, nil, nil)
+        (aiChatbotAvailability, aiCopilotAvailability, aiSalesAgentAvailability) = (nil, nil, nil)
     }
 }
 
-extension ContentSnippetUpdateRequest {
-    public init(from decoder: Decoder) throws {
+public extension ContentSnippetUpdateRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.title = try container.sdkDecodeIfPresent(.title)
-        self.jsonBlocks = try container.sdkDecodeIfPresent(.jsonBlocks)
-        self.bodyMarkdown = try container.sdkDecodeIfPresent(.bodyMarkdown)
-        self.locale = try container.sdkDecodeIfPresent(.locale)
-        self.audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
-        self.aiChatbotAvailability = try container.sdkDecodeIfPresent(.aiChatbotAvailability)
-        self.aiCopilotAvailability = try container.sdkDecodeIfPresent(.aiCopilotAvailability)
-        self.aiSalesAgentAvailability = try container.sdkDecodeIfPresent(.aiSalesAgentAvailability)
-        if let value = self.title {
+        title = try container.sdkDecodeIfPresent(.title)
+        jsonBlocks = try container.sdkDecodeIfPresent(.jsonBlocks)
+        bodyMarkdown = try container.sdkDecodeIfPresent(.bodyMarkdown)
+        locale = try container.sdkDecodeIfPresent(.locale)
+        audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
+        aiChatbotAvailability = try container.sdkDecodeIfPresent(.aiChatbotAvailability)
+        aiCopilotAvailability = try container.sdkDecodeIfPresent(.aiCopilotAvailability)
+        aiSalesAgentAvailability = try container.sdkDecodeIfPresent(.aiSalesAgentAvailability)
+        if let value = title {
             try validateLength("title", value, min: nil, max: 255)
         }
     }
 }
 
-extension ContentSnippetUpdateRequest {
-    public init(title: String? = nil, jsonBlocks: [[String: JSONValue]]? = nil, bodyMarkdown: String? = nil, locale: String? = nil, audienceIds: [Int]? = nil, aiChatbotAvailability: Bool? = nil, aiCopilotAvailability: Bool? = nil, aiSalesAgentAvailability: Bool? = nil) throws {
+public extension ContentSnippetUpdateRequest {
+    init(
+        title: String? = nil,
+        jsonBlocks: [[String: JSONValue]]? = nil,
+        bodyMarkdown: String? = nil,
+        locale: String? = nil,
+        audienceIds: [Int]? = nil,
+        aiChatbotAvailability: Bool? = nil,
+        aiCopilotAvailability: Bool? = nil,
+        aiSalesAgentAvailability: Bool? = nil
+    ) throws {
         self.init()
         (self.title, self.jsonBlocks) = (title, jsonBlocks)
         (self.bodyMarkdown, self.locale) = (bodyMarkdown, locale)
@@ -124,35 +133,50 @@ public struct ContentSnippetCreateRequest: Codable {
         case aiSalesAgentAvailability = "ai_sales_agent_availability"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ContentSnippetCreateRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.title) else {
-            throw SdkValidationError(field: "title", code: "required", message: "Validation failed for 'title': value is required")
-        }
-        self.title = try container.sdkDecodeRequired(.title)
-        self.jsonBlocks = try container.sdkDecodeIfPresent(.jsonBlocks)
-        self.bodyMarkdown = try container.sdkDecodeIfPresent(.bodyMarkdown)
-        self.locale = try container.sdkDecodeIfPresent(.locale)
-        self.audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
-        self.aiChatbotAvailability = try container.sdkDecodeIfPresent(.aiChatbotAvailability)
-        self.aiCopilotAvailability = try container.sdkDecodeIfPresent(.aiCopilotAvailability)
-        self.aiSalesAgentAvailability = try container.sdkDecodeIfPresent(.aiSalesAgentAvailability)
-            try validateLength("title", self.title, min: nil, max: 255)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ContentSnippetCreateRequest {
-    public init(title: String, jsonBlocks: [[String: JSONValue]]? = nil, bodyMarkdown: String? = nil, locale: String? = nil, audienceIds: [Int]? = nil, aiChatbotAvailability: Bool? = nil, aiCopilotAvailability: Bool? = nil, aiSalesAgentAvailability: Bool? = nil) throws {
+public extension ContentSnippetCreateRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.title) else {
+            throw SdkValidationError(
+                field: "title",
+                code: "required",
+                message: "Validation failed for 'title': value is required"
+            )
+        }
+        title = try container.sdkDecodeRequired(.title)
+        jsonBlocks = try container.sdkDecodeIfPresent(.jsonBlocks)
+        bodyMarkdown = try container.sdkDecodeIfPresent(.bodyMarkdown)
+        locale = try container.sdkDecodeIfPresent(.locale)
+        audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
+        aiChatbotAvailability = try container.sdkDecodeIfPresent(.aiChatbotAvailability)
+        aiCopilotAvailability = try container.sdkDecodeIfPresent(.aiCopilotAvailability)
+        aiSalesAgentAvailability = try container.sdkDecodeIfPresent(.aiSalesAgentAvailability)
+        try validateLength("title", title, min: nil, max: 255)
+    }
+}
+
+public extension ContentSnippetCreateRequest {
+    init(
+        title: String,
+        jsonBlocks: [[String: JSONValue]]? = nil,
+        bodyMarkdown: String? = nil,
+        locale: String? = nil,
+        audienceIds: [Int]? = nil,
+        aiChatbotAvailability: Bool? = nil,
+        aiCopilotAvailability: Bool? = nil,
+        aiSalesAgentAvailability: Bool? = nil
+    ) throws {
         (self.title, self.jsonBlocks) = (title, jsonBlocks)
         (self.bodyMarkdown, self.locale) = (bodyMarkdown, locale)
         (self.audienceIds, self.aiChatbotAvailability) = (audienceIds, aiChatbotAvailability)
         self.aiCopilotAvailability = aiCopilotAvailability
         self.aiSalesAgentAvailability = aiSalesAgentAvailability
-            try validateLength("title", self.title, min: nil, max: 255)
+        try validateLength("title", self.title, min: nil, max: 255)
     }
 }
 
@@ -186,25 +210,32 @@ public struct ContentSnippetList: Codable {
     }
 
     init() {
-        (self.type, self.data, self.totalCount, self.page, self.perPage) = (nil, nil, nil, nil, nil)
-        self.totalPages = nil
+        (type, data, totalCount, page, perPage) = (nil, nil, nil, nil, nil)
+        totalPages = nil
     }
 }
 
-extension ContentSnippetList {
-    public init(from decoder: Decoder) throws {
+public extension ContentSnippetList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.data = try container.sdkDecodeIfPresent(.data)
-        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        self.page = try container.sdkDecodeIfPresent(.page)
-        self.perPage = try container.sdkDecodeIfPresent(.perPage)
-        self.totalPages = try container.sdkDecodeIfPresent(.totalPages)
+        type = try container.sdkDecodeIfPresent(.type)
+        data = try container.sdkDecodeIfPresent(.data)
+        totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        page = try container.sdkDecodeIfPresent(.page)
+        perPage = try container.sdkDecodeIfPresent(.perPage)
+        totalPages = try container.sdkDecodeIfPresent(.totalPages)
     }
 }
 
-extension ContentSnippetList {
-    public init(type: ContentSnippetListType? = nil, data: [ContentSnippet]? = nil, totalCount: Int? = nil, page: Int? = nil, perPage: Int? = nil, totalPages: Int? = nil) {
+public extension ContentSnippetList {
+    init(
+        type: ContentSnippetListType? = nil,
+        data: [ContentSnippet]? = nil,
+        totalCount: Int? = nil,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        totalPages: Int? = nil
+    ) {
         self.init()
         (self.type, self.data) = (type, data)
         (self.totalCount, self.page) = (totalCount, page)
@@ -216,12 +247,15 @@ extension ContentSnippetList {
 public struct ContentSnippetListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let list = ContentSnippetListType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

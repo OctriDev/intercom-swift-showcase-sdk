@@ -6,35 +6,82 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ConversationsAttributesMethods {
-    /// Updates the label of an option on a list-type conversation attribute. Supply the option's UUID in `option_id` and the replacement text in `label`; the response includes the full attribute with its updated options.
+public extension ConversationsAttributesMethods {
+    /// Updates the label of an option on a list-type conversation attribute. Supply the option's UUID in `option_id`
+    /// and the replacement text in `label`; the response includes the full attribute with its updated options.
     ///
-    /// Update the label of a single option on a list-type conversation attribute. Returns the full attribute with the updated options array.
+    /// Update the label of a single option on a list-type conversation attribute. Returns the full attribute with the
+    /// updated options array.
     ///
     /// - Parameters:
     /// - id: The conversation attribute id
     /// - optionId: The UUID of the list option to update (from the `id` field in
     ///   the options array)
     /// - label: The updated label for the option.
-    public static func updateConversationAttributeOption(config: ClientConfig, id: Int, optionId: String, label: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ConversationAttribute {
+    static func updateConversationAttributeOption(
+        config: ClientConfig,
+        id: Int,
+        optionId: String,
+        label: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ConversationAttribute {
         let requestBody = UpdateConversationAttributeOptionRequestBody(label: label)
 
-        return try (await sdkRequest("PUT", ["/conversations/attributes/", sdkEncodePathSegment(sdkWireString(id)), "/options/", sdkEncodePathSegment(sdkWireString(optionId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "updateConversationAttributeOption", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "422": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            [
+                "/conversations/attributes/",
+                sdkEncodePathSegment(sdkWireString(id)),
+                "/options/",
+                sdkEncodePathSegment(sdkWireString(optionId)),
+            ].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "updateConversationAttributeOption",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self, "422": Error2.self]
+        )).data
     }
 
-    /// Archives an option on a list-type conversation attribute without removing it. Use `id` and `option_id` to identify the attribute and option; the response retains the option with `archived: true` and includes the updated options array.
+    /// Archives an option on a list-type conversation attribute without removing it. Use `id` and `option_id` to
+    /// identify the attribute and option; the response retains the option with `archived: true` and includes the
+    /// updated options array.
     ///
-    /// Archive a single option on a list-type conversation attribute (soft delete). The option remains in the response with `archived: true`. Returns the full attribute with the updated options array.
+    /// Archive a single option on a list-type conversation attribute (soft delete). The option remains in the response
+    /// with `archived: true`. Returns the full attribute with the updated options array.
     ///
     /// - Parameters:
     /// - id: The conversation attribute id
     /// - optionId: The UUID of the list option to archive (from the `id` field in
     ///   the options array)
-    public static func deleteConversationAttributeOption(config: ClientConfig, id: Int, optionId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ConversationAttribute {
-        return try (await sdkRequest("DELETE", ["/conversations/attributes/", sdkEncodePathSegment(sdkWireString(id)), "/options/", sdkEncodePathSegment(sdkWireString(optionId))].joined(), config: config, decoder: .json, operationId: "deleteConversationAttributeOption", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "422": Error2.self])).data
+    static func deleteConversationAttributeOption(
+        config: ClientConfig,
+        id: Int,
+        optionId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ConversationAttribute {
+        try await (sdkRequest(
+            "DELETE",
+            [
+                "/conversations/attributes/",
+                sdkEncodePathSegment(sdkWireString(id)),
+                "/options/",
+                sdkEncodePathSegment(sdkWireString(optionId)),
+            ].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "deleteConversationAttributeOption",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self, "422": Error2.self]
+        )).data
     }
 }

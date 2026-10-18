@@ -10,25 +10,59 @@ public enum TeamsMethods {
     /// Lists the teams in the workspace. Use this endpoint to retrieve team objects and their available team details.
     ///
     /// This will return a list of team objects for the App.
-    public static func listTeams(config: ClientConfig, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> TeamList {
-        return try (await sdkRequest("GET", "/teams", config: config, decoder: .json, operationId: "listTeams", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self])).data
+    public static func listTeams(
+        config: ClientConfig,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> TeamList {
+        try await (sdkRequest(
+            "GET",
+            "/teams",
+            config: config,
+            decoder: .json,
+            operationId: "listTeams",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self]
+        )).data
     }
-    /// Retrieves a team and the admins that belong to it. Use the `team_id` path parameter to specify the team whose details you need.
+
+    /// Retrieves a team and the admins that belong to it. Use the `team_id` path parameter to specify the team whose
+    /// details you need.
     ///
     /// You can fetch the details of a single team, containing an array of admins that belong to this team.
     ///
     /// - Parameters:
     /// - teamId: The unique identifier of a given team.
-    public static func retrieveTeam(config: ClientConfig, teamId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Team {
-        return try (await sdkRequest("GET", ["/teams/", sdkEncodePathSegment(sdkWireString(teamId))].joined(), config: config, decoder: .json, operationId: "retrieveTeam", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
+    public static func retrieveTeam(
+        config: ClientConfig,
+        teamId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Team {
+        try await (sdkRequest(
+            "GET",
+            ["/teams/", sdkEncodePathSegment(sdkWireString(teamId))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "retrieveTeam",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).data
     }
-    /// Retrieves real-time activity metrics for admins in a specified team, including counts of open, idle, and snoozed conversations. The `realtime_monitoring` feature must be enabled for the workspace; use `idle_threshold` to set when an open conversation counts as idle.
+
+    /// Retrieves real-time activity metrics for admins in a specified team, including counts of open, idle, and snoozed
+    /// conversations. The `realtime_monitoring` feature must be enabled for the workspace; use `idle_threshold` to set
+    /// when an open conversation counts as idle.
     ///
-    /// Returns real-time activity metrics for admins in the specified team. For each admin, the response includes counts of open, idle, and snoozed conversations. This endpoint requires the `realtime_monitoring` feature to be enabled for your workspace.
+    /// Returns real-time activity metrics for admins in the specified team. For each admin, the response includes
+    /// counts of open, idle, and snoozed conversations. This endpoint requires the `realtime_monitoring` feature to be
+    /// enabled for your workspace.
     ///
     /// - Parameters:
     /// - teamId: The unique identifier of the team to retrieve metrics for. Use
@@ -36,11 +70,27 @@ public enum TeamsMethods {
     /// - idleThreshold: The number of seconds after which an open conversation is
     ///   considered idle. Clamped to the range 1–86400. Defaults to 1800 (30
     ///   minutes).
-    public static func getTeamMetrics(config: ClientConfig, teamId: String, idleThreshold: Int? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> TeamMetricList {
-        return try (await sdkRequest("GET", ["/teams/", sdkEncodePathSegment(sdkWireString(teamId)), "/metrics"].joined(), config: config, query: [
-            SdkQueryParameter("idle_threshold", value: idleThreshold),
-        ], decoder: .json, operationId: "getTeamMetrics", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self])).data
+    public static func getTeamMetrics(
+        config: ClientConfig,
+        teamId: String,
+        idleThreshold: Int? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> TeamMetricList {
+        try await (sdkRequest(
+            "GET",
+            ["/teams/", sdkEncodePathSegment(sdkWireString(teamId)), "/metrics"].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("idle_threshold", value: idleThreshold),
+            ],
+            decoder: .json,
+            operationId: "getTeamMetrics",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self]
+        )).data
     }
 }

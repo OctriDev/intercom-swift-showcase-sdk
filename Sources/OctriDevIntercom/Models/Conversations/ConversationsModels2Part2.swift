@@ -3,7 +3,7 @@
 
 import Foundation
 
-// TaggedModelsConversations domain models
+/// TaggedModelsConversations domain models
 /// The data returned about your conversations when you list or search them.
 public struct ConversationListItem: Codable {
     /// Always conversation.
@@ -145,56 +145,89 @@ public struct ConversationListItem: Codable {
     }
 
     init() {
-        (self.type, self.id, self.title, self.createdAt, self.updatedAt) = (nil, nil, nil, nil, nil)
-        (self.waitingSince, self.snoozedUntil, self.open, self.state, self.read) = (nil, nil, nil, nil, nil)
-        (self.priority, self.adminAssigneeId, self.teamAssigneeId, self.company, self.tags) = (nil, nil, nil, nil, nil)
-        (self.conversationRating, self.source, self.contacts, self.teammates, self.customAttributes) = (nil, nil, nil, nil, nil)
-        (self.firstContactReply, self.slaApplied, self.statistics, self.linkedObjects, self.aiAgentParticipated) = (nil, nil, nil, nil, nil)
-        (self.aiAgent, self.salesAgentParticipated, self.salesAgent, self.channel, self.externalReferences) = (nil, nil, nil, nil, nil)
-        (self.monitorEvaluations, self.scorecards) = (nil, nil)
+        (type, id, title, createdAt, updatedAt) = (nil, nil, nil, nil, nil)
+        (waitingSince, snoozedUntil, open, state, read) = (nil, nil, nil, nil, nil)
+        (priority, adminAssigneeId, teamAssigneeId, company, tags) = (nil, nil, nil, nil, nil)
+        (conversationRating, source, contacts, teammates, customAttributes) = (nil, nil, nil, nil, nil)
+        (firstContactReply, slaApplied, statistics, linkedObjects, aiAgentParticipated) = (nil, nil, nil, nil, nil)
+        (aiAgent, salesAgentParticipated, salesAgent, channel, externalReferences) = (nil, nil, nil, nil, nil)
+        (monitorEvaluations, scorecards) = (nil, nil)
     }
 }
 
-extension ConversationListItem {
-    public init(from decoder: Decoder) throws {
+public extension ConversationListItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.title = try container.sdkDecodeIfPresent(.title)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.waitingSince = try container.sdkDecodeIfPresent(.waitingSince)
-        self.snoozedUntil = try container.sdkDecodeIfPresent(.snoozedUntil)
-        self.open = try container.sdkDecodeIfPresent(.open)
-        self.state = try container.sdkDecodeIfPresent(.state)
-        self.read = try container.sdkDecodeIfPresent(.read)
-        self.priority = try container.sdkDecodeIfPresent(.priority)
-        self.adminAssigneeId = try container.sdkDecodeIfPresent(.adminAssigneeId)
-        self.teamAssigneeId = try container.sdkDecodeIfPresent(.teamAssigneeId)
-        self.company = try container.sdkDecodeIfPresent(.company)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.conversationRating = try container.sdkDecodeIfPresent(.conversationRating)
-        self.source = try container.sdkDecodeIfPresent(.source)
-        self.contacts = try container.sdkDecodeIfPresent(.contacts)
-        self.teammates = try container.sdkDecodeIfPresent(.teammates)
-        self.customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
-        self.firstContactReply = try container.sdkDecodeIfPresent(.firstContactReply)
-        self.slaApplied = try container.sdkDecodeIfPresent(.slaApplied)
-        self.statistics = try container.sdkDecodeIfPresent(.statistics)
-        self.linkedObjects = try container.sdkDecodeIfPresent(.linkedObjects)
-        self.aiAgentParticipated = try container.sdkDecodeIfPresent(.aiAgentParticipated)
-        self.aiAgent = try container.sdkDecodeIfPresent(.aiAgent)
-        self.salesAgentParticipated = try container.sdkDecodeIfPresent(.salesAgentParticipated)
-        self.salesAgent = try container.sdkDecodeIfPresent(.salesAgent)
-        self.channel = try container.sdkDecodeIfPresent(.channel)
-        self.externalReferences = try container.sdkDecodeIfPresent(.externalReferences)
-        self.monitorEvaluations = try container.sdkDecodeIfPresent(.monitorEvaluations)
-        self.scorecards = try container.sdkDecodeIfPresent(.scorecards)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        title = try container.sdkDecodeIfPresent(.title)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        waitingSince = try container.sdkDecodeIfPresent(.waitingSince)
+        snoozedUntil = try container.sdkDecodeIfPresent(.snoozedUntil)
+        open = try container.sdkDecodeIfPresent(.open)
+        state = try container.sdkDecodeIfPresent(.state)
+        read = try container.sdkDecodeIfPresent(.read)
+        priority = try container.sdkDecodeIfPresent(.priority)
+        adminAssigneeId = try container.sdkDecodeIfPresent(.adminAssigneeId)
+        teamAssigneeId = try container.sdkDecodeIfPresent(.teamAssigneeId)
+        company = try container.sdkDecodeIfPresent(.company)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        conversationRating = try container.sdkDecodeIfPresent(.conversationRating)
+        source = try container.sdkDecodeIfPresent(.source)
+        contacts = try container.sdkDecodeIfPresent(.contacts)
+        teammates = try container.sdkDecodeIfPresent(.teammates)
+        customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
+        firstContactReply = try container.sdkDecodeIfPresent(.firstContactReply)
+        slaApplied = try container.sdkDecodeIfPresent(.slaApplied)
+        statistics = try container.sdkDecodeIfPresent(.statistics)
+        linkedObjects = try container.sdkDecodeIfPresent(.linkedObjects)
+        aiAgentParticipated = try container.sdkDecodeIfPresent(.aiAgentParticipated)
+        aiAgent = try container.sdkDecodeIfPresent(.aiAgent)
+        salesAgentParticipated = try container.sdkDecodeIfPresent(.salesAgentParticipated)
+        salesAgent = try container.sdkDecodeIfPresent(.salesAgent)
+        channel = try container.sdkDecodeIfPresent(.channel)
+        externalReferences = try container.sdkDecodeIfPresent(.externalReferences)
+        monitorEvaluations = try container.sdkDecodeIfPresent(.monitorEvaluations)
+        scorecards = try container.sdkDecodeIfPresent(.scorecards)
     }
 }
 
-extension ConversationListItem {
-    public init(type: String? = nil, id: String? = nil, title: String? = nil, createdAt: Int? = nil, updatedAt: Int? = nil, waitingSince: Int? = nil, snoozedUntil: Int? = nil, open: Bool? = nil, state: ConversationListItemState? = nil, read: Bool? = nil, priority: ConversationListItemPriority? = nil, adminAssigneeId: Int? = nil, teamAssigneeId: Int? = nil, company: Company? = nil, tags: Tags? = nil, conversationRating: ConversationRating? = nil, source: ConversationSource? = nil, contacts: ConversationContacts? = nil, teammates: ConversationTeammates? = nil, customAttributes: CustomAttributes? = nil, firstContactReply: ConversationFirstContactReply? = nil, slaApplied: SlaApplied? = nil, statistics: ConversationStatistics? = nil, linkedObjects: LinkedObjectList? = nil, aiAgentParticipated: Bool? = nil, aiAgent: AiAgent? = nil, salesAgentParticipated: Bool? = nil, salesAgent: SalesAgent? = nil, channel: ConversationChannel? = nil, externalReferences: [ConversationExternalReference]? = nil, monitorEvaluations: [ConversationMonitorEvaluation]? = nil, scorecards: [ConversationScorecard]? = nil) {
+public extension ConversationListItem {
+    init(
+        type: String? = nil,
+        id: String? = nil,
+        title: String? = nil,
+        createdAt: Int? = nil,
+        updatedAt: Int? = nil,
+        waitingSince: Int? = nil,
+        snoozedUntil: Int? = nil,
+        open: Bool? = nil,
+        state: ConversationListItemState? = nil,
+        read: Bool? = nil,
+        priority: ConversationListItemPriority? = nil,
+        adminAssigneeId: Int? = nil,
+        teamAssigneeId: Int? = nil,
+        company: Company? = nil,
+        tags: Tags? = nil,
+        conversationRating: ConversationRating? = nil,
+        source: ConversationSource? = nil,
+        contacts: ConversationContacts? = nil,
+        teammates: ConversationTeammates? = nil,
+        customAttributes: CustomAttributes? = nil,
+        firstContactReply: ConversationFirstContactReply? = nil,
+        slaApplied: SlaApplied? = nil,
+        statistics: ConversationStatistics? = nil,
+        linkedObjects: LinkedObjectList? = nil,
+        aiAgentParticipated: Bool? = nil,
+        aiAgent: AiAgent? = nil,
+        salesAgentParticipated: Bool? = nil,
+        salesAgent: SalesAgent? = nil,
+        channel: ConversationChannel? = nil,
+        externalReferences: [ConversationExternalReference]? = nil,
+        monitorEvaluations: [ConversationMonitorEvaluation]? = nil,
+        scorecards: [ConversationScorecard]? = nil
+    ) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.title, self.createdAt) = (title, createdAt)
@@ -232,20 +265,20 @@ public struct ConversationScorecardSubmittedBy: Codable {
     }
 
     init() {
-        (self.type, self.adminId) = (nil, nil)
+        (type, adminId) = (nil, nil)
     }
 }
 
-extension ConversationScorecardSubmittedBy {
-    public init(from decoder: Decoder) throws {
+public extension ConversationScorecardSubmittedBy {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.adminId = try container.sdkDecodeIfPresent(.adminId)
+        type = try container.sdkDecodeIfPresent(.type)
+        adminId = try container.sdkDecodeIfPresent(.adminId)
     }
 }
 
-extension ConversationScorecardSubmittedBy {
-    public init(type: ConversationScorecardSubmittedByType? = nil, adminId: String? = nil) {
+public extension ConversationScorecardSubmittedBy {
+    init(type: ConversationScorecardSubmittedByType? = nil, adminId: String? = nil) {
         self.init()
         (self.type, self.adminId) = (type, adminId)
     }
@@ -397,57 +430,91 @@ public struct Conversation: Codable {
     }
 
     init() {
-        (self.type, self.id, self.title, self.createdAt, self.updatedAt) = (nil, nil, nil, nil, nil)
-        (self.waitingSince, self.snoozedUntil, self.open, self.state, self.read) = (nil, nil, nil, nil, nil)
-        (self.priority, self.adminAssigneeId, self.teamAssigneeId, self.company, self.tags) = (nil, nil, nil, nil, nil)
-        (self.conversationRating, self.source, self.contacts, self.teammates, self.customAttributes) = (nil, nil, nil, nil, nil)
-        (self.firstContactReply, self.slaApplied, self.statistics, self.conversationParts, self.linkedObjects) = (nil, nil, nil, nil, nil)
-        (self.aiAgentParticipated, self.aiAgent, self.salesAgentParticipated, self.salesAgent, self.channel) = (nil, nil, nil, nil, nil)
-        (self.externalReferences, self.monitorEvaluations, self.scorecards) = (nil, nil, nil)
+        (type, id, title, createdAt, updatedAt) = (nil, nil, nil, nil, nil)
+        (waitingSince, snoozedUntil, open, state, read) = (nil, nil, nil, nil, nil)
+        (priority, adminAssigneeId, teamAssigneeId, company, tags) = (nil, nil, nil, nil, nil)
+        (conversationRating, source, contacts, teammates, customAttributes) = (nil, nil, nil, nil, nil)
+        (firstContactReply, slaApplied, statistics, conversationParts, linkedObjects) = (nil, nil, nil, nil, nil)
+        (aiAgentParticipated, aiAgent, salesAgentParticipated, salesAgent, channel) = (nil, nil, nil, nil, nil)
+        (externalReferences, monitorEvaluations, scorecards) = (nil, nil, nil)
     }
 }
 
-extension Conversation {
-    public init(from decoder: Decoder) throws {
+public extension Conversation {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.title = try container.sdkDecodeIfPresent(.title)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.waitingSince = try container.sdkDecodeIfPresent(.waitingSince)
-        self.snoozedUntil = try container.sdkDecodeIfPresent(.snoozedUntil)
-        self.open = try container.sdkDecodeIfPresent(.open)
-        self.state = try container.sdkDecodeIfPresent(.state)
-        self.read = try container.sdkDecodeIfPresent(.read)
-        self.priority = try container.sdkDecodeIfPresent(.priority)
-        self.adminAssigneeId = try container.sdkDecodeIfPresent(.adminAssigneeId)
-        self.teamAssigneeId = try container.sdkDecodeIfPresent(.teamAssigneeId)
-        self.company = try container.sdkDecodeIfPresent(.company)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.conversationRating = try container.sdkDecodeIfPresent(.conversationRating)
-        self.source = try container.sdkDecodeIfPresent(.source)
-        self.contacts = try container.sdkDecodeIfPresent(.contacts)
-        self.teammates = try container.sdkDecodeIfPresent(.teammates)
-        self.customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
-        self.firstContactReply = try container.sdkDecodeIfPresent(.firstContactReply)
-        self.slaApplied = try container.sdkDecodeIfPresent(.slaApplied)
-        self.statistics = try container.sdkDecodeIfPresent(.statistics)
-        self.conversationParts = try container.sdkDecodeIfPresent(.conversationParts)
-        self.linkedObjects = try container.sdkDecodeIfPresent(.linkedObjects)
-        self.aiAgentParticipated = try container.sdkDecodeIfPresent(.aiAgentParticipated)
-        self.aiAgent = try container.sdkDecodeIfPresent(.aiAgent)
-        self.salesAgentParticipated = try container.sdkDecodeIfPresent(.salesAgentParticipated)
-        self.salesAgent = try container.sdkDecodeIfPresent(.salesAgent)
-        self.channel = try container.sdkDecodeIfPresent(.channel)
-        self.externalReferences = try container.sdkDecodeIfPresent(.externalReferences)
-        self.monitorEvaluations = try container.sdkDecodeIfPresent(.monitorEvaluations)
-        self.scorecards = try container.sdkDecodeIfPresent(.scorecards)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        title = try container.sdkDecodeIfPresent(.title)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        waitingSince = try container.sdkDecodeIfPresent(.waitingSince)
+        snoozedUntil = try container.sdkDecodeIfPresent(.snoozedUntil)
+        open = try container.sdkDecodeIfPresent(.open)
+        state = try container.sdkDecodeIfPresent(.state)
+        read = try container.sdkDecodeIfPresent(.read)
+        priority = try container.sdkDecodeIfPresent(.priority)
+        adminAssigneeId = try container.sdkDecodeIfPresent(.adminAssigneeId)
+        teamAssigneeId = try container.sdkDecodeIfPresent(.teamAssigneeId)
+        company = try container.sdkDecodeIfPresent(.company)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        conversationRating = try container.sdkDecodeIfPresent(.conversationRating)
+        source = try container.sdkDecodeIfPresent(.source)
+        contacts = try container.sdkDecodeIfPresent(.contacts)
+        teammates = try container.sdkDecodeIfPresent(.teammates)
+        customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
+        firstContactReply = try container.sdkDecodeIfPresent(.firstContactReply)
+        slaApplied = try container.sdkDecodeIfPresent(.slaApplied)
+        statistics = try container.sdkDecodeIfPresent(.statistics)
+        conversationParts = try container.sdkDecodeIfPresent(.conversationParts)
+        linkedObjects = try container.sdkDecodeIfPresent(.linkedObjects)
+        aiAgentParticipated = try container.sdkDecodeIfPresent(.aiAgentParticipated)
+        aiAgent = try container.sdkDecodeIfPresent(.aiAgent)
+        salesAgentParticipated = try container.sdkDecodeIfPresent(.salesAgentParticipated)
+        salesAgent = try container.sdkDecodeIfPresent(.salesAgent)
+        channel = try container.sdkDecodeIfPresent(.channel)
+        externalReferences = try container.sdkDecodeIfPresent(.externalReferences)
+        monitorEvaluations = try container.sdkDecodeIfPresent(.monitorEvaluations)
+        scorecards = try container.sdkDecodeIfPresent(.scorecards)
     }
 }
 
-extension Conversation {
-    public init(type: String? = nil, id: String? = nil, title: String? = nil, createdAt: Int? = nil, updatedAt: Int? = nil, waitingSince: Int? = nil, snoozedUntil: Int? = nil, open: Bool? = nil, state: ConversationState? = nil, read: Bool? = nil, priority: ConversationPriority? = nil, adminAssigneeId: Int? = nil, teamAssigneeId: Int? = nil, company: Company? = nil, tags: Tags? = nil, conversationRating: ConversationRating? = nil, source: ConversationSource? = nil, contacts: ConversationContacts? = nil, teammates: ConversationTeammates? = nil, customAttributes: CustomAttributes? = nil, firstContactReply: ConversationFirstContactReply? = nil, slaApplied: SlaApplied? = nil, statistics: ConversationStatistics? = nil, conversationParts: ConversationParts? = nil, linkedObjects: LinkedObjectList? = nil, aiAgentParticipated: Bool? = nil, aiAgent: AiAgent? = nil, salesAgentParticipated: Bool? = nil, salesAgent: SalesAgent? = nil, channel: ConversationChannel? = nil, externalReferences: [ConversationExternalReference]? = nil, monitorEvaluations: [ConversationMonitorEvaluation]? = nil, scorecards: [ConversationScorecard]? = nil) {
+public extension Conversation {
+    init(
+        type: String? = nil,
+        id: String? = nil,
+        title: String? = nil,
+        createdAt: Int? = nil,
+        updatedAt: Int? = nil,
+        waitingSince: Int? = nil,
+        snoozedUntil: Int? = nil,
+        open: Bool? = nil,
+        state: ConversationState? = nil,
+        read: Bool? = nil,
+        priority: ConversationPriority? = nil,
+        adminAssigneeId: Int? = nil,
+        teamAssigneeId: Int? = nil,
+        company: Company? = nil,
+        tags: Tags? = nil,
+        conversationRating: ConversationRating? = nil,
+        source: ConversationSource? = nil,
+        contacts: ConversationContacts? = nil,
+        teammates: ConversationTeammates? = nil,
+        customAttributes: CustomAttributes? = nil,
+        firstContactReply: ConversationFirstContactReply? = nil,
+        slaApplied: SlaApplied? = nil,
+        statistics: ConversationStatistics? = nil,
+        conversationParts: ConversationParts? = nil,
+        linkedObjects: LinkedObjectList? = nil,
+        aiAgentParticipated: Bool? = nil,
+        aiAgent: AiAgent? = nil,
+        salesAgentParticipated: Bool? = nil,
+        salesAgent: SalesAgent? = nil,
+        channel: ConversationChannel? = nil,
+        externalReferences: [ConversationExternalReference]? = nil,
+        monitorEvaluations: [ConversationMonitorEvaluation]? = nil,
+        scorecards: [ConversationScorecard]? = nil
+    ) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.title, self.createdAt) = (title, createdAt)
@@ -473,13 +540,16 @@ extension Conversation {
 public struct ConversationScorecardRevisedByType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let ai = ConversationScorecardRevisedByType(rawValue: "ai")
     public static let admin = ConversationScorecardRevisedByType(rawValue: "admin")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// TaggedModelsSubscriptionTypes domain models
+/// TaggedModelsSubscriptionTypes domain models
 /// A subscription type lets customers easily opt out of non-essential communications without missing what's
 /// important to them.
 public struct SubscriptionType: Codable {
@@ -38,26 +38,34 @@ public struct SubscriptionType: Codable {
     }
 
     init() {
-        (self.type, self.id, self.state, self.defaultTranslation, self.translations) = (nil, nil, nil, nil, nil)
-        (self.consentType, self.contentTypes) = (nil, nil)
+        (type, id, state, defaultTranslation, translations) = (nil, nil, nil, nil, nil)
+        (consentType, contentTypes) = (nil, nil)
     }
 }
 
-extension SubscriptionType {
-    public init(from decoder: Decoder) throws {
+public extension SubscriptionType {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.state = try container.sdkDecodeIfPresent(.state)
-        self.defaultTranslation = try container.sdkDecodeIfPresent(.defaultTranslation)
-        self.translations = try container.sdkDecodeIfPresent(.translations)
-        self.consentType = try container.sdkDecodeIfPresent(.consentType)
-        self.contentTypes = try container.sdkDecodeIfPresent(.contentTypes)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        state = try container.sdkDecodeIfPresent(.state)
+        defaultTranslation = try container.sdkDecodeIfPresent(.defaultTranslation)
+        translations = try container.sdkDecodeIfPresent(.translations)
+        consentType = try container.sdkDecodeIfPresent(.consentType)
+        contentTypes = try container.sdkDecodeIfPresent(.contentTypes)
     }
 }
 
-extension SubscriptionType {
-    public init(type: String? = nil, id: String? = nil, state: SubscriptionTypeState? = nil, defaultTranslation: Translation? = nil, translations: [Translation]? = nil, consentType: SubscriptionTypeConsentType? = nil, contentTypes: [SubscriptionTypeContentTypesItem]? = nil) {
+public extension SubscriptionType {
+    init(
+        type: String? = nil,
+        id: String? = nil,
+        state: SubscriptionTypeState? = nil,
+        defaultTranslation: Translation? = nil,
+        translations: [Translation]? = nil,
+        consentType: SubscriptionTypeConsentType? = nil,
+        contentTypes: [SubscriptionTypeContentTypesItem]? = nil
+    ) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.state, self.defaultTranslation) = (state, defaultTranslation)
@@ -70,14 +78,17 @@ extension SubscriptionType {
 public struct SubscriptionTypeState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let live = SubscriptionTypeState(rawValue: "live")
     public static let draft = SubscriptionTypeState(rawValue: "draft")
     public static let archived = SubscriptionTypeState(rawValue: "archived")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -90,13 +101,16 @@ public struct SubscriptionTypeState: RawRepresentable, Hashable, Codable, Sendab
 public struct SubscriptionTypeContentTypesItem: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let email = SubscriptionTypeContentTypesItem(rawValue: "email")
     public static let smsMessage = SubscriptionTypeContentTypesItem(rawValue: "sms_message")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -109,13 +123,16 @@ public struct SubscriptionTypeContentTypesItem: RawRepresentable, Hashable, Coda
 public struct SubscriptionTypeConsentType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let optOut = SubscriptionTypeConsentType(rawValue: "opt_out")
     public static let optIn = SubscriptionTypeConsentType(rawValue: "opt_in")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

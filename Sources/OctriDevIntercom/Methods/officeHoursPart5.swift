@@ -6,10 +6,13 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension OfficeHoursMethods {
-    /// Creates an exception that overrides the regular hours for a specific date on an office hours schedule. Supply `exception_date` and choose `closed` or `custom_hours`; provide `time_intervals` for custom hours and omit it for a closed day. Set `recurring_annually` to repeat the exception on the same date each year.
+public extension OfficeHoursMethods {
+    /// Creates an exception that overrides the regular hours for a specific date on an office hours schedule. Supply
+    /// `exception_date` and choose `closed` or `custom_hours`; provide `time_intervals` for custom hours and omit it
+    /// for a closed day. Set `recurring_annually` to repeat the exception on the same date each year.
     ///
-    /// You can create an exception for an office hours schedule. Use `closed` to mark the day closed (omit `time_intervals`) or `custom_hours` to supply replacement intervals.
+    /// You can create an exception for an office hours schedule. Use `closed` to mark the day closed (omit
+    /// `time_intervals`) or `custom_hours` to supply replacement intervals.
     ///
     /// - Parameters:
     /// - officeHoursScheduleId: The unique identifier for the office hours
@@ -21,13 +24,43 @@ extension OfficeHoursMethods {
     ///   `custom_hours`; omit for `closed`.
     /// - recurringAnnually: Whether the exception repeats every year on the same
     ///   date.
-    public static func createOfficeHoursException(config: ClientConfig, officeHoursScheduleId: String, exceptionDate: String, exceptionType: CreateOfficeHoursExceptionRequestRequestExceptionType, intercomVersion: IntercomVersion? = nil, name: String? = nil, timeIntervals: SdkOptional<[OfficeHoursTimeIntervalRequest]>? = nil, recurringAnnually: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> OfficeHoursException {
+    static func createOfficeHoursException(
+        config: ClientConfig,
+        officeHoursScheduleId: String,
+        exceptionDate: String,
+        exceptionType: CreateOfficeHoursExceptionRequestRequestExceptionType,
+        intercomVersion: IntercomVersion? = nil,
+        name: String? = nil,
+        timeIntervals: SdkOptional<[OfficeHoursTimeIntervalRequest]>? = nil,
+        recurringAnnually: Bool? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> OfficeHoursException {
         try sdkValidateDate("exception_date", exceptionDate)
 
-        let requestBody = CreateOfficeHoursExceptionRequestBody(exceptionDate: exceptionDate, exceptionType: exceptionType, name: name, timeIntervals: timeIntervals, recurringAnnually: recurringAnnually)
+        let requestBody = CreateOfficeHoursExceptionRequestBody(
+            exceptionDate: exceptionDate,
+            exceptionType: exceptionType,
+            name: name,
+            timeIntervals: timeIntervals,
+            recurringAnnually: recurringAnnually
+        )
 
-        return try (await sdkRequest("POST", ["/office_hours_schedules/", sdkEncodePathSegment(sdkWireString(officeHoursScheduleId)), "/office_hours_exceptions"].joined(), config: config, body: requestBody, decoder: .json, operationId: "createOfficeHoursException", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "422": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            [
+                "/office_hours_schedules/",
+                sdkEncodePathSegment(sdkWireString(officeHoursScheduleId)),
+                "/office_hours_exceptions",
+            ].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "createOfficeHoursException",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self, "422": Error2.self]
+        )).data
     }
 }

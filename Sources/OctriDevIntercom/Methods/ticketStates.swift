@@ -7,12 +7,26 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum TicketStatesMethods {
-    /// Lists the ticket states associated with ticket types in the workspace. Use the returned state details to see their labels, categories, and ticket type associations.
+    /// Lists the ticket states associated with ticket types in the workspace. Use the returned state details to see
+    /// their labels, categories, and ticket type associations.
     ///
     /// You can get a list of all ticket states for a workspace.
-    public static func listTicketStates(config: ClientConfig, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> TicketStateList {
-        return try (await sdkRequest("GET", "/ticket_states", config: config, decoder: .json, operationId: "listTicketStates", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self])).data
+    public static func listTicketStates(
+        config: ClientConfig,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> TicketStateList {
+        try await (sdkRequest(
+            "GET",
+            "/ticket_states",
+            config: config,
+            decoder: .json,
+            operationId: "listTicketStates",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self]
+        )).data
     }
 }
