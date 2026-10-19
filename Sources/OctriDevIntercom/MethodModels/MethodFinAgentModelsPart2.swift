@@ -7,9 +7,9 @@ import Foundation
     import FoundationNetworking
 #endif
 
-// Canonical finAgent operation model declarations
-extension SubmitFinCsatResponseXc47b0270 {
-    public init(errors: [String: String]? = nil) {
+/// Canonical finAgent operation model declarations
+public extension SubmitFinCsatResponseXc47b0270 {
+    init(errors: [String: String]? = nil) {
         self.init()
         self.errors = errors
     }

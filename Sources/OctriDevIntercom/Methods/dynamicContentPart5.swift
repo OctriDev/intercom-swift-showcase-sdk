@@ -6,10 +6,13 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DynamicContentMethods {
-    /// Updates an existing reusable dynamic content item. Provide only the fields you want to change; if you send `variations`, that array replaces the full set and any omitted existing variations are deleted. The authenticated user needs the `read_write_dynamic_content` scope.
+public extension DynamicContentMethods {
+    /// Updates an existing reusable dynamic content item. Provide only the fields you want to change; if you send
+    /// `variations`, that array replaces the full set and any omitted existing variations are deleted. The
+    /// authenticated user needs the `read_write_dynamic_content` scope.
     ///
-    /// You can update existing dynamic content. Only the fields you provide are changed. Requires the `read_write_dynamic_content` scope.
+    /// You can update existing dynamic content. Only the fields you provide are changed. Requires the
+    /// `read_write_dynamic_content` scope.
     ///
     /// - Parameters:
     /// - id: The unique identifier for the dynamic content.
@@ -20,19 +23,41 @@ extension DynamicContentMethods {
     ///   variation for this locale that applies to all brands.
     /// - variations: The full set of variations. Existing variations that aren't
     ///   included are deleted.
-    public static func updateDynamicContent(config: ClientConfig, id: String, intercomVersion: IntercomVersion? = nil, name: String? = nil, defaultLocale: String? = nil, variations: [DynamicContentVariationRequest]? = nil, requestOptions: RequestOptions? = nil) async throws -> DynamicContent {
-        if let name = name {
+    static func updateDynamicContent(
+        config: ClientConfig,
+        id: String,
+        intercomVersion: IntercomVersion? = nil,
+        name: String? = nil,
+        defaultLocale: String? = nil,
+        variations: [DynamicContentVariationRequest]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DynamicContent {
+        if let name {
             try validateLength("name", name, max: 255)
         }
 
-        if let variations = variations {
+        if let variations {
             try validateItems("variations", variations, min: 1)
         }
 
-        let requestBody = UpdateDynamicContentRequestBody(name: name, defaultLocale: defaultLocale, variations: variations)
+        let requestBody = UpdateDynamicContentRequestBody(
+            name: name,
+            defaultLocale: defaultLocale,
+            variations: variations
+        )
 
-        return try (await sdkRequest("PUT", ["/dynamic_contents/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, body: requestBody, decoder: .json, operationId: "updateDynamicContent", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self, "422": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            ["/dynamic_contents/", sdkEncodePathSegment(sdkWireString(id))].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "updateDynamicContent",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self, "422": Error2.self]
+        )).data
     }
 }

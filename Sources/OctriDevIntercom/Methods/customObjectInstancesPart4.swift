@@ -6,23 +6,42 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension CustomObjectInstancesMethods {
-    /// Deletes a custom object instance using its external ID. Supply the custom object type identifier and the instance's `external_id` to identify the instance to delete.
+public extension CustomObjectInstancesMethods {
+    /// Deletes a custom object instance using its external ID. Supply the custom object type identifier and the
+    /// instance's `external_id` to identify the instance to delete.
     ///
     /// Delete a single Custom Object instance by external_id.
     ///
     /// - Parameters:
     /// - customObjectTypeIdentifier: The unique identifier of the custom object
     ///   type that defines the structure of the custom object instance.
-    public static func deleteCustomObjectInstancesById(config: ClientConfig, customObjectTypeIdentifier: String, externalId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> CustomObjectInstanceDeleted {
-        return try (await sdkRequest("DELETE", ["/custom_object_instances/", sdkEncodePathSegment(sdkWireString(customObjectTypeIdentifier))].joined(), config: config, query: [
-            SdkQueryParameter("external_id", value: externalId),
-        ], decoder: .json, operationId: "deleteCustomObjectInstancesById", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
+    static func deleteCustomObjectInstancesById(
+        config: ClientConfig,
+        customObjectTypeIdentifier: String,
+        externalId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CustomObjectInstanceDeleted {
+        try await (sdkRequest(
+            "DELETE",
+            ["/custom_object_instances/", sdkEncodePathSegment(sdkWireString(customObjectTypeIdentifier))].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("external_id", value: externalId),
+            ],
+            decoder: .json,
+            operationId: "deleteCustomObjectInstancesById",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).data
     }
 
-    /// Retrieves a custom object instance by its Intercom-defined ID or external ID. Use `custom_object_type_identifier` to specify the instance type and `custom_object_instance_id` to identify the instance.
+    /// Retrieves a custom object instance by its Intercom-defined ID or external ID. Use
+    /// `custom_object_type_identifier` to specify the instance type and `custom_object_instance_id` to identify the
+    /// instance.
     ///
     /// Fetch a Custom Object Instance by id.
     ///
@@ -31,9 +50,29 @@ extension CustomObjectInstancesMethods {
     ///   type that defines the structure of the custom object instance.
     /// - customObjectInstanceId: The id or external_id of the custom object
     ///   instance
-    public static func getCustomObjectInstancesById(config: ClientConfig, customObjectTypeIdentifier: String, customObjectInstanceId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> CustomObjectInstance {
-        return try (await sdkRequest("GET", ["/custom_object_instances/", sdkEncodePathSegment(sdkWireString(customObjectTypeIdentifier)), "/", sdkEncodePathSegment(sdkWireString(customObjectInstanceId))].joined(), config: config, decoder: .json, operationId: "getCustomObjectInstancesById", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
+    static func getCustomObjectInstancesById(
+        config: ClientConfig,
+        customObjectTypeIdentifier: String,
+        customObjectInstanceId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CustomObjectInstance {
+        try await (sdkRequest(
+            "GET",
+            [
+                "/custom_object_instances/",
+                sdkEncodePathSegment(sdkWireString(customObjectTypeIdentifier)),
+                "/",
+                sdkEncodePathSegment(sdkWireString(customObjectInstanceId)),
+            ].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "getCustomObjectInstancesById",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).data
     }
 }

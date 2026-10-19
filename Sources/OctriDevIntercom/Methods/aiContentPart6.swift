@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AiContentMethods {
-    public struct CreateExternalPageOptions: Codable {
+public extension AiContentMethods {
+    struct CreateExternalPageOptions: Codable {
         public var title: String
         public var html: String
         public var locale: CreateExternalPageRequestLocale
@@ -19,7 +19,13 @@ extension AiContentMethods {
         public var aiCopilotAvailability: Bool?
         public var audienceIds: SdkOptional<[Int]>?
 
-        public init(title: String, html: String, locale: CreateExternalPageRequestLocale, sourceId: Int, externalId: String) {
+        public init(
+            title: String,
+            html: String,
+            locale: CreateExternalPageRequestLocale,
+            sourceId: Int,
+            externalId: String
+        ) {
             self.title = title
             self.html = html
             self.locale = locale
@@ -28,9 +34,11 @@ extension AiContentMethods {
         }
     }
 
-    /// Creates an external page in your Fin Content Library, or updates the existing page with the same source and external identifiers. Provide the page title, HTML body, locale, source ID, and source-assigned external ID.
+    /// Creates an external page in your Fin Content Library, or updates the existing page with the same source and
+    /// external identifiers. Provide the page title, HTML body, locale, source ID, and source-assigned external ID.
     ///
-    /// You can create a new external page by sending a POST request to this endpoint. If an external page already exists with the specified source_id and external_id, it will be updated instead.
+    /// You can create a new external page by sending a POST request to this endpoint. If an external page already
+    /// exists with the specified source_id and external_id, it will be updated instead.
     ///
     /// - Parameters:
     /// - title: The title of the external page.
@@ -59,11 +67,25 @@ extension AiContentMethods {
     ///   inherited ones. If an external page already exists with the specified
     ///   source_id and external_id, omitting the field leaves its audience
     ///   memberships unchanged. Unknown audience IDs return a `404` error.
-    public static func createExternalPage(config: ClientConfig, options: CreateExternalPageOptions, requestOptions: RequestOptions? = nil) async throws -> ExternalPage {
+    static func createExternalPage(
+        config: ClientConfig,
+        options: CreateExternalPageOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ExternalPage {
         let requestBody = CreateExternalPageRequestBody(options: options)
 
-        return try (await sdkRequest("POST", "/ai/external_pages", config: config, body: requestBody, decoder: .json, operationId: "createExternalPage", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/ai/external_pages",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "createExternalPage",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self]
+        )).data
     }
 }

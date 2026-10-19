@@ -3,7 +3,7 @@
 
 import Foundation
 
-// TaggedModelsConversationsAttributes domain models
+/// TaggedModelsConversationsAttributes domain models
 public indirect enum ConversationAttribute {
     case conversationAttributeStringType(ConversationAttributeStringType)
     case conversationAttributeIntegerType(ConversationAttributeIntegerType)
@@ -18,7 +18,6 @@ public indirect enum ConversationAttribute {
 }
 
 extension ConversationAttribute: Codable {
-
     private enum CodingKeys: String, CodingKey {
         case discriminator = "data_type"
     }
@@ -26,20 +25,29 @@ extension ConversationAttribute: Codable {
     public init(from decoder: Decoder) throws {
         if let tagged = try? decoder.container(keyedBy: CodingKeys.self),
            let discriminator = try? tagged.decode(String.self, forKey: .discriminator) {
-            if let value = try Self.decodeGroup1(discriminator, from: decoder) { self = value; return }
+            if let value = try Self.decodeGroup1(discriminator, from: decoder) {
+                self = value; return
+            }
         }
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeUntaggedGroup1(from: container) { self = value; return }
+        if let value = Self.decodeUntaggedGroup1(from: container) {
+            self = value; return
+        }
         if let tagged = try? decoder.container(keyedBy: CodingKeys.self),
            let discriminator = try? tagged.decode(String.self, forKey: .discriminator) {
             self = try .unknown(tag: discriminator, raw: JSONValue(from: decoder))
             return
         }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for ConversationAttribute")
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for ConversationAttribute"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
         if case let .unknown(_, raw) = self {
             var container = encoder.singleValueContainer()
             try container.encode(raw)
@@ -50,33 +58,56 @@ extension ConversationAttribute: Codable {
 extension ConversationAttribute {
     static func decodeGroup1(_ discriminator: String, from decoder: Decoder) throws -> Self? {
         switch discriminator {
-        case "string": return .conversationAttributeStringType(try ConversationAttributeStringType(from: decoder))
-        case "integer": return .conversationAttributeIntegerType(try ConversationAttributeIntegerType(from: decoder))
-        case "list": return .conversationAttributeListType(try ConversationAttributeListType(from: decoder))
-        case "decimal": return .conversationAttributeDecimalType(try ConversationAttributeDecimalType(from: decoder))
-        case "boolean": return .conversationAttributeBooleanType(try ConversationAttributeBooleanType(from: decoder))
-        case "datetime": return .conversationAttributeDatetimeType(try ConversationAttributeDatetimeType(from: decoder))
-        case "relationship": return .conversationAttributeRelationshipType(try ConversationAttributeRelationshipType(from: decoder))
-        case "files": return .conversationAttributeFilesType(try ConversationAttributeFilesType(from: decoder))
-        default: return nil
+        case "string": try .conversationAttributeStringType(ConversationAttributeStringType(from: decoder))
+        case "integer": try .conversationAttributeIntegerType(ConversationAttributeIntegerType(from: decoder))
+        case "list": try .conversationAttributeListType(ConversationAttributeListType(from: decoder))
+        case "decimal": try .conversationAttributeDecimalType(ConversationAttributeDecimalType(from: decoder))
+        case "boolean": try .conversationAttributeBooleanType(ConversationAttributeBooleanType(from: decoder))
+        case "datetime": try .conversationAttributeDatetimeType(ConversationAttributeDatetimeType(from: decoder))
+        case "relationship": try .conversationAttributeRelationshipType(
+                ConversationAttributeRelationshipType(from: decoder)
+            )
+        case "files": try .conversationAttributeFilesType(ConversationAttributeFilesType(from: decoder))
+        default: nil
         }
     }
 }
 
 extension ConversationAttribute {
     static func decodeUntaggedGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(ConversationAttributeStringType.self) { return .conversationAttributeStringType(value) }
-        if let value = try? container.decode(ConversationAttributeIntegerType.self) { return .conversationAttributeIntegerType(value) }
-        if let value = try? container.decode(ConversationAttributeListType.self) { return .conversationAttributeListType(value) }
-        if let value = try? container.decode(ConversationAttributeDecimalType.self) { return .conversationAttributeDecimalType(value) }
-        if let value = try? container.decode(ConversationAttributeBooleanType.self) { return .conversationAttributeBooleanType(value) }
-        if let value = try? container.decode(ConversationAttributeDatetimeType.self) { return .conversationAttributeDatetimeType(value) }
+        if let value = try? container
+            .decode(ConversationAttributeStringType.self) {
+            return .conversationAttributeStringType(value)
+        }
+        if let value = try? container
+            .decode(ConversationAttributeIntegerType.self) {
+            return .conversationAttributeIntegerType(value)
+        }
+        if let value = try? container
+            .decode(ConversationAttributeListType.self) {
+            return .conversationAttributeListType(value)
+        }
+        if let value = try? container
+            .decode(ConversationAttributeDecimalType.self) {
+            return .conversationAttributeDecimalType(value)
+        }
+        if let value = try? container
+            .decode(ConversationAttributeBooleanType.self) {
+            return .conversationAttributeBooleanType(value)
+        }
+        if let value = try? container
+            .decode(ConversationAttributeDatetimeType.self) {
+            return .conversationAttributeDatetimeType(value)
+        }
         if let value = try? container.decode(
             ConversationAttributeRelationshipType.self
         ) {
-            return             .conversationAttributeRelationshipType(value)
+            return .conversationAttributeRelationshipType(value)
         }
-        if let value = try? container.decode(ConversationAttributeFilesType.self) { return .conversationAttributeFilesType(value) }
+        if let value = try? container
+            .decode(ConversationAttributeFilesType.self) {
+            return .conversationAttributeFilesType(value)
+        }
         return nil
     }
 }

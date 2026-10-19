@@ -3,25 +3,33 @@
 
 import Foundation
 
-// News domain models
+/// News domain models
 public indirect enum PaginatedResponseDataItem {
     case newsItem(NewsItem)
     case newsfeed(Newsfeed)
 }
 
 extension PaginatedResponseDataItem: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
+            if let value = Self.decodeLossless1(from: container, raw) {
+                self = value; return
+            }
         }
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for PaginatedResponseDataItem")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for PaginatedResponseDataItem"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
@@ -39,8 +47,12 @@ extension PaginatedResponseDataItem {
 
 extension PaginatedResponseDataItem {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(NewsItem.self) { return .newsItem(value) }
-        if let value = try? container.decode(Newsfeed.self) { return .newsfeed(value) }
+        if let value = try? container.decode(NewsItem.self) {
+            return .newsItem(value)
+        }
+        if let value = try? container.decode(Newsfeed.self) {
+            return .newsfeed(value)
+        }
         return nil
     }
 }
@@ -94,31 +106,50 @@ public struct NewsItemRequest: Codable {
         case newsfeedAssignments = "newsfeed_assignments"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension NewsItemRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.title) else {
-            throw SdkValidationError(field: "title", code: "required", message: "Validation failed for 'title': value is required")
-        }
-        guard container.contains(.senderId) else {
-            throw SdkValidationError(field: "sender_id", code: "required", message: "Validation failed for 'sender_id': value is required")
-        }
-        self.title = try container.sdkDecodeRequired(.title)
-        self.senderId = try container.sdkDecodeRequired(.senderId)
-        self.body = try container.sdkDecodeIfPresent(.body)
-        self.state = try container.sdkDecodeIfPresent(.state)
-        self.deliverSilently = try container.sdkDecodeIfPresent(.deliverSilently)
-        self.labels = try container.sdkDecodeIfPresent(.labels)
-        self.reactions = try container.sdkDecodeIfPresent(.reactions)
-        self.newsfeedAssignments = try container.sdkDecodeIfPresent(.newsfeedAssignments)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension NewsItemRequest {
-    public init(title: String, senderId: Int, body: String? = nil, state: NewsItemRequestState? = nil, deliverSilently: Bool? = nil, labels: [String]? = nil, reactions: [String?]? = nil, newsfeedAssignments: [NewsfeedAssignment]? = nil) {
+public extension NewsItemRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.title) else {
+            throw SdkValidationError(
+                field: "title",
+                code: "required",
+                message: "Validation failed for 'title': value is required"
+            )
+        }
+        guard container.contains(.senderId) else {
+            throw SdkValidationError(
+                field: "sender_id",
+                code: "required",
+                message: "Validation failed for 'sender_id': value is required"
+            )
+        }
+        title = try container.sdkDecodeRequired(.title)
+        senderId = try container.sdkDecodeRequired(.senderId)
+        body = try container.sdkDecodeIfPresent(.body)
+        state = try container.sdkDecodeIfPresent(.state)
+        deliverSilently = try container.sdkDecodeIfPresent(.deliverSilently)
+        labels = try container.sdkDecodeIfPresent(.labels)
+        reactions = try container.sdkDecodeIfPresent(.reactions)
+        newsfeedAssignments = try container.sdkDecodeIfPresent(.newsfeedAssignments)
+    }
+}
+
+public extension NewsItemRequest {
+    init(
+        title: String,
+        senderId: Int,
+        body: String? = nil,
+        state: NewsItemRequestState? = nil,
+        deliverSilently: Bool? = nil,
+        labels: [String]? = nil,
+        reactions: [String?]? = nil,
+        newsfeedAssignments: [NewsfeedAssignment]? = nil
+    ) {
         (self.title, self.senderId) = (title, senderId)
         (self.body, self.state) = (body, state)
         (self.deliverSilently, self.labels) = (deliverSilently, labels)
@@ -149,22 +180,27 @@ public struct PaginatedResponse: Codable {
     }
 
     init() {
-        (self.type, self.pages, self.totalCount, self.data) = (nil, nil, nil, nil)
+        (type, pages, totalCount, data) = (nil, nil, nil, nil)
     }
 }
 
-extension PaginatedResponse {
-    public init(from decoder: Decoder) throws {
+public extension PaginatedResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.pages = try container.sdkDecodeIfPresent(.pages)
-        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        type = try container.sdkDecodeIfPresent(.type)
+        pages = try container.sdkDecodeIfPresent(.pages)
+        totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension PaginatedResponse {
-    public init(type: PaginatedResponseType? = nil, pages: CursorPages? = nil, totalCount: Int? = nil, data: [PaginatedResponseDataItem]? = nil) {
+public extension PaginatedResponse {
+    init(
+        type: PaginatedResponseType? = nil,
+        pages: CursorPages? = nil,
+        totalCount: Int? = nil,
+        data: [PaginatedResponseDataItem]? = nil
+    ) {
         self.init()
         (self.type, self.pages) = (type, pages)
         (self.totalCount, self.data) = (totalCount, data)
@@ -190,21 +226,21 @@ public struct DeletedObject: Codable {
     }
 
     init() {
-        (self.id, self.object, self.deleted) = (nil, nil, nil)
+        (id, object, deleted) = (nil, nil, nil)
     }
 }
 
-extension DeletedObject {
-    public init(from decoder: Decoder) throws {
+public extension DeletedObject {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.deleted = try container.sdkDecodeIfPresent(.deleted)
+        id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
+        deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-extension DeletedObject {
-    public init(id: String? = nil, object: DeletedObjectObject? = nil, deleted: Bool? = nil) {
+public extension DeletedObject {
+    init(id: String? = nil, object: DeletedObjectObject? = nil, deleted: Bool? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
         self.deleted = deleted
@@ -215,12 +251,15 @@ extension DeletedObject {
 public struct DeletedObjectObject: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let newsItem = DeletedObjectObject(rawValue: "news-item")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -233,13 +272,16 @@ public struct DeletedObjectObject: RawRepresentable, Hashable, Codable, Sendable
 public struct PaginatedResponseType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let list = PaginatedResponseType(rawValue: "list")
     public static let conversationList = PaginatedResponseType(rawValue: "conversation.list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -252,13 +294,16 @@ public struct PaginatedResponseType: RawRepresentable, Hashable, Codable, Sendab
 public struct NewsItemRequestState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let draft = NewsItemRequestState(rawValue: "draft")
     public static let live = NewsItemRequestState(rawValue: "live")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

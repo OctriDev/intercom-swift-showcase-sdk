@@ -6,17 +6,32 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension NewsMethods {
-    /// Retrieves the details of a single newsfeed. Use `newsfeed_id` to identify the feed. Newsfeeds cannot be edited through the API.
+public extension NewsMethods {
+    /// Retrieves the details of a single newsfeed. Use `newsfeed_id` to identify the feed. Newsfeeds cannot be edited
+    /// through the API.
     ///
     /// You can fetch the details of a single newsfeed
     ///
     /// - Parameters:
     /// - newsfeedId: The unique identifier for the news feed item which is given by
     ///   Intercom.
-    public static func retrieveNewsfeed(config: ClientConfig, newsfeedId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Newsfeed {
-        return try (await sdkRequest("GET", ["/news/newsfeeds/", sdkEncodePathSegment(sdkWireString(newsfeedId))].joined(), config: config, decoder: .json, operationId: "retrieveNewsfeed", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self])).data
+    static func retrieveNewsfeed(
+        config: ClientConfig,
+        newsfeedId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Newsfeed {
+        try await (sdkRequest(
+            "GET",
+            ["/news/newsfeeds/", sdkEncodePathSegment(sdkWireString(newsfeedId))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "retrieveNewsfeed",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self]
+        )).data
     }
 }

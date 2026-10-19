@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Misc domain models
+/// Misc domain models
 public typealias Metadata = ConversationPartMetadata
 
 /// Response returned when an object is deleted
@@ -25,21 +25,21 @@ public struct VisitorDeletedObject: Codable {
     }
 
     init() {
-        (self.id, self.type, self.userId) = (nil, nil, nil)
+        (id, type, userId) = (nil, nil, nil)
     }
 }
 
-extension VisitorDeletedObject {
-    public init(from decoder: Decoder) throws {
+public extension VisitorDeletedObject {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.userId = try container.sdkDecodeIfPresent(.userId)
+        id = try container.sdkDecodeIfPresent(.id)
+        type = try container.sdkDecodeIfPresent(.type)
+        userId = try container.sdkDecodeIfPresent(.userId)
     }
 }
 
-extension VisitorDeletedObject {
-    public init(id: String? = nil, type: VisitorDeletedObjectType? = nil, userId: String? = nil) {
+public extension VisitorDeletedObject {
+    init(id: String? = nil, type: VisitorDeletedObjectType? = nil, userId: String? = nil) {
         self.init()
         (self.id, self.type) = (id, type)
         self.userId = userId
@@ -50,12 +50,15 @@ extension VisitorDeletedObject {
 public struct VisitorDeletedObjectType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let visitor = VisitorDeletedObjectType(rawValue: "visitor")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

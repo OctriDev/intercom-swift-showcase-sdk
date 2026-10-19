@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension TicketTypeAttributesMethods {
-    public struct CreateTicketTypeAttributeOptions: Codable {
+public extension TicketTypeAttributesMethods {
+    struct CreateTicketTypeAttributeOptions: Codable {
         public var ticketTypeId: String
         public var name: String
         public var description: String
@@ -21,7 +21,12 @@ extension TicketTypeAttributesMethods {
         public var listItems: String?
         public var allowMultipleValues: Bool?
 
-        public init(ticketTypeId: String, name: String, description: String, dataType: CreateTicketTypeAttributeRequestDataType) {
+        public init(
+            ticketTypeId: String,
+            name: String,
+            description: String,
+            dataType: CreateTicketTypeAttributeRequestDataType
+        ) {
             self.ticketTypeId = ticketTypeId
             self.name = name
             self.description = description
@@ -29,7 +34,9 @@ extension TicketTypeAttributesMethods {
         }
     }
 
-    /// Creates an attribute for a ticket type to define a data field captured on tickets. Supply `name`, `description`, and `data_type`; `data_type` must be one of the supported values. Use the remaining fields to configure the attribute's visibility and input options.
+    /// Creates an attribute for a ticket type to define a data field captured on tickets. Supply `name`, `description`,
+    /// and `data_type`; `data_type` must be one of the supported values. Use the remaining fields to configure the
+    /// attribute's visibility and input options.
     ///
     /// You can create a new attribute for a ticket type.
     ///
@@ -54,11 +61,25 @@ extension TicketTypeAttributesMethods {
     ///   applicable to list attributes)
     /// - allowMultipleValues: Whether the attribute allows multiple files to be
     ///   attached to it (only applicable to file attributes)
-    public static func createTicketTypeAttribute(config: ClientConfig, options: CreateTicketTypeAttributeOptions, requestOptions: RequestOptions? = nil) async throws -> TicketTypeAttribute {
+    static func createTicketTypeAttribute(
+        config: ClientConfig,
+        options: CreateTicketTypeAttributeOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> TicketTypeAttribute {
         let requestBody = CreateTicketTypeAttributeRequestBody(options: options)
 
-        return try (await sdkRequest("POST", ["/ticket_types/", sdkEncodePathSegment(sdkWireString(options.ticketTypeId)), "/attributes"].joined(), config: config, body: requestBody, decoder: .json, operationId: "createTicketTypeAttribute", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/ticket_types/", sdkEncodePathSegment(sdkWireString(options.ticketTypeId)), "/attributes"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "createTicketTypeAttribute",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self]
+        )).data
     }
 }

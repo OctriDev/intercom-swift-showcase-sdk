@@ -3,34 +3,44 @@
 
 import Foundation
 
-// DataAttributes domain models
+/// DataAttributes domain models
 public indirect enum CreateDataAttributeRequest {
     case createDataAttributeRequestVariant0(CreateDataAttributeRequestVariant0)
     case createDataAttributeRequestVariant1(CreateDataAttributeRequestVariant1)
 }
 
 extension CreateDataAttributeRequest: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
+            if let value = Self.decodeLossless1(from: container, raw) {
+                self = value; return
+            }
         }
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for CreateDataAttributeRequest")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for CreateDataAttributeRequest"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension CreateDataAttributeRequest {
     static func decodeLossless1(from container: SingleValueDecodingContainer, _ raw: JSONValue) -> Self? {
-        if let value = try? container.decode(CreateDataAttributeRequestVariant0.self), sdkKeepsEveryKey(value, of: raw) {
+        if let value = try? container.decode(CreateDataAttributeRequestVariant0.self),
+           sdkKeepsEveryKey(value, of: raw) {
             return .createDataAttributeRequestVariant0(value)
         }
-        if let value = try? container.decode(CreateDataAttributeRequestVariant1.self), sdkKeepsEveryKey(value, of: raw) {
+        if let value = try? container.decode(CreateDataAttributeRequestVariant1.self),
+           sdkKeepsEveryKey(value, of: raw) {
             return .createDataAttributeRequestVariant1(value)
         }
         return nil
@@ -39,8 +49,14 @@ extension CreateDataAttributeRequest {
 
 extension CreateDataAttributeRequest {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(CreateDataAttributeRequestVariant0.self) { return .createDataAttributeRequestVariant0(value) }
-        if let value = try? container.decode(CreateDataAttributeRequestVariant1.self) { return .createDataAttributeRequestVariant1(value) }
+        if let value = try? container
+            .decode(CreateDataAttributeRequestVariant0.self) {
+            return .createDataAttributeRequestVariant0(value)
+        }
+        if let value = try? container
+            .decode(CreateDataAttributeRequestVariant1.self) {
+            return .createDataAttributeRequestVariant1(value)
+        }
         return nil
     }
 }
@@ -61,22 +77,33 @@ public indirect enum UpdateDataAttributeRequest {
 }
 
 extension UpdateDataAttributeRequest: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for UpdateDataAttributeRequest")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for UpdateDataAttributeRequest"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension UpdateDataAttributeRequest {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(UpdateDataAttributeRequestVariant0.self) { return .updateDataAttributeRequestVariant0(value) }
-        if let value = try? container.decode(JSONValue.self) { return .jsonValue(value) }
+        if let value = try? container
+            .decode(UpdateDataAttributeRequestVariant0.self) {
+            return .updateDataAttributeRequestVariant0(value)
+        }
+        if let value = try? container.decode(JSONValue.self) {
+            return .jsonValue(value)
+        }
         return nil
     }
 }
@@ -101,21 +128,27 @@ public struct UpdateDataAttributeRequestVariant0: Codable {
         case options
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension UpdateDataAttributeRequestVariant0 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.options) else {
-            throw SdkValidationError(field: "options", code: "required", message: "Validation failed for 'options': value is required")
-        }
-        self.options = try container.sdkDecodeRequired(.options)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension UpdateDataAttributeRequestVariant0 {
-    public init(options: [UpdateDataAttributeRequestVariant0OptionsItem]) {
+public extension UpdateDataAttributeRequestVariant0 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.options) else {
+            throw SdkValidationError(
+                field: "options",
+                code: "required",
+                message: "Validation failed for 'options': value is required"
+            )
+        }
+        options = try container.sdkDecodeRequired(.options)
+    }
+}
+
+public extension UpdateDataAttributeRequestVariant0 {
+    init(options: [UpdateDataAttributeRequestVariant0OptionsItem]) {
         self.options = options
     }
 }
@@ -132,22 +165,31 @@ public struct CreateDataAttributeRequestVariant0: Codable {
         case dataType = "data_type"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateDataAttributeRequestVariant0 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.options) else {
-            throw SdkValidationError(field: "options", code: "required", message: "Validation failed for 'options': value is required")
-        }
-        self.options = try container.sdkDecodeRequired(.options)
-        self.dataType = try container.sdkDecodeIfPresent(.dataType)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateDataAttributeRequestVariant0 {
-    public init(options: [CreateDataAttributeRequestVariant0OptionsItem], dataType: CreateDataAttributeRequestVariant0DataType? = nil) {
+public extension CreateDataAttributeRequestVariant0 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.options) else {
+            throw SdkValidationError(
+                field: "options",
+                code: "required",
+                message: "Validation failed for 'options': value is required"
+            )
+        }
+        options = try container.sdkDecodeRequired(.options)
+        dataType = try container.sdkDecodeIfPresent(.dataType)
+    }
+}
+
+public extension CreateDataAttributeRequestVariant0 {
+    init(
+        options: [CreateDataAttributeRequestVariant0OptionsItem],
+        dataType: CreateDataAttributeRequestVariant0DataType? = nil
+    ) {
         (self.options, self.dataType) = (options, dataType)
     }
 }
@@ -160,19 +202,19 @@ public struct CreateDataAttributeRequestVariant0OptionsItem: Codable {
     }
 
     init() {
-        self.value = nil
+        value = nil
     }
 }
 
-extension CreateDataAttributeRequestVariant0OptionsItem {
-    public init(from decoder: Decoder) throws {
+public extension CreateDataAttributeRequestVariant0OptionsItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.value = try container.sdkDecodeIfPresent(.value)
+        value = try container.sdkDecodeIfPresent(.value)
     }
 }
 
-extension CreateDataAttributeRequestVariant0OptionsItem {
-    public init(value: String? = nil) {
+public extension CreateDataAttributeRequestVariant0OptionsItem {
+    init(value: String? = nil) {
         self.init()
         self.value = value
     }
@@ -186,19 +228,19 @@ public struct CreateDataAttributeRequestVariant1: Codable {
     }
 
     init() {
-        self.dataType = nil
+        dataType = nil
     }
 }
 
-extension CreateDataAttributeRequestVariant1 {
-    public init(from decoder: Decoder) throws {
+public extension CreateDataAttributeRequestVariant1 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.dataType = try container.sdkDecodeIfPresent(.dataType)
+        dataType = try container.sdkDecodeIfPresent(.dataType)
     }
 }
 
-extension CreateDataAttributeRequestVariant1 {
-    public init(dataType: CreateDataAttributeRequestVariant1DataType? = nil) {
+public extension CreateDataAttributeRequestVariant1 {
+    init(dataType: CreateDataAttributeRequestVariant1DataType? = nil) {
         self.init()
         self.dataType = dataType
     }
@@ -212,19 +254,19 @@ public struct UpdateDataAttributeRequestVariant0OptionsItem: Codable {
     }
 
     init() {
-        self.value = nil
+        value = nil
     }
 }
 
-extension UpdateDataAttributeRequestVariant0OptionsItem {
-    public init(from decoder: Decoder) throws {
+public extension UpdateDataAttributeRequestVariant0OptionsItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.value = try container.sdkDecodeIfPresent(.value)
+        value = try container.sdkDecodeIfPresent(.value)
     }
 }
 
-extension UpdateDataAttributeRequestVariant0OptionsItem {
-    public init(value: String? = nil) {
+public extension UpdateDataAttributeRequestVariant0OptionsItem {
+    init(value: String? = nil) {
         self.init()
         self.value = value
     }
@@ -244,20 +286,20 @@ public struct DataAttributeList: Codable {
     }
 
     init() {
-        (self.type, self.data) = (nil, nil)
+        (type, data) = (nil, nil)
     }
 }
 
-extension DataAttributeList {
-    public init(from decoder: Decoder) throws {
+public extension DataAttributeList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        type = try container.sdkDecodeIfPresent(.type)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension DataAttributeList {
-    public init(type: DataAttributeListType? = nil, data: [DataAttribute]? = nil) {
+public extension DataAttributeList {
+    init(type: DataAttributeListType? = nil, data: [DataAttribute]? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
     }
@@ -267,13 +309,16 @@ extension DataAttributeList {
 public struct CreateDataAttributeRequestModel: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let contact = CreateDataAttributeRequestModel(rawValue: "contact")
     public static let company = CreateDataAttributeRequestModel(rawValue: "company")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -282,10 +327,14 @@ public struct CreateDataAttributeRequestModel: RawRepresentable, Hashable, Codab
     }
 }
 
-public struct CreateDataAttributeRequestVariant1DataType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct CreateDataAttributeRequestVariant1DataType: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let string = CreateDataAttributeRequestVariant1DataType(rawValue: "string")
     public static let integer = CreateDataAttributeRequestVariant1DataType(rawValue: "integer")
     public static let float = CreateDataAttributeRequestVariant1DataType(rawValue: "float")
@@ -295,7 +344,7 @@ public struct CreateDataAttributeRequestVariant1DataType: RawRepresentable, Hash
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -308,12 +357,15 @@ public struct CreateDataAttributeRequestVariant1DataType: RawRepresentable, Hash
 public struct DataAttributeListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let list = DataAttributeListType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -322,15 +374,19 @@ public struct DataAttributeListType: RawRepresentable, Hashable, Codable, Sendab
     }
 }
 
-public struct CreateDataAttributeRequestVariant0DataType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct CreateDataAttributeRequestVariant0DataType: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let options = CreateDataAttributeRequestVariant0DataType(rawValue: "options")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

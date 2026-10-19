@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DataConnectors domain models
+/// DataConnectors domain models
 /// Cursor for the next page of results.
 public struct DataConnectorVersionListPagesNext: Codable {
     /// The cursor value to use for the next page.
@@ -15,19 +15,19 @@ public struct DataConnectorVersionListPagesNext: Codable {
     }
 
     init() {
-        self.startingAfter = nil
+        startingAfter = nil
     }
 }
 
-extension DataConnectorVersionListPagesNext {
-    public init(from decoder: Decoder) throws {
+public extension DataConnectorVersionListPagesNext {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.startingAfter = try container.sdkDecodeIfPresent(.startingAfter)
+        startingAfter = try container.sdkDecodeIfPresent(.startingAfter)
     }
 }
 
-extension DataConnectorVersionListPagesNext {
-    public init(startingAfter: String? = nil) {
+public extension DataConnectorVersionListPagesNext {
+    init(startingAfter: String? = nil) {
         self.init()
         self.startingAfter = startingAfter
     }
@@ -50,21 +50,21 @@ public struct DataConnectorList: Codable {
     }
 
     init() {
-        (self.type, self.data, self.pages) = (nil, nil, nil)
+        (type, data, pages) = (nil, nil, nil)
     }
 }
 
-extension DataConnectorList {
-    public init(from decoder: Decoder) throws {
+public extension DataConnectorList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.data = try container.sdkDecodeIfPresent(.data)
-        self.pages = try container.sdkDecodeIfPresent(.pages)
+        type = try container.sdkDecodeIfPresent(.type)
+        data = try container.sdkDecodeIfPresent(.data)
+        pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-extension DataConnectorList {
-    public init(type: DataConnectorListType? = nil, data: [DataConnector]? = nil, pages: DataConnectorListPages? = nil) {
+public extension DataConnectorList {
+    init(type: DataConnectorListType? = nil, data: [DataConnector]? = nil, pages: DataConnectorListPages? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
         self.pages = pages
@@ -82,19 +82,19 @@ public struct DataConnectorExecutionResultListPagesNext: Codable {
     }
 
     init() {
-        self.startingAfter = nil
+        startingAfter = nil
     }
 }
 
-extension DataConnectorExecutionResultListPagesNext {
-    public init(from decoder: Decoder) throws {
+public extension DataConnectorExecutionResultListPagesNext {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.startingAfter = try container.sdkDecodeIfPresent(.startingAfter)
+        startingAfter = try container.sdkDecodeIfPresent(.startingAfter)
     }
 }
 
-extension DataConnectorExecutionResultListPagesNext {
-    public init(startingAfter: String? = nil) {
+public extension DataConnectorExecutionResultListPagesNext {
+    init(startingAfter: String? = nil) {
         self.init()
         self.startingAfter = startingAfter
     }
@@ -117,21 +117,25 @@ public struct DataConnectorExecutionResultList: Codable {
     }
 
     init() {
-        (self.type, self.data, self.pages) = (nil, nil, nil)
+        (type, data, pages) = (nil, nil, nil)
     }
 }
 
-extension DataConnectorExecutionResultList {
-    public init(from decoder: Decoder) throws {
+public extension DataConnectorExecutionResultList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.data = try container.sdkDecodeIfPresent(.data)
-        self.pages = try container.sdkDecodeIfPresent(.pages)
+        type = try container.sdkDecodeIfPresent(.type)
+        data = try container.sdkDecodeIfPresent(.data)
+        pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-extension DataConnectorExecutionResultList {
-    public init(type: DataConnectorExecutionResultListType? = nil, data: [DataConnectorExecutionResult]? = nil, pages: DataConnectorExecutionResultListPages? = nil) {
+public extension DataConnectorExecutionResultList {
+    init(
+        type: DataConnectorExecutionResultListType? = nil,
+        data: [DataConnectorExecutionResult]? = nil,
+        pages: DataConnectorExecutionResultListPages? = nil
+    ) {
         self.init()
         (self.type, self.data) = (type, data)
         self.pages = pages
@@ -164,23 +168,29 @@ public struct UpdateDataConnectorRequestDataInputsItem: Codable {
     }
 
     init() {
-        (self.name, self.type, self.description, self.required, self.defaultValue) = (nil, nil, nil, nil, nil)
+        (name, type, description, required, defaultValue) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension UpdateDataConnectorRequestDataInputsItem {
-    public init(from decoder: Decoder) throws {
+public extension UpdateDataConnectorRequestDataInputsItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.required = try container.sdkDecodeIfPresent(.required)
-        self.defaultValue = try container.sdkDecodeIfPresent(.defaultValue)
+        name = try container.sdkDecodeIfPresent(.name)
+        type = try container.sdkDecodeIfPresent(.type)
+        description = try container.sdkDecodeIfPresent(.description)
+        required = try container.sdkDecodeIfPresent(.required)
+        defaultValue = try container.sdkDecodeIfPresent(.defaultValue)
     }
 }
 
-extension UpdateDataConnectorRequestDataInputsItem {
-    public init(name: String? = nil, type: UpdateDataConnectorRequestDataInputsItemType? = nil, description: String? = nil, required: Bool? = nil, defaultValue: String? = nil) {
+public extension UpdateDataConnectorRequestDataInputsItem {
+    init(
+        name: String? = nil,
+        type: UpdateDataConnectorRequestDataInputsItemType? = nil,
+        description: String? = nil,
+        required: Bool? = nil,
+        defaultValue: String? = nil
+    ) {
         self.init()
         (self.name, self.type) = (name, type)
         (self.description, self.required) = (description, required)
@@ -205,21 +215,25 @@ public struct DataConnectorVersionList: Codable {
     }
 
     init() {
-        (self.type, self.data, self.pages) = (nil, nil, nil)
+        (type, data, pages) = (nil, nil, nil)
     }
 }
 
-extension DataConnectorVersionList {
-    public init(from decoder: Decoder) throws {
+public extension DataConnectorVersionList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.data = try container.sdkDecodeIfPresent(.data)
-        self.pages = try container.sdkDecodeIfPresent(.pages)
+        type = try container.sdkDecodeIfPresent(.type)
+        data = try container.sdkDecodeIfPresent(.data)
+        pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-extension DataConnectorVersionList {
-    public init(type: DataConnectorVersionListType? = nil, data: [DataConnectorVersion]? = nil, pages: DataConnectorVersionListPages? = nil) {
+public extension DataConnectorVersionList {
+    init(
+        type: DataConnectorVersionListType? = nil,
+        data: [DataConnectorVersion]? = nil,
+        pages: DataConnectorVersionListPages? = nil
+    ) {
         self.init()
         (self.type, self.data) = (type, data)
         self.pages = pages
@@ -245,21 +259,21 @@ public struct DeletedDataConnectorObject: Codable {
     }
 
     init() {
-        (self.id, self.object, self.deleted) = (nil, nil, nil)
+        (id, object, deleted) = (nil, nil, nil)
     }
 }
 
-extension DeletedDataConnectorObject {
-    public init(from decoder: Decoder) throws {
+public extension DeletedDataConnectorObject {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.deleted = try container.sdkDecodeIfPresent(.deleted)
+        id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
+        deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-extension DeletedDataConnectorObject {
-    public init(id: String? = nil, object: DeletedDataConnectorObjectObject? = nil, deleted: Bool? = nil) {
+public extension DeletedDataConnectorObject {
+    init(id: String? = nil, object: DeletedDataConnectorObjectObject? = nil, deleted: Bool? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
         self.deleted = deleted
@@ -276,21 +290,27 @@ public struct UpdateDataConnectorVersionRequest: Codable {
         case note
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension UpdateDataConnectorVersionRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.note) else {
-            throw SdkValidationError(field: "note", code: "required", message: "Validation failed for 'note': value is required")
-        }
-        self.note = try container.sdkDecodeNullable(.note)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension UpdateDataConnectorVersionRequest {
-    public init(note: String?) {
+public extension UpdateDataConnectorVersionRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.note) else {
+            throw SdkValidationError(
+                field: "note",
+                code: "required",
+                message: "Validation failed for 'note': value is required"
+            )
+        }
+        note = try container.sdkDecodeNullable(.note)
+    }
+}
+
+public extension UpdateDataConnectorVersionRequest {
+    init(note: String?) {
         self.note = note
     }
 }
@@ -310,20 +330,20 @@ public struct CreateDataConnectorRequestHeadersItem: Codable {
     }
 
     init() {
-        (self.name, self.value) = (nil, nil)
+        (name, value) = (nil, nil)
     }
 }
 
-extension CreateDataConnectorRequestHeadersItem {
-    public init(from decoder: Decoder) throws {
+public extension CreateDataConnectorRequestHeadersItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.value = try container.sdkDecodeIfPresent(.value)
+        name = try container.sdkDecodeIfPresent(.name)
+        value = try container.sdkDecodeIfPresent(.value)
     }
 }
 
-extension CreateDataConnectorRequestHeadersItem {
-    public init(name: String? = nil, value: String? = nil) {
+public extension CreateDataConnectorRequestHeadersItem {
+    init(name: String? = nil, value: String? = nil) {
         self.init()
         (self.name, self.value) = (name, value)
     }
@@ -355,23 +375,29 @@ public struct CreateDataConnectorRequestDataInputsItem: Codable {
     }
 
     init() {
-        (self.name, self.type, self.description, self.required, self.defaultValue) = (nil, nil, nil, nil, nil)
+        (name, type, description, required, defaultValue) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension CreateDataConnectorRequestDataInputsItem {
-    public init(from decoder: Decoder) throws {
+public extension CreateDataConnectorRequestDataInputsItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.required = try container.sdkDecodeIfPresent(.required)
-        self.defaultValue = try container.sdkDecodeIfPresent(.defaultValue)
+        name = try container.sdkDecodeIfPresent(.name)
+        type = try container.sdkDecodeIfPresent(.type)
+        description = try container.sdkDecodeIfPresent(.description)
+        required = try container.sdkDecodeIfPresent(.required)
+        defaultValue = try container.sdkDecodeIfPresent(.defaultValue)
     }
 }
 
-extension CreateDataConnectorRequestDataInputsItem {
-    public init(name: String? = nil, type: CreateDataConnectorRequestDataInputsItemType? = nil, description: String? = nil, required: Bool? = nil, defaultValue: String? = nil) {
+public extension CreateDataConnectorRequestDataInputsItem {
+    init(
+        name: String? = nil,
+        type: CreateDataConnectorRequestDataInputsItemType? = nil,
+        description: String? = nil,
+        required: Bool? = nil,
+        defaultValue: String? = nil
+    ) {
         self.init()
         (self.name, self.type) = (name, type)
         (self.description, self.required) = (description, required)
@@ -397,21 +423,21 @@ public struct DataConnectorListPages: Codable {
     }
 
     init() {
-        (self.type, self.perPage, self.next) = (nil, nil, nil)
+        (type, perPage, next) = (nil, nil, nil)
     }
 }
 
-extension DataConnectorListPages {
-    public init(from decoder: Decoder) throws {
+public extension DataConnectorListPages {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.perPage = try container.sdkDecodeIfPresent(.perPage)
-        self.next = try container.sdkDecodeIfPresent(.next)
+        type = try container.sdkDecodeIfPresent(.type)
+        perPage = try container.sdkDecodeIfPresent(.perPage)
+        next = try container.sdkDecodeIfPresent(.next)
     }
 }
 
-extension DataConnectorListPages {
-    public init(type: DataConnectorListPagesType? = nil, perPage: Int? = nil, next: DataConnectorListPagesNext? = nil) {
+public extension DataConnectorListPages {
+    init(type: DataConnectorListPagesType? = nil, perPage: Int? = nil, next: DataConnectorListPagesNext? = nil) {
         self.init()
         (self.type, self.perPage) = (type, perPage)
         self.next = next
@@ -433,20 +459,20 @@ public struct UpdateDataConnectorRequestHeadersItem: Codable {
     }
 
     init() {
-        (self.name, self.value) = (nil, nil)
+        (name, value) = (nil, nil)
     }
 }
 
-extension UpdateDataConnectorRequestHeadersItem {
-    public init(from decoder: Decoder) throws {
+public extension UpdateDataConnectorRequestHeadersItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.value = try container.sdkDecodeIfPresent(.value)
+        name = try container.sdkDecodeIfPresent(.name)
+        value = try container.sdkDecodeIfPresent(.value)
     }
 }
 
-extension UpdateDataConnectorRequestHeadersItem {
-    public init(name: String? = nil, value: String? = nil) {
+public extension UpdateDataConnectorRequestHeadersItem {
+    init(name: String? = nil, value: String? = nil) {
         self.init()
         (self.name, self.value) = (name, value)
     }
@@ -514,35 +540,57 @@ public struct UpdateDataConnectorRequest: Codable {
     }
 
     init() {
-        (self.name, self.description, self.state, self.httpMethod, self.url) = (nil, nil, nil, nil, nil)
-        (self.body, self.directFinUsage, self.audiences, self.headers, self.dataInputs) = (nil, nil, nil, nil, nil)
-        (self.customerAuthentication, self.bypassAuthentication, self.validateMissingAttributes, self.mockResponse, self.tokenIds) = (nil, nil, nil, nil, nil)
+        (name, description, state, httpMethod, url) = (nil, nil, nil, nil, nil)
+        (body, directFinUsage, audiences, headers, dataInputs) = (nil, nil, nil, nil, nil)
+        (customerAuthentication, bypassAuthentication, validateMissingAttributes, mockResponse, tokenIds) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
     }
 }
 
-extension UpdateDataConnectorRequest {
-    public init(from decoder: Decoder) throws {
+public extension UpdateDataConnectorRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.state = try container.sdkDecodeIfPresent(.state)
-        self.httpMethod = try container.sdkDecodeIfPresent(.httpMethod)
-        self.url = try container.sdkDecodeIfPresent(.url)
-        self.body = try container.sdkDecodeIfPresent(.body)
-        self.directFinUsage = try container.sdkDecodeIfPresent(.directFinUsage)
-        self.audiences = try container.sdkDecodeIfPresent(.audiences)
-        self.headers = try container.sdkDecodeIfPresent(.headers)
-        self.dataInputs = try container.sdkDecodeIfPresent(.dataInputs)
-        self.customerAuthentication = try container.sdkDecodeIfPresent(.customerAuthentication)
-        self.bypassAuthentication = try container.sdkDecodeIfPresent(.bypassAuthentication)
-        self.validateMissingAttributes = try container.sdkDecodeIfPresent(.validateMissingAttributes)
-        self.mockResponse = try container.sdkDecodeIfPresent(.mockResponse)
-        self.tokenIds = try container.sdkDecodeIfPresent(.tokenIds)
+        name = try container.sdkDecodeIfPresent(.name)
+        description = try container.sdkDecodeIfPresent(.description)
+        state = try container.sdkDecodeIfPresent(.state)
+        httpMethod = try container.sdkDecodeIfPresent(.httpMethod)
+        url = try container.sdkDecodeIfPresent(.url)
+        body = try container.sdkDecodeIfPresent(.body)
+        directFinUsage = try container.sdkDecodeIfPresent(.directFinUsage)
+        audiences = try container.sdkDecodeIfPresent(.audiences)
+        headers = try container.sdkDecodeIfPresent(.headers)
+        dataInputs = try container.sdkDecodeIfPresent(.dataInputs)
+        customerAuthentication = try container.sdkDecodeIfPresent(.customerAuthentication)
+        bypassAuthentication = try container.sdkDecodeIfPresent(.bypassAuthentication)
+        validateMissingAttributes = try container.sdkDecodeIfPresent(.validateMissingAttributes)
+        mockResponse = try container.sdkDecodeIfPresent(.mockResponse)
+        tokenIds = try container.sdkDecodeIfPresent(.tokenIds)
     }
 }
 
-extension UpdateDataConnectorRequest {
-    public init(name: String? = nil, description: String? = nil, state: UpdateDataConnectorRequestState? = nil, httpMethod: UpdateDataConnectorRequestHttpMethod? = nil, url: String? = nil, body: String? = nil, directFinUsage: Bool? = nil, audiences: [UpdateDataConnectorRequestAudiencesItem]? = nil, headers: [UpdateDataConnectorRequestHeadersItem]? = nil, dataInputs: [UpdateDataConnectorRequestDataInputsItem]? = nil, customerAuthentication: Bool? = nil, bypassAuthentication: Bool? = nil, validateMissingAttributes: Bool? = nil, mockResponse: [String: JSONValue]? = nil, tokenIds: [String]? = nil) {
+public extension UpdateDataConnectorRequest {
+    init(
+        name: String? = nil,
+        description: String? = nil,
+        state: UpdateDataConnectorRequestState? = nil,
+        httpMethod: UpdateDataConnectorRequestHttpMethod? = nil,
+        url: String? = nil,
+        body: String? = nil,
+        directFinUsage: Bool? = nil,
+        audiences: [UpdateDataConnectorRequestAudiencesItem]? = nil,
+        headers: [UpdateDataConnectorRequestHeadersItem]? = nil,
+        dataInputs: [UpdateDataConnectorRequestDataInputsItem]? = nil,
+        customerAuthentication: Bool? = nil,
+        bypassAuthentication: Bool? = nil,
+        validateMissingAttributes: Bool? = nil,
+        mockResponse: [String: JSONValue]? = nil,
+        tokenIds: [String]? = nil
+    ) {
         self.init()
         (self.name, self.description) = (name, description)
         (self.state, self.httpMethod) = (state, httpMethod)

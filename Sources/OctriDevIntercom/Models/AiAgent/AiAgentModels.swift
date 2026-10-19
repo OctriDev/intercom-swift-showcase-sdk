@@ -3,7 +3,7 @@
 
 import Foundation
 
-// TaggedModelsAiAgent domain models
+/// TaggedModelsAiAgent domain models
 /// Data related to AI Agent involvement in the conversation.
 public struct AiAgent: Codable {
     /// The type of the source that triggered AI Agent involvement in the conversation.
@@ -47,28 +47,38 @@ public struct AiAgent: Codable {
     }
 
     init() {
-        (self.sourceType, self.sourceTitle, self.lastAnswerType, self.resolutionState, self.rating) = (nil, nil, nil, nil, nil)
-        (self.ratingRemark, self.createdAt, self.updatedAt, self.contentSources) = (nil, nil, nil, nil)
+        (sourceType, sourceTitle, lastAnswerType, resolutionState, rating) = (nil, nil, nil, nil, nil)
+        (ratingRemark, createdAt, updatedAt, contentSources) = (nil, nil, nil, nil)
     }
 }
 
-extension AiAgent {
-    public init(from decoder: Decoder) throws {
+public extension AiAgent {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.sourceType = try container.sdkDecodeIfPresent(.sourceType)
-        self.sourceTitle = try container.sdkDecodeIfPresent(.sourceTitle)
-        self.lastAnswerType = try container.sdkDecodeIfPresent(.lastAnswerType)
-        self.resolutionState = try container.sdkDecodeIfPresent(.resolutionState)
-        self.rating = try container.sdkDecodeIfPresent(.rating)
-        self.ratingRemark = try container.sdkDecodeIfPresent(.ratingRemark)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.contentSources = try container.sdkDecodeIfPresent(.contentSources)
+        sourceType = try container.sdkDecodeIfPresent(.sourceType)
+        sourceTitle = try container.sdkDecodeIfPresent(.sourceTitle)
+        lastAnswerType = try container.sdkDecodeIfPresent(.lastAnswerType)
+        resolutionState = try container.sdkDecodeIfPresent(.resolutionState)
+        rating = try container.sdkDecodeIfPresent(.rating)
+        ratingRemark = try container.sdkDecodeIfPresent(.ratingRemark)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        contentSources = try container.sdkDecodeIfPresent(.contentSources)
     }
 }
 
-extension AiAgent {
-    public init(sourceType: AiAgentSourceType? = nil, sourceTitle: String? = nil, lastAnswerType: AiAgentLastAnswerType? = nil, resolutionState: AiAgentResolutionState? = nil, rating: Int? = nil, ratingRemark: String? = nil, createdAt: Int? = nil, updatedAt: Int? = nil, contentSources: ContentSourcesList? = nil) {
+public extension AiAgent {
+    init(
+        sourceType: AiAgentSourceType? = nil,
+        sourceTitle: String? = nil,
+        lastAnswerType: AiAgentLastAnswerType? = nil,
+        resolutionState: AiAgentResolutionState? = nil,
+        rating: Int? = nil,
+        ratingRemark: String? = nil,
+        createdAt: Int? = nil,
+        updatedAt: Int? = nil,
+        contentSources: ContentSourcesList? = nil
+    ) {
         self.init()
         (self.sourceType, self.sourceTitle) = (sourceType, sourceTitle)
         (self.lastAnswerType, self.resolutionState) = (lastAnswerType, resolutionState)
@@ -82,13 +92,16 @@ extension AiAgent {
 public struct AiAgentLastAnswerType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let aiAnswer = AiAgentLastAnswerType(rawValue: "ai_answer")
     public static let customAnswer = AiAgentLastAnswerType(rawValue: "custom_answer")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -101,7 +114,10 @@ public struct AiAgentLastAnswerType: RawRepresentable, Hashable, Codable, Sendab
 public struct AiAgentSourceType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let essentialsPlanSetup = AiAgentSourceType(rawValue: "essentials_plan_setup")
     public static let profile = AiAgentSourceType(rawValue: "profile")
     public static let workflow = AiAgentSourceType(rawValue: "workflow")
@@ -110,7 +126,7 @@ public struct AiAgentSourceType: RawRepresentable, Hashable, Codable, Sendable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -123,7 +139,10 @@ public struct AiAgentSourceType: RawRepresentable, Hashable, Codable, Sendable, 
 public struct AiAgentResolutionState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let assumedResolution = AiAgentResolutionState(rawValue: "assumed_resolution")
     public static let confirmedResolution = AiAgentResolutionState(rawValue: "confirmed_resolution")
     public static let escalated = AiAgentResolutionState(rawValue: "escalated")
@@ -132,7 +151,7 @@ public struct AiAgentResolutionState: RawRepresentable, Hashable, Codable, Senda
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

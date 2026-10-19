@@ -3,7 +3,7 @@
 
 import Foundation
 
-// TaggedModelsContentSnippets domain models
+/// TaggedModelsContentSnippets domain models
 /// A content snippet is a reusable piece of content for your AI agent and Copilot.
 public struct ContentSnippet: Codable {
     /// String representing the object's type. Always has the value `content_snippet`.
@@ -70,34 +70,55 @@ public struct ContentSnippet: Codable {
     }
 
     init() {
-        (self.type, self.id, self.title, self.locale, self.jsonBlocks) = (nil, nil, nil, nil, nil)
-        (self.bodyMarkdown, self.chatbotAvailability, self.copilotAvailability, self.aiChatbotAvailability, self.aiCopilotAvailability) = (nil, nil, nil, nil, nil)
-        (self.aiSalesAgentAvailability, self.createdAt, self.updatedAt, self.audienceIds) = (nil, nil, nil, nil)
+        (type, id, title, locale, jsonBlocks) = (nil, nil, nil, nil, nil)
+        (bodyMarkdown, chatbotAvailability, copilotAvailability, aiChatbotAvailability, aiCopilotAvailability) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        (aiSalesAgentAvailability, createdAt, updatedAt, audienceIds) = (nil, nil, nil, nil)
     }
 }
 
-extension ContentSnippet {
-    public init(from decoder: Decoder) throws {
+public extension ContentSnippet {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.title = try container.sdkDecodeIfPresent(.title)
-        self.locale = try container.sdkDecodeIfPresent(.locale)
-        self.jsonBlocks = try container.sdkDecodeIfPresent(.jsonBlocks)
-        self.bodyMarkdown = try container.sdkDecodeIfPresent(.bodyMarkdown)
-        self.chatbotAvailability = try container.sdkDecodeIfPresent(.chatbotAvailability)
-        self.copilotAvailability = try container.sdkDecodeIfPresent(.copilotAvailability)
-        self.aiChatbotAvailability = try container.sdkDecodeIfPresent(.aiChatbotAvailability)
-        self.aiCopilotAvailability = try container.sdkDecodeIfPresent(.aiCopilotAvailability)
-        self.aiSalesAgentAvailability = try container.sdkDecodeIfPresent(.aiSalesAgentAvailability)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        title = try container.sdkDecodeIfPresent(.title)
+        locale = try container.sdkDecodeIfPresent(.locale)
+        jsonBlocks = try container.sdkDecodeIfPresent(.jsonBlocks)
+        bodyMarkdown = try container.sdkDecodeIfPresent(.bodyMarkdown)
+        chatbotAvailability = try container.sdkDecodeIfPresent(.chatbotAvailability)
+        copilotAvailability = try container.sdkDecodeIfPresent(.copilotAvailability)
+        aiChatbotAvailability = try container.sdkDecodeIfPresent(.aiChatbotAvailability)
+        aiCopilotAvailability = try container.sdkDecodeIfPresent(.aiCopilotAvailability)
+        aiSalesAgentAvailability = try container.sdkDecodeIfPresent(.aiSalesAgentAvailability)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
     }
 }
 
-extension ContentSnippet {
-    public init(type: String? = nil, id: String? = nil, title: String? = nil, locale: String? = nil, jsonBlocks: [[String: JSONValue]]? = nil, bodyMarkdown: String? = nil, chatbotAvailability: Int? = nil, copilotAvailability: Int? = nil, aiChatbotAvailability: Bool? = nil, aiCopilotAvailability: Bool? = nil, aiSalesAgentAvailability: Bool? = nil, createdAt: Int? = nil, updatedAt: Int? = nil, audienceIds: [Int]? = nil) {
+public extension ContentSnippet {
+    init(
+        type: String? = nil,
+        id: String? = nil,
+        title: String? = nil,
+        locale: String? = nil,
+        jsonBlocks: [[String: JSONValue]]? = nil,
+        bodyMarkdown: String? = nil,
+        chatbotAvailability: Int? = nil,
+        copilotAvailability: Int? = nil,
+        aiChatbotAvailability: Bool? = nil,
+        aiCopilotAvailability: Bool? = nil,
+        aiSalesAgentAvailability: Bool? = nil,
+        createdAt: Int? = nil,
+        updatedAt: Int? = nil,
+        audienceIds: [Int]? = nil
+    ) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.title, self.locale) = (title, locale)

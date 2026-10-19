@@ -6,10 +6,16 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ConversationsMethods {
-    /// Creates a conversation initiated by a contact and returns the created message. The conversation can be an in-app message only; include the contact in `from` and the message text in `body`. When you identify a visitor in `from`, the visitor is converted to a contact with a lead role.
+public extension ConversationsMethods {
+    /// Creates a conversation initiated by a contact and returns the created message. The conversation can be an in-app
+    /// message only; include the contact in `from` and the message text in `body`. When you identify a visitor in
+    /// `from`, the visitor is converted to a contact with a lead role.
     ///
-    /// You can create a conversation that has been initiated by a contact (ie. user or lead). The conversation can be an in-app message only. {% admonition type="info" name="Sending for visitors" %} You can also send a message from a visitor by specifying their `user_id` or `id` value in the `from` field, along with a `type` field value of `contact`. This visitor will be automatically converted to a contact with a lead role once the conversation is created. {% /admonition %} This will return the Message model that has been created.
+    /// You can create a conversation that has been initiated by a contact (ie. user or lead). The conversation can be
+    /// an in-app message only. {% admonition type="info" name="Sending for visitors" %} You can also send a message
+    /// from a visitor by specifying their `user_id` or `id` value in the `from` field, along with a `type` field value
+    /// of `contact`. This visitor will be automatically converted to a contact with a lead role once the conversation
+    /// is created. {% /admonition %} This will return the Message model that has been created.
     ///
     /// - Parameters:
     /// - from: Required object value serialized in the `from` wire field.
@@ -24,15 +30,42 @@ extension ConversationsMethods {
     ///   Intercom.
     /// - brandId: The unique identifier of the brand to associate with this
     ///   conversation.
-    public static func createConversation(config: ClientConfig, from: CreateConversationRequestFrom, body: String, intercomVersion: IntercomVersion? = nil, subject: String? = nil, attachmentUrls: [String]? = nil, createdAt: Int? = nil, brandId: String? = nil, requestOptions: RequestOptions? = nil) async throws -> CreateConversationResponse {
-        if let attachmentUrls = attachmentUrls {
+    static func createConversation(
+        config: ClientConfig,
+        from: CreateConversationRequestFrom,
+        body: String,
+        intercomVersion: IntercomVersion? = nil,
+        subject: String? = nil,
+        attachmentUrls: [String]? = nil,
+        createdAt: Int? = nil,
+        brandId: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateConversationResponse {
+        if let attachmentUrls {
             try validateItems("attachment_urls", attachmentUrls, max: 10)
         }
 
-        let requestBody = CreateConversationRequestBody(from: from, body: body, subject: subject, attachmentUrls: attachmentUrls, createdAt: createdAt, brandId: brandId)
+        let requestBody = CreateConversationRequestBody(
+            from: from,
+            body: body,
+            subject: subject,
+            attachmentUrls: attachmentUrls,
+            createdAt: createdAt,
+            brandId: brandId
+        )
 
-        return try (await sdkRequest("POST", "/conversations", config: config, body: requestBody, decoder: .json, operationId: "createConversation", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/conversations",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "createConversation",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self]
+        )).data
     }
 }

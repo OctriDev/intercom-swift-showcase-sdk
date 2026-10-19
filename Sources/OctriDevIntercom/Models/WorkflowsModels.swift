@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Workflows domain models
+/// Workflows domain models
 /// A workflow export containing the complete workflow configuration.
 public struct WorkflowExport: Codable {
     /// The version of the export format.
@@ -26,25 +26,30 @@ public struct WorkflowExport: Codable {
     }
 
     init() {
-        (self.exportVersion, self.exportedAt, self.appId, self.workflow) = (nil, nil, nil, nil)
+        (exportVersion, exportedAt, appId, workflow) = (nil, nil, nil, nil)
     }
 }
 
-extension WorkflowExport {
-    public init(from decoder: Decoder) throws {
+public extension WorkflowExport {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.exportVersion = try container.sdkDecodeIfPresent(.exportVersion)
-        self.exportedAt = try container.sdkDecodeIfPresent(.exportedAt)
-        self.appId = try container.sdkDecodeIfPresent(.appId)
-        self.workflow = try container.sdkDecodeIfPresent(.workflow)
-        if let value = self.exportedAt {
+        exportVersion = try container.sdkDecodeIfPresent(.exportVersion)
+        exportedAt = try container.sdkDecodeIfPresent(.exportedAt)
+        appId = try container.sdkDecodeIfPresent(.appId)
+        workflow = try container.sdkDecodeIfPresent(.workflow)
+        if let value = exportedAt {
             try sdkValidateDateTime("exported_at", sdkWireString(value))
         }
     }
 }
 
-extension WorkflowExport {
-    public init(exportVersion: String? = nil, exportedAt: Date? = nil, appId: Int? = nil, workflow: WorkflowExportWorkflow? = nil) throws {
+public extension WorkflowExport {
+    init(
+        exportVersion: String? = nil,
+        exportedAt: Date? = nil,
+        appId: Int? = nil,
+        workflow: WorkflowExportWorkflow? = nil
+    ) throws {
         self.init()
         (self.exportVersion, self.exportedAt) = (exportVersion, exportedAt)
         (self.appId, self.workflow) = (appId, workflow)
@@ -109,39 +114,53 @@ public struct WorkflowExportWorkflow: Codable {
     }
 
     init() {
-        (self.id, self.title, self.description, self.triggerType, self.state) = (nil, nil, nil, nil, nil)
-        (self.targetChannels, self.preferredDevices, self.createdAt, self.updatedAt, self.targeting) = (nil, nil, nil, nil, nil)
-        (self.snapshot, self.attributes, self.embeddedRules) = (nil, nil, nil)
+        (id, title, description, triggerType, state) = (nil, nil, nil, nil, nil)
+        (targetChannels, preferredDevices, createdAt, updatedAt, targeting) = (nil, nil, nil, nil, nil)
+        (snapshot, attributes, embeddedRules) = (nil, nil, nil)
     }
 }
 
-extension WorkflowExportWorkflow {
-    public init(from decoder: Decoder) throws {
+public extension WorkflowExportWorkflow {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.title = try container.sdkDecodeIfPresent(.title)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.triggerType = try container.sdkDecodeIfPresent(.triggerType)
-        self.state = try container.sdkDecodeIfPresent(.state)
-        self.targetChannels = try container.sdkDecodeIfPresent(.targetChannels)
-        self.preferredDevices = try container.sdkDecodeIfPresent(.preferredDevices)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.targeting = try container.sdkDecodeIfPresent(.targeting)
-        self.snapshot = try container.sdkDecodeIfPresent(.snapshot)
-        self.attributes = try container.sdkDecodeIfPresent(.attributes)
-        self.embeddedRules = try container.sdkDecodeIfPresent(.embeddedRules)
-        if let value = self.createdAt {
+        id = try container.sdkDecodeIfPresent(.id)
+        title = try container.sdkDecodeIfPresent(.title)
+        description = try container.sdkDecodeIfPresent(.description)
+        triggerType = try container.sdkDecodeIfPresent(.triggerType)
+        state = try container.sdkDecodeIfPresent(.state)
+        targetChannels = try container.sdkDecodeIfPresent(.targetChannels)
+        preferredDevices = try container.sdkDecodeIfPresent(.preferredDevices)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        targeting = try container.sdkDecodeIfPresent(.targeting)
+        snapshot = try container.sdkDecodeIfPresent(.snapshot)
+        attributes = try container.sdkDecodeIfPresent(.attributes)
+        embeddedRules = try container.sdkDecodeIfPresent(.embeddedRules)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.updatedAt {
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension WorkflowExportWorkflow {
-    public init(id: String? = nil, title: String? = nil, description: String? = nil, triggerType: String? = nil, state: WorkflowExportWorkflowState? = nil, targetChannels: [String]? = nil, preferredDevices: [String]? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, targeting: [String: JSONValue]? = nil, snapshot: [String: JSONValue]? = nil, attributes: [[String: JSONValue]]? = nil, embeddedRules: [[String: JSONValue]]? = nil) throws {
+public extension WorkflowExportWorkflow {
+    init(
+        id: String? = nil,
+        title: String? = nil,
+        description: String? = nil,
+        triggerType: String? = nil,
+        state: WorkflowExportWorkflowState? = nil,
+        targetChannels: [String]? = nil,
+        preferredDevices: [String]? = nil,
+        createdAt: Date? = nil,
+        updatedAt: Date? = nil,
+        targeting: [String: JSONValue]? = nil,
+        snapshot: [String: JSONValue]? = nil,
+        attributes: [[String: JSONValue]]? = nil,
+        embeddedRules: [[String: JSONValue]]? = nil
+    ) throws {
         self.init()
         (self.id, self.title) = (id, title)
         (self.description, self.triggerType) = (description, triggerType)
@@ -163,14 +182,17 @@ extension WorkflowExportWorkflow {
 public struct WorkflowExportWorkflowState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let live = WorkflowExportWorkflowState(rawValue: "live")
     public static let draft = WorkflowExportWorkflowState(rawValue: "draft")
     public static let paused = WorkflowExportWorkflowState(rawValue: "paused")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// IPAllowlist domain models
+/// IPAllowlist domain models
 /// IP allowlist settings for the workspace.
 public struct IpAllowlist: Codable {
     /// String representing the object's type. Always has the value `ip_allowlist`.
@@ -24,21 +24,21 @@ public struct IpAllowlist: Codable {
     }
 
     init() {
-        (self.type, self.enabled, self.ipAllowlist) = (nil, nil, nil)
+        (type, enabled, ipAllowlist) = (nil, nil, nil)
     }
 }
 
-extension IpAllowlist {
-    public init(from decoder: Decoder) throws {
+public extension IpAllowlist {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.enabled = try container.sdkDecodeIfPresent(.enabled)
-        self.ipAllowlist = try container.sdkDecodeIfPresent(.ipAllowlist)
+        type = try container.sdkDecodeIfPresent(.type)
+        enabled = try container.sdkDecodeIfPresent(.enabled)
+        ipAllowlist = try container.sdkDecodeIfPresent(.ipAllowlist)
     }
 }
 
-extension IpAllowlist {
-    public init(type: String? = nil, enabled: Bool? = nil, ipAllowlist: [String]? = nil) {
+public extension IpAllowlist {
+    init(type: String? = nil, enabled: Bool? = nil, ipAllowlist: [String]? = nil) {
         self.init()
         (self.type, self.enabled) = (type, enabled)
         self.ipAllowlist = ipAllowlist

@@ -6,22 +6,31 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DataConnectorsMethods {
-    /// Lists the workspace's data connectors, ordered from most recently updated to least recently updated. Use `per_page` to set the page size and `starting_after` from `pages.next.starting_after` to continue through the results.
+public extension DataConnectorsMethods {
+    /// Lists the workspace's data connectors, ordered from most recently updated to least recently updated. Use
+    /// `per_page` to set the page size and `starting_after` from `pages.next.starting_after` to continue through the
+    /// results.
     ///
-    /// Returns a paginated list of all data connectors for the workspace, ordered by most recently updated first. Data connectors allow workflows and AI agents to make HTTP requests to external APIs.
+    /// Returns a paginated list of all data connectors for the workspace, ordered by most recently updated first. Data
+    /// connectors allow workflows and AI agents to make HTTP requests to external APIs.
     ///
     /// - Parameters:
     /// - perPage: The number of results to return per page. Defaults to 20, minimum
     ///   1, maximum 50.
     /// - startingAfter: The cursor value from `pages.next.starting_after` in a
     ///   previous response. Used to paginate through results.
-    public static func listDataConnectors(config: ClientConfig, perPage: Int? = nil, startingAfter: String? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DataConnectorList {
-        if let perPage = perPage {
+    static func listDataConnectors(
+        config: ClientConfig,
+        perPage: Int? = nil,
+        startingAfter: String? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DataConnectorList {
+        if let perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 50)
         }
 
-        return try (await sdkRequest("GET", "/data_connectors", config: config, query: [
+        return try await (sdkRequest("GET", "/data_connectors", config: config, query: [
             SdkQueryParameter("per_page", value: perPage),
             SdkQueryParameter("starting_after", value: startingAfter),
         ], decoder: .json, operationId: "listDataConnectors", extraHeaders: sdkHeaders([

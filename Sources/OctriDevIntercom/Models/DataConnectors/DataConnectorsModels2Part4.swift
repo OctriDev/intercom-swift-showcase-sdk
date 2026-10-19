@@ -3,18 +3,25 @@
 
 import Foundation
 
-// TaggedModelsDataConnectors domain models
+/// TaggedModelsDataConnectors domain models
 /// Optional enumerated value serialized in the `mapping_type` wire field.
-public struct DataConnectorDetailObjectMappingsItemAttributeMappingsItemMappingType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct DataConnectorDetailObjectMappingsItemAttributeMappingsItemMappingType: RawRepresentable, Hashable,
+    Codable,
+    Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
-    public static let primitiveMapping = DataConnectorDetailObjectMappingsItemAttributeMappingsItemMappingType(rawValue: "primitive_mapping")
-    public static let contextMapping = DataConnectorDetailObjectMappingsItemAttributeMappingsItemMappingType(rawValue: "context_mapping")
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static let primitiveMapping =
+        DataConnectorDetailObjectMappingsItemAttributeMappingsItemMappingType(rawValue: "primitive_mapping")
+    public static let contextMapping =
+        DataConnectorDetailObjectMappingsItemAttributeMappingsItemMappingType(rawValue: "context_mapping")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -24,16 +31,20 @@ public struct DataConnectorDetailObjectMappingsItemAttributeMappingsItemMappingT
 }
 
 /// The expected response format from the connector.
-public struct DataConnectorDetailConfigurationResponseType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct DataConnectorDetailConfigurationResponseType: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let testResponseType = DataConnectorDetailConfigurationResponseType(rawValue: "test_response_type")
     public static let mockResponseType = DataConnectorDetailConfigurationResponseType(rawValue: "mock_response_type")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

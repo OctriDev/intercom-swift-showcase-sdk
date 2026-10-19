@@ -6,20 +6,36 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension TagsMethods {
-    /// Deletes a tag from the workspace. Use the `tag_id` path parameter to identify the tag to delete; a tag with dependent objects cannot be deleted.
+public extension TagsMethods {
+    /// Deletes a tag from the workspace. Use the `tag_id` path parameter to identify the tag to delete; a tag with
+    /// dependent objects cannot be deleted.
     ///
     /// You can delete the details of tags that are on the workspace by passing in the id.
     ///
     /// - Parameters:
     /// - tagId: The unique identifier of a given tag
-    public static func deleteTag(config: ClientConfig, tagId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try (await sdkRequest("DELETE", ["/tags/", sdkEncodePathSegment(sdkWireString(tagId))].joined(), config: config, decoder: .empty, operationId: "deleteTag", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self])).data
+    static func deleteTag(
+        config: ClientConfig,
+        tagId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await (sdkRequest(
+            "DELETE",
+            ["/tags/", sdkEncodePathSegment(sdkWireString(tagId))].joined(),
+            config: config,
+            decoder: .empty,
+            operationId: "deleteTag",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self]
+        )).data
     }
 
-    /// Attaches an existing tag to a ticket. Supply the tag's `id` and the `admin_id` of the admin applying it. The response contains the tag object returned for the tagging operation.
+    /// Attaches an existing tag to a ticket. Supply the tag's `id` and the `admin_id` of the admin applying it. The
+    /// response contains the tag object returned for the tagging operation.
     ///
     /// You can tag a specific ticket. This will return a tag object for the tag that was added to the ticket.
     ///
@@ -27,11 +43,28 @@ extension TagsMethods {
     /// - ticketId: ticket_id
     /// - id: The unique identifier for the tag which is given by Intercom
     /// - adminId: The unique identifier for the admin which is given by Intercom.
-    public static func attachTagToTicket(config: ClientConfig, ticketId: String, id: String, adminId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Tag {
+    static func attachTagToTicket(
+        config: ClientConfig,
+        ticketId: String,
+        id: String,
+        adminId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Tag {
         let requestBody = AttachTagToTicketRequestBody(id: id, adminId: adminId)
 
-        return try (await sdkRequest("POST", ["/tickets/", sdkEncodePathSegment(sdkWireString(ticketId)), "/tags"].joined(), config: config, body: requestBody, decoder: .json, operationId: "attachTagToTicket", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/tickets/", sdkEncodePathSegment(sdkWireString(ticketId)), "/tags"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "attachTagToTicket",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).data
     }
 }

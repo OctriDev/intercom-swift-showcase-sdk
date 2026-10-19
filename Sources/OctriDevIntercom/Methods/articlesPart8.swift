@@ -6,26 +6,52 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ArticlesMethods {
-    /// Publishes a staged article draft, promoting its content to live. Use the `id` path parameter to identify the article; on a multilingual workspace, provide the `locales` array to choose which locale drafts to publish. You need the `read_write_articles_scope` OAuth scope.
+public extension ArticlesMethods {
+    /// Publishes a staged article draft, promoting its content to live. Use the `id` path parameter to identify the
+    /// article; on a multilingual workspace, provide the `locales` array to choose which locale drafts to publish. You
+    /// need the `read_write_articles_scope` OAuth scope.
     ///
-    /// Publish a staged draft by making a POST request to `https://api.intercom.io/articles/<id>/draft/publish`, promoting the draft content to live. On a single-language workspace no body is required. On a multilingual workspace you must list which locales to publish via the `locales` array; omitting it returns `422`. Returns `422` when there is no staged draft to publish, or when a requested locale has no pending changes. Requires the `read_write_articles_scope` OAuth scope.
+    /// Publish a staged draft by making a POST request to `https://api.intercom.io/articles/<id>/draft/publish`,
+    /// promoting the draft content to live. On a single-language workspace no body is required. On a multilingual
+    /// workspace you must list which locales to publish via the `locales` array; omitting it returns `422`. Returns
+    /// `422` when there is no staged draft to publish, or when a requested locale has no pending changes. Requires the
+    /// `read_write_articles_scope` OAuth scope.
     ///
     /// - Parameters:
     /// - id: The unique identifier for the article which is given by Intercom.
     /// - locales: The locales whose staged drafts should be published. Required on
     ///   multilingual workspaces; each locale must have a pending draft.
-    public static func publishArticleDraft(config: ClientConfig, id: Int, intercomVersion: IntercomVersion? = nil, locales: [String]? = nil, requestOptions: RequestOptions? = nil) async throws -> Article {
+    static func publishArticleDraft(
+        config: ClientConfig,
+        id: Int,
+        intercomVersion: IntercomVersion? = nil,
+        locales: [String]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Article {
         let requestBody = PublishArticleDraftRequestBody(locales: locales)
 
-        return try (await sdkRequest("POST", ["/articles/", sdkEncodePathSegment(sdkWireString(id)), "/draft/publish"].joined(), config: config, body: requestBody, decoder: .json, operationId: "publishArticleDraft", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "422": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/articles/", sdkEncodePathSegment(sdkWireString(id)), "/draft/publish"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "publishArticleDraft",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self, "422": Error2.self]
+        )).data
     }
 
-    /// Applies an existing workspace tag to an article. Provide the tag's `id` in the request body and use `article_id` to identify the article. The authenticated teammate needs the `manage_knowledge_base_content` permission and the `read_write_articles_scope` OAuth scope.
+    /// Applies an existing workspace tag to an article. Provide the tag's `id` in the request body and use `article_id`
+    /// to identify the article. The authenticated teammate needs the `manage_knowledge_base_content` permission and the
+    /// `read_write_articles_scope` OAuth scope.
     ///
-    /// Apply an existing tag to an article. Returns the tag that was applied. The tag must already exist in the workspace (create tags with the Tags API), and the authenticating teammate must have the `manage_knowledge_base_content` permission. Requires the `read_write_articles_scope` OAuth scope.
+    /// Apply an existing tag to an article. Returns the tag that was applied. The tag must already exist in the
+    /// workspace (create tags with the Tags API), and the authenticating teammate must have the
+    /// `manage_knowledge_base_content` permission. Requires the `read_write_articles_scope` OAuth scope.
     ///
     /// - Parameters:
     /// - articleId: The unique identifier for the article which is given by
@@ -33,11 +59,28 @@ extension ArticlesMethods {
     /// - id: The unique identifier of the tag to apply, as given by Intercom.
     /// - adminId: Optional id of the teammate to attribute the tagging to. Defaults
     ///   to the authenticating teammate. Does not affect authorization.
-    public static func attachArticlesTag(config: ClientConfig, articleId: Int, id: String, intercomVersion: IntercomVersion? = nil, adminId: SdkOptional<String>? = nil, requestOptions: RequestOptions? = nil) async throws -> Tag {
+    static func attachArticlesTag(
+        config: ClientConfig,
+        articleId: Int,
+        id: String,
+        intercomVersion: IntercomVersion? = nil,
+        adminId: SdkOptional<String>? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Tag {
         let requestBody = AttachArticlesTagRequestBody(id: id, adminId: adminId)
 
-        return try (await sdkRequest("POST", ["/articles/", sdkEncodePathSegment(sdkWireString(articleId)), "/tags"].joined(), config: config, body: requestBody, decoder: .json, operationId: "attachArticlesTag", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/articles/", sdkEncodePathSegment(sdkWireString(articleId)), "/tags"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "attachArticlesTag",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self]
+        )).data
     }
 }
