@@ -3,7 +3,7 @@
 
 import Foundation
 
-// SharedCustom domain models
+/// SharedCustom domain models
 public typealias CustomAttributes = [String: CustomAttributesValue]
 
 public typealias CustomAttributesRequest = [String: CustomAttributesRequestValue]
@@ -20,18 +20,26 @@ public indirect enum CustomAttributesValue {
 }
 
 extension CustomAttributesValue: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
+            if let value = Self.decodeLossless1(from: container, raw) {
+                self = value; return
+            }
         }
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for CustomAttributesValue")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for CustomAttributesValue"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
@@ -55,14 +63,30 @@ extension CustomAttributesValue {
 
 extension CustomAttributesValue {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode(Int.self) { return .intValue(value) }
-        if let value = try? container.decode(Double.self) { return .doubleValue(value) }
-        if let value = try? container.decode(Bool.self) { return .boolValue(value) }
-        if let value = try? container.decode(Datetime.self) { return .datetime(value) }
-        if let value = try? container.decode(CustomObjectInstanceList.self) { return .customObjectInstanceList(value) }
-        if let value = try? container.decode(AiTopicSubtopicList.self) { return .aiTopicSubtopicList(value) }
-        if let value = try? container.decode(CxScoreReasonList.self) { return .cxScoreReasonList(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container.decode(Int.self) {
+            return .intValue(value)
+        }
+        if let value = try? container.decode(Double.self) {
+            return .doubleValue(value)
+        }
+        if let value = try? container.decode(Bool.self) {
+            return .boolValue(value)
+        }
+        if let value = try? container.decode(Datetime.self) {
+            return .datetime(value)
+        }
+        if let value = try? container.decode(CustomObjectInstanceList.self) {
+            return .customObjectInstanceList(value)
+        }
+        if let value = try? container.decode(AiTopicSubtopicList.self) {
+            return .aiTopicSubtopicList(value)
+        }
+        if let value = try? container.decode(CxScoreReasonList.self) {
+            return .cxScoreReasonList(value)
+        }
         return nil
     }
 }
@@ -103,19 +127,19 @@ public struct CustomActionStarted: Codable {
     }
 
     init() {
-        self.action = nil
+        action = nil
     }
 }
 
-extension CustomActionStarted {
-    public init(from decoder: Decoder) throws {
+public extension CustomActionStarted {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.action = try container.sdkDecodeIfPresent(.action)
+        action = try container.sdkDecodeIfPresent(.action)
     }
 }
 
-extension CustomActionStarted {
-    public init(action: CustomActionStartedAction? = nil) {
+public extension CustomActionStarted {
+    init(action: CustomActionStartedAction? = nil) {
         self.init()
         self.action = action
     }
@@ -132,19 +156,19 @@ public struct CustomActionStartedAction: Codable {
     }
 
     init() {
-        self.name = nil
+        name = nil
     }
 }
 
-extension CustomActionStartedAction {
-    public init(from decoder: Decoder) throws {
+public extension CustomActionStartedAction {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension CustomActionStartedAction {
-    public init(name: String? = nil) {
+public extension CustomActionStartedAction {
+    init(name: String? = nil) {
         self.init()
         self.name = name
     }
@@ -160,19 +184,19 @@ public struct CustomActionFinished: Codable {
     }
 
     init() {
-        self.action = nil
+        action = nil
     }
 }
 
-extension CustomActionFinished {
-    public init(from decoder: Decoder) throws {
+public extension CustomActionFinished {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.action = try container.sdkDecodeIfPresent(.action)
+        action = try container.sdkDecodeIfPresent(.action)
     }
 }
 
-extension CustomActionFinished {
-    public init(action: CustomActionFinishedAction? = nil) {
+public extension CustomActionFinished {
+    init(action: CustomActionFinishedAction? = nil) {
         self.init()
         self.action = action
     }
@@ -192,20 +216,20 @@ public struct CustomObjectInstanceList: Codable {
     }
 
     init() {
-        (self.type, self.instances) = (nil, nil)
+        (type, instances) = (nil, nil)
     }
 }
 
-extension CustomObjectInstanceList {
-    public init(from decoder: Decoder) throws {
+public extension CustomObjectInstanceList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.instances = try container.sdkDecodeIfPresent(.instances)
+        type = try container.sdkDecodeIfPresent(.type)
+        instances = try container.sdkDecodeIfPresent(.instances)
     }
 }
 
-extension CustomObjectInstanceList {
-    public init(type: String? = nil, instances: [CustomObjectInstance?]? = nil) {
+public extension CustomObjectInstanceList {
+    init(type: String? = nil, instances: [CustomObjectInstance?]? = nil) {
         self.init()
         (self.type, self.instances) = (type, instances)
     }
@@ -226,20 +250,20 @@ public struct CustomActionFinishedAction: Codable {
     }
 
     init() {
-        (self.name, self.result) = (nil, nil)
+        (name, result) = (nil, nil)
     }
 }
 
-extension CustomActionFinishedAction {
-    public init(from decoder: Decoder) throws {
+public extension CustomActionFinishedAction {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.result = try container.sdkDecodeIfPresent(.result)
+        name = try container.sdkDecodeIfPresent(.name)
+        result = try container.sdkDecodeIfPresent(.result)
     }
 }
 
-extension CustomActionFinishedAction {
-    public init(name: String? = nil, result: CustomActionFinishedActionResult? = nil) {
+public extension CustomActionFinishedAction {
+    init(name: String? = nil, result: CustomActionFinishedActionResult? = nil) {
         self.init()
         (self.name, self.result) = (name, result)
     }
@@ -255,18 +279,26 @@ public indirect enum CustomAttributesRequestValue {
 }
 
 extension CustomAttributesRequestValue: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
+            if let value = Self.decodeLossless1(from: container, raw) {
+                self = value; return
+            }
         }
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for CustomAttributesRequestValue")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for CustomAttributesRequestValue"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
@@ -284,12 +316,24 @@ extension CustomAttributesRequestValue {
 
 extension CustomAttributesRequestValue {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode(Int.self) { return .intValue(value) }
-        if let value = try? container.decode(Double.self) { return .doubleValue(value) }
-        if let value = try? container.decode(Bool.self) { return .boolValue(value) }
-        if let value = try? container.decode(Datetime.self) { return .datetime(value) }
-        if let value = try? container.decode(CustomObjectInstanceList.self) { return .customObjectInstanceList(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container.decode(Int.self) {
+            return .intValue(value)
+        }
+        if let value = try? container.decode(Double.self) {
+            return .doubleValue(value)
+        }
+        if let value = try? container.decode(Bool.self) {
+            return .boolValue(value)
+        }
+        if let value = try? container.decode(Datetime.self) {
+            return .datetime(value)
+        }
+        if let value = try? container.decode(CustomObjectInstanceList.self) {
+            return .customObjectInstanceList(value)
+        }
         return nil
     }
 }
@@ -322,13 +366,16 @@ extension CustomAttributesRequestValue: SdkNumericValueConvertible {
 public struct CustomActionFinishedActionResult: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let success = CustomActionFinishedActionResult(rawValue: "success")
     public static let failed = CustomActionFinishedActionResult(rawValue: "failed")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

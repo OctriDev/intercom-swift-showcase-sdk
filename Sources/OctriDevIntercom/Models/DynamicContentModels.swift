@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DynamicContent domain models
+/// DynamicContent domain models
 /// The request payload for creating dynamic content.
 public struct DynamicContentCreateRequest: Codable {
     /// The name of the dynamic content. Must be unique in the workspace.
@@ -28,39 +28,62 @@ public struct DynamicContentCreateRequest: Codable {
         case variations
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DynamicContentCreateRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.name) else {
-            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
-        }
-        guard container.contains(.contentType) else {
-            throw SdkValidationError(field: "content_type", code: "required", message: "Validation failed for 'content_type': value is required")
-        }
-        guard container.contains(.defaultLocale) else {
-            throw SdkValidationError(field: "default_locale", code: "required", message: "Validation failed for 'default_locale': value is required")
-        }
-        guard container.contains(.variations) else {
-            throw SdkValidationError(field: "variations", code: "required", message: "Validation failed for 'variations': value is required")
-        }
-        self.name = try container.sdkDecodeRequired(.name)
-        self.contentType = try container.sdkDecodeRequired(.contentType)
-        self.defaultLocale = try container.sdkDecodeRequired(.defaultLocale)
-        self.variations = try container.sdkDecodeRequired(.variations)
-            try validateLength("name", self.name, min: nil, max: 255)
-            try validateItems("variations", self.variations, min: 1, max: nil)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DynamicContentCreateRequest {
-    public init(name: String, contentType: DynamicContentCreateRequestContentType, defaultLocale: String, variations: [DynamicContentVariationRequest]) throws {
+public extension DynamicContentCreateRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.name) else {
+            throw SdkValidationError(
+                field: "name",
+                code: "required",
+                message: "Validation failed for 'name': value is required"
+            )
+        }
+        guard container.contains(.contentType) else {
+            throw SdkValidationError(
+                field: "content_type",
+                code: "required",
+                message: "Validation failed for 'content_type': value is required"
+            )
+        }
+        guard container.contains(.defaultLocale) else {
+            throw SdkValidationError(
+                field: "default_locale",
+                code: "required",
+                message: "Validation failed for 'default_locale': value is required"
+            )
+        }
+        guard container.contains(.variations) else {
+            throw SdkValidationError(
+                field: "variations",
+                code: "required",
+                message: "Validation failed for 'variations': value is required"
+            )
+        }
+        name = try container.sdkDecodeRequired(.name)
+        contentType = try container.sdkDecodeRequired(.contentType)
+        defaultLocale = try container.sdkDecodeRequired(.defaultLocale)
+        variations = try container.sdkDecodeRequired(.variations)
+        try validateLength("name", name, min: nil, max: 255)
+        try validateItems("variations", variations, min: 1, max: nil)
+    }
+}
+
+public extension DynamicContentCreateRequest {
+    init(
+        name: String,
+        contentType: DynamicContentCreateRequestContentType,
+        defaultLocale: String,
+        variations: [DynamicContentVariationRequest]
+    ) throws {
         (self.name, self.contentType) = (name, contentType)
         (self.defaultLocale, self.variations) = (defaultLocale, variations)
-            try validateLength("name", self.name, min: nil, max: 255)
-            try validateItems("variations", self.variations, min: 1, max: nil)
+        try validateLength("name", self.name, min: nil, max: 255)
+        try validateItems("variations", self.variations, min: 1, max: nil)
     }
 }
 
@@ -94,25 +117,32 @@ public struct DynamicContentList: Codable {
     }
 
     init() {
-        (self.type, self.data, self.totalCount, self.page, self.perPage) = (nil, nil, nil, nil, nil)
-        self.totalPages = nil
+        (type, data, totalCount, page, perPage) = (nil, nil, nil, nil, nil)
+        totalPages = nil
     }
 }
 
-extension DynamicContentList {
-    public init(from decoder: Decoder) throws {
+public extension DynamicContentList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.data = try container.sdkDecodeIfPresent(.data)
-        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        self.page = try container.sdkDecodeIfPresent(.page)
-        self.perPage = try container.sdkDecodeIfPresent(.perPage)
-        self.totalPages = try container.sdkDecodeIfPresent(.totalPages)
+        type = try container.sdkDecodeIfPresent(.type)
+        data = try container.sdkDecodeIfPresent(.data)
+        totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        page = try container.sdkDecodeIfPresent(.page)
+        perPage = try container.sdkDecodeIfPresent(.perPage)
+        totalPages = try container.sdkDecodeIfPresent(.totalPages)
     }
 }
 
-extension DynamicContentList {
-    public init(type: DynamicContentListType? = nil, data: [DynamicContent]? = nil, totalCount: Int? = nil, page: Int? = nil, perPage: Int? = nil, totalPages: Int? = nil) {
+public extension DynamicContentList {
+    init(
+        type: DynamicContentListType? = nil,
+        data: [DynamicContent]? = nil,
+        totalCount: Int? = nil,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        totalPages: Int? = nil
+    ) {
         self.init()
         (self.type, self.data) = (type, data)
         (self.totalCount, self.page) = (totalCount, page)
@@ -148,25 +178,37 @@ public struct DynamicContentVariationRequest: Codable {
         case intentionallyEmpty = "intentionally_empty"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension DynamicContentVariationRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.locale) else {
-            throw SdkValidationError(field: "locale", code: "required", message: "Validation failed for 'locale': value is required")
-        }
-        self.locale = try container.sdkDecodeRequired(.locale)
-        self.brandId = try container.sdkDecodeIfPresent(.brandId)
-        self.textContent = try container.sdkDecodeIfPresent(.textContent)
-        self.body = try container.sdkDecodeIfPresent(.body)
-        self.intentionallyEmpty = try container.sdkDecodeIfPresent(.intentionallyEmpty)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension DynamicContentVariationRequest {
-    public init(locale: String, brandId: String? = nil, textContent: String? = nil, body: String? = nil, intentionallyEmpty: Bool? = nil) {
+public extension DynamicContentVariationRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.locale) else {
+            throw SdkValidationError(
+                field: "locale",
+                code: "required",
+                message: "Validation failed for 'locale': value is required"
+            )
+        }
+        locale = try container.sdkDecodeRequired(.locale)
+        brandId = try container.sdkDecodeIfPresent(.brandId)
+        textContent = try container.sdkDecodeIfPresent(.textContent)
+        body = try container.sdkDecodeIfPresent(.body)
+        intentionallyEmpty = try container.sdkDecodeIfPresent(.intentionallyEmpty)
+    }
+}
+
+public extension DynamicContentVariationRequest {
+    init(
+        locale: String,
+        brandId: String? = nil,
+        textContent: String? = nil,
+        body: String? = nil,
+        intentionallyEmpty: Bool? = nil
+    ) {
         (self.locale, self.brandId) = (locale, brandId)
         (self.textContent, self.body) = (textContent, body)
         self.intentionallyEmpty = intentionallyEmpty
@@ -192,27 +234,31 @@ public struct DynamicContentUpdateRequest: Codable {
     }
 
     init() {
-        (self.name, self.defaultLocale, self.variations) = (nil, nil, nil)
+        (name, defaultLocale, variations) = (nil, nil, nil)
     }
 }
 
-extension DynamicContentUpdateRequest {
-    public init(from decoder: Decoder) throws {
+public extension DynamicContentUpdateRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.defaultLocale = try container.sdkDecodeIfPresent(.defaultLocale)
-        self.variations = try container.sdkDecodeIfPresent(.variations)
-        if let value = self.name {
+        name = try container.sdkDecodeIfPresent(.name)
+        defaultLocale = try container.sdkDecodeIfPresent(.defaultLocale)
+        variations = try container.sdkDecodeIfPresent(.variations)
+        if let value = name {
             try validateLength("name", value, min: nil, max: 255)
         }
-        if let value = self.variations {
+        if let value = variations {
             try validateItems("variations", value, min: 1, max: nil)
         }
     }
 }
 
-extension DynamicContentUpdateRequest {
-    public init(name: String? = nil, defaultLocale: String? = nil, variations: [DynamicContentVariationRequest]? = nil) throws {
+public extension DynamicContentUpdateRequest {
+    init(
+        name: String? = nil,
+        defaultLocale: String? = nil,
+        variations: [DynamicContentVariationRequest]? = nil
+    ) throws {
         self.init()
         (self.name, self.defaultLocale) = (name, defaultLocale)
         self.variations = variations
@@ -229,12 +275,15 @@ extension DynamicContentUpdateRequest {
 public struct DynamicContentListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let list = DynamicContentListType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -245,16 +294,20 @@ public struct DynamicContentListType: RawRepresentable, Hashable, Codable, Senda
 
 /// Whether the dynamic content is a short inline value (`inline`) or one or more blocks of content (`block`).
 /// Can't be changed later.
-public struct DynamicContentCreateRequestContentType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct DynamicContentCreateRequestContentType: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let inline = DynamicContentCreateRequestContentType(rawValue: "inline")
     public static let block = DynamicContentCreateRequestContentType(rawValue: "block")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

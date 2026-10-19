@@ -6,30 +6,67 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension CompaniesMethods {
-    /// Deletes a company from the workspace and detaches its contacts without deleting the contact records. Contact detachment is permanent, and a `company.deleted` webhook is sent after deletion. A third-party integration may recreate the company on its next sync, so remove or filter it at the source before deleting it here.
+public extension CompaniesMethods {
+    /// Deletes a company from the workspace and detaches its contacts without deleting the contact records. Contact
+    /// detachment is permanent, and a `company.deleted` webhook is sent after deletion. A third-party integration may
+    /// recreate the company on its next sync, so remove or filter it at the source before deleting it here.
     ///
-    /// Delete a single company. The company record is kept in your workspace, but all contacts are detached. The contacts themselves are not deleted. Detaching contacts is permanent and can't be reversed. A `company.deleted` webhook is sent when the company is deleted. These changes may take some time to be reflected in your workspace. {% admonition type="warning" %} Third-party integrations that sync companies into Intercom (for example, Salesforce or Chargebee) will recreate any company deleted through this endpoint on their next sync. To prevent recreation, remove or filter the company at the source integration before deleting it via the API. {% /admonition %}
+    /// Delete a single company. The company record is kept in your workspace, but all contacts are detached. The
+    /// contacts themselves are not deleted. Detaching contacts is permanent and can't be reversed. A `company.deleted`
+    /// webhook is sent when the company is deleted. These changes may take some time to be reflected in your workspace.
+    /// {% admonition type="warning" %} Third-party integrations that sync companies into Intercom (for example,
+    /// Salesforce or Chargebee) will recreate any company deleted through this endpoint on their next sync. To prevent
+    /// recreation, remove or filter the company at the source integration before deleting it via the API. {%
+    /// /admonition %}
     ///
     /// - Parameters:
     /// - companyId: The unique identifier for the company which is given by
     ///   Intercom
-    public static func deleteCompany(config: ClientConfig, companyId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DeletedCompanyObject {
-        return try (await sdkRequest("DELETE", ["/companies/", sdkEncodePathSegment(sdkWireString(companyId))].joined(), config: config, decoder: .json, operationId: "deleteCompany", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
+    static func deleteCompany(
+        config: ClientConfig,
+        companyId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DeletedCompanyObject {
+        try await (sdkRequest(
+            "DELETE",
+            ["/companies/", sdkEncodePathSegment(sdkWireString(companyId))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "deleteCompany",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).data
     }
 
-    /// Lists the contacts associated with a specific company. Use the company identifier to retrieve its attached contacts; the response includes cursor-based pagination metadata.
+    /// Lists the contacts associated with a specific company. Use the company identifier to retrieve its attached
+    /// contacts; the response includes cursor-based pagination metadata.
     ///
     /// You can fetch a list of all contacts that belong to a company.
     ///
     /// - Parameters:
     /// - companyId: The unique identifier for the company which is given by
     ///   Intercom
-    public static func listAttachedContacts(config: ClientConfig, companyId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> CompanyAttachedContacts {
-        return try (await sdkRequest("GET", ["/companies/", sdkEncodePathSegment(sdkWireString(companyId)), "/contacts"].joined(), config: config, decoder: .json, operationId: "ListAttachedContacts", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
+    static func listAttachedContacts(
+        config: ClientConfig,
+        companyId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CompanyAttachedContacts {
+        try await (sdkRequest(
+            "GET",
+            ["/companies/", sdkEncodePathSegment(sdkWireString(companyId)), "/contacts"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "ListAttachedContacts",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).data
     }
 }

@@ -3,17 +3,21 @@
 
 import Foundation
 
-// Tickets domain models
+/// Tickets domain models
 /// Required enumerated value serialized in the `message_type` wire field.
-public struct ContactReplyTicketIntercomUserIdRequestMessageType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct ContactReplyTicketIntercomUserIdRequestMessageType: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let comment = ContactReplyTicketIntercomUserIdRequestMessageType(rawValue: "comment")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -27,14 +31,17 @@ public struct ContactReplyTicketIntercomUserIdRequestMessageType: RawRepresentab
 public struct AdminReplyTicketRequestMessageType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let comment = AdminReplyTicketRequestMessageType(rawValue: "comment")
     public static let note = AdminReplyTicketRequestMessageType(rawValue: "note")
     public static let quickReply = AdminReplyTicketRequestMessageType(rawValue: "quick_reply")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -44,15 +51,19 @@ public struct AdminReplyTicketRequestMessageType: RawRepresentable, Hashable, Co
 }
 
 /// Required enumerated value serialized in the `type` wire field.
-public struct ContactReplyTicketIntercomUserIdRequestType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct ContactReplyTicketIntercomUserIdRequestType: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let user = ContactReplyTicketIntercomUserIdRequestType(rawValue: "user")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -62,15 +73,19 @@ public struct ContactReplyTicketIntercomUserIdRequestType: RawRepresentable, Has
 }
 
 /// Required enumerated value serialized in the `message_type` wire field.
-public struct ContactReplyTicketUserIdRequestMessageType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct ContactReplyTicketUserIdRequestMessageType: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let comment = ContactReplyTicketUserIdRequestMessageType(rawValue: "comment")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -83,12 +98,15 @@ public struct ContactReplyTicketUserIdRequestMessageType: RawRepresentable, Hash
 public struct TicketReplyType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let ticketPart = TicketReplyType(rawValue: "ticket_part")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -98,15 +116,19 @@ public struct TicketReplyType: RawRepresentable, Hashable, Codable, Sendable, Sd
 }
 
 /// Required enumerated value serialized in the `message_type` wire field.
-public struct ContactReplyTicketEmailRequestMessageType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct ContactReplyTicketEmailRequestMessageType: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let comment = ContactReplyTicketEmailRequestMessageType(rawValue: "comment")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -119,12 +141,15 @@ public struct ContactReplyTicketEmailRequestMessageType: RawRepresentable, Hasha
 public struct AdminReplyTicketRequestType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let admin = AdminReplyTicketRequestType(rawValue: "admin")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -137,12 +162,15 @@ public struct AdminReplyTicketRequestType: RawRepresentable, Hashable, Codable, 
 public struct ContactReplyTicketEmailRequestType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let user = ContactReplyTicketEmailRequestType(rawValue: "user")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

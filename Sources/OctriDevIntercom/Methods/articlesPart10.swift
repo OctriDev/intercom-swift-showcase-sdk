@@ -6,10 +6,15 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ArticlesMethods {
-    /// Lists an article's version history as paginated metadata, with the newest versions first. Use `locale` to filter the history to a configured locale, and use `page` and `per_page` to paginate the results. Retrieve an individual version to access its full content.
+public extension ArticlesMethods {
+    /// Lists an article's version history as paginated metadata, with the newest versions first. Use `locale` to filter
+    /// the history to a configured locale, and use `page` and `per_page` to paginate the results. Retrieve an
+    /// individual version to access its full content.
     ///
-    /// Fetch the version history of an article by making a GET request to `https://api.intercom.io/articles/<article_id>/versions`. Versions are returned newest-first as a paginated list of metadata. Use `GET /articles/{article_id}/versions/{id}` to retrieve a single version with its full content. Requires the `read_articles_scope` OAuth scope.
+    /// Fetch the version history of an article by making a GET request to
+    /// `https://api.intercom.io/articles/<article_id>/versions`. Versions are returned newest-first as a paginated list
+    /// of metadata. Use `GET /articles/{article_id}/versions/{id}` to retrieve a single version with its full content.
+    /// Requires the `read_articles_scope` OAuth scope.
     ///
     /// - Parameters:
     /// - articleId: The unique identifier for the article whose versions you are
@@ -19,13 +24,31 @@ extension ArticlesMethods {
     /// - locale: Filter versions to a specific locale. Use the locale identifier
     ///   (for example `en`, `fr`). If the locale is not configured for the workspace,
     ///   a `400` is returned.
-    public static func listArticleVersions(config: ClientConfig, articleId: Int, page: Int? = nil, perPage: Int? = nil, locale: String? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ArticleVersionList {
-        return try (await sdkRequest("GET", ["/articles/", sdkEncodePathSegment(sdkWireString(articleId)), "/versions"].joined(), config: config, query: [
-            SdkQueryParameter("page", value: page),
-            SdkQueryParameter("per_page", value: perPage),
-            SdkQueryParameter("locale", value: locale),
-        ], decoder: .json, operationId: "listArticleVersions", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self])).data
+    static func listArticleVersions(
+        config: ClientConfig,
+        articleId: Int,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        locale: String? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ArticleVersionList {
+        try await (sdkRequest(
+            "GET",
+            ["/articles/", sdkEncodePathSegment(sdkWireString(articleId)), "/versions"].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("page", value: page),
+                SdkQueryParameter("per_page", value: perPage),
+                SdkQueryParameter("locale", value: locale),
+            ],
+            decoder: .json,
+            operationId: "listArticleVersions",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self]
+        )).data
     }
 }

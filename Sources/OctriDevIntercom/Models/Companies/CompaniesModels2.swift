@@ -3,7 +3,7 @@
 
 import Foundation
 
-// TaggedModelsCompanies domain models
+/// TaggedModelsCompanies domain models
 /// Companies allow you to represent organizations using your product. Each company will have its own description
 /// and be associated with contacts. You can fetch, create, update and list companies.
 public struct Company: Codable {
@@ -88,41 +88,62 @@ public struct Company: Codable {
     }
 
     init() {
-        (self.type, self.id, self.name, self.appId, self.plan) = (nil, nil, nil, nil, nil)
-        (self.companyId, self.remoteCreatedAt, self.createdAt, self.updatedAt, self.lastRequestAt) = (nil, nil, nil, nil, nil)
-        (self.size, self.website, self.industry, self.monthlySpend, self.sessionCount) = (nil, nil, nil, nil, nil)
-        (self.userCount, self.customAttributes, self.tags, self.segments, self.notes) = (nil, nil, nil, nil, nil)
+        (type, id, name, appId, plan) = (nil, nil, nil, nil, nil)
+        (companyId, remoteCreatedAt, createdAt, updatedAt, lastRequestAt) = (nil, nil, nil, nil, nil)
+        (size, website, industry, monthlySpend, sessionCount) = (nil, nil, nil, nil, nil)
+        (userCount, customAttributes, tags, segments, notes) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension Company {
-    public init(from decoder: Decoder) throws {
+public extension Company {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.appId = try container.sdkDecodeIfPresent(.appId)
-        self.plan = try container.sdkDecodeIfPresent(.plan)
-        self.companyId = try container.sdkDecodeIfPresent(.companyId)
-        self.remoteCreatedAt = try container.sdkDecodeIfPresent(.remoteCreatedAt)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.lastRequestAt = try container.sdkDecodeIfPresent(.lastRequestAt)
-        self.size = try container.sdkDecodeIfPresent(.size)
-        self.website = try container.sdkDecodeIfPresent(.website)
-        self.industry = try container.sdkDecodeIfPresent(.industry)
-        self.monthlySpend = try container.sdkDecodeIfPresent(.monthlySpend)
-        self.sessionCount = try container.sdkDecodeIfPresent(.sessionCount)
-        self.userCount = try container.sdkDecodeIfPresent(.userCount)
-        self.customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.segments = try container.sdkDecodeIfPresent(.segments)
-        self.notes = try container.sdkDecodeIfPresent(.notes)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        appId = try container.sdkDecodeIfPresent(.appId)
+        plan = try container.sdkDecodeIfPresent(.plan)
+        companyId = try container.sdkDecodeIfPresent(.companyId)
+        remoteCreatedAt = try container.sdkDecodeIfPresent(.remoteCreatedAt)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        lastRequestAt = try container.sdkDecodeIfPresent(.lastRequestAt)
+        size = try container.sdkDecodeIfPresent(.size)
+        website = try container.sdkDecodeIfPresent(.website)
+        industry = try container.sdkDecodeIfPresent(.industry)
+        monthlySpend = try container.sdkDecodeIfPresent(.monthlySpend)
+        sessionCount = try container.sdkDecodeIfPresent(.sessionCount)
+        userCount = try container.sdkDecodeIfPresent(.userCount)
+        customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        segments = try container.sdkDecodeIfPresent(.segments)
+        notes = try container.sdkDecodeIfPresent(.notes)
     }
 }
 
-extension Company {
-    public init(type: CompanyType? = nil, id: String? = nil, name: String? = nil, appId: String? = nil, plan: CompanyPlan? = nil, companyId: String? = nil, remoteCreatedAt: Int? = nil, createdAt: Int? = nil, updatedAt: Int? = nil, lastRequestAt: Int? = nil, size: Int? = nil, website: String? = nil, industry: String? = nil, monthlySpend: Int? = nil, sessionCount: Int? = nil, userCount: Int? = nil, customAttributes: [String: String]? = nil, tags: CompanyTags? = nil, segments: CompanySegments? = nil, notes: CompanyNotes? = nil) {
+public extension Company {
+    init(
+        type: CompanyType? = nil,
+        id: String? = nil,
+        name: String? = nil,
+        appId: String? = nil,
+        plan: CompanyPlan? = nil,
+        companyId: String? = nil,
+        remoteCreatedAt: Int? = nil,
+        createdAt: Int? = nil,
+        updatedAt: Int? = nil,
+        lastRequestAt: Int? = nil,
+        size: Int? = nil,
+        website: String? = nil,
+        industry: String? = nil,
+        monthlySpend: Int? = nil,
+        sessionCount: Int? = nil,
+        userCount: Int? = nil,
+        customAttributes: [String: String]? = nil,
+        tags: CompanyTags? = nil,
+        segments: CompanySegments? = nil,
+        notes: CompanyNotes? = nil
+    ) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.name, self.appId) = (name, appId)
@@ -150,20 +171,20 @@ public struct CompanyTags: Codable {
     }
 
     init() {
-        (self.type, self.tags) = (nil, nil)
+        (type, tags) = (nil, nil)
     }
 }
 
-extension CompanyTags {
-    public init(from decoder: Decoder) throws {
+public extension CompanyTags {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
+        type = try container.sdkDecodeIfPresent(.type)
+        tags = try container.sdkDecodeIfPresent(.tags)
     }
 }
 
-extension CompanyTags {
-    public init(type: CompanyTagsType? = nil, tags: [TagBasic]? = nil) {
+public extension CompanyTags {
+    init(type: CompanyTagsType? = nil, tags: [TagBasic]? = nil) {
         self.init()
         (self.type, self.tags) = (type, tags)
     }
@@ -182,20 +203,20 @@ public struct CompanyNotes: Codable {
     }
 
     init() {
-        (self.type, self.notes) = (nil, nil)
+        (type, notes) = (nil, nil)
     }
 }
 
-extension CompanyNotes {
-    public init(from decoder: Decoder) throws {
+public extension CompanyNotes {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.notes = try container.sdkDecodeIfPresent(.notes)
+        type = try container.sdkDecodeIfPresent(.type)
+        notes = try container.sdkDecodeIfPresent(.notes)
     }
 }
 
-extension CompanyNotes {
-    public init(type: CompanyNotesType? = nil, notes: [CompanyNote]? = nil) {
+public extension CompanyNotes {
+    init(type: CompanyNotesType? = nil, notes: [CompanyNote]? = nil) {
         self.init()
         (self.type, self.notes) = (type, notes)
     }
@@ -214,20 +235,20 @@ public struct CompanySegments: Codable {
     }
 
     init() {
-        (self.type, self.segments) = (nil, nil)
+        (type, segments) = (nil, nil)
     }
 }
 
-extension CompanySegments {
-    public init(from decoder: Decoder) throws {
+public extension CompanySegments {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.segments = try container.sdkDecodeIfPresent(.segments)
+        type = try container.sdkDecodeIfPresent(.type)
+        segments = try container.sdkDecodeIfPresent(.segments)
     }
 }
 
-extension CompanySegments {
-    public init(type: CompanySegmentsType? = nil, segments: [Segment]? = nil) {
+public extension CompanySegments {
+    init(type: CompanySegmentsType? = nil, segments: [Segment]? = nil) {
         self.init()
         (self.type, self.segments) = (type, segments)
     }
@@ -252,21 +273,21 @@ public struct CompanyPlan: Codable {
     }
 
     init() {
-        (self.type, self.id, self.name) = (nil, nil, nil)
+        (type, id, name) = (nil, nil, nil)
     }
 }
 
-extension CompanyPlan {
-    public init(from decoder: Decoder) throws {
+public extension CompanyPlan {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension CompanyPlan {
-    public init(type: String? = nil, id: String? = nil, name: String? = nil) {
+public extension CompanyPlan {
+    init(type: String? = nil, id: String? = nil, name: String? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         self.name = name
@@ -277,12 +298,15 @@ extension CompanyPlan {
 public struct CompanySegmentsType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let segmentList = CompanySegmentsType(rawValue: "segment.list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -295,12 +319,15 @@ public struct CompanySegmentsType: RawRepresentable, Hashable, Codable, Sendable
 public struct CompanyTagsType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let tagList = CompanyTagsType(rawValue: "tag.list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -313,12 +340,15 @@ public struct CompanyTagsType: RawRepresentable, Hashable, Codable, Sendable, Sd
 public struct CompanyType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let company = CompanyType(rawValue: "company")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -331,12 +361,15 @@ public struct CompanyType: RawRepresentable, Hashable, Codable, Sendable, SdkWir
 public struct CompanyNotesType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let noteList = CompanyNotesType(rawValue: "note.list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

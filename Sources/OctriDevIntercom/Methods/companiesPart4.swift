@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension CompaniesMethods {
-    public struct UpdateCompanyOptions: Codable {
+public extension CompaniesMethods {
+    struct UpdateCompanyOptions: Codable {
         public var companyId: String
         public var intercomVersion: IntercomVersion?
         public var name: String?
@@ -23,9 +23,12 @@ extension CompaniesMethods {
         }
     }
 
-    /// Replaces details for a company identified by its Intercom-assigned ID. Supply the company properties you want to update; `company_id` is set only when the company is created and cannot be changed.
+    /// Replaces details for a company identified by its Intercom-assigned ID. Supply the company properties you want to
+    /// update; `company_id` is set only when the company is created and cannot be changed.
     ///
-    /// You can update a single company using the Intercom provisioned `id`. {% admonition type="warning" name="Using `company_id`" %} When updating a company it is not possible to update `company_id`. This can only be set once upon creation of the company. {% /admonition %}
+    /// You can update a single company using the Intercom provisioned `id`. {% admonition type="warning" name="Using
+    /// `company_id`" %} When updating a company it is not possible to update `company_id`. This can only be set once
+    /// upon creation of the company. {% /admonition %}
     ///
     /// - Parameters:
     /// - companyId: The unique identifier for the company which is given by
@@ -42,11 +45,25 @@ extension CompaniesMethods {
     ///   Note that this will truncate floats. i.e. it only allow for whole integers,
     ///   155.98 will be truncated to 155. Note that this has an upper limit of
     ///   2**31-1 or 2147483647..
-    public static func updateCompany(config: ClientConfig, options: UpdateCompanyOptions, requestOptions: RequestOptions? = nil) async throws -> Company {
+    static func updateCompany(
+        config: ClientConfig,
+        options: UpdateCompanyOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Company {
         let requestBody = UpdateCompanyRequestBody(options: options)
 
-        return try (await sdkRequest("PUT", ["/companies/", sdkEncodePathSegment(sdkWireString(options.companyId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "UpdateCompany", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            ["/companies/", sdkEncodePathSegment(sdkWireString(options.companyId))].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "UpdateCompany",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).data
     }
 }

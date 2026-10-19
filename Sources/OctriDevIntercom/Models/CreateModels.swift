@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Create domain models
+/// Create domain models
 /// You can create an Article
 public struct CreateArticleRequest: Codable {
     /// The title of the article.For multilingual articles, this will be the title of the default language's
@@ -95,45 +95,72 @@ public struct CreateArticleRequest: Codable {
         case scheduledUnpublishAt = "scheduled_unpublish_at"
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension CreateArticleRequest {
-    public init(from decoder: Decoder) throws {
+public extension CreateArticleRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.title) else {
-            throw SdkValidationError(field: "title", code: "required", message: "Validation failed for 'title': value is required")
+            throw SdkValidationError(
+                field: "title",
+                code: "required",
+                message: "Validation failed for 'title': value is required"
+            )
         }
         guard container.contains(.authorId) else {
-            throw SdkValidationError(field: "author_id", code: "required", message: "Validation failed for 'author_id': value is required")
+            throw SdkValidationError(
+                field: "author_id",
+                code: "required",
+                message: "Validation failed for 'author_id': value is required"
+            )
         }
-        self.title = try container.sdkDecodeRequired(.title)
-        self.authorId = try container.sdkDecodeRequired(.authorId)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.body = try container.sdkDecodeIfPresent(.body)
-        self.bodyMarkdown = try container.sdkDecodeIfPresent(.bodyMarkdown)
-        self.state = try container.sdkDecodeIfPresent(.state)
-        self.parentId = try container.sdkDecodeIfPresent(.parentId)
-        self.parentType = try container.sdkDecodeIfPresent(.parentType)
-        self.translatedContent = try container.sdkDecodeIfPresent(.translatedContent)
-        self.folderId = try container.sdkDecodeIfPresent(.folderId)
-        self.audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
-        self.aiChatbotAvailability = try container.sdkDecodeIfPresent(.aiChatbotAvailability)
-        self.aiCopilotAvailability = try container.sdkDecodeIfPresent(.aiCopilotAvailability)
-        self.aiSalesAgentAvailability = try container.sdkDecodeIfPresent(.aiSalesAgentAvailability)
-        self.scheduledPublishAt = try container.sdkDecodeIfPresent(.scheduledPublishAt)
-        self.scheduledUnpublishAt = try container.sdkDecodeIfPresent(.scheduledUnpublishAt)
-        if let value = self.scheduledPublishAt {
+        title = try container.sdkDecodeRequired(.title)
+        authorId = try container.sdkDecodeRequired(.authorId)
+        description = try container.sdkDecodeIfPresent(.description)
+        body = try container.sdkDecodeIfPresent(.body)
+        bodyMarkdown = try container.sdkDecodeIfPresent(.bodyMarkdown)
+        state = try container.sdkDecodeIfPresent(.state)
+        parentId = try container.sdkDecodeIfPresent(.parentId)
+        parentType = try container.sdkDecodeIfPresent(.parentType)
+        translatedContent = try container.sdkDecodeIfPresent(.translatedContent)
+        folderId = try container.sdkDecodeIfPresent(.folderId)
+        audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
+        aiChatbotAvailability = try container.sdkDecodeIfPresent(.aiChatbotAvailability)
+        aiCopilotAvailability = try container.sdkDecodeIfPresent(.aiCopilotAvailability)
+        aiSalesAgentAvailability = try container.sdkDecodeIfPresent(.aiSalesAgentAvailability)
+        scheduledPublishAt = try container.sdkDecodeIfPresent(.scheduledPublishAt)
+        scheduledUnpublishAt = try container.sdkDecodeIfPresent(.scheduledUnpublishAt)
+        if let value = scheduledPublishAt {
             try sdkValidateDateTime("scheduled_publish_at", sdkWireString(value))
         }
-        if let value = self.scheduledUnpublishAt {
+        if let value = scheduledUnpublishAt {
             try sdkValidateDateTime("scheduled_unpublish_at", sdkWireString(value))
         }
     }
 }
 
-extension CreateArticleRequest {
-    public init(title: String, authorId: Int, description: String? = nil, body: String? = nil, bodyMarkdown: String? = nil, state: CreateArticleRequestState? = nil, parentId: Int? = nil, parentType: String? = nil, translatedContent: ArticleTranslatedContent? = nil, folderId: Int? = nil, audienceIds: [Int]? = nil, aiChatbotAvailability: Bool? = nil, aiCopilotAvailability: Bool? = nil, aiSalesAgentAvailability: Bool? = nil, scheduledPublishAt: Date? = nil, scheduledUnpublishAt: Date? = nil) throws {
+public extension CreateArticleRequest {
+    init(
+        title: String,
+        authorId: Int,
+        description: String? = nil,
+        body: String? = nil,
+        bodyMarkdown: String? = nil,
+        state: CreateArticleRequestState? = nil,
+        parentId: Int? = nil,
+        parentType: String? = nil,
+        translatedContent: ArticleTranslatedContent? = nil,
+        folderId: Int? = nil,
+        audienceIds: [Int]? = nil,
+        aiChatbotAvailability: Bool? = nil,
+        aiCopilotAvailability: Bool? = nil,
+        aiSalesAgentAvailability: Bool? = nil,
+        scheduledPublishAt: Date? = nil,
+        scheduledUnpublishAt: Date? = nil
+    ) throws {
         (self.title, self.authorId) = (title, authorId)
         (self.description, self.body) = (description, body)
         (self.bodyMarkdown, self.state) = (bodyMarkdown, state)
@@ -157,13 +184,16 @@ extension CreateArticleRequest {
 public struct CreateArticleRequestState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let published = CreateArticleRequestState(rawValue: "published")
     public static let draft = CreateArticleRequestState(rawValue: "draft")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

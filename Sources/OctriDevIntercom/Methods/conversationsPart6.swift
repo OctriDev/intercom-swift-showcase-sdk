@@ -6,10 +6,21 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ConversationsMethods {
-    /// Deletes a conversation, with reporting-data retention controlled by `retain_metrics`. The default retains reporting data; set `retain_metrics` to false to remove the conversation's associated reporting data as well, which requires the `delete_conversations_and_metrics` OAuth scope. <Callout type="warning">Deleting a conversation is permanent and cannot be reversed.</Callout>
+public extension ConversationsMethods {
+    /// Deletes a conversation, with reporting-data retention controlled by `retain_metrics`. The default retains
+    /// reporting data; set `retain_metrics` to false to remove the conversation's associated reporting data as well,
+    /// which requires the `delete_conversations_and_metrics` OAuth scope. <Callout type="warning">Deleting a
+    /// conversation is permanent and cannot be reversed.</Callout>
     ///
-    /// {% admonition type="warning" name="Irreversible operation" %} Deleting a conversation is permanent and cannot be reversed. {% /admonition %} You can delete a single conversation. The behavior depends on the `retain_metrics` parameter: - **With `retain_metrics=true` (default)**: Deletes the conversation while retaining reporting data. The conversation will still appear in reporting, though some data may be incomplete due to the deletion. - **With `retain_metrics=false`**: Deletes the conversation and all associated reporting data. The conversation will be completely removed from both the inbox and all reporting. {% admonition type="info" name="Required scope for retain_metrics=false" %} Using `retain_metrics=false` requires the `delete_conversations_and_metrics` OAuth scope. {% /admonition %} For more info, see [this help center article](https://www.intercom.com/help/en/articles/13885146-deleting-a-conversation).
+    /// {% admonition type="warning" name="Irreversible operation" %} Deleting a conversation is permanent and cannot be
+    /// reversed. {% /admonition %} You can delete a single conversation. The behavior depends on the `retain_metrics`
+    /// parameter: - **With `retain_metrics=true` (default)**: Deletes the conversation while retaining reporting data.
+    /// The conversation will still appear in reporting, though some data may be incomplete due to the deletion. -
+    /// **With `retain_metrics=false`**: Deletes the conversation and all associated reporting data. The conversation
+    /// will be completely removed from both the inbox and all reporting. {% admonition type="info" name="Required scope
+    /// for retain_metrics=false" %} Using `retain_metrics=false` requires the `delete_conversations_and_metrics` OAuth
+    /// scope. {% /admonition %} For more info, see [this help center
+    /// article](https://www.intercom.com/help/en/articles/13885146-deleting-a-conversation).
     ///
     /// - Parameters:
     /// - conversationId: id
@@ -17,11 +28,27 @@ extension ConversationsMethods {
     ///   reporting data. If false, deletes the conversation and all associated
     ///   reporting data. Setting to false requires the
     ///   `delete_conversations_and_metrics` OAuth scope.
-    public static func deleteConversation(config: ClientConfig, conversationId: Int, retainMetrics: Bool? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ConversationDeleted {
-        return try (await sdkRequest("DELETE", ["/conversations/", sdkEncodePathSegment(sdkWireString(conversationId))].joined(), config: config, query: [
-            SdkQueryParameter("retain_metrics", value: retainMetrics),
-        ], decoder: .json, operationId: "deleteConversation", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "403": Error2.self])).data
+    static func deleteConversation(
+        config: ClientConfig,
+        conversationId: Int,
+        retainMetrics: Bool? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ConversationDeleted {
+        try await (sdkRequest(
+            "DELETE",
+            ["/conversations/", sdkEncodePathSegment(sdkWireString(conversationId))].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("retain_metrics", value: retainMetrics),
+            ],
+            decoder: .json,
+            operationId: "deleteConversation",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "403": Error2.self]
+        )).data
     }
 }

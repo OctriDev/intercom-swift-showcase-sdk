@@ -6,16 +6,24 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DynamicContentMethods {
-    /// Lists dynamic content for a workspace, ordered from most recently updated to least recently updated. Use `page` and `per_page` to paginate the results; access requires the `read_dynamic_content` scope.
+public extension DynamicContentMethods {
+    /// Lists dynamic content for a workspace, ordered from most recently updated to least recently updated. Use `page`
+    /// and `per_page` to paginate the results; access requires the `read_dynamic_content` scope.
     ///
-    /// You can fetch a list of all dynamic content for a workspace, most recently updated first. Requires the `read_dynamic_content` scope.
+    /// You can fetch a list of all dynamic content for a workspace, most recently updated first. Requires the
+    /// `read_dynamic_content` scope.
     ///
     /// - Parameters:
     /// - page: The page of results to fetch.
     /// - perPage: The number of results to return per page. Max value of 50.
-    public static func listDynamicContents(config: ClientConfig, page: Int? = nil, perPage: Int? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DynamicContentList {
-        return try (await sdkRequest("GET", "/dynamic_contents", config: config, query: [
+    static func listDynamicContents(
+        config: ClientConfig,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DynamicContentList {
+        try await (sdkRequest("GET", "/dynamic_contents", config: config, query: [
             SdkQueryParameter("page", value: page),
             SdkQueryParameter("per_page", value: perPage),
         ], decoder: .json, operationId: "listDynamicContents", extraHeaders: sdkHeaders([
@@ -23,24 +31,47 @@ extension DynamicContentMethods {
         ]), options: requestOptions, errors: ["401": Error2.self, "403": Error2.self])).data
     }
 
-    /// Lists dynamic content for a workspace, ordered from most recently updated to least recently updated. Use `page` and `per_page` to paginate the results; access requires the `read_dynamic_content` scope.
+    /// Lists dynamic content for a workspace, ordered from most recently updated to least recently updated. Use `page`
+    /// and `per_page` to paginate the results; access requires the `read_dynamic_content` scope.
     ///
-    /// You can fetch a list of all dynamic content for a workspace, most recently updated first. Requires the `read_dynamic_content` scope.
+    /// You can fetch a list of all dynamic content for a workspace, most recently updated first. Requires the
+    /// `read_dynamic_content` scope.
     ///
     /// - Parameters:
     /// - page: The page of results to fetch.
     /// - perPage: The number of results to return per page. Max value of 50.
-    public static func listDynamicContentsPaginated(config: ClientConfig, page: Int? = nil, perPage: Int? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<DynamicContent, Swift.Error> {
-        return AsyncThrowingStream<DynamicContent, Swift.Error> { (continuation: AsyncThrowingStream<DynamicContent, Swift.Error>.Continuation) in
+    static func listDynamicContentsPaginated(
+        config: ClientConfig,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) -> AsyncThrowingStream<DynamicContent, Swift.Error> {
+        AsyncThrowingStream<DynamicContent, Swift.Error> { (continuation: AsyncThrowingStream<
+            DynamicContent,
+            Swift.Error
+        >.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageNumber: Int = page ?? 1
                     while true {
-                        let pageResponse = try await listDynamicContents(config: config, page: pageNumber, perPage: perPage, intercomVersion: intercomVersion, requestOptions: requestOptions)
+                        let pageResponse = try await listDynamicContents(
+                            config: config,
+                            page: pageNumber,
+                            perPage: perPage,
+                            intercomVersion: intercomVersion,
+                            requestOptions: requestOptions
+                        )
                         let pageItems = (pageResponse.data ?? [])
-                        if pageItems.isEmpty { break }
-                        for item in pageItems { continuation.yield(item) }
-                        if let totalPages = pageResponse.totalPages, pageNumber >= totalPages { break }
+                        if pageItems.isEmpty {
+                            break
+                        }
+                        for item in pageItems {
+                            continuation.yield(item)
+                        }
+                        if let totalPages = pageResponse.totalPages, pageNumber >= totalPages {
+                            break
+                        }
                         pageNumber += 1
                     }
                 } catch {
@@ -53,24 +84,48 @@ extension DynamicContentMethods {
         }
     }
 
-    public struct ListDynamicContentsPage {
+    struct ListDynamicContentsPage {
         public let data: DynamicContentList
         public let items: [DynamicContent]
         public let hasMore: Bool
     }
 
-    public static func listDynamicContentsPages(config: ClientConfig, page: Int? = nil, perPage: Int? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<ListDynamicContentsPage, Swift.Error> {
-        return AsyncThrowingStream<ListDynamicContentsPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<ListDynamicContentsPage, Swift.Error>.Continuation) in
+    static func listDynamicContentsPages(
+        config: ClientConfig,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) -> AsyncThrowingStream<ListDynamicContentsPage, Swift.Error> {
+        AsyncThrowingStream<ListDynamicContentsPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<
+            ListDynamicContentsPage,
+            Swift.Error
+        >.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageNumber: Int = page ?? 1
                     while true {
-                        let pageResponse = try await listDynamicContents(config: config, page: pageNumber, perPage: perPage, intercomVersion: intercomVersion, requestOptions: requestOptions)
+                        let pageResponse = try await listDynamicContents(
+                            config: config,
+                            page: pageNumber,
+                            perPage: perPage,
+                            intercomVersion: intercomVersion,
+                            requestOptions: requestOptions
+                        )
                         let pageItems = (pageResponse.data ?? [])
-                        if pageItems.isEmpty { break }
-                        let hasMore = true && pageNumber + 1 != pageNumber && (pageResponse.totalPages == nil || pageNumber + 1 <= pageResponse.totalPages!)
-                        pageContinuation.yield(ListDynamicContentsPage(data: pageResponse, items: pageItems, hasMore: hasMore))
-                        if !hasMore { break }
+                        if pageItems.isEmpty {
+                            break
+                        }
+                        let hasMore = true && pageNumber + 1 != pageNumber &&
+                            (pageResponse.totalPages == nil || pageNumber + 1 <= pageResponse.totalPages!)
+                        pageContinuation.yield(ListDynamicContentsPage(
+                            data: pageResponse,
+                            items: pageItems,
+                            hasMore: hasMore
+                        ))
+                        if !hasMore {
+                            break
+                        }
                         pageNumber += 1
                     }
                 } catch {

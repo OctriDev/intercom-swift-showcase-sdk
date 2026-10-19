@@ -7,7 +7,7 @@ import Foundation
     import FoundationNetworking
 #endif
 
-// Canonical conversations operation model declarations
+/// Canonical conversations operation model declarations
 public struct CreateConversationResponse: Codable {
     /// The type of the message
     /// - Example: "user_message"
@@ -41,42 +41,76 @@ public struct CreateConversationResponse: Codable {
         case subject
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateConversationResponse {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.id) else {
-            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
-        }
-        guard container.contains(.createdAt) else {
-            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
-        }
-        guard container.contains(.body) else {
-            throw SdkValidationError(field: "body", code: "required", message: "Validation failed for 'body': value is required")
-        }
-        guard container.contains(.messageType) else {
-            throw SdkValidationError(field: "message_type", code: "required", message: "Validation failed for 'message_type': value is required")
-        }
-        guard container.contains(.conversationId) else {
-            throw SdkValidationError(field: "conversation_id", code: "required", message: "Validation failed for 'conversation_id': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.id = try container.sdkDecodeRequired(.id)
-        self.createdAt = try container.sdkDecodeRequired(.createdAt)
-        self.body = try container.sdkDecodeRequired(.body)
-        self.messageType = try container.sdkDecodeRequired(.messageType)
-        self.conversationId = try container.sdkDecodeRequired(.conversationId)
-        self.subject = try container.sdkDecodeIfPresent(.subject)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateConversationResponse {
-    public init(type: String, id: String, createdAt: Int, body: String, messageType: CreateConversationResponseMessageType, conversationId: String, subject: String? = nil) {
+public extension CreateConversationResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.id) else {
+            throw SdkValidationError(
+                field: "id",
+                code: "required",
+                message: "Validation failed for 'id': value is required"
+            )
+        }
+        guard container.contains(.createdAt) else {
+            throw SdkValidationError(
+                field: "created_at",
+                code: "required",
+                message: "Validation failed for 'created_at': value is required"
+            )
+        }
+        guard container.contains(.body) else {
+            throw SdkValidationError(
+                field: "body",
+                code: "required",
+                message: "Validation failed for 'body': value is required"
+            )
+        }
+        guard container.contains(.messageType) else {
+            throw SdkValidationError(
+                field: "message_type",
+                code: "required",
+                message: "Validation failed for 'message_type': value is required"
+            )
+        }
+        guard container.contains(.conversationId) else {
+            throw SdkValidationError(
+                field: "conversation_id",
+                code: "required",
+                message: "Validation failed for 'conversation_id': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        id = try container.sdkDecodeRequired(.id)
+        createdAt = try container.sdkDecodeRequired(.createdAt)
+        body = try container.sdkDecodeRequired(.body)
+        messageType = try container.sdkDecodeRequired(.messageType)
+        conversationId = try container.sdkDecodeRequired(.conversationId)
+        subject = try container.sdkDecodeIfPresent(.subject)
+    }
+}
+
+public extension CreateConversationResponse {
+    init(
+        type: String,
+        id: String,
+        createdAt: Int,
+        body: String,
+        messageType: CreateConversationResponseMessageType,
+        conversationId: String,
+        subject: String? = nil
+    ) {
         (self.type, self.id) = (type, id)
         (self.createdAt, self.body) = (createdAt, body)
         (self.messageType, self.conversationId) = (messageType, conversationId)
@@ -94,7 +128,6 @@ public indirect enum ManageConversationRequestBody {
 }
 
 extension ManageConversationRequestBody: Codable {
-
     private enum CodingKeys: String, CodingKey {
         case discriminator = "message_type"
     }
@@ -102,12 +135,16 @@ extension ManageConversationRequestBody: Codable {
     public init(from decoder: Decoder) throws {
         let tagged = try decoder.container(keyedBy: CodingKeys.self)
         let discriminator = try tagged.decode(String.self, forKey: .discriminator)
-        if let value = try Self.decodeGroup1(discriminator, from: decoder) { self = value; return }
+        if let value = try Self.decodeGroup1(discriminator, from: decoder) {
+            self = value; return
+        }
         self = try .unknown(tag: discriminator, raw: JSONValue(from: decoder))
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
         if case let .unknown(_, raw) = self {
             var container = encoder.singleValueContainer()
             try container.encode(raw)
@@ -118,11 +155,11 @@ extension ManageConversationRequestBody: Codable {
 extension ManageConversationRequestBody {
     static func decodeGroup1(_ discriminator: String, from decoder: Decoder) throws -> Self? {
         switch discriminator {
-        case "close": return .closeConversationRequest(try CloseConversationRequest(from: decoder))
-        case "snoozed": return .snoozeConversationRequest(try SnoozeConversationRequest(from: decoder))
-        case "open": return .openConversationRequest(try OpenConversationRequest(from: decoder))
-        case "assignment": return .assignConversationRequest(try AssignConversationRequest(from: decoder))
-        default: return nil
+        case "close": try .closeConversationRequest(CloseConversationRequest(from: decoder))
+        case "snoozed": try .snoozeConversationRequest(SnoozeConversationRequest(from: decoder))
+        case "open": try .openConversationRequest(OpenConversationRequest(from: decoder))
+        case "assignment": try .assignConversationRequest(AssignConversationRequest(from: decoder))
+        default: nil
         }
     }
 }

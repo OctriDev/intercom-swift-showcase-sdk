@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Teams domain models
+/// Teams domain models
 /// Per-admin activity metrics within a team.
 public struct TeamMetric: Codable {
     /// Optional `string` value serialized in the `type` wire field.
@@ -32,23 +32,23 @@ public struct TeamMetric: Codable {
     }
 
     init() {
-        (self.type, self.adminId, self.open, self.idle, self.snoozed) = (nil, nil, nil, nil, nil)
+        (type, adminId, open, idle, snoozed) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension TeamMetric {
-    public init(from decoder: Decoder) throws {
+public extension TeamMetric {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.adminId = try container.sdkDecodeIfPresent(.adminId)
-        self.open = try container.sdkDecodeIfPresent(.open)
-        self.idle = try container.sdkDecodeIfPresent(.idle)
-        self.snoozed = try container.sdkDecodeIfPresent(.snoozed)
+        type = try container.sdkDecodeIfPresent(.type)
+        adminId = try container.sdkDecodeIfPresent(.adminId)
+        open = try container.sdkDecodeIfPresent(.open)
+        idle = try container.sdkDecodeIfPresent(.idle)
+        snoozed = try container.sdkDecodeIfPresent(.snoozed)
     }
 }
 
-extension TeamMetric {
-    public init(type: String? = nil, adminId: String? = nil, open: Int? = nil, idle: Int? = nil, snoozed: Int? = nil) {
+public extension TeamMetric {
+    init(type: String? = nil, adminId: String? = nil, open: Int? = nil, idle: Int? = nil, snoozed: Int? = nil) {
         self.init()
         (self.type, self.adminId) = (type, adminId)
         (self.open, self.idle) = (open, idle)
@@ -70,20 +70,20 @@ public struct TeamMetricList: Codable {
     }
 
     init() {
-        (self.type, self.data) = (nil, nil)
+        (type, data) = (nil, nil)
     }
 }
 
-extension TeamMetricList {
-    public init(from decoder: Decoder) throws {
+public extension TeamMetricList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        type = try container.sdkDecodeIfPresent(.type)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension TeamMetricList {
-    public init(type: String? = nil, data: [TeamMetric]? = nil) {
+public extension TeamMetricList {
+    init(type: String? = nil, data: [TeamMetric]? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
     }
@@ -103,20 +103,20 @@ public struct TeamList: Codable {
     }
 
     init() {
-        (self.type, self.teams) = (nil, nil)
+        (type, teams) = (nil, nil)
     }
 }
 
-extension TeamList {
-    public init(from decoder: Decoder) throws {
+public extension TeamList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.teams = try container.sdkDecodeIfPresent(.teams)
+        type = try container.sdkDecodeIfPresent(.type)
+        teams = try container.sdkDecodeIfPresent(.teams)
     }
 }
 
-extension TeamList {
-    public init(type: TeamListType? = nil, teams: [Team]? = nil) {
+public extension TeamList {
+    init(type: TeamListType? = nil, teams: [Team]? = nil) {
         self.init()
         (self.type, self.teams) = (type, teams)
     }
@@ -137,20 +137,20 @@ public struct AdminPriorityLevel: Codable {
     }
 
     init() {
-        (self.primaryAdminIds, self.secondaryAdminIds) = (nil, nil)
+        (primaryAdminIds, secondaryAdminIds) = (nil, nil)
     }
 }
 
-extension AdminPriorityLevel {
-    public init(from decoder: Decoder) throws {
+public extension AdminPriorityLevel {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.primaryAdminIds = try container.sdkDecodeIfPresent(.primaryAdminIds)
-        self.secondaryAdminIds = try container.sdkDecodeIfPresent(.secondaryAdminIds)
+        primaryAdminIds = try container.sdkDecodeIfPresent(.primaryAdminIds)
+        secondaryAdminIds = try container.sdkDecodeIfPresent(.secondaryAdminIds)
     }
 }
 
-extension AdminPriorityLevel {
-    public init(primaryAdminIds: [Int]? = nil, secondaryAdminIds: [Int]? = nil) {
+public extension AdminPriorityLevel {
+    init(primaryAdminIds: [Int]? = nil, secondaryAdminIds: [Int]? = nil) {
         self.init()
         (self.primaryAdminIds, self.secondaryAdminIds) = (primaryAdminIds, secondaryAdminIds)
     }
@@ -160,12 +160,15 @@ extension AdminPriorityLevel {
 public struct TeamListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let teamList = TeamListType(rawValue: "team.list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

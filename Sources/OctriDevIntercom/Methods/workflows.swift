@@ -7,15 +7,32 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum WorkflowsMethods {
-    /// Exports the complete configuration for a workflow, including its steps, targeting rules, and attributes. Use this operation to retrieve workflow configuration for EU Data Act compliance.
+    /// Exports the complete configuration for a workflow, including its steps, targeting rules, and attributes. Use
+    /// this operation to retrieve workflow configuration for EU Data Act compliance.
     ///
-    /// Export a workflow configuration by its ID. This endpoint returns the complete workflow definition including its steps, targeting rules, and attributes. This endpoint is designed for EU Data Act compliance, allowing customers to export their workflow configurations.
+    /// Export a workflow configuration by its ID. This endpoint returns the complete workflow definition including its
+    /// steps, targeting rules, and attributes. This endpoint is designed for EU Data Act compliance, allowing customers
+    /// to export their workflow configurations.
     ///
     /// - Parameters:
     /// - id: The unique identifier for the workflow
-    public static func exportWorkflow(config: ClientConfig, id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> WorkflowExport {
-        return try (await sdkRequest("GET", ["/export/workflows/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "exportWorkflow", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["403": Error2.self, "404": Error2.self])).data
+    public static func exportWorkflow(
+        config: ClientConfig,
+        id: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> WorkflowExport {
+        try await (sdkRequest(
+            "GET",
+            ["/export/workflows/", sdkEncodePathSegment(sdkWireString(id))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "exportWorkflow",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["403": Error2.self, "404": Error2.self]
+        )).data
     }
 }

@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ArticlesMethods {
-    public struct StageArticleDraftOptions: Codable {
+public extension ArticlesMethods {
+    struct StageArticleDraftOptions: Codable {
         public var id: Int
         public var intercomVersion: IntercomVersion?
         public var title: String?
@@ -32,9 +32,17 @@ extension ArticlesMethods {
         }
     }
 
-    /// Stages changes to a published article as a draft, leaving the live article unchanged. Use the `id` path parameter to identify the article and supply versioned text content to stage; non-versioned fields such as AI availability are ignored. The article must already be published, and you need the `read_write_articles_scope` OAuth scope.
+    /// Stages changes to a published article as a draft, leaving the live article unchanged. Use the `id` path
+    /// parameter to identify the article and supply versioned text content to stage; non-versioned fields such as AI
+    /// availability are ignored. The article must already be published, and you need the `read_write_articles_scope`
+    /// OAuth scope.
     ///
-    /// Stage changes to a published article as a draft by making a PUT request to `https://api.intercom.io/articles/<id>/draft`. The live article remains unchanged until the draft is published. The article must already be published; staging a draft on an article that has never been published returns `422`. Only versioned text content (such as `title` and `body`) is staged. Non-versioned fields like AI availability are ignored, leaving the live values untouched. Requires the `read_write_articles_scope` OAuth scope.
+    /// Stage changes to a published article as a draft by making a PUT request to
+    /// `https://api.intercom.io/articles/<id>/draft`. The live article remains unchanged until the draft is published.
+    /// The article must already be published; staging a draft on an article that has never been published returns
+    /// `422`. Only versioned text content (such as `title` and `body`) is staged. Non-versioned fields like AI
+    /// availability are ignored, leaving the live values untouched. Requires the `read_write_articles_scope` OAuth
+    /// scope.
     ///
     /// - Parameters:
     /// - id: The unique identifier for the article which is given by Intercom.
@@ -100,7 +108,11 @@ extension ArticlesMethods {
     ///   published. Sending in the same request as `scheduled_publish_at` returns 400
     ///   — only one pending schedule per article. Empty string returns 400
     ///   `parameter_invalid`.
-    public static func stageArticleDraft(config: ClientConfig, options: StageArticleDraftOptions, requestOptions: RequestOptions? = nil) async throws -> Article {
+    static func stageArticleDraft(
+        config: ClientConfig,
+        options: StageArticleDraftOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Article {
         if let scheduledPublishAt = options.scheduledPublishAt?.valueOrNil {
             try sdkValidateDateTime("scheduled_publish_at", scheduledPublishAt)
         }
@@ -111,8 +123,18 @@ extension ArticlesMethods {
 
         let requestBody = StageArticleDraftRequestBody(options: options)
 
-        return try (await sdkRequest("PUT", ["/articles/", sdkEncodePathSegment(sdkWireString(options.id)), "/draft"].joined(), config: config, body: requestBody, decoder: .json, operationId: "stageArticleDraft", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "422": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            ["/articles/", sdkEncodePathSegment(sdkWireString(options.id)), "/draft"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "stageArticleDraft",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self, "422": Error2.self]
+        )).data
     }
 }

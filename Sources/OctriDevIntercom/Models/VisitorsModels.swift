@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Visitors domain models
+/// Visitors domain models
 /// The unique identifiers retained after converting or merging.
 public struct ConvertVisitorRequestUser: Codable {
     /// The unique identifier for the contact which is given by Intercom.
@@ -23,21 +23,21 @@ public struct ConvertVisitorRequestUser: Codable {
     }
 
     init() {
-        (self.id, self.userId, self.email) = (nil, nil, nil)
+        (id, userId, email) = (nil, nil, nil)
     }
 }
 
-extension ConvertVisitorRequestUser {
-    public init(from decoder: Decoder) throws {
+public extension ConvertVisitorRequestUser {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.userId = try container.sdkDecodeIfPresent(.userId)
-        self.email = try container.sdkDecodeIfPresent(.email)
+        id = try container.sdkDecodeIfPresent(.id)
+        userId = try container.sdkDecodeIfPresent(.userId)
+        email = try container.sdkDecodeIfPresent(.email)
     }
 }
 
-extension ConvertVisitorRequestUser {
-    public init(id: String? = nil, userId: String? = nil, email: String? = nil) {
+public extension ConvertVisitorRequestUser {
+    init(id: String? = nil, userId: String? = nil, email: String? = nil) {
         self.init()
         (self.id, self.userId) = (id, userId)
         self.email = email
@@ -173,60 +173,94 @@ public struct Visitor: Codable {
     }
 
     init() {
-        (self.type, self.id, self.userId, self.anonymous, self.email) = (nil, nil, nil, nil, nil)
-        (self.phone, self.name, self.pseudonym, self.avatar, self.appId) = (nil, nil, nil, nil, nil)
-        (self.companies, self.locationData, self.lasRequestAt, self.createdAt, self.remoteCreatedAt) = (nil, nil, nil, nil, nil)
-        (self.signedUpAt, self.updatedAt, self.sessionCount, self.socialProfiles, self.ownerId) = (nil, nil, nil, nil, nil)
-        (self.unsubscribedFromEmails, self.markedEmailAsSpam, self.hasHardBounced, self.tags, self.segments) = (nil, nil, nil, nil, nil)
-        (self.customAttributes, self.referrer, self.utmCampaign, self.utmContent, self.utmMedium) = (nil, nil, nil, nil, nil)
-        (self.utmSource, self.utmTerm, self.doNotTrack) = (nil, nil, nil)
+        (type, id, userId, anonymous, email) = (nil, nil, nil, nil, nil)
+        (phone, name, pseudonym, avatar, appId) = (nil, nil, nil, nil, nil)
+        (companies, locationData, lasRequestAt, createdAt, remoteCreatedAt) = (nil, nil, nil, nil, nil)
+        (signedUpAt, updatedAt, sessionCount, socialProfiles, ownerId) = (nil, nil, nil, nil, nil)
+        (unsubscribedFromEmails, markedEmailAsSpam, hasHardBounced, tags, segments) = (nil, nil, nil, nil, nil)
+        (customAttributes, referrer, utmCampaign, utmContent, utmMedium) = (nil, nil, nil, nil, nil)
+        (utmSource, utmTerm, doNotTrack) = (nil, nil, nil)
     }
 }
 
-extension Visitor {
-    public init(from decoder: Decoder) throws {
+public extension Visitor {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.userId = try container.sdkDecodeIfPresent(.userId)
-        self.anonymous = try container.sdkDecodeIfPresent(.anonymous)
-        self.email = try container.sdkDecodeIfPresent(.email)
-        self.phone = try container.sdkDecodeIfPresent(.phone)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.pseudonym = try container.sdkDecodeIfPresent(.pseudonym)
-        self.avatar = try container.sdkDecodeIfPresent(.avatar)
-        self.appId = try container.sdkDecodeIfPresent(.appId)
-        self.companies = try container.sdkDecodeIfPresent(.companies)
-        self.locationData = try container.sdkDecodeIfPresent(.locationData)
-        self.lasRequestAt = try container.sdkDecodeIfPresent(.lasRequestAt)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.remoteCreatedAt = try container.sdkDecodeIfPresent(.remoteCreatedAt)
-        self.signedUpAt = try container.sdkDecodeIfPresent(.signedUpAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.sessionCount = try container.sdkDecodeIfPresent(.sessionCount)
-        self.socialProfiles = try container.sdkDecodeIfPresent(.socialProfiles)
-        self.ownerId = try container.sdkDecodeIfPresent(.ownerId)
-        self.unsubscribedFromEmails = try container.sdkDecodeIfPresent(.unsubscribedFromEmails)
-        self.markedEmailAsSpam = try container.sdkDecodeIfPresent(.markedEmailAsSpam)
-        self.hasHardBounced = try container.sdkDecodeIfPresent(.hasHardBounced)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.segments = try container.sdkDecodeIfPresent(.segments)
-        self.customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
-        self.referrer = try container.sdkDecodeIfPresent(.referrer)
-        self.utmCampaign = try container.sdkDecodeIfPresent(.utmCampaign)
-        self.utmContent = try container.sdkDecodeIfPresent(.utmContent)
-        self.utmMedium = try container.sdkDecodeIfPresent(.utmMedium)
-        self.utmSource = try container.sdkDecodeIfPresent(.utmSource)
-        self.utmTerm = try container.sdkDecodeIfPresent(.utmTerm)
-        self.doNotTrack = try container.sdkDecodeIfPresent(.doNotTrack)
-        if let value = self.email {
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        userId = try container.sdkDecodeIfPresent(.userId)
+        anonymous = try container.sdkDecodeIfPresent(.anonymous)
+        email = try container.sdkDecodeIfPresent(.email)
+        phone = try container.sdkDecodeIfPresent(.phone)
+        name = try container.sdkDecodeIfPresent(.name)
+        pseudonym = try container.sdkDecodeIfPresent(.pseudonym)
+        avatar = try container.sdkDecodeIfPresent(.avatar)
+        appId = try container.sdkDecodeIfPresent(.appId)
+        companies = try container.sdkDecodeIfPresent(.companies)
+        locationData = try container.sdkDecodeIfPresent(.locationData)
+        lasRequestAt = try container.sdkDecodeIfPresent(.lasRequestAt)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        remoteCreatedAt = try container.sdkDecodeIfPresent(.remoteCreatedAt)
+        signedUpAt = try container.sdkDecodeIfPresent(.signedUpAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        sessionCount = try container.sdkDecodeIfPresent(.sessionCount)
+        socialProfiles = try container.sdkDecodeIfPresent(.socialProfiles)
+        ownerId = try container.sdkDecodeIfPresent(.ownerId)
+        unsubscribedFromEmails = try container.sdkDecodeIfPresent(.unsubscribedFromEmails)
+        markedEmailAsSpam = try container.sdkDecodeIfPresent(.markedEmailAsSpam)
+        hasHardBounced = try container.sdkDecodeIfPresent(.hasHardBounced)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        segments = try container.sdkDecodeIfPresent(.segments)
+        customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
+        referrer = try container.sdkDecodeIfPresent(.referrer)
+        utmCampaign = try container.sdkDecodeIfPresent(.utmCampaign)
+        utmContent = try container.sdkDecodeIfPresent(.utmContent)
+        utmMedium = try container.sdkDecodeIfPresent(.utmMedium)
+        utmSource = try container.sdkDecodeIfPresent(.utmSource)
+        utmTerm = try container.sdkDecodeIfPresent(.utmTerm)
+        doNotTrack = try container.sdkDecodeIfPresent(.doNotTrack)
+        if let value = email {
             try sdkValidateEmail("email", value)
         }
     }
 }
 
-extension Visitor {
-    public init(type: String? = nil, id: String? = nil, userId: String? = nil, anonymous: Bool? = nil, email: String? = nil, phone: String? = nil, name: String? = nil, pseudonym: String? = nil, avatar: VisitorAvatar? = nil, appId: String? = nil, companies: VisitorCompanies? = nil, locationData: VisitorLocationData? = nil, lasRequestAt: Int? = nil, createdAt: Int? = nil, remoteCreatedAt: Int? = nil, signedUpAt: Int? = nil, updatedAt: Int? = nil, sessionCount: Int? = nil, socialProfiles: VisitorSocialProfiles? = nil, ownerId: String? = nil, unsubscribedFromEmails: Bool? = nil, markedEmailAsSpam: Bool? = nil, hasHardBounced: Bool? = nil, tags: VisitorTags? = nil, segments: VisitorSegments? = nil, customAttributes: [String: String]? = nil, referrer: String? = nil, utmCampaign: String? = nil, utmContent: String? = nil, utmMedium: String? = nil, utmSource: String? = nil, utmTerm: String? = nil, doNotTrack: Bool? = nil) throws {
+public extension Visitor {
+    init(
+        type: String? = nil,
+        id: String? = nil,
+        userId: String? = nil,
+        anonymous: Bool? = nil,
+        email: String? = nil,
+        phone: String? = nil,
+        name: String? = nil,
+        pseudonym: String? = nil,
+        avatar: VisitorAvatar? = nil,
+        appId: String? = nil,
+        companies: VisitorCompanies? = nil,
+        locationData: VisitorLocationData? = nil,
+        lasRequestAt: Int? = nil,
+        createdAt: Int? = nil,
+        remoteCreatedAt: Int? = nil,
+        signedUpAt: Int? = nil,
+        updatedAt: Int? = nil,
+        sessionCount: Int? = nil,
+        socialProfiles: VisitorSocialProfiles? = nil,
+        ownerId: String? = nil,
+        unsubscribedFromEmails: Bool? = nil,
+        markedEmailAsSpam: Bool? = nil,
+        hasHardBounced: Bool? = nil,
+        tags: VisitorTags? = nil,
+        segments: VisitorSegments? = nil,
+        customAttributes: [String: String]? = nil,
+        referrer: String? = nil,
+        utmCampaign: String? = nil,
+        utmContent: String? = nil,
+        utmMedium: String? = nil,
+        utmSource: String? = nil,
+        utmTerm: String? = nil,
+        doNotTrack: Bool? = nil
+    ) throws {
         self.init()
         (self.type, self.id) = (type, id)
         (self.userId, self.anonymous) = (userId, anonymous)
@@ -270,21 +304,21 @@ public struct VisitorTagsTagsItem: Codable {
     }
 
     init() {
-        (self.type, self.id, self.name) = (nil, nil, nil)
+        (type, id, name) = (nil, nil, nil)
     }
 }
 
-extension VisitorTagsTagsItem {
-    public init(from decoder: Decoder) throws {
+public extension VisitorTagsTagsItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension VisitorTagsTagsItem {
-    public init(type: VisitorTagsTagsItemType? = nil, id: String? = nil, name: String? = nil) {
+public extension VisitorTagsTagsItem {
+    init(type: VisitorTagsTagsItemType? = nil, id: String? = nil, name: String? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         self.name = name
@@ -305,20 +339,20 @@ public struct VisitorCompanies: Codable {
     }
 
     init() {
-        (self.type, self.companies) = (nil, nil)
+        (type, companies) = (nil, nil)
     }
 }
 
-extension VisitorCompanies {
-    public init(from decoder: Decoder) throws {
+public extension VisitorCompanies {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.companies = try container.sdkDecodeIfPresent(.companies)
+        type = try container.sdkDecodeIfPresent(.type)
+        companies = try container.sdkDecodeIfPresent(.companies)
     }
 }
 
-extension VisitorCompanies {
-    public init(type: VisitorCompaniesType? = nil, companies: [Company]? = nil) {
+public extension VisitorCompanies {
+    init(type: VisitorCompaniesType? = nil, companies: [Company]? = nil) {
         self.init()
         (self.type, self.companies) = (type, companies)
     }
@@ -338,20 +372,20 @@ public struct VisitorSocialProfiles: Codable {
     }
 
     init() {
-        (self.type, self.socialProfiles) = (nil, nil)
+        (type, socialProfiles) = (nil, nil)
     }
 }
 
-extension VisitorSocialProfiles {
-    public init(from decoder: Decoder) throws {
+public extension VisitorSocialProfiles {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.socialProfiles = try container.sdkDecodeIfPresent(.socialProfiles)
+        type = try container.sdkDecodeIfPresent(.type)
+        socialProfiles = try container.sdkDecodeIfPresent(.socialProfiles)
     }
 }
 
-extension VisitorSocialProfiles {
-    public init(type: VisitorSocialProfilesType? = nil, socialProfiles: [String]? = nil) {
+public extension VisitorSocialProfiles {
+    init(type: VisitorSocialProfilesType? = nil, socialProfiles: [String]? = nil) {
         self.init()
         (self.type, self.socialProfiles) = (type, socialProfiles)
     }
@@ -380,22 +414,22 @@ public struct UpdateVisitorRequest: Codable {
     }
 
     init() {
-        (self.id, self.userId, self.name, self.customAttributes) = (nil, nil, nil, nil)
+        (id, userId, name, customAttributes) = (nil, nil, nil, nil)
     }
 }
 
-extension UpdateVisitorRequest {
-    public init(from decoder: Decoder) throws {
+public extension UpdateVisitorRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.userId = try container.sdkDecodeIfPresent(.userId)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
+        id = try container.sdkDecodeIfPresent(.id)
+        userId = try container.sdkDecodeIfPresent(.userId)
+        name = try container.sdkDecodeIfPresent(.name)
+        customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
     }
 }
 
-extension UpdateVisitorRequest {
-    public init(id: String? = nil, userId: String? = nil, name: String? = nil, customAttributes: [String: String]? = nil) {
+public extension UpdateVisitorRequest {
+    init(id: String? = nil, userId: String? = nil, name: String? = nil, customAttributes: [String: String]? = nil) {
         self.init()
         (self.id, self.userId) = (id, userId)
         (self.name, self.customAttributes) = (name, customAttributes)
@@ -416,20 +450,20 @@ public struct VisitorSegments: Codable {
     }
 
     init() {
-        (self.type, self.segments) = (nil, nil)
+        (type, segments) = (nil, nil)
     }
 }
 
-extension VisitorSegments {
-    public init(from decoder: Decoder) throws {
+public extension VisitorSegments {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.segments = try container.sdkDecodeIfPresent(.segments)
+        type = try container.sdkDecodeIfPresent(.type)
+        segments = try container.sdkDecodeIfPresent(.segments)
     }
 }
 
-extension VisitorSegments {
-    public init(type: VisitorSegmentsType? = nil, segments: [String]? = nil) {
+public extension VisitorSegments {
+    init(type: VisitorSegmentsType? = nil, segments: [String]? = nil) {
         self.init()
         (self.type, self.segments) = (type, segments)
     }
@@ -474,27 +508,36 @@ public struct VisitorLocationData: Codable {
     }
 
     init() {
-        (self.type, self.cityName, self.continentCode, self.countryCode, self.countryName) = (nil, nil, nil, nil, nil)
-        (self.postalCode, self.regionName, self.timezone) = (nil, nil, nil)
+        (type, cityName, continentCode, countryCode, countryName) = (nil, nil, nil, nil, nil)
+        (postalCode, regionName, timezone) = (nil, nil, nil)
     }
 }
 
-extension VisitorLocationData {
-    public init(from decoder: Decoder) throws {
+public extension VisitorLocationData {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.cityName = try container.sdkDecodeIfPresent(.cityName)
-        self.continentCode = try container.sdkDecodeIfPresent(.continentCode)
-        self.countryCode = try container.sdkDecodeIfPresent(.countryCode)
-        self.countryName = try container.sdkDecodeIfPresent(.countryName)
-        self.postalCode = try container.sdkDecodeIfPresent(.postalCode)
-        self.regionName = try container.sdkDecodeIfPresent(.regionName)
-        self.timezone = try container.sdkDecodeIfPresent(.timezone)
+        type = try container.sdkDecodeIfPresent(.type)
+        cityName = try container.sdkDecodeIfPresent(.cityName)
+        continentCode = try container.sdkDecodeIfPresent(.continentCode)
+        countryCode = try container.sdkDecodeIfPresent(.countryCode)
+        countryName = try container.sdkDecodeIfPresent(.countryName)
+        postalCode = try container.sdkDecodeIfPresent(.postalCode)
+        regionName = try container.sdkDecodeIfPresent(.regionName)
+        timezone = try container.sdkDecodeIfPresent(.timezone)
     }
 }
 
-extension VisitorLocationData {
-    public init(type: String? = nil, cityName: String? = nil, continentCode: String? = nil, countryCode: String? = nil, countryName: String? = nil, postalCode: String? = nil, regionName: String? = nil, timezone: String? = nil) {
+public extension VisitorLocationData {
+    init(
+        type: String? = nil,
+        cityName: String? = nil,
+        continentCode: String? = nil,
+        countryCode: String? = nil,
+        countryName: String? = nil,
+        postalCode: String? = nil,
+        regionName: String? = nil,
+        timezone: String? = nil
+    ) {
         self.init()
         (self.type, self.cityName) = (type, cityName)
         (self.continentCode, self.countryCode) = (continentCode, countryCode)
@@ -519,5 +562,7 @@ public struct ConvertVisitorRequest: Codable {
         case visitor
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }

@@ -3,25 +3,33 @@
 
 import Foundation
 
-// Companies domain models
+/// Companies domain models
 public indirect enum CompanySearchRequestQuery {
     case singleFilterSearchRequest(SingleFilterSearchRequest)
     case multipleFilterSearchRequest(MultipleFilterSearchRequest)
 }
 
 extension CompanySearchRequestQuery: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
+            if let value = Self.decodeLossless1(from: container, raw) {
+                self = value; return
+            }
         }
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for CompanySearchRequestQuery")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for CompanySearchRequestQuery"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
@@ -39,8 +47,14 @@ extension CompanySearchRequestQuery {
 
 extension CompanySearchRequestQuery {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(SingleFilterSearchRequest.self) { return .singleFilterSearchRequest(value) }
-        if let value = try? container.decode(MultipleFilterSearchRequest.self) { return .multipleFilterSearchRequest(value) }
+        if let value = try? container
+            .decode(SingleFilterSearchRequest.self) {
+            return .singleFilterSearchRequest(value)
+        }
+        if let value = try? container
+            .decode(MultipleFilterSearchRequest.self) {
+            return .multipleFilterSearchRequest(value)
+        }
         return nil
     }
 }
@@ -69,20 +83,20 @@ public struct CompanyAttachedSegments: Codable {
     }
 
     init() {
-        (self.type, self.data) = (nil, nil)
+        (type, data) = (nil, nil)
     }
 }
 
-extension CompanyAttachedSegments {
-    public init(from decoder: Decoder) throws {
+public extension CompanyAttachedSegments {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        type = try container.sdkDecodeIfPresent(.type)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension CompanyAttachedSegments {
-    public init(type: CompanyAttachedSegmentsType? = nil, data: [Segment]? = nil) {
+public extension CompanyAttachedSegments {
+    init(type: CompanyAttachedSegmentsType? = nil, data: [Segment]? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
     }
@@ -111,22 +125,27 @@ public struct CompanyAttachedContacts: Codable {
     }
 
     init() {
-        (self.type, self.data, self.totalCount, self.pages) = (nil, nil, nil, nil)
+        (type, data, totalCount, pages) = (nil, nil, nil, nil)
     }
 }
 
-extension CompanyAttachedContacts {
-    public init(from decoder: Decoder) throws {
+public extension CompanyAttachedContacts {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.data = try container.sdkDecodeIfPresent(.data)
-        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        self.pages = try container.sdkDecodeIfPresent(.pages)
+        type = try container.sdkDecodeIfPresent(.type)
+        data = try container.sdkDecodeIfPresent(.data)
+        totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-extension CompanyAttachedContacts {
-    public init(type: CompanyAttachedContactsType? = nil, data: [Contact]? = nil, totalCount: Int? = nil, pages: CursorPages? = nil) {
+public extension CompanyAttachedContacts {
+    init(
+        type: CompanyAttachedContactsType? = nil,
+        data: [Contact]? = nil,
+        totalCount: Int? = nil,
+        pages: CursorPages? = nil
+    ) {
         self.init()
         (self.type, self.data) = (type, data)
         (self.totalCount, self.pages) = (totalCount, pages)
@@ -148,23 +167,33 @@ public struct CompanySearchRequest: Codable {
         case sort
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CompanySearchRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.query) else {
-            throw SdkValidationError(field: "query", code: "required", message: "Validation failed for 'query': value is required")
-        }
-        self.query = try container.sdkDecodeRequired(.query)
-        self.pagination = try container.sdkDecodeIfPresent(.pagination)
-        self.sort = try container.sdkDecodeIfPresent(.sort)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CompanySearchRequest {
-    public init(query: CompanySearchRequestQuery, pagination: StartingAfterPaging? = nil, sort: CompanySearchRequestSort? = nil) {
+public extension CompanySearchRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.query) else {
+            throw SdkValidationError(
+                field: "query",
+                code: "required",
+                message: "Validation failed for 'query': value is required"
+            )
+        }
+        query = try container.sdkDecodeRequired(.query)
+        pagination = try container.sdkDecodeIfPresent(.pagination)
+        sort = try container.sdkDecodeIfPresent(.sort)
+    }
+}
+
+public extension CompanySearchRequest {
+    init(
+        query: CompanySearchRequestQuery,
+        pagination: StartingAfterPaging? = nil,
+        sort: CompanySearchRequestSort? = nil
+    ) {
         (self.query, self.pagination) = (query, pagination)
         self.sort = sort
     }
@@ -198,23 +227,29 @@ public struct CompanyScroll: Codable {
     }
 
     init() {
-        (self.type, self.data, self.pages, self.totalCount, self.scrollParam) = (nil, nil, nil, nil, nil)
+        (type, data, pages, totalCount, scrollParam) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension CompanyScroll {
-    public init(from decoder: Decoder) throws {
+public extension CompanyScroll {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.data = try container.sdkDecodeIfPresent(.data)
-        self.pages = try container.sdkDecodeIfPresent(.pages)
-        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        self.scrollParam = try container.sdkDecodeIfPresent(.scrollParam)
+        type = try container.sdkDecodeIfPresent(.type)
+        data = try container.sdkDecodeIfPresent(.data)
+        pages = try container.sdkDecodeIfPresent(.pages)
+        totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        scrollParam = try container.sdkDecodeIfPresent(.scrollParam)
     }
 }
 
-extension CompanyScroll {
-    public init(type: CompanyScrollType? = nil, data: [Company]? = nil, pages: CursorPages? = nil, totalCount: Int? = nil, scrollParam: String? = nil) {
+public extension CompanyScroll {
+    init(
+        type: CompanyScrollType? = nil,
+        data: [Company]? = nil,
+        pages: CursorPages? = nil,
+        totalCount: Int? = nil,
+        scrollParam: String? = nil
+    ) {
         self.init()
         (self.type, self.data) = (type, data)
         (self.pages, self.totalCount) = (pages, totalCount)
@@ -241,21 +276,21 @@ public struct DeletedCompanyObject: Codable {
     }
 
     init() {
-        (self.id, self.object, self.deleted) = (nil, nil, nil)
+        (id, object, deleted) = (nil, nil, nil)
     }
 }
 
-extension DeletedCompanyObject {
-    public init(from decoder: Decoder) throws {
+public extension DeletedCompanyObject {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.deleted = try container.sdkDecodeIfPresent(.deleted)
+        id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
+        deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-extension DeletedCompanyObject {
-    public init(id: String? = nil, object: DeletedCompanyObjectObject? = nil, deleted: Bool? = nil) {
+public extension DeletedCompanyObject {
+    init(id: String? = nil, object: DeletedCompanyObjectObject? = nil, deleted: Bool? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
         self.deleted = deleted
@@ -300,26 +335,34 @@ public struct UpdateCompanyRequest: Codable {
     }
 
     init() {
-        (self.name, self.plan, self.size, self.website, self.industry) = (nil, nil, nil, nil, nil)
-        (self.customAttributes, self.monthlySpend) = (nil, nil)
+        (name, plan, size, website, industry) = (nil, nil, nil, nil, nil)
+        (customAttributes, monthlySpend) = (nil, nil)
     }
 }
 
-extension UpdateCompanyRequest {
-    public init(from decoder: Decoder) throws {
+public extension UpdateCompanyRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.plan = try container.sdkDecodeIfPresent(.plan)
-        self.size = try container.sdkDecodeIfPresent(.size)
-        self.website = try container.sdkDecodeIfPresent(.website)
-        self.industry = try container.sdkDecodeIfPresent(.industry)
-        self.customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
-        self.monthlySpend = try container.sdkDecodeIfPresent(.monthlySpend)
+        name = try container.sdkDecodeIfPresent(.name)
+        plan = try container.sdkDecodeIfPresent(.plan)
+        size = try container.sdkDecodeIfPresent(.size)
+        website = try container.sdkDecodeIfPresent(.website)
+        industry = try container.sdkDecodeIfPresent(.industry)
+        customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
+        monthlySpend = try container.sdkDecodeIfPresent(.monthlySpend)
     }
 }
 
-extension UpdateCompanyRequest {
-    public init(name: String? = nil, plan: String? = nil, size: Int? = nil, website: String? = nil, industry: String? = nil, customAttributes: [String: String]? = nil, monthlySpend: Int? = nil) {
+public extension UpdateCompanyRequest {
+    init(
+        name: String? = nil,
+        plan: String? = nil,
+        size: Int? = nil,
+        website: String? = nil,
+        industry: String? = nil,
+        customAttributes: [String: String]? = nil,
+        monthlySpend: Int? = nil
+    ) {
         self.init()
         (self.name, self.plan) = (name, plan)
         (self.size, self.website) = (size, website)
@@ -351,22 +394,22 @@ public struct CompanyList: Codable {
     }
 
     init() {
-        (self.type, self.pages, self.totalCount, self.data) = (nil, nil, nil, nil)
+        (type, pages, totalCount, data) = (nil, nil, nil, nil)
     }
 }
 
-extension CompanyList {
-    public init(from decoder: Decoder) throws {
+public extension CompanyList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.pages = try container.sdkDecodeIfPresent(.pages)
-        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        type = try container.sdkDecodeIfPresent(.type)
+        pages = try container.sdkDecodeIfPresent(.pages)
+        totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension CompanyList {
-    public init(type: CompanyListType? = nil, pages: CursorPages? = nil, totalCount: Int? = nil, data: [Company]? = nil) {
+public extension CompanyList {
+    init(type: CompanyListType? = nil, pages: CursorPages? = nil, totalCount: Int? = nil, data: [Company]? = nil) {
         self.init()
         (self.type, self.pages) = (type, pages)
         (self.totalCount, self.data) = (totalCount, data)
@@ -423,29 +466,40 @@ public struct CreateOrUpdateCompanyRequest: Codable {
     }
 
     init() {
-        (self.name, self.companyId, self.plan, self.size, self.website) = (nil, nil, nil, nil, nil)
-        (self.industry, self.customAttributes, self.remoteCreatedAt, self.updateLastRequestAt, self.monthlySpend) = (nil, nil, nil, nil, nil)
+        (name, companyId, plan, size, website) = (nil, nil, nil, nil, nil)
+        (industry, customAttributes, remoteCreatedAt, updateLastRequestAt, monthlySpend) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension CreateOrUpdateCompanyRequest {
-    public init(from decoder: Decoder) throws {
+public extension CreateOrUpdateCompanyRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.companyId = try container.sdkDecodeIfPresent(.companyId)
-        self.plan = try container.sdkDecodeIfPresent(.plan)
-        self.size = try container.sdkDecodeIfPresent(.size)
-        self.website = try container.sdkDecodeIfPresent(.website)
-        self.industry = try container.sdkDecodeIfPresent(.industry)
-        self.customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
-        self.remoteCreatedAt = try container.sdkDecodeIfPresent(.remoteCreatedAt)
-        self.updateLastRequestAt = try container.sdkDecodeIfPresent(.updateLastRequestAt)
-        self.monthlySpend = try container.sdkDecodeIfPresent(.monthlySpend)
+        name = try container.sdkDecodeIfPresent(.name)
+        companyId = try container.sdkDecodeIfPresent(.companyId)
+        plan = try container.sdkDecodeIfPresent(.plan)
+        size = try container.sdkDecodeIfPresent(.size)
+        website = try container.sdkDecodeIfPresent(.website)
+        industry = try container.sdkDecodeIfPresent(.industry)
+        customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
+        remoteCreatedAt = try container.sdkDecodeIfPresent(.remoteCreatedAt)
+        updateLastRequestAt = try container.sdkDecodeIfPresent(.updateLastRequestAt)
+        monthlySpend = try container.sdkDecodeIfPresent(.monthlySpend)
     }
 }
 
-extension CreateOrUpdateCompanyRequest {
-    public init(name: String? = nil, companyId: String? = nil, plan: String? = nil, size: Int? = nil, website: String? = nil, industry: String? = nil, customAttributes: [String: String]? = nil, remoteCreatedAt: Int? = nil, updateLastRequestAt: Bool? = nil, monthlySpend: Int? = nil) {
+public extension CreateOrUpdateCompanyRequest {
+    init(
+        name: String? = nil,
+        companyId: String? = nil,
+        plan: String? = nil,
+        size: Int? = nil,
+        website: String? = nil,
+        industry: String? = nil,
+        customAttributes: [String: String]? = nil,
+        remoteCreatedAt: Int? = nil,
+        updateLastRequestAt: Bool? = nil,
+        monthlySpend: Int? = nil
+    ) {
         self.init()
         (self.name, self.companyId) = (name, companyId)
         (self.plan, self.size) = (plan, size)
@@ -471,20 +525,20 @@ public struct CompanySearchRequestSort: Codable {
     }
 
     init() {
-        (self.field, self.order) = (nil, nil)
+        (field, order) = (nil, nil)
     }
 }
 
-extension CompanySearchRequestSort {
-    public init(from decoder: Decoder) throws {
+public extension CompanySearchRequestSort {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.field = try container.sdkDecodeIfPresent(.field)
-        self.order = try container.sdkDecodeIfPresent(.order)
+        field = try container.sdkDecodeIfPresent(.field)
+        order = try container.sdkDecodeIfPresent(.order)
     }
 }
 
-extension CompanySearchRequestSort {
-    public init(field: String? = nil, order: CompanySearchRequestSortOrder? = nil) {
+public extension CompanySearchRequestSort {
+    init(field: String? = nil, order: CompanySearchRequestSortOrder? = nil) {
         self.init()
         (self.field, self.order) = (field, order)
     }
@@ -495,13 +549,16 @@ extension CompanySearchRequestSort {
 public struct CompanySearchRequestSortOrder: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let ascending = CompanySearchRequestSortOrder(rawValue: "ascending")
     public static let descending = CompanySearchRequestSortOrder(rawValue: "descending")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -514,12 +571,15 @@ public struct CompanySearchRequestSortOrder: RawRepresentable, Hashable, Codable
 public struct CompanyAttachedSegmentsType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let list = CompanyAttachedSegmentsType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -532,12 +592,15 @@ public struct CompanyAttachedSegmentsType: RawRepresentable, Hashable, Codable, 
 public struct DeletedCompanyObjectObject: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let company = DeletedCompanyObjectObject(rawValue: "company")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

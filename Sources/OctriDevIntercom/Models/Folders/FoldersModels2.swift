@@ -3,7 +3,7 @@
 
 import Foundation
 
-// TaggedModelsFolders domain models
+/// TaggedModelsFolders domain models
 /// A folder for organizing content
 public struct Folder: Codable {
     /// The unique identifier for the folder
@@ -42,27 +42,36 @@ public struct Folder: Codable {
     }
 
     init() {
-        (self.id, self.name, self.description, self.emoji, self.parentFolderId) = (nil, nil, nil, nil, nil)
-        (self.contentCount, self.createdAt, self.updatedAt) = (nil, nil, nil)
+        (id, name, description, emoji, parentFolderId) = (nil, nil, nil, nil, nil)
+        (contentCount, createdAt, updatedAt) = (nil, nil, nil)
     }
 }
 
-extension Folder {
-    public init(from decoder: Decoder) throws {
+public extension Folder {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.emoji = try container.sdkDecodeIfPresent(.emoji)
-        self.parentFolderId = try container.sdkDecodeIfPresent(.parentFolderId)
-        self.contentCount = try container.sdkDecodeIfPresent(.contentCount)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        description = try container.sdkDecodeIfPresent(.description)
+        emoji = try container.sdkDecodeIfPresent(.emoji)
+        parentFolderId = try container.sdkDecodeIfPresent(.parentFolderId)
+        contentCount = try container.sdkDecodeIfPresent(.contentCount)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
     }
 }
 
-extension Folder {
-    public init(id: Int? = nil, name: String? = nil, description: String? = nil, emoji: String? = nil, parentFolderId: Int? = nil, contentCount: Int? = nil, createdAt: Int? = nil, updatedAt: Int? = nil) {
+public extension Folder {
+    init(
+        id: Int? = nil,
+        name: String? = nil,
+        description: String? = nil,
+        emoji: String? = nil,
+        parentFolderId: Int? = nil,
+        contentCount: Int? = nil,
+        createdAt: Int? = nil,
+        updatedAt: Int? = nil
+    ) {
         self.init()
         (self.id, self.name) = (id, name)
         (self.description, self.emoji) = (description, emoji)

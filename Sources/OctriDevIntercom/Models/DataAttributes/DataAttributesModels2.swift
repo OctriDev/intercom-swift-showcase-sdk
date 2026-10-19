@@ -3,7 +3,7 @@
 
 import Foundation
 
-// TaggedModelsDataAttributes domain models
+/// TaggedModelsDataAttributes domain models
 /// Data Attributes are metadata used to describe your contact and company models. These include standard and custom
 /// attributes. By using the data attributes endpoint, you can get the global list of attributes for your workspace,
 /// as well as create and archive custom attributes.
@@ -81,38 +81,56 @@ public struct DataAttribute: Codable {
     }
 
     init() {
-        (self.type, self.id, self.model, self.name, self.fullName) = (nil, nil, nil, nil, nil)
-        (self.label, self.description, self.dataType, self.options, self.apiWritable) = (nil, nil, nil, nil, nil)
-        (self.messengerWritable, self.uiWritable, self.custom, self.archived, self.createdAt) = (nil, nil, nil, nil, nil)
-        (self.updatedAt, self.adminId) = (nil, nil)
+        (type, id, model, name, fullName) = (nil, nil, nil, nil, nil)
+        (label, description, dataType, options, apiWritable) = (nil, nil, nil, nil, nil)
+        (messengerWritable, uiWritable, custom, archived, createdAt) = (nil, nil, nil, nil, nil)
+        (updatedAt, adminId) = (nil, nil)
     }
 }
 
-extension DataAttribute {
-    public init(from decoder: Decoder) throws {
+public extension DataAttribute {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.model = try container.sdkDecodeIfPresent(.model)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.fullName = try container.sdkDecodeIfPresent(.fullName)
-        self.label = try container.sdkDecodeIfPresent(.label)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.dataType = try container.sdkDecodeIfPresent(.dataType)
-        self.options = try container.sdkDecodeIfPresent(.options)
-        self.apiWritable = try container.sdkDecodeIfPresent(.apiWritable)
-        self.messengerWritable = try container.sdkDecodeIfPresent(.messengerWritable)
-        self.uiWritable = try container.sdkDecodeIfPresent(.uiWritable)
-        self.custom = try container.sdkDecodeIfPresent(.custom)
-        self.archived = try container.sdkDecodeIfPresent(.archived)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.adminId = try container.sdkDecodeIfPresent(.adminId)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        model = try container.sdkDecodeIfPresent(.model)
+        name = try container.sdkDecodeIfPresent(.name)
+        fullName = try container.sdkDecodeIfPresent(.fullName)
+        label = try container.sdkDecodeIfPresent(.label)
+        description = try container.sdkDecodeIfPresent(.description)
+        dataType = try container.sdkDecodeIfPresent(.dataType)
+        options = try container.sdkDecodeIfPresent(.options)
+        apiWritable = try container.sdkDecodeIfPresent(.apiWritable)
+        messengerWritable = try container.sdkDecodeIfPresent(.messengerWritable)
+        uiWritable = try container.sdkDecodeIfPresent(.uiWritable)
+        custom = try container.sdkDecodeIfPresent(.custom)
+        archived = try container.sdkDecodeIfPresent(.archived)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        adminId = try container.sdkDecodeIfPresent(.adminId)
     }
 }
 
-extension DataAttribute {
-    public init(type: DataAttributeType? = nil, id: Int? = nil, model: DataAttributeModel? = nil, name: String? = nil, fullName: String? = nil, label: String? = nil, description: String? = nil, dataType: DataAttributeDataType? = nil, options: [String]? = nil, apiWritable: Bool? = nil, messengerWritable: Bool? = nil, uiWritable: Bool? = nil, custom: Bool? = nil, archived: Bool? = nil, createdAt: Int? = nil, updatedAt: Int? = nil, adminId: String? = nil) {
+public extension DataAttribute {
+    init(
+        type: DataAttributeType? = nil,
+        id: Int? = nil,
+        model: DataAttributeModel? = nil,
+        name: String? = nil,
+        fullName: String? = nil,
+        label: String? = nil,
+        description: String? = nil,
+        dataType: DataAttributeDataType? = nil,
+        options: [String]? = nil,
+        apiWritable: Bool? = nil,
+        messengerWritable: Bool? = nil,
+        uiWritable: Bool? = nil,
+        custom: Bool? = nil,
+        archived: Bool? = nil,
+        createdAt: Int? = nil,
+        updatedAt: Int? = nil,
+        adminId: String? = nil
+    ) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.model, self.name) = (model, name)
@@ -130,7 +148,10 @@ extension DataAttribute {
 public struct DataAttributeDataType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let string = DataAttributeDataType(rawValue: "string")
     public static let integer = DataAttributeDataType(rawValue: "integer")
     public static let float = DataAttributeDataType(rawValue: "float")
@@ -139,7 +160,7 @@ public struct DataAttributeDataType: RawRepresentable, Hashable, Codable, Sendab
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -152,13 +173,16 @@ public struct DataAttributeDataType: RawRepresentable, Hashable, Codable, Sendab
 public struct DataAttributeModel: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let contact = DataAttributeModel(rawValue: "contact")
     public static let company = DataAttributeModel(rawValue: "company")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -171,12 +195,15 @@ public struct DataAttributeModel: RawRepresentable, Hashable, Codable, Sendable,
 public struct DataAttributeType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let dataAttribute = DataAttributeType(rawValue: "data_attribute")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

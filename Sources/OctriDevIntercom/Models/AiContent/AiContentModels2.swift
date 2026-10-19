@@ -3,7 +3,7 @@
 
 import Foundation
 
-// TaggedModelsAiContent domain models
+/// TaggedModelsAiContent domain models
 /// This will return a list of external pages for the App.
 public struct ExternalPagesList: Codable {
     /// The type of the object - `list`.
@@ -28,31 +28,32 @@ public struct ExternalPagesList: Codable {
     }
 
     init() {
-        (self.type, self.pages, self.totalCount, self.data) = (nil, nil, nil, nil)
+        (type, pages, totalCount, data) = (nil, nil, nil, nil)
     }
 }
 
-extension ExternalPagesList {
-    public init(from decoder: Decoder) throws {
+public extension ExternalPagesList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.pages = try container.sdkDecodeIfPresent(.pages)
-        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        type = try container.sdkDecodeIfPresent(.type)
+        pages = try container.sdkDecodeIfPresent(.pages)
+        totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension ExternalPagesList {
-    public init(type: ExternalPagesListType? = nil, pages: PagesLink? = nil, totalCount: Int? = nil, data: [ExternalPage]? = nil) {
+public extension ExternalPagesList {
+    init(
+        type: ExternalPagesListType? = nil,
+        pages: PagesLink? = nil,
+        totalCount: Int? = nil,
+        data: [ExternalPage]? = nil
+    ) {
         self.init()
         (self.type, self.pages) = (type, pages)
         (self.totalCount, self.data) = (totalCount, data)
     }
 }
-
-
-
-
 
 /// External pages that you have added to your Fin Content Library.
 public struct ExternalPage: Codable {
@@ -128,33 +129,52 @@ public struct ExternalPage: Codable {
         case audienceIds = "audience_ids"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ExternalPage {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeRequired(.type)
-        self.id = try container.sdkDecodeRequired(.id)
-        self.title = try container.sdkDecodeRequired(.title)
-        self.html = try container.sdkDecodeRequired(.html)
-        self.aiAgentAvailability = try container.sdkDecodeRequired(.aiAgentAvailability)
-        self.aiCopilotAvailability = try container.sdkDecodeRequired(.aiCopilotAvailability)
-        self.locale = try container.sdkDecodeRequired(.locale)
-        self.sourceId = try container.sdkDecodeRequired(.sourceId)
-        self.externalId = try container.sdkDecodeRequired(.externalId)
-        self.createdAt = try container.sdkDecodeRequired(.createdAt)
-        self.updatedAt = try container.sdkDecodeRequired(.updatedAt)
-        self.lastIngestedAt = try container.sdkDecodeRequired(.lastIngestedAt)
-        self.url = try container.sdkDecodeIfPresent(.url)
-        self.aiSalesAgentAvailability = try container.sdkDecodeIfPresent(.aiSalesAgentAvailability)
-        self.finAvailability = try container.sdkDecodeIfPresent(.finAvailability)
-        self.audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ExternalPage {
-    public init(type: ExternalPageType, id: String, title: String, html: String, aiAgentAvailability: Bool, aiCopilotAvailability: Bool, locale: ExternalPageLocale, sourceId: Int, externalId: String, createdAt: Int, updatedAt: Int, lastIngestedAt: Int, url: String? = nil, aiSalesAgentAvailability: Bool? = nil, finAvailability: Bool? = nil, audienceIds: [Int]? = nil) {
+public extension ExternalPage {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        type = try container.sdkDecodeRequired(.type)
+        id = try container.sdkDecodeRequired(.id)
+        title = try container.sdkDecodeRequired(.title)
+        html = try container.sdkDecodeRequired(.html)
+        aiAgentAvailability = try container.sdkDecodeRequired(.aiAgentAvailability)
+        aiCopilotAvailability = try container.sdkDecodeRequired(.aiCopilotAvailability)
+        locale = try container.sdkDecodeRequired(.locale)
+        sourceId = try container.sdkDecodeRequired(.sourceId)
+        externalId = try container.sdkDecodeRequired(.externalId)
+        createdAt = try container.sdkDecodeRequired(.createdAt)
+        updatedAt = try container.sdkDecodeRequired(.updatedAt)
+        lastIngestedAt = try container.sdkDecodeRequired(.lastIngestedAt)
+        url = try container.sdkDecodeIfPresent(.url)
+        aiSalesAgentAvailability = try container.sdkDecodeIfPresent(.aiSalesAgentAvailability)
+        finAvailability = try container.sdkDecodeIfPresent(.finAvailability)
+        audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
+    }
+}
+
+public extension ExternalPage {
+    init(
+        type: ExternalPageType,
+        id: String,
+        title: String,
+        html: String,
+        aiAgentAvailability: Bool,
+        aiCopilotAvailability: Bool,
+        locale: ExternalPageLocale,
+        sourceId: Int,
+        externalId: String,
+        createdAt: Int,
+        updatedAt: Int,
+        lastIngestedAt: Int,
+        url: String? = nil,
+        aiSalesAgentAvailability: Bool? = nil,
+        finAvailability: Bool? = nil,
+        audienceIds: [Int]? = nil
+    ) {
         (self.type, self.id) = (type, id)
         (self.title, self.html) = (title, html)
         self.aiAgentAvailability = aiAgentAvailability
@@ -191,33 +211,32 @@ public struct ContentImportSourcesList: Codable {
     }
 
     init() {
-        (self.type, self.pages, self.totalCount, self.data) = (nil, nil, nil, nil)
+        (type, pages, totalCount, data) = (nil, nil, nil, nil)
     }
 }
 
-extension ContentImportSourcesList {
-    public init(from decoder: Decoder) throws {
+public extension ContentImportSourcesList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.pages = try container.sdkDecodeIfPresent(.pages)
-        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        type = try container.sdkDecodeIfPresent(.type)
+        pages = try container.sdkDecodeIfPresent(.pages)
+        totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension ContentImportSourcesList {
-    public init(type: ContentImportSourcesListType? = nil, pages: PagesLink? = nil, totalCount: Int? = nil, data: [ContentImportSource]? = nil) {
+public extension ContentImportSourcesList {
+    init(
+        type: ContentImportSourcesListType? = nil,
+        pages: PagesLink? = nil,
+        totalCount: Int? = nil,
+        data: [ContentImportSource]? = nil
+    ) {
         self.init()
         (self.type, self.pages) = (type, pages)
         (self.totalCount, self.data) = (totalCount, data)
     }
 }
-
-
-
-
-
-
 
 /// An external source for External Pages that you add to your Fin Content Library.
 public struct ContentImportSource: Codable {
@@ -261,26 +280,38 @@ public struct ContentImportSource: Codable {
         case audienceIds = "audience_ids"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ContentImportSource {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeRequired(.type)
-        self.id = try container.sdkDecodeRequired(.id)
-        self.lastSyncedAt = try container.sdkDecodeRequired(.lastSyncedAt)
-        self.syncBehavior = try container.sdkDecodeRequired(.syncBehavior)
-        self.status = try container.sdkDecodeRequired(.status)
-        self.url = try container.sdkDecodeRequired(.url)
-        self.createdAt = try container.sdkDecodeRequired(.createdAt)
-        self.updatedAt = try container.sdkDecodeRequired(.updatedAt)
-        self.audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ContentImportSource {
-    public init(type: ContentImportSourceType, id: Int, lastSyncedAt: Int, syncBehavior: ContentImportSourceSyncBehavior, status: ContentImportSourceStatus, url: String, createdAt: Int, updatedAt: Int, audienceIds: [Int]? = nil) {
+public extension ContentImportSource {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        type = try container.sdkDecodeRequired(.type)
+        id = try container.sdkDecodeRequired(.id)
+        lastSyncedAt = try container.sdkDecodeRequired(.lastSyncedAt)
+        syncBehavior = try container.sdkDecodeRequired(.syncBehavior)
+        status = try container.sdkDecodeRequired(.status)
+        url = try container.sdkDecodeRequired(.url)
+        createdAt = try container.sdkDecodeRequired(.createdAt)
+        updatedAt = try container.sdkDecodeRequired(.updatedAt)
+        audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
+    }
+}
+
+public extension ContentImportSource {
+    init(
+        type: ContentImportSourceType,
+        id: Int,
+        lastSyncedAt: Int,
+        syncBehavior: ContentImportSourceSyncBehavior,
+        status: ContentImportSourceStatus,
+        url: String,
+        createdAt: Int,
+        updatedAt: Int,
+        audienceIds: [Int]? = nil
+    ) {
         (self.type, self.id) = (type, id)
         (self.lastSyncedAt, self.syncBehavior) = (lastSyncedAt, syncBehavior)
         (self.status, self.url) = (status, url)
@@ -293,12 +324,15 @@ extension ContentImportSource {
 public struct ExternalPageType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let externalPage = ExternalPageType(rawValue: "external_page")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -311,12 +345,15 @@ public struct ExternalPageType: RawRepresentable, Hashable, Codable, Sendable, S
 public struct ContentImportSourceType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let contentImportSource = ContentImportSourceType(rawValue: "content_import_source")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -329,13 +366,16 @@ public struct ContentImportSourceType: RawRepresentable, Hashable, Codable, Send
 public struct ContentImportSourceStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let active = ContentImportSourceStatus(rawValue: "active")
     public static let deactivated = ContentImportSourceStatus(rawValue: "deactivated")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -348,14 +388,17 @@ public struct ContentImportSourceStatus: RawRepresentable, Hashable, Codable, Se
 public struct ContentImportSourceSyncBehavior: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let api = ContentImportSourceSyncBehavior(rawValue: "api")
     public static let automatic = ContentImportSourceSyncBehavior(rawValue: "automatic")
     public static let manual = ContentImportSourceSyncBehavior(rawValue: "manual")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -368,12 +411,15 @@ public struct ContentImportSourceSyncBehavior: RawRepresentable, Hashable, Codab
 public struct ContentImportSourcesListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let list = ContentImportSourcesListType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -386,12 +432,15 @@ public struct ContentImportSourcesListType: RawRepresentable, Hashable, Codable,
 public struct ExternalPageLocale: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let en = ExternalPageLocale(rawValue: "en")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -404,12 +453,15 @@ public struct ExternalPageLocale: RawRepresentable, Hashable, Codable, Sendable,
 public struct ExternalPagesListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let list = ExternalPagesListType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

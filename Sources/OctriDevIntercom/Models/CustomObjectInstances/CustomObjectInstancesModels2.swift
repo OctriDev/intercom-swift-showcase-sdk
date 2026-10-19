@@ -3,7 +3,7 @@
 
 import Foundation
 
-// TaggedModelsCustomObjectInstances domain models
+/// TaggedModelsCustomObjectInstances domain models
 /// A paginated list of custom object instances.
 public struct CustomObjectInstancesPaginatedList: Codable {
     /// The type of the object - `list`.
@@ -28,22 +28,27 @@ public struct CustomObjectInstancesPaginatedList: Codable {
     }
 
     init() {
-        (self.type, self.pages, self.totalCount, self.data) = (nil, nil, nil, nil)
+        (type, pages, totalCount, data) = (nil, nil, nil, nil)
     }
 }
 
-extension CustomObjectInstancesPaginatedList {
-    public init(from decoder: Decoder) throws {
+public extension CustomObjectInstancesPaginatedList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.pages = try container.sdkDecodeIfPresent(.pages)
-        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        type = try container.sdkDecodeIfPresent(.type)
+        pages = try container.sdkDecodeIfPresent(.pages)
+        totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension CustomObjectInstancesPaginatedList {
-    public init(type: CustomObjectInstancesPaginatedListType? = nil, pages: PagesLink? = nil, totalCount: Int? = nil, data: [CustomObjectInstance?]? = nil) {
+public extension CustomObjectInstancesPaginatedList {
+    init(
+        type: CustomObjectInstancesPaginatedListType? = nil,
+        pages: PagesLink? = nil,
+        totalCount: Int? = nil,
+        data: [CustomObjectInstance?]? = nil
+    ) {
         self.init()
         (self.type, self.pages) = (type, pages)
         (self.totalCount, self.data) = (totalCount, data)
@@ -90,27 +95,36 @@ public struct CustomObjectInstance: Codable {
     }
 
     init() {
-        (self.id, self.externalId, self.externalCreatedAt, self.externalUpdatedAt, self.createdAt) = (nil, nil, nil, nil, nil)
-        (self.updatedAt, self.type, self.customAttributes) = (nil, nil, nil)
+        (id, externalId, externalCreatedAt, externalUpdatedAt, createdAt) = (nil, nil, nil, nil, nil)
+        (updatedAt, type, customAttributes) = (nil, nil, nil)
     }
 }
 
-extension CustomObjectInstance {
-    public init(from decoder: Decoder) throws {
+public extension CustomObjectInstance {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.externalId = try container.sdkDecodeIfPresent(.externalId)
-        self.externalCreatedAt = try container.sdkDecodeIfPresent(.externalCreatedAt)
-        self.externalUpdatedAt = try container.sdkDecodeIfPresent(.externalUpdatedAt)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
+        id = try container.sdkDecodeIfPresent(.id)
+        externalId = try container.sdkDecodeIfPresent(.externalId)
+        externalCreatedAt = try container.sdkDecodeIfPresent(.externalCreatedAt)
+        externalUpdatedAt = try container.sdkDecodeIfPresent(.externalUpdatedAt)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        type = try container.sdkDecodeIfPresent(.type)
+        customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
     }
 }
 
-extension CustomObjectInstance {
-    public init(id: String? = nil, externalId: String? = nil, externalCreatedAt: Int? = nil, externalUpdatedAt: Int? = nil, createdAt: Int? = nil, updatedAt: Int? = nil, type: String? = nil, customAttributes: [String: String]? = nil) {
+public extension CustomObjectInstance {
+    init(
+        id: String? = nil,
+        externalId: String? = nil,
+        externalCreatedAt: Int? = nil,
+        externalUpdatedAt: Int? = nil,
+        createdAt: Int? = nil,
+        updatedAt: Int? = nil,
+        type: String? = nil,
+        customAttributes: [String: String]? = nil
+    ) {
         self.init()
         (self.id, self.externalId) = (id, externalId)
         (self.externalCreatedAt, self.externalUpdatedAt) = (externalCreatedAt, externalUpdatedAt)
@@ -120,15 +134,19 @@ extension CustomObjectInstance {
 }
 
 /// The type of the object - `list`.
-public struct CustomObjectInstancesPaginatedListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct CustomObjectInstancesPaginatedListType: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let list = CustomObjectInstancesPaginatedListType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

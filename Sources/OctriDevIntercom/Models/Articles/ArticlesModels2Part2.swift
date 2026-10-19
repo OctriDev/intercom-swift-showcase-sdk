@@ -3,7 +3,7 @@
 
 import Foundation
 
-// TaggedModelsArticles domain models
+/// TaggedModelsArticles domain models
 /// An instance of highlighted summary text.
 public struct ArticleSearchHighlightsHighlightedSummaryItemItem: Codable {
     /// The type of text - `highlight` or `plain`.
@@ -19,20 +19,20 @@ public struct ArticleSearchHighlightsHighlightedSummaryItemItem: Codable {
     }
 
     init() {
-        (self.type, self.text) = (nil, nil)
+        (type, text) = (nil, nil)
     }
 }
 
-extension ArticleSearchHighlightsHighlightedSummaryItemItem {
-    public init(from decoder: Decoder) throws {
+public extension ArticleSearchHighlightsHighlightedSummaryItemItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.text = try container.sdkDecodeIfPresent(.text)
+        type = try container.sdkDecodeIfPresent(.type)
+        text = try container.sdkDecodeIfPresent(.text)
     }
 }
 
-extension ArticleSearchHighlightsHighlightedSummaryItemItem {
-    public init(type: ArticleSearchHighlightsHighlightedSummaryItemItemType? = nil, text: String? = nil) {
+public extension ArticleSearchHighlightsHighlightedSummaryItemItem {
+    init(type: ArticleSearchHighlightsHighlightedSummaryItemItemType? = nil, text: String? = nil) {
         self.init()
         (self.type, self.text) = (type, text)
     }
@@ -61,22 +61,27 @@ public struct ArticleSearchResponse: Codable {
     }
 
     init() {
-        (self.type, self.totalCount, self.data, self.pages) = (nil, nil, nil, nil)
+        (type, totalCount, data, pages) = (nil, nil, nil, nil)
     }
 }
 
-extension ArticleSearchResponse {
-    public init(from decoder: Decoder) throws {
+public extension ArticleSearchResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        self.data = try container.sdkDecodeIfPresent(.data)
-        self.pages = try container.sdkDecodeIfPresent(.pages)
+        type = try container.sdkDecodeIfPresent(.type)
+        totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        data = try container.sdkDecodeIfPresent(.data)
+        pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-extension ArticleSearchResponse {
-    public init(type: ArticleSearchResponseType? = nil, totalCount: Int? = nil, data: ArticleSearchResponseData? = nil, pages: CursorPages? = nil) {
+public extension ArticleSearchResponse {
+    init(
+        type: ArticleSearchResponseType? = nil,
+        totalCount: Int? = nil,
+        data: ArticleSearchResponseData? = nil,
+        pages: CursorPages? = nil
+    ) {
         self.init()
         (self.type, self.totalCount) = (type, totalCount)
         (self.data, self.pages) = (data, pages)
@@ -98,20 +103,20 @@ public struct ArticleSearchHighlightsHighlightedTitleItem: Codable {
     }
 
     init() {
-        (self.type, self.text) = (nil, nil)
+        (type, text) = (nil, nil)
     }
 }
 
-extension ArticleSearchHighlightsHighlightedTitleItem {
-    public init(from decoder: Decoder) throws {
+public extension ArticleSearchHighlightsHighlightedTitleItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.text = try container.sdkDecodeIfPresent(.text)
+        type = try container.sdkDecodeIfPresent(.type)
+        text = try container.sdkDecodeIfPresent(.text)
     }
 }
 
-extension ArticleSearchHighlightsHighlightedTitleItem {
-    public init(type: ArticleSearchHighlightsHighlightedTitleItemType? = nil, text: String? = nil) {
+public extension ArticleSearchHighlightsHighlightedTitleItem {
+    init(type: ArticleSearchHighlightsHighlightedTitleItemType? = nil, text: String? = nil) {
         self.init()
         (self.type, self.text) = (type, text)
     }
@@ -134,21 +139,25 @@ public struct ArticleSearchHighlights: Codable {
     }
 
     init() {
-        (self.articleId, self.highlightedTitle, self.highlightedSummary) = (nil, nil, nil)
+        (articleId, highlightedTitle, highlightedSummary) = (nil, nil, nil)
     }
 }
 
-extension ArticleSearchHighlights {
-    public init(from decoder: Decoder) throws {
+public extension ArticleSearchHighlights {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.articleId = try container.sdkDecodeIfPresent(.articleId)
-        self.highlightedTitle = try container.sdkDecodeIfPresent(.highlightedTitle)
-        self.highlightedSummary = try container.sdkDecodeIfPresent(.highlightedSummary)
+        articleId = try container.sdkDecodeIfPresent(.articleId)
+        highlightedTitle = try container.sdkDecodeIfPresent(.highlightedTitle)
+        highlightedSummary = try container.sdkDecodeIfPresent(.highlightedSummary)
     }
 }
 
-extension ArticleSearchHighlights {
-    public init(articleId: String? = nil, highlightedTitle: [ArticleSearchHighlightsHighlightedTitleItem]? = nil, highlightedSummary: [[ArticleSearchHighlightsHighlightedSummaryItemItem]]? = nil) {
+public extension ArticleSearchHighlights {
+    init(
+        articleId: String? = nil,
+        highlightedTitle: [ArticleSearchHighlightsHighlightedTitleItem]? = nil,
+        highlightedSummary: [[ArticleSearchHighlightsHighlightedSummaryItemItem]]? = nil
+    ) {
         self.init()
         (self.articleId, self.highlightedTitle) = (articleId, highlightedTitle)
         self.highlightedSummary = highlightedSummary
@@ -168,20 +177,20 @@ public struct ArticleSearchResponseData: Codable {
     }
 
     init() {
-        (self.articles, self.highlights) = (nil, nil)
+        (articles, highlights) = (nil, nil)
     }
 }
 
-extension ArticleSearchResponseData {
-    public init(from decoder: Decoder) throws {
+public extension ArticleSearchResponseData {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.articles = try container.sdkDecodeIfPresent(.articles)
-        self.highlights = try container.sdkDecodeIfPresent(.highlights)
+        articles = try container.sdkDecodeIfPresent(.articles)
+        highlights = try container.sdkDecodeIfPresent(.highlights)
     }
 }
 
-extension ArticleSearchResponseData {
-    public init(articles: [Article]? = nil, highlights: [ArticleSearchHighlights]? = nil) {
+public extension ArticleSearchResponseData {
+    init(articles: [Article]? = nil, highlights: [ArticleSearchHighlights]? = nil) {
         self.init()
         (self.articles, self.highlights) = (articles, highlights)
     }
@@ -324,51 +333,92 @@ public struct ArticleListItem: Codable {
     }
 
     init() {
-        (self.type, self.id, self.workspaceId, self.title, self.description) = (nil, nil, nil, nil, nil)
-        (self.body, self.bodyMarkdown, self.authorId, self.state, self.createdAt) = (nil, nil, nil, nil, nil)
-        (self.updatedAt, self.hasUnpublishedChanges, self.draftUpdatedAt, self.url, self.parentIds) = (nil, nil, nil, nil, nil)
-        (self.aiChatbotAvailability, self.aiCopilotAvailability, self.aiSalesAgentAvailability, self.createdById, self.updatedById) = (nil, nil, nil, nil, nil)
-        (self.excludeFromArticleSuggestions, self.helpCenterAudience, self.scheduledPublishAt, self.scheduledUnpublishAt, self.defaultLocale) = (nil, nil, nil, nil, nil)
-        (self.translatedContent, self.tags, self.folderId) = (nil, nil, nil)
+        (type, id, workspaceId, title, description) = (nil, nil, nil, nil, nil)
+        (body, bodyMarkdown, authorId, state, createdAt) = (nil, nil, nil, nil, nil)
+        (updatedAt, hasUnpublishedChanges, draftUpdatedAt, url, parentIds) = (nil, nil, nil, nil, nil)
+        (aiChatbotAvailability, aiCopilotAvailability, aiSalesAgentAvailability, createdById, updatedById) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        (excludeFromArticleSuggestions, helpCenterAudience, scheduledPublishAt, scheduledUnpublishAt, defaultLocale) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        (translatedContent, tags, folderId) = (nil, nil, nil)
     }
 }
 
-extension ArticleListItem {
-    public init(from decoder: Decoder) throws {
+public extension ArticleListItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.workspaceId = try container.sdkDecodeIfPresent(.workspaceId)
-        self.title = try container.sdkDecodeIfPresent(.title)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.body = try container.sdkDecodeIfPresent(.body)
-        self.bodyMarkdown = try container.sdkDecodeIfPresent(.bodyMarkdown)
-        self.authorId = try container.sdkDecodeIfPresent(.authorId)
-        self.state = try container.sdkDecodeIfPresent(.state)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.hasUnpublishedChanges = try container.sdkDecodeIfPresent(.hasUnpublishedChanges)
-        self.draftUpdatedAt = try container.sdkDecodeIfPresent(.draftUpdatedAt)
-        self.url = try container.sdkDecodeIfPresent(.url)
-        self.parentIds = try container.sdkDecodeIfPresent(.parentIds)
-        self.aiChatbotAvailability = try container.sdkDecodeIfPresent(.aiChatbotAvailability)
-        self.aiCopilotAvailability = try container.sdkDecodeIfPresent(.aiCopilotAvailability)
-        self.aiSalesAgentAvailability = try container.sdkDecodeIfPresent(.aiSalesAgentAvailability)
-        self.createdById = try container.sdkDecodeIfPresent(.createdById)
-        self.updatedById = try container.sdkDecodeIfPresent(.updatedById)
-        self.excludeFromArticleSuggestions = try container.sdkDecodeIfPresent(.excludeFromArticleSuggestions)
-        self.helpCenterAudience = try container.sdkDecodeIfPresent(.helpCenterAudience)
-        self.scheduledPublishAt = try container.sdkDecodeIfPresent(.scheduledPublishAt)
-        self.scheduledUnpublishAt = try container.sdkDecodeIfPresent(.scheduledUnpublishAt)
-        self.defaultLocale = try container.sdkDecodeIfPresent(.defaultLocale)
-        self.translatedContent = try container.sdkDecodeIfPresent(.translatedContent)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.folderId = try container.sdkDecodeIfPresent(.folderId)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        workspaceId = try container.sdkDecodeIfPresent(.workspaceId)
+        title = try container.sdkDecodeIfPresent(.title)
+        description = try container.sdkDecodeIfPresent(.description)
+        body = try container.sdkDecodeIfPresent(.body)
+        bodyMarkdown = try container.sdkDecodeIfPresent(.bodyMarkdown)
+        authorId = try container.sdkDecodeIfPresent(.authorId)
+        state = try container.sdkDecodeIfPresent(.state)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        hasUnpublishedChanges = try container.sdkDecodeIfPresent(.hasUnpublishedChanges)
+        draftUpdatedAt = try container.sdkDecodeIfPresent(.draftUpdatedAt)
+        url = try container.sdkDecodeIfPresent(.url)
+        parentIds = try container.sdkDecodeIfPresent(.parentIds)
+        aiChatbotAvailability = try container.sdkDecodeIfPresent(.aiChatbotAvailability)
+        aiCopilotAvailability = try container.sdkDecodeIfPresent(.aiCopilotAvailability)
+        aiSalesAgentAvailability = try container.sdkDecodeIfPresent(.aiSalesAgentAvailability)
+        createdById = try container.sdkDecodeIfPresent(.createdById)
+        updatedById = try container.sdkDecodeIfPresent(.updatedById)
+        excludeFromArticleSuggestions = try container.sdkDecodeIfPresent(.excludeFromArticleSuggestions)
+        helpCenterAudience = try container.sdkDecodeIfPresent(.helpCenterAudience)
+        scheduledPublishAt = try container.sdkDecodeIfPresent(.scheduledPublishAt)
+        scheduledUnpublishAt = try container.sdkDecodeIfPresent(.scheduledUnpublishAt)
+        defaultLocale = try container.sdkDecodeIfPresent(.defaultLocale)
+        translatedContent = try container.sdkDecodeIfPresent(.translatedContent)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        folderId = try container.sdkDecodeIfPresent(.folderId)
     }
 }
 
-extension ArticleListItem {
-    public init(type: ArticleListItemType? = nil, id: String? = nil, workspaceId: String? = nil, title: String? = nil, description: String? = nil, body: String? = nil, bodyMarkdown: String? = nil, authorId: Int? = nil, state: ArticleListItemState? = nil, createdAt: Int? = nil, updatedAt: Int? = nil, hasUnpublishedChanges: Bool? = nil, draftUpdatedAt: Int? = nil, url: String? = nil, parentIds: [Int]? = nil, aiChatbotAvailability: Bool? = nil, aiCopilotAvailability: Bool? = nil, aiSalesAgentAvailability: Bool? = nil, createdById: Int? = nil, updatedById: Int? = nil, excludeFromArticleSuggestions: Bool? = nil, helpCenterAudience: ArticleListItemHelpCenterAudience? = nil, scheduledPublishAt: Int? = nil, scheduledUnpublishAt: Int? = nil, defaultLocale: String? = nil, translatedContent: ArticleTranslatedContent? = nil, tags: Tags? = nil, folderId: Int? = nil) {
+public extension ArticleListItem {
+    init(
+        type: ArticleListItemType? = nil,
+        id: String? = nil,
+        workspaceId: String? = nil,
+        title: String? = nil,
+        description: String? = nil,
+        body: String? = nil,
+        bodyMarkdown: String? = nil,
+        authorId: Int? = nil,
+        state: ArticleListItemState? = nil,
+        createdAt: Int? = nil,
+        updatedAt: Int? = nil,
+        hasUnpublishedChanges: Bool? = nil,
+        draftUpdatedAt: Int? = nil,
+        url: String? = nil,
+        parentIds: [Int]? = nil,
+        aiChatbotAvailability: Bool? = nil,
+        aiCopilotAvailability: Bool? = nil,
+        aiSalesAgentAvailability: Bool? = nil,
+        createdById: Int? = nil,
+        updatedById: Int? = nil,
+        excludeFromArticleSuggestions: Bool? = nil,
+        helpCenterAudience: ArticleListItemHelpCenterAudience? = nil,
+        scheduledPublishAt: Int? = nil,
+        scheduledUnpublishAt: Int? = nil,
+        defaultLocale: String? = nil,
+        translatedContent: ArticleTranslatedContent? = nil,
+        tags: Tags? = nil,
+        folderId: Int? = nil
+    ) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.workspaceId, self.title) = (workspaceId, title)
@@ -394,13 +444,16 @@ extension ArticleListItem {
 public struct ArticleState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let published = ArticleState(rawValue: "published")
     public static let draft = ArticleState(rawValue: "draft")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -410,16 +463,20 @@ public struct ArticleState: RawRepresentable, Hashable, Codable, Sendable, SdkWi
 }
 
 /// The type of text - `highlight` or `plain`.
-public struct ArticleSearchHighlightsHighlightedSummaryItemItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct ArticleSearchHighlightsHighlightedSummaryItemItemType: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let highlight = ArticleSearchHighlightsHighlightedSummaryItemItemType(rawValue: "highlight")
     public static let plain = ArticleSearchHighlightsHighlightedSummaryItemItemType(rawValue: "plain")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -432,12 +489,15 @@ public struct ArticleSearchHighlightsHighlightedSummaryItemItemType: RawRepresen
 public struct ArticleSearchResponseType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let list = ArticleSearchResponseType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -451,13 +511,16 @@ public struct ArticleSearchResponseType: RawRepresentable, Hashable, Codable, Se
 public struct ArticleListItemState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let published = ArticleListItemState(rawValue: "published")
     public static let draft = ArticleListItemState(rawValue: "draft")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -470,12 +533,15 @@ public struct ArticleListItemState: RawRepresentable, Hashable, Codable, Sendabl
 public struct ArticleVersionSummaryType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let articleVersion = ArticleVersionSummaryType(rawValue: "article_version")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -490,7 +556,10 @@ public struct ArticleVersionSummaryType: RawRepresentable, Hashable, Codable, Se
 public struct ArticleHelpCenterAudience: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let everyone = ArticleHelpCenterAudience(rawValue: "everyone")
     public static let allUsers = ArticleHelpCenterAudience(rawValue: "all_users")
     public static let allVisitors = ArticleHelpCenterAudience(rawValue: "all_visitors")
@@ -500,7 +569,7 @@ public struct ArticleHelpCenterAudience: RawRepresentable, Hashable, Codable, Se
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -513,12 +582,15 @@ public struct ArticleHelpCenterAudience: RawRepresentable, Hashable, Codable, Se
 public struct ArticleVersionType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let articleVersion = ArticleVersionType(rawValue: "article_version")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -6,17 +6,32 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AiContentMethods {
-    /// Lists the content import sources configured for the workspace. Use the pagination links in the response to navigate through the source list. Each source represents an external source added to the Fin Content Library.
+public extension AiContentMethods {
+    /// Lists the content import sources configured for the workspace. Use the pagination links in the response to
+    /// navigate through the source list. Each source represents an external source added to the Fin Content Library.
     ///
     /// You can retrieve a list of all content import sources for a workspace.
-    public static func listContentImportSources(config: ClientConfig, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ContentImportSourcesList {
-        return try (await sdkRequest("GET", "/ai/content_import_sources", config: config, decoder: .json, operationId: "listContentImportSources", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self])).data
+    static func listContentImportSources(
+        config: ClientConfig,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContentImportSourcesList {
+        try await (sdkRequest(
+            "GET",
+            "/ai/content_import_sources",
+            config: config,
+            decoder: .json,
+            operationId: "listContentImportSources",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self]
+        )).data
     }
 
-    /// Creates a content import source for external pages in your Fin Content Library. Supply `sync_behavior` as `api` and provide the source `url`; you can also set its status and associate audiences.
+    /// Creates a content import source for external pages in your Fin Content Library. Supply `sync_behavior` as `api`
+    /// and provide the source `url`; you can also set its status and associate audiences.
     ///
     /// You can create a new content import source by sending a POST request to this endpoint.
     ///
@@ -27,11 +42,34 @@ extension AiContentMethods {
     /// - status: The status of the content import source.
     /// - audienceIds: The unique identifiers for the audiences to associate with
     ///   this content import source. Can be a single integer or an array of integers.
-    public static func createContentImportSource(config: ClientConfig, syncBehavior: CreateContentImportSourceRequestSyncBehavior, url: String, intercomVersion: IntercomVersion? = nil, status: CreateContentImportSourceRequestStatus? = nil, audienceIds: SdkOptional<CreateContentImportSourceRequestAudienceIds>? = nil, requestOptions: RequestOptions? = nil) async throws -> ContentImportSource {
-        let requestBody = CreateContentImportSourceRequestBody(syncBehavior: syncBehavior, url: url, status: status, audienceIds: audienceIds)
+    static func createContentImportSource(
+        config: ClientConfig,
+        syncBehavior: CreateContentImportSourceRequestSyncBehavior,
+        url: String,
+        intercomVersion: IntercomVersion? = nil,
+        status: CreateContentImportSourceRequestStatus? = nil,
+        audienceIds: SdkOptional<CreateContentImportSourceRequestAudienceIds>? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContentImportSource {
+        let requestBody = CreateContentImportSourceRequestBody(
+            syncBehavior: syncBehavior,
+            url: url,
+            status: status,
+            audienceIds: audienceIds
+        )
 
-        return try (await sdkRequest("POST", "/ai/content_import_sources", config: config, body: requestBody, decoder: .json, operationId: "createContentImportSource", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/ai/content_import_sources",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "createContentImportSource",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self]
+        )).data
     }
 }

@@ -9,39 +9,98 @@ public class FoldersNamespace {
         self.config = config
     }
 
-/// Lists folders used to organize content. Use `parent_folder_id` to list only the direct children of a specific folder, and use `page` and `per_page` to paginate the results.
+    /// Lists folders used to organize content. Use `parent_folder_id` to list only the direct children of a specific
+    /// folder, and use `page` and `per_page` to paginate the results.
     ///
-    /// You can fetch a list of all folders for organizing content by making a GET request to `https://api.intercom.io/folders`.
-    public func list(page: Int? = nil, perPage: Int? = nil, parentFolderId: Int? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ListFoldersResponse {
-        return try await FoldersMethods.listFolders(config: config, page: page, perPage: perPage, parentFolderId: parentFolderId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// You can fetch a list of all folders for organizing content by making a GET request to
+    /// `https://api.intercom.io/folders`.
+    public func list(
+        page: Int? = nil,
+        perPage: Int? = nil,
+        parentFolderId: Int? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListFoldersResponse {
+        try await FoldersMethods.listFolders(
+            config: config,
+            page: page,
+            perPage: perPage,
+            parentFolderId: parentFolderId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Creates a folder for organizing content. Include a `folder` object with a `name`; optionally provide a description, emoji, or parent folder ID.
+    /// Creates a folder for organizing content. Include a `folder` object with a `name`; optionally provide a
+    /// description, emoji, or parent folder ID.
     ///
-    /// You can create a new folder for organizing content by making a POST request to `https://api.intercom.io/folders`.
-    public func create(folder: CreateFolderRequestBodyFolder, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Folder {
-        return try await FoldersMethods.createFolder(config: config, folder: folder, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// You can create a new folder for organizing content by making a POST request to
+    /// `https://api.intercom.io/folders`.
+    public func create(
+        folder: CreateFolderRequestBodyFolder,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Folder {
+        try await FoldersMethods.createFolder(
+            config: config,
+            folder: folder,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieves a folder by its unique identifier. Use the `id` path parameter to select the folder whose details you need.
+    /// Retrieves a folder by its unique identifier. Use the `id` path parameter to select the folder whose details you
+    /// need.
     ///
     /// You can fetch the details of a single folder by making a GET request to `https://api.intercom.io/folders/<id>`.
-    public func retrieve(id: Int, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Folder {
-        return try await FoldersMethods.retrieveFolder(config: config, id: id, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func retrieve(
+        id: Int,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Folder {
+        try await FoldersMethods.retrieveFolder(
+            config: config,
+            id: id,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Updates a folder's details, including its name, description, emoji, or parent folder. Supply the `folder` object with the properties you want to change; `id` selects the folder to update.
+    /// Updates a folder's details, including its name, description, emoji, or parent folder. Supply the `folder` object
+    /// with the properties you want to change; `id` selects the folder to update.
     ///
     /// You can update a folder by making a PUT request to `https://api.intercom.io/folders/<id>`.
-    public func update(id: Int, folder: UpdateFolderRequestBodyFolder, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Folder {
-        return try await FoldersMethods.updateFolder(config: config, id: id, folder: folder, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func update(
+        id: Int,
+        folder: UpdateFolderRequestBodyFolder,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Folder {
+        try await FoldersMethods.updateFolder(
+            config: config,
+            id: id,
+            folder: folder,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Deletes a folder that contains no content. Use the `id` path parameter to select the folder; folders with content cannot be deleted until that content is removed or moved.
+    /// Deletes a folder that contains no content. Use the `id` path parameter to select the folder; folders with
+    /// content cannot be deleted until that content is removed or moved.
     ///
-    /// You can delete a folder (if it contains no content) by making a DELETE request to `https://api.intercom.io/folders/<id>`.
-    public func delete(id: Int, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DeletedFolderObject {
-        return try await FoldersMethods.deleteFolder(config: config, id: id, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// You can delete a folder (if it contains no content) by making a DELETE request to
+    /// `https://api.intercom.io/folders/<id>`.
+    public func delete(
+        id: Int,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DeletedFolderObject {
+        try await FoldersMethods.deleteFolder(
+            config: config,
+            id: id,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 }
 
@@ -51,18 +110,43 @@ public class IpAllowlistNamespace {
         self.config = config
     }
 
-/// Retrieves the current IP allowlist configuration for the workspace. Use the returned `enabled` value and `ip_allowlist` entries to inspect whether the allowlist is active and which IP addresses or ranges are allowed.
+    /// Retrieves the current IP allowlist configuration for the workspace. Use the returned `enabled` value and
+    /// `ip_allowlist` entries to inspect whether the allowlist is active and which IP addresses or ranges are allowed.
     ///
     /// Retrieve the current IP allowlist configuration for the workspace.
-    public func get(intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> IpAllowlist {
-        return try await IpAllowlistMethods.getIpAllowlist(config: config, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func get(
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> IpAllowlist {
+        try await IpAllowlistMethods.getIpAllowlist(
+            config: config,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Updates the workspace's IP allowlist configuration. Supply `enabled` to control whether the allowlist is active and `ip_allowlist` to set allowed IP addresses or CIDR ranges. Include the caller's current IP address before enabling the allowlist to avoid locking out the caller.
+    /// Updates the workspace's IP allowlist configuration. Supply `enabled` to control whether the allowlist is active
+    /// and `ip_allowlist` to set allowed IP addresses or CIDR ranges. Include the caller's current IP address before
+    /// enabling the allowlist to avoid locking out the caller.
     ///
-    /// Update the IP allowlist configuration for the workspace. {% admonition type="warning" name="Lockout Protection" %} The API will reject updates that would lock out the caller's IP address. Ensure your current IP is included in the allowlist when enabling the feature. {% /admonition %}
-    public func update(intercomVersion: IntercomVersion? = nil, type: String? = nil, enabled: Bool? = nil, ipAllowlist: [String]? = nil, requestOptions: RequestOptions? = nil) async throws -> IpAllowlist {
-        return try await IpAllowlistMethods.updateIpAllowlist(config: config, intercomVersion: intercomVersion, type: type, enabled: enabled, ipAllowlist: ipAllowlist, requestOptions: requestOptions)
+    /// Update the IP allowlist configuration for the workspace. {% admonition type="warning" name="Lockout Protection"
+    /// %} The API will reject updates that would lock out the caller's IP address. Ensure your current IP is included
+    /// in the allowlist when enabling the feature. {% /admonition %}
+    public func update(
+        intercomVersion: IntercomVersion? = nil,
+        type: String? = nil,
+        enabled: Bool? = nil,
+        ipAllowlist: [String]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> IpAllowlist {
+        try await IpAllowlistMethods.updateIpAllowlist(
+            config: config,
+            intercomVersion: intercomVersion,
+            type: type,
+            enabled: enabled,
+            ipAllowlist: ipAllowlist,
+            requestOptions: requestOptions
+        )
     }
 }
 
@@ -72,90 +156,280 @@ public class CompaniesNamespace {
         self.config = config
     }
 
-/// Creates a company or updates the existing company identified by `company_id`. Set a unique `company_id` when creating a company because it cannot be changed later; a company appears in Intercom only when it has at least one associated user.
+    /// Creates a company or updates the existing company identified by `company_id`. Set a unique `company_id` when
+    /// creating a company because it cannot be changed later; a company appears in Intercom only when it has at least
+    /// one associated user.
     ///
-    /// You can create or update a company. Companies will be only visible in Intercom when there is at least one associated user. Companies are looked up via `company_id` in a `POST` request, if not found via `company_id`, the new company will be created, if found, that company will be updated. {% admonition type="warning" name="Using `company_id`" %} You can set a unique `company_id` value when creating a company. However, it is not possible to update `company_id`. Be sure to set a unique value once upon creation of the company. {% /admonition %}
-    public func createOrUpdate(options: CompaniesMethods.CreateOrUpdateCompanyOptions, requestOptions: RequestOptions? = nil) async throws -> Company {
-        return try await CompaniesMethods.createOrUpdateCompany(config: config, options: options, requestOptions: requestOptions)
+    /// You can create or update a company. Companies will be only visible in Intercom when there is at least one
+    /// associated user. Companies are looked up via `company_id` in a `POST` request, if not found via `company_id`,
+    /// the new company will be created, if found, that company will be updated. {% admonition type="warning"
+    /// name="Using `company_id`" %} You can set a unique `company_id` value when creating a company. However, it is not
+    /// possible to update `company_id`. Be sure to set a unique value once upon creation of the company. {% /admonition
+    /// %}
+    public func createOrUpdate(
+        options: CompaniesMethods.CreateOrUpdateCompanyOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Company {
+        try await CompaniesMethods.createOrUpdateCompany(
+            config: config,
+            options: options,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists companies, or retrieves a single company when you filter by `company_id` or `name`. Use `tag_id` or `segment_id` to filter the results, and use `page` and `per_page` to paginate the results.
+    /// Lists companies, or retrieves a single company when you filter by `company_id` or `name`. Use `tag_id` or
+    /// `segment_id` to filter the results, and use `page` and `per_page` to paginate the results.
     ///
-    /// You can fetch a single company by passing in `company_id` or `name`. `https://api.intercom.io/companies?name={name}` `https://api.intercom.io/companies?company_id={company_id}` You can fetch all companies and filter by `segment_id` or `tag_id` as a query parameter. `https://api.intercom.io/companies?tag_id={tag_id}` `https://api.intercom.io/companies?segment_id={segment_id}`
-    public func retrieve(name: String? = nil, companyId: String? = nil, tagId: String? = nil, segmentId: String? = nil, page: Int? = nil, perPage: Int? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> CompanyList {
-        return try await CompaniesMethods.retrieveCompany(config: config, name: name, companyId: companyId, tagId: tagId, segmentId: segmentId, page: page, perPage: perPage, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// You can fetch a single company by passing in `company_id` or `name`.
+    /// `https://api.intercom.io/companies?name={name}` `https://api.intercom.io/companies?company_id={company_id}` You
+    /// can fetch all companies and filter by `segment_id` or `tag_id` as a query parameter.
+    /// `https://api.intercom.io/companies?tag_id={tag_id}` `https://api.intercom.io/companies?segment_id={segment_id}`
+    public func retrieve(
+        name: String? = nil,
+        companyId: String? = nil,
+        tagId: String? = nil,
+        segmentId: String? = nil,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CompanyList {
+        try await CompaniesMethods.retrieveCompany(
+            config: config,
+            name: name,
+            companyId: companyId,
+            tagId: tagId,
+            segmentId: segmentId,
+            page: page,
+            perPage: perPage,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieves a company by its Intercom-assigned identifier. Use the `company_id` path parameter to select the company whose details you need.
+    /// Retrieves a company by its Intercom-assigned identifier. Use the `company_id` path parameter to select the
+    /// company whose details you need.
     ///
     /// You can fetch a single company.
-    public func retrieveById(companyId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Company {
-        return try await CompaniesMethods.retrieveCompaniesById(config: config, companyId: companyId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func retrieveById(
+        companyId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Company {
+        try await CompaniesMethods.retrieveCompaniesById(
+            config: config,
+            companyId: companyId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Replaces details for a company identified by its Intercom-assigned ID. Supply the company properties you want to update; `company_id` is set only when the company is created and cannot be changed.
+    /// Replaces details for a company identified by its Intercom-assigned ID. Supply the company properties you want to
+    /// update; `company_id` is set only when the company is created and cannot be changed.
     ///
-    /// You can update a single company using the Intercom provisioned `id`. {% admonition type="warning" name="Using `company_id`" %} When updating a company it is not possible to update `company_id`. This can only be set once upon creation of the company. {% /admonition %}
-    public func update(options: CompaniesMethods.UpdateCompanyOptions, requestOptions: RequestOptions? = nil) async throws -> Company {
-        return try await CompaniesMethods.updateCompany(config: config, options: options, requestOptions: requestOptions)
+    /// You can update a single company using the Intercom provisioned `id`. {% admonition type="warning" name="Using
+    /// `company_id`" %} When updating a company it is not possible to update `company_id`. This can only be set once
+    /// upon creation of the company. {% /admonition %}
+    public func update(
+        options: CompaniesMethods.UpdateCompanyOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Company {
+        try await CompaniesMethods.updateCompany(config: config, options: options, requestOptions: requestOptions)
     }
 
-/// Deletes a company from the workspace and detaches its contacts without deleting the contact records. Contact detachment is permanent, and a `company.deleted` webhook is sent after deletion. A third-party integration may recreate the company on its next sync, so remove or filter it at the source before deleting it here.
+    /// Deletes a company from the workspace and detaches its contacts without deleting the contact records. Contact
+    /// detachment is permanent, and a `company.deleted` webhook is sent after deletion. A third-party integration may
+    /// recreate the company on its next sync, so remove or filter it at the source before deleting it here.
     ///
-    /// Delete a single company. The company record is kept in your workspace, but all contacts are detached. The contacts themselves are not deleted. Detaching contacts is permanent and can't be reversed. A `company.deleted` webhook is sent when the company is deleted. These changes may take some time to be reflected in your workspace. {% admonition type="warning" %} Third-party integrations that sync companies into Intercom (for example, Salesforce or Chargebee) will recreate any company deleted through this endpoint on their next sync. To prevent recreation, remove or filter the company at the source integration before deleting it via the API. {% /admonition %}
-    public func delete(companyId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DeletedCompanyObject {
-        return try await CompaniesMethods.deleteCompany(config: config, companyId: companyId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// Delete a single company. The company record is kept in your workspace, but all contacts are detached. The
+    /// contacts themselves are not deleted. Detaching contacts is permanent and can't be reversed. A `company.deleted`
+    /// webhook is sent when the company is deleted. These changes may take some time to be reflected in your workspace.
+    /// {% admonition type="warning" %} Third-party integrations that sync companies into Intercom (for example,
+    /// Salesforce or Chargebee) will recreate any company deleted through this endpoint on their next sync. To prevent
+    /// recreation, remove or filter the company at the source integration before deleting it via the API. {%
+    /// /admonition %}
+    public func delete(
+        companyId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DeletedCompanyObject {
+        try await CompaniesMethods.deleteCompany(
+            config: config,
+            companyId: companyId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists the contacts associated with a specific company. Use the company identifier to retrieve its attached contacts; the response includes cursor-based pagination metadata.
+    /// Lists the contacts associated with a specific company. Use the company identifier to retrieve its attached
+    /// contacts; the response includes cursor-based pagination metadata.
     ///
     /// You can fetch a list of all contacts that belong to a company.
-    public func listAttachedContacts(companyId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> CompanyAttachedContacts {
-        return try await CompaniesMethods.listAttachedContacts(config: config, companyId: companyId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func listAttachedContacts(
+        companyId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CompanyAttachedContacts {
+        try await CompaniesMethods.listAttachedContacts(
+            config: config,
+            companyId: companyId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists the segments associated with a specific company. Use the company identifier to retrieve the segments that belong to it.
+    /// Lists the segments associated with a specific company. Use the company identifier to retrieve the segments that
+    /// belong to it.
     ///
     /// You can fetch a list of all segments that belong to a company.
-    public func listAttachedSegments(companyId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> CompanyAttachedSegments {
-        return try await CompaniesMethods.listCompaniesAttachedSegments(config: config, companyId: companyId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func listAttachedSegments(
+        companyId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CompanyAttachedSegments {
+        try await CompaniesMethods.listCompaniesAttachedSegments(
+            config: config,
+            companyId: companyId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Searches companies by attribute filters in a request body. Use `query` to specify filters and optionally provide `pagination` and `sort`; companies without associated users are excluded from the results.
+    /// Searches companies by attribute filters in a request body. Use `query` to specify filters and optionally provide
+    /// `pagination` and `sort`; companies without associated users are excluded from the results.
     ///
-    /// You can search for companies by the value of their attributes in order to fetch exactly the companies you want. To search for companies, send a `POST` request to `https://api.intercom.io/companies/search`, with a query object in the body defining your filters. Note that the API does not include companies who have no associated users in search results. {% admonition type="warning" name="Optimizing search queries" %} Search queries can be complex, so optimizing them can help the performance of your search. Use the `AND` and `OR` operators to combine multiple filters to get the exact results you need and utilize pagination to limit the number of results returned. The default is `15` results per page. See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#example-search-conversations-request) for more details on how to use the `starting_after` param. {% /admonition %} ### Nesting & Limitations You can nest these filters in order to get even more granular insights that pinpoint exactly what you need. Example: (1 OR 2) AND (3 OR 4). There are some limitations to the amount of multiple's there can be: * There's a limit of max 2 nested filters * There's a limit of max 15 filters for each AND or OR group ### Accepted Fields Most keys listed as part of the Companies Model are searchable. The value you search for has to match the accepted type, otherwise the query will fail (ie. as `created_at` accepts a date, the `value` cannot be a string such as `"foobar"`). | Field | Type | | ---------------------------------- | ------------------------------ | | company_id | String | | name | String | | created_at | Date (UNIX Timestamp) | | updated_at | Date (UNIX Timestamp) | | remote_created_at | Date (UNIX Timestamp) | | last_request_at | Date (UNIX Timestamp) | | monthly_spend | Integer | | session_count | Integer | | user_count | Integer | | tag_id | String | | custom_attributes.{attribute_name} | String | The…
-    public func search(query: CompanySearchRequestQuery, intercomVersion: IntercomVersion? = nil, pagination: SdkOptional<StartingAfterPaging>? = nil, sort: CompanySearchRequestSort? = nil, requestOptions: RequestOptions? = nil) async throws -> CompanyList {
-        return try await CompaniesMethods.searchCompanies(config: config, query: query, intercomVersion: intercomVersion, pagination: pagination, sort: sort, requestOptions: requestOptions)
+    /// You can search for companies by the value of their attributes in order to fetch exactly the companies you want.
+    /// To search for companies, send a `POST` request to `https://api.intercom.io/companies/search`, with a query
+    /// object in the body defining your filters. Note that the API does not include companies who have no associated
+    /// users in search results. {% admonition type="warning" name="Optimizing search queries" %} Search queries can be
+    /// complex, so optimizing them can help the performance of your search. Use the `AND` and `OR` operators to combine
+    /// multiple filters to get the exact results you need and utilize pagination to limit the number of results
+    /// returned. The default is `15` results per page. See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#example-search-conversations-request)
+    /// for more details on how to use the `starting_after` param. {% /admonition %} ### Nesting & Limitations You can
+    /// nest these filters in order to get even more granular insights that pinpoint exactly what you need. Example: (1
+    /// OR 2) AND (3 OR 4). There are some limitations to the amount of multiple's there can be: * There's a limit of
+    /// max 2 nested filters * There's a limit of max 15 filters for each AND or OR group ### Accepted Fields Most keys
+    /// listed as part of the Companies Model are searchable. The value you search for has to match the accepted type,
+    /// otherwise the query will fail (ie. as `created_at` accepts a date, the `value` cannot be a string such as
+    /// `"foobar"`). | Field | Type | | ---------------------------------- | ------------------------------ | |
+    /// company_id | String | | name | String | | created_at | Date (UNIX Timestamp) | | updated_at | Date (UNIX
+    /// Timestamp) | | remote_created_at | Date (UNIX Timestamp) | | last_request_at | Date (UNIX Timestamp) | |
+    /// monthly_spend | Integer | | session_count | Integer | | user_count | Integer | | tag_id | String | |
+    /// custom_attributes.{attribute_name} | String | The…
+    public func search(
+        query: CompanySearchRequestQuery,
+        intercomVersion: IntercomVersion? = nil,
+        pagination: SdkOptional<StartingAfterPaging>? = nil,
+        sort: CompanySearchRequestSort? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CompanyList {
+        try await CompaniesMethods.searchCompanies(
+            config: config,
+            query: query,
+            intercomVersion: intercomVersion,
+            pagination: pagination,
+            sort: sort,
+            requestOptions: requestOptions
+        )
     }
 }
 
-extension CompaniesNamespace {
-/// Lists companies, ordered by `last_request_at` and descending by default. Use the pagination parameters to retrieve results in pages; companies without associated users are excluded, and this endpoint can return at most 10,000 companies.
+public extension CompaniesNamespace {
+    /// Lists companies, ordered by `last_request_at` and descending by default. Use the pagination parameters to
+    /// retrieve results in pages; companies without associated users are excluded, and this endpoint can return at most
+    /// 10,000 companies.
     ///
-    /// You can list companies. The company list is sorted by the `last_request_at` field and by default is ordered descending, most recently requested first. Note that the API does not include companies who have no associated users in list responses. When using the Companies endpoint and the pages object to iterate through the returned companies, there is a limit of 10,000 Companies that can be returned. If you need to list or iterate on more than 10,000 Companies, please use the [Scroll API](https://developers.intercom.com/reference#iterating-over-all-companies). {% admonition type="warning" name="Pagination" %} You can use pagination to limit the number of results returned. The default is `20` results per page. See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#pagination-for-list-apis) for more details on how to use the `starting_after` param. {% /admonition %}
-    public func listAll(page: Int? = nil, perPage: Int? = nil, order: String? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> CompanyList {
-        return try await CompaniesMethods.listAllCompanies(config: config, page: page, perPage: perPage, order: order, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// You can list companies. The company list is sorted by the `last_request_at` field and by default is ordered
+    /// descending, most recently requested first. Note that the API does not include companies who have no associated
+    /// users in list responses. When using the Companies endpoint and the pages object to iterate through the returned
+    /// companies, there is a limit of 10,000 Companies that can be returned. If you need to list or iterate on more
+    /// than 10,000 Companies, please use the [Scroll
+    /// API](https://developers.intercom.com/reference#iterating-over-all-companies). {% admonition type="warning"
+    /// name="Pagination" %} You can use pagination to limit the number of results returned. The default is `20` results
+    /// per page. See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#pagination-for-list-apis)
+    /// for more details on how to use the `starting_after` param. {% /admonition %}
+    func listAll(
+        page: Int? = nil,
+        perPage: Int? = nil,
+        order: String? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CompanyList {
+        try await CompaniesMethods.listAllCompanies(
+            config: config,
+            page: page,
+            perPage: perPage,
+            order: order,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists companies by using a cursor-based scroll to iterate through a large dataset. Omit `scroll_param` to start a scroll, then pass the returned value on subsequent requests; only one scroll can be open per app at a time, and an unused scroll expires after one minute.
+    /// Lists companies by using a cursor-based scroll to iterate through a large dataset. Omit `scroll_param` to start
+    /// a scroll, then pass the returned value on subsequent requests; only one scroll can be open per app at a time,
+    /// and an unused scroll expires after one minute.
     ///
-    /// The `list all companies` functionality does not work well for huge datasets, and can result in errors and performance problems when paging deeply. The Scroll API provides an efficient mechanism for iterating over all companies in a dataset. - Each app can only have 1 scroll open at a time. You'll get an error message if you try to have more than one open per app. - If the scroll isn't used for 1 minute, it expires and calls with that scroll param will fail - If the end of the scroll is reached, "companies" will be empty and the scroll parameter will expire {% admonition type="info" name="Scroll Parameter" %} You can get the first page of companies by simply sending a GET request to the scroll endpoint. For subsequent requests you will need to use the scroll parameter from the response. {% /admonition %} {% admonition type="danger" name="Scroll network timeouts" %} Since scroll is often used on large datasets network errors such as timeouts can be encountered. When this occurs you will see a HTTP 500 error with the following message: "Request failed due to an internal network error. Please restart the scroll operation." If this happens, you will need to restart your scroll query: It is not possible to continue from a specific point when using scroll. {% /admonition %}
-    public func scrollOverAll(scrollParam: String? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> CompanyScroll {
-        return try await CompaniesMethods.scrollOverAllCompanies(config: config, scrollParam: scrollParam, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// The `list all companies` functionality does not work well for huge datasets, and can result in errors and
+    /// performance problems when paging deeply. The Scroll API provides an efficient mechanism for iterating over all
+    /// companies in a dataset. - Each app can only have 1 scroll open at a time. You'll get an error message if you try
+    /// to have more than one open per app. - If the scroll isn't used for 1 minute, it expires and calls with that
+    /// scroll param will fail - If the end of the scroll is reached, "companies" will be empty and the scroll parameter
+    /// will expire {% admonition type="info" name="Scroll Parameter" %} You can get the first page of companies by
+    /// simply sending a GET request to the scroll endpoint. For subsequent requests you will need to use the scroll
+    /// parameter from the response. {% /admonition %} {% admonition type="danger" name="Scroll network timeouts" %}
+    /// Since scroll is often used on large datasets network errors such as timeouts can be encountered. When this
+    /// occurs you will see a HTTP 500 error with the following message: "Request failed due to an internal network
+    /// error. Please restart the scroll operation." If this happens, you will need to restart your scroll query: It is
+    /// not possible to continue from a specific point when using scroll. {% /admonition %}
+    func scrollOverAll(
+        scrollParam: String? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CompanyScroll {
+        try await CompaniesMethods.scrollOverAllCompanies(
+            config: config,
+            scrollParam: scrollParam,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Attaches a company to a specific contact. Include the company's Intercom identifier in the request body to create the association.
+    /// Attaches a company to a specific contact. Include the company's Intercom identifier in the request body to
+    /// create the association.
     ///
     /// You can attach a company to a single contact.
-    public func attachContact(contactId: String, id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Company {
-        return try await CompaniesMethods.attachCompaniesContact(config: config, contactId: contactId, id: id, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    func attachContact(
+        contactId: String,
+        id: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Company {
+        try await CompaniesMethods.attachCompaniesContact(
+            config: config,
+            contactId: contactId,
+            id: id,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Detaches a company from a specific contact. Provide both identifiers to remove the association between that contact and company.
+    /// Detaches a company from a specific contact. Provide both identifiers to remove the association between that
+    /// contact and company.
     ///
     /// You can detach a company from a single contact.
-    public func detachContact(contactId: String, companyId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Company {
-        return try await CompaniesMethods.detachCompaniesContact(config: config, contactId: contactId, companyId: companyId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    func detachContact(
+        contactId: String,
+        companyId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Company {
+        try await CompaniesMethods.detachCompaniesContact(
+            config: config,
+            contactId: contactId,
+            companyId: companyId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 }
 
@@ -165,45 +439,113 @@ public class NotesNamespace {
         self.config = config
     }
 
-/// Lists the notes associated with a specific company. Use the company identifier to retrieve its notes; the response includes cursor-based pagination metadata.
+    /// Lists the notes associated with a specific company. Use the company identifier to retrieve its notes; the
+    /// response includes cursor-based pagination metadata.
     ///
     /// You can fetch a list of notes that are associated to a company.
-    public func list(companyId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> NoteList {
-        return try await NotesMethods.listCompanyNotes(config: config, companyId: companyId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func list(
+        companyId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> NoteList {
+        try await NotesMethods.listCompanyNotes(
+            config: config,
+            companyId: companyId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Creates a note associated with a specific company. Include the note text in `body`; you can optionally specify `admin_id` to set the note's author, otherwise the admin associated with the access token is used.
+    /// Creates a note associated with a specific company. Include the note text in `body`; you can optionally specify
+    /// `admin_id` to set the note's author, otherwise the admin associated with the access token is used.
     ///
     /// You can add a note to a single company.
-    public func create(companyId: String, body: String, intercomVersion: IntercomVersion? = nil, adminId: String? = nil, requestOptions: RequestOptions? = nil) async throws -> Note {
-        return try await NotesMethods.createCompanyNote(config: config, companyId: companyId, body: body, intercomVersion: intercomVersion, adminId: adminId, requestOptions: requestOptions)
+    public func create(
+        companyId: String,
+        body: String,
+        intercomVersion: IntercomVersion? = nil,
+        adminId: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Note {
+        try await NotesMethods.createCompanyNote(
+            config: config,
+            companyId: companyId,
+            body: body,
+            intercomVersion: intercomVersion,
+            adminId: adminId,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists notes associated with a contact. Use the `contact_id` path parameter to identify the contact; the response includes cursor-based pagination metadata and the total note count.
+    /// Lists notes associated with a contact. Use the `contact_id` path parameter to identify the contact; the response
+    /// includes cursor-based pagination metadata and the total note count.
     ///
     /// You can fetch a list of notes that are associated to a contact.
-    public func listNotes(contactId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> NoteList {
-        return try await NotesMethods.listNotes(config: config, contactId: contactId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func listNotes(
+        contactId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> NoteList {
+        try await NotesMethods.listNotes(
+            config: config,
+            contactId: contactId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Creates a note for a contact. Supply the required `body` text and optionally specify the `admin_id` of the admin associated with the note. The response includes the created note and its contact and author details.
+    /// Creates a note for a contact. Supply the required `body` text and optionally specify the `admin_id` of the admin
+    /// associated with the note. The response includes the created note and its contact and author details.
     ///
     /// You can add a note to a single contact.
-    public func createNote(contactId: Int, body: String, intercomVersion: IntercomVersion? = nil, adminId: String? = nil, requestOptions: RequestOptions? = nil) async throws -> Note {
-        return try await NotesMethods.createNote(config: config, contactId: contactId, body: body, intercomVersion: intercomVersion, adminId: adminId, requestOptions: requestOptions)
+    public func createNote(
+        contactId: Int,
+        body: String,
+        intercomVersion: IntercomVersion? = nil,
+        adminId: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Note {
+        try await NotesMethods.createNote(
+            config: config,
+            contactId: contactId,
+            body: body,
+            intercomVersion: intercomVersion,
+            adminId: adminId,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieves a note attached to a contact or company. Supply `note_id` to identify the note. The response includes the note body, creation time, author, and associated contact or company.
+    /// Retrieves a note attached to a contact or company. Supply `note_id` to identify the note. The response includes
+    /// the note body, creation time, author, and associated contact or company.
     ///
     /// You can fetch the details of a single note.
-    public func retrieve(noteId: Int, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Note {
-        return try await NotesMethods.retrieveNote(config: config, noteId: noteId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func retrieve(
+        noteId: Int,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Note {
+        try await NotesMethods.retrieveNote(
+            config: config,
+            noteId: noteId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Deletes a note attached to a contact or company. Use `note_id` to identify the note to remove. Notes of other kinds cannot be deleted through the API.
+    /// Deletes a note attached to a contact or company. Use `note_id` to identify the note to remove. Notes of other
+    /// kinds cannot be deleted through the API.
     ///
     /// You can delete a single contact or company note. Notes of other kinds cannot be deleted through the API.
-    public func delete(noteId: Int, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DeletedNoteObject {
-        return try await NotesMethods.deleteNote(config: config, noteId: noteId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func delete(
+        noteId: Int,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DeletedNoteObject {
+        try await NotesMethods.deleteNote(
+            config: config,
+            noteId: noteId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 }

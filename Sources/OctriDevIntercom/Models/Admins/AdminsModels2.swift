@@ -3,7 +3,7 @@
 
 import Foundation
 
-// TaggedModelsAdmins domain models
+/// TaggedModelsAdmins domain models
 /// The role assigned to this admin. Only present if the admin has a role assigned.
 public struct AdminRole: Codable {
     /// String representing the object's type. Always has the value `role`.
@@ -23,21 +23,21 @@ public struct AdminRole: Codable {
     }
 
     init() {
-        (self.type, self.id, self.name) = (nil, nil, nil)
+        (type, id, name) = (nil, nil, nil)
     }
 }
 
-extension AdminRole {
-    public init(from decoder: Decoder) throws {
+public extension AdminRole {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension AdminRole {
-    public init(type: String? = nil, id: String? = nil, name: String? = nil) {
+public extension AdminRole {
+    init(type: String? = nil, id: String? = nil, name: String? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         self.name = name
@@ -99,36 +99,50 @@ public struct Admin: Codable {
     }
 
     init() {
-        (self.type, self.id, self.name, self.email, self.jobTitle) = (nil, nil, nil, nil, nil)
-        (self.awayModeEnabled, self.awayModeReassign, self.awayStatusReasonId, self.hasInboxSeat, self.teamIds) = (nil, nil, nil, nil, nil)
-        (self.avatar, self.teamPriorityLevel, self.role) = (nil, nil, nil)
+        (type, id, name, email, jobTitle) = (nil, nil, nil, nil, nil)
+        (awayModeEnabled, awayModeReassign, awayStatusReasonId, hasInboxSeat, teamIds) = (nil, nil, nil, nil, nil)
+        (avatar, teamPriorityLevel, role) = (nil, nil, nil)
     }
 }
 
-extension Admin {
-    public init(from decoder: Decoder) throws {
+public extension Admin {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.email = try container.sdkDecodeIfPresent(.email)
-        self.jobTitle = try container.sdkDecodeIfPresent(.jobTitle)
-        self.awayModeEnabled = try container.sdkDecodeIfPresent(.awayModeEnabled)
-        self.awayModeReassign = try container.sdkDecodeIfPresent(.awayModeReassign)
-        self.awayStatusReasonId = try container.sdkDecodeIfPresent(.awayStatusReasonId)
-        self.hasInboxSeat = try container.sdkDecodeIfPresent(.hasInboxSeat)
-        self.teamIds = try container.sdkDecodeIfPresent(.teamIds)
-        self.avatar = try container.sdkDecodeIfPresent(.avatar)
-        self.teamPriorityLevel = try container.sdkDecodeIfPresent(.teamPriorityLevel)
-        self.role = try container.sdkDecodeIfPresent(.role)
-        if let value = self.avatar {
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        email = try container.sdkDecodeIfPresent(.email)
+        jobTitle = try container.sdkDecodeIfPresent(.jobTitle)
+        awayModeEnabled = try container.sdkDecodeIfPresent(.awayModeEnabled)
+        awayModeReassign = try container.sdkDecodeIfPresent(.awayModeReassign)
+        awayStatusReasonId = try container.sdkDecodeIfPresent(.awayStatusReasonId)
+        hasInboxSeat = try container.sdkDecodeIfPresent(.hasInboxSeat)
+        teamIds = try container.sdkDecodeIfPresent(.teamIds)
+        avatar = try container.sdkDecodeIfPresent(.avatar)
+        teamPriorityLevel = try container.sdkDecodeIfPresent(.teamPriorityLevel)
+        role = try container.sdkDecodeIfPresent(.role)
+        if let value = avatar {
             try sdkValidateUri("avatar", value)
         }
     }
 }
 
-extension Admin {
-    public init(type: String? = nil, id: String? = nil, name: String? = nil, email: String? = nil, jobTitle: String? = nil, awayModeEnabled: Bool? = nil, awayModeReassign: Bool? = nil, awayStatusReasonId: Int? = nil, hasInboxSeat: Bool? = nil, teamIds: [Int]? = nil, avatar: String? = nil, teamPriorityLevel: TeamPriorityLevel? = nil, role: AdminRole? = nil) throws {
+public extension Admin {
+    init(
+        type: String? = nil,
+        id: String? = nil,
+        name: String? = nil,
+        email: String? = nil,
+        jobTitle: String? = nil,
+        awayModeEnabled: Bool? = nil,
+        awayModeReassign: Bool? = nil,
+        awayStatusReasonId: Int? = nil,
+        hasInboxSeat: Bool? = nil,
+        teamIds: [Int]? = nil,
+        avatar: String? = nil,
+        teamPriorityLevel: TeamPriorityLevel? = nil,
+        role: AdminRole? = nil
+    ) throws {
         self.init()
         (self.type, self.id) = (type, id)
         (self.name, self.email) = (name, email)
@@ -158,20 +172,20 @@ public struct ActivityLogEventTypeList: Codable {
     }
 
     init() {
-        (self.type, self.eventTypes) = (nil, nil)
+        (type, eventTypes) = (nil, nil)
     }
 }
 
-extension ActivityLogEventTypeList {
-    public init(from decoder: Decoder) throws {
+public extension ActivityLogEventTypeList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.eventTypes = try container.sdkDecodeIfPresent(.eventTypes)
+        type = try container.sdkDecodeIfPresent(.type)
+        eventTypes = try container.sdkDecodeIfPresent(.eventTypes)
     }
 }
 
-extension ActivityLogEventTypeList {
-    public init(type: String? = nil, eventTypes: [String]? = nil) {
+public extension ActivityLogEventTypeList {
+    init(type: String? = nil, eventTypes: [String]? = nil) {
         self.init()
         (self.type, self.eventTypes) = (type, eventTypes)
     }
