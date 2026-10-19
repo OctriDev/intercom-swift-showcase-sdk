@@ -6,10 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DynamicContentMethods {
-    /// Creates reusable dynamic content that you can insert into Help Center articles. Provide a unique `name`, choose
-    /// `inline` or `block` for `content_type`, and include at least one variation with a default-locale variation that
-    /// applies to all brands. The authenticated user needs the `read_write_dynamic_content` scope.
+extension DynamicContentMethods {
+    /// Creates reusable dynamic content that you can insert into Help Center articles. Provide a unique `name`, choose `inline` or `block` for `content_type`, and include at least one variation with a default-locale variation that applies to all brands. The authenticated user needs the `read_write_dynamic_content` scope.
     ///
     /// You can create dynamic content. Requires the `read_write_dynamic_content` scope.
     ///
@@ -24,38 +22,15 @@ public extension DynamicContentMethods {
     /// - variations: The variations of the dynamic content, one per locale and
     ///   optionally per brand. Set `brand_id` on a variation to override the
     ///   all-brands value for that brand. At least one is required.
-    static func createDynamicContent(
-        config: ClientConfig,
-        name: String,
-        contentType: DynamicContentCreateRequestContentType,
-        defaultLocale: String,
-        variations: [DynamicContentVariationRequest],
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DynamicContent {
+    public static func createDynamicContent(config: ClientConfig, name: String, contentType: DynamicContentCreateRequestContentType, defaultLocale: String, variations: [DynamicContentVariationRequest], intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DynamicContent {
         try validateLength("name", name, max: 255)
 
         try validateItems("variations", variations, min: 1)
 
-        let requestBody = CreateDynamicContentRequestBody(
-            name: name,
-            contentType: contentType,
-            defaultLocale: defaultLocale,
-            variations: variations
-        )
+        let requestBody = CreateDynamicContentRequestBody(name: name, contentType: contentType, defaultLocale: defaultLocale, variations: variations)
 
-        return try await (sdkRequest(
-            "POST",
-            "/dynamic_contents",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "createDynamicContent",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "403": Error2.self, "422": Error2.self]
-        )).data
+        return try (await sdkRequest("POST", "/dynamic_contents", config: config, body: requestBody, decoder: .json, operationId: "createDynamicContent", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "403": Error2.self, "422": Error2.self])).data
     }
 }

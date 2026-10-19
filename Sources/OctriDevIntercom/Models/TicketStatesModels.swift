@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// TicketStates domain models
+// TicketStates domain models
 /// A list of ticket states associated with a given ticket type.
 public struct TicketStateList: Codable {
     /// String representing the object's type. Always has the value `list`.
@@ -18,20 +18,20 @@ public struct TicketStateList: Codable {
     }
 
     init() {
-        (type, data) = (nil, nil)
+        (self.type, self.data) = (nil, nil)
     }
 }
 
-public extension TicketStateList {
-    init(from decoder: Decoder) throws {
+extension TicketStateList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension TicketStateList {
-    init(type: String? = nil, data: [TicketStateDetailed?]? = nil) {
+extension TicketStateList {
+    public init(type: String? = nil, data: [TicketStateDetailed?]? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
     }

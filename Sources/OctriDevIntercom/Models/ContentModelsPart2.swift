@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Content domain models
+// Content domain models
 /// The bulk action to perform. Allowed `content_ids[].type` values vary per action: * `publish`, `unpublish`:
 /// `article_content` * `delete`: `article_content`, `content_snippet`, `file_source_content`,
 /// `internal_article` * `set_availability`, `set_audience`: `article_content`, `content_snippet`,
@@ -12,10 +12,7 @@ import Foundation
 public struct ContentBulkActionRequestAction: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let publish = ContentBulkActionRequestAction(rawValue: "publish")
     public static let unpublish = ContentBulkActionRequestAction(rawValue: "unpublish")
     public static let delete = ContentBulkActionRequestAction(rawValue: "delete")
@@ -25,7 +22,7 @@ public struct ContentBulkActionRequestAction: RawRepresentable, Hashable, Codabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -35,14 +32,10 @@ public struct ContentBulkActionRequestAction: RawRepresentable, Hashable, Codabl
 }
 
 /// Required enumerated value serialized in the `type` wire field.
-public struct ContentBulkActionRequestContentIdsItemType: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct ContentBulkActionRequestContentIdsItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let article = ContentBulkActionRequestContentIdsItemType(rawValue: "article")
     public static let articleContent = ContentBulkActionRequestContentIdsItemType(rawValue: "article_content")
     public static let contentSnippet = ContentBulkActionRequestContentIdsItemType(rawValue: "content_snippet")
@@ -52,7 +45,7 @@ public struct ContentBulkActionRequestContentIdsItemType: RawRepresentable, Hash
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -86,15 +79,12 @@ public enum ContentSearchDefaultItemType: String, CaseIterable, Codable {
 public struct ContentSearchResponsePagesType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let pages = ContentSearchResponsePagesType(rawValue: "pages")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -107,15 +97,12 @@ public struct ContentSearchResponsePagesType: RawRepresentable, Hashable, Codabl
 public struct ContentSearchResponseType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let list = ContentSearchResponseType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -146,15 +133,12 @@ public enum ContentSearchArticleItemType: String, CaseIterable, Codable {
 public struct ContentSearchArticleContentItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let articleContent = ContentSearchArticleContentItemType(rawValue: "article_content")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

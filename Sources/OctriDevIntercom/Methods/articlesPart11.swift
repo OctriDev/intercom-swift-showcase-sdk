@@ -6,53 +6,25 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ArticlesMethods {
-    /// Retrieves a historical version of an article, including its title, description, and body content. Use
-    /// `article_id` and `id` to identify the article and version, and `locale` to request content for a specific
-    /// locale. Access requires the `read_articles_scope` OAuth scope.
+extension ArticlesMethods {
+    /// Retrieves a historical version of an article, including its title, description, and body content. Use `article_id` and `id` to identify the article and version, and `locale` to request content for a specific locale. Access requires the `read_articles_scope` OAuth scope.
     ///
-    /// Fetch a single prior version of an article, including its body content, by making a GET request to
-    /// `https://api.intercom.io/articles/<article_id>/versions/<id>`. Returns the version's full content; the live
-    /// article remains untouched. Requires the `read_articles_scope` OAuth scope.
+    /// Fetch a single prior version of an article, including its body content, by making a GET request to `https://api.intercom.io/articles/<article_id>/versions/<id>`. Returns the version's full content; the live article remains untouched. Requires the `read_articles_scope` OAuth scope.
     ///
     /// - Parameters:
     /// - articleId: The unique identifier for the article.
     /// - id: The unique identifier for the version.
     /// - locale: Return the version's content for a specific locale. If the locale
     ///   is not configured for the workspace, a `400` is returned.
-    static func retrieveArticleVersion(
-        config: ClientConfig,
-        articleId: Int,
-        id: String,
-        locale: String? = nil,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ArticleVersion {
-        try await (sdkRequest(
-            "GET",
-            [
-                "/articles/",
-                sdkEncodePathSegment(sdkWireString(articleId)),
-                "/versions/",
-                sdkEncodePathSegment(sdkWireString(id)),
-            ].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("locale", value: locale),
-            ],
-            decoder: .json,
-            operationId: "retrieveArticleVersion",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self]
-        )).data
+    public static func retrieveArticleVersion(config: ClientConfig, articleId: Int, id: String, locale: String? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ArticleVersion {
+        return try (await sdkRequest("GET", ["/articles/", sdkEncodePathSegment(sdkWireString(articleId)), "/versions/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, query: [
+            SdkQueryParameter("locale", value: locale),
+        ], decoder: .json, operationId: "retrieveArticleVersion", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self])).data
     }
 
-    /// Searches articles by phrase and can filter results by article state and Help Center. Use `highlight` to request
-    /// highlighted matching content; results include article data, optional highlights, and cursor-based page
-    /// information.
+    /// Searches articles by phrase and can filter results by article state and Help Center. Use `highlight` to request highlighted matching content; results include article data, optional highlights, and cursor-based page information.
     ///
     /// You can search for articles by making a GET request to `https://api.intercom.io/articles/search`.
     ///
@@ -63,16 +35,8 @@ public extension ArticlesMethods {
     /// - helpCenterId: The ID of the Help Center to search in.
     /// - highlight: Return a highlighted version of the matching content within
     ///   your articles. Refer to the response schema for more details.
-    static func searchArticles(
-        config: ClientConfig,
-        phrase: String? = nil,
-        state: String? = nil,
-        helpCenterId: Int? = nil,
-        highlight: Bool? = nil,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ArticleSearchResponse {
-        try await (sdkRequest("GET", "/articles/search", config: config, query: [
+    public static func searchArticles(config: ClientConfig, phrase: String? = nil, state: String? = nil, helpCenterId: Int? = nil, highlight: Bool? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ArticleSearchResponse {
+        return try (await sdkRequest("GET", "/articles/search", config: config, query: [
             SdkQueryParameter("phrase", value: phrase),
             SdkQueryParameter("state", value: state),
             SdkQueryParameter("help_center_id", value: helpCenterId),

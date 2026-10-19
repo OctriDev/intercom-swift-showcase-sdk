@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// TaggedModelsSalesAgent domain models
+// TaggedModelsSalesAgent domain models
 /// Data related to Sales Agent involvement in the conversation.
 public struct SalesAgent: Codable {
     /// The fixed outcome of the sales agent interaction, used for billing and tracking.
@@ -23,21 +23,21 @@ public struct SalesAgent: Codable {
     }
 
     init() {
-        (outcome, routingOutcome, collectedData) = (nil, nil, nil)
+        (self.outcome, self.routingOutcome, self.collectedData) = (nil, nil, nil)
     }
 }
 
-public extension SalesAgent {
-    init(from decoder: Decoder) throws {
+extension SalesAgent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        outcome = try container.sdkDecodeIfPresent(.outcome)
-        routingOutcome = try container.sdkDecodeIfPresent(.routingOutcome)
-        collectedData = try container.sdkDecodeIfPresent(.collectedData)
+        self.outcome = try container.sdkDecodeIfPresent(.outcome)
+        self.routingOutcome = try container.sdkDecodeIfPresent(.routingOutcome)
+        self.collectedData = try container.sdkDecodeIfPresent(.collectedData)
     }
 }
 
-public extension SalesAgent {
-    init(outcome: SalesAgentOutcome? = nil, routingOutcome: String? = nil, collectedData: [String: String]? = nil) {
+extension SalesAgent {
+    public init(outcome: SalesAgentOutcome? = nil, routingOutcome: String? = nil, collectedData: [String: String]? = nil) {
         self.init()
         (self.outcome, self.routingOutcome) = (outcome, routingOutcome)
         self.collectedData = collectedData
@@ -48,10 +48,7 @@ public extension SalesAgent {
 public struct SalesAgentOutcome: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let qualified = SalesAgentOutcome(rawValue: "qualified")
     public static let disqualified = SalesAgentOutcome(rawValue: "disqualified")
     public static let productDiscovery = SalesAgentOutcome(rawValue: "product_discovery")
@@ -60,7 +57,7 @@ public struct SalesAgentOutcome: RawRepresentable, Hashable, Codable, Sendable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

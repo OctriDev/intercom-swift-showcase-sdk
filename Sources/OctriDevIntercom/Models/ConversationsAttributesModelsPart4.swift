@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// ConversationsAttributes domain models
+// ConversationsAttributes domain models
 /// Typed representation of the `CreateConversationAttributeStringRequest` API schema.
 public struct CreateConversationAttributeStringRequest: Codable {
     /// Name of the attribute.
@@ -30,59 +30,34 @@ public struct CreateConversationAttributeStringRequest: Codable {
         case multiline
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateConversationAttributeStringRequest {
-    init(from decoder: Decoder) throws {
+extension CreateConversationAttributeStringRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.dataType) else {
-            throw SdkValidationError(
-                field: "data_type",
-                code: "required",
-                message: "Validation failed for 'data_type': value is required"
-            )
+            throw SdkValidationError(field: "data_type", code: "required", message: "Validation failed for 'data_type': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        dataType = try container.sdkDecodeRequired(.dataType)
-        description = try container.sdkDecodeIfPresent(.description)
-        required = try container.sdkDecodeIfPresent(.required)
-        visibleToTeamIds = try container.sdkDecodeIfPresent(.visibleToTeamIds)
-        multiline = try container.sdkDecodeIfPresent(.multiline)
-        try sdkValidateRawEnum(
-            "data_type",
-            dataType,
-            CreateConversationAttributeStringRequestVariant1DataType.allCases.map(\.rawValue)
-        )
+        self.name = try container.sdkDecodeRequired(.name)
+        self.dataType = try container.sdkDecodeRequired(.dataType)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.required = try container.sdkDecodeIfPresent(.required)
+        self.visibleToTeamIds = try container.sdkDecodeIfPresent(.visibleToTeamIds)
+        self.multiline = try container.sdkDecodeIfPresent(.multiline)
+            try sdkValidateRawEnum("data_type", self.dataType, CreateConversationAttributeStringRequestVariant1DataType.allCases.map(\.rawValue))
     }
 }
 
-public extension CreateConversationAttributeStringRequest {
-    init(
-        name: String,
-        dataType: CreateConversationAttributeStringRequestVariant1DataType,
-        description: String? = nil,
-        required: Bool? = nil,
-        visibleToTeamIds: [String]? = nil,
-        multiline: Bool? = nil
-    ) throws {
+extension CreateConversationAttributeStringRequest {
+    public init(name: String, dataType: CreateConversationAttributeStringRequestVariant1DataType, description: String? = nil, required: Bool? = nil, visibleToTeamIds: [String]? = nil, multiline: Bool? = nil) throws {
         (self.name, self.dataType) = (name, dataType)
         (self.description, self.required) = (description, required)
         (self.visibleToTeamIds, self.multiline) = (visibleToTeamIds, multiline)
-        try sdkValidateRawEnum(
-            "data_type",
-            self.dataType,
-            CreateConversationAttributeStringRequestVariant1DataType.allCases.map(\.rawValue)
-        )
+            try sdkValidateRawEnum("data_type", self.dataType, CreateConversationAttributeStringRequestVariant1DataType.allCases.map(\.rawValue))
     }
 }
 
@@ -138,52 +113,35 @@ public struct ConversationAttributeListType: Codable {
     }
 
     init() {
-        (type, id, name, description, dataType) = (nil, nil, nil, nil, nil)
-        (required, visibleToTeamIds, archived, createdAt, updatedAt) = (nil, nil, nil, nil, nil)
-        (adminId, options) = (nil, nil)
+        (self.type, self.id, self.name, self.description, self.dataType) = (nil, nil, nil, nil, nil)
+        (self.required, self.visibleToTeamIds, self.archived, self.createdAt, self.updatedAt) = (nil, nil, nil, nil, nil)
+        (self.adminId, self.options) = (nil, nil)
     }
 }
 
-public extension ConversationAttributeListType {
-    init(from decoder: Decoder) throws {
+extension ConversationAttributeListType {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        dataType = try container.sdkDecodeIfPresent(.dataType)
-        required = try container.sdkDecodeIfPresent(.required)
-        visibleToTeamIds = try container.sdkDecodeIfPresent(.visibleToTeamIds)
-        archived = try container.sdkDecodeIfPresent(.archived)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        adminId = try container.sdkDecodeIfPresent(.adminId)
-        options = try container.sdkDecodeIfPresent(.options)
-        if let value = dataType {
-            try sdkValidateRawEnum(
-                "data_type",
-                value,
-                ConversationAttributeListTypeVariant1DataType.allCases.map(\.rawValue)
-            )
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.dataType = try container.sdkDecodeIfPresent(.dataType)
+        self.required = try container.sdkDecodeIfPresent(.required)
+        self.visibleToTeamIds = try container.sdkDecodeIfPresent(.visibleToTeamIds)
+        self.archived = try container.sdkDecodeIfPresent(.archived)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.adminId = try container.sdkDecodeIfPresent(.adminId)
+        self.options = try container.sdkDecodeIfPresent(.options)
+        if let value = self.dataType {
+            try sdkValidateRawEnum("data_type", value, ConversationAttributeListTypeVariant1DataType.allCases.map(\.rawValue))
         }
     }
 }
 
-public extension ConversationAttributeListType {
-    init(
-        type: ConversationAttributeBaseType? = nil,
-        id: Int? = nil,
-        name: String? = nil,
-        description: String? = nil,
-        dataType: ConversationAttributeListTypeVariant1DataType? = nil,
-        required: Bool? = nil,
-        visibleToTeamIds: [String]? = nil,
-        archived: Bool? = nil,
-        createdAt: Int? = nil,
-        updatedAt: Int? = nil,
-        adminId: String? = nil,
-        options: [ConversationAttributeOption]? = nil
-    ) throws {
+extension ConversationAttributeListType {
+    public init(type: ConversationAttributeBaseType? = nil, id: Int? = nil, name: String? = nil, description: String? = nil, dataType: ConversationAttributeListTypeVariant1DataType? = nil, required: Bool? = nil, visibleToTeamIds: [String]? = nil, archived: Bool? = nil, createdAt: Int? = nil, updatedAt: Int? = nil, adminId: String? = nil, options: [ConversationAttributeOption]? = nil) throws {
         self.init()
         (self.type, self.id) = (type, id)
         (self.name, self.description) = (name, description)
@@ -192,11 +150,7 @@ public extension ConversationAttributeListType {
         (self.createdAt, self.updatedAt) = (createdAt, updatedAt)
         (self.adminId, self.options) = (adminId, options)
         if let value = self.dataType {
-            try sdkValidateRawEnum(
-                "data_type",
-                value,
-                ConversationAttributeListTypeVariant1DataType.allCases.map(\.rawValue)
-            )
+            try sdkValidateRawEnum("data_type", value, ConversationAttributeListTypeVariant1DataType.allCases.map(\.rawValue))
         }
     }
 }
@@ -209,34 +163,26 @@ public struct CreateConversationAttributeFilesRequestVariant1: Codable {
     }
 
     init() {
-        dataType = nil
+        self.dataType = nil
     }
 }
 
-public extension CreateConversationAttributeFilesRequestVariant1 {
-    init(from decoder: Decoder) throws {
+extension CreateConversationAttributeFilesRequestVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        dataType = try container.sdkDecodeIfPresent(.dataType)
-        if let value = dataType {
-            try sdkValidateRawEnum(
-                "data_type",
-                value,
-                CreateConversationAttributeFilesRequestVariant1DataType.allCases.map(\.rawValue)
-            )
+        self.dataType = try container.sdkDecodeIfPresent(.dataType)
+        if let value = self.dataType {
+            try sdkValidateRawEnum("data_type", value, CreateConversationAttributeFilesRequestVariant1DataType.allCases.map(\.rawValue))
         }
     }
 }
 
-public extension CreateConversationAttributeFilesRequestVariant1 {
-    init(dataType: CreateConversationAttributeFilesRequestVariant1DataType? = nil) throws {
+extension CreateConversationAttributeFilesRequestVariant1 {
+    public init(dataType: CreateConversationAttributeFilesRequestVariant1DataType? = nil) throws {
         self.init()
         self.dataType = dataType
         if let value = self.dataType {
-            try sdkValidateRawEnum(
-                "data_type",
-                value,
-                CreateConversationAttributeFilesRequestVariant1DataType.allCases.map(\.rawValue)
-            )
+            try sdkValidateRawEnum("data_type", value, CreateConversationAttributeFilesRequestVariant1DataType.allCases.map(\.rawValue))
         }
     }
 }
@@ -249,34 +195,26 @@ public struct CreateConversationAttributeIntegerRequestVariant1: Codable {
     }
 
     init() {
-        dataType = nil
+        self.dataType = nil
     }
 }
 
-public extension CreateConversationAttributeIntegerRequestVariant1 {
-    init(from decoder: Decoder) throws {
+extension CreateConversationAttributeIntegerRequestVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        dataType = try container.sdkDecodeIfPresent(.dataType)
-        if let value = dataType {
-            try sdkValidateRawEnum(
-                "data_type",
-                value,
-                CreateConversationAttributeIntegerRequestVariant1DataType.allCases.map(\.rawValue)
-            )
+        self.dataType = try container.sdkDecodeIfPresent(.dataType)
+        if let value = self.dataType {
+            try sdkValidateRawEnum("data_type", value, CreateConversationAttributeIntegerRequestVariant1DataType.allCases.map(\.rawValue))
         }
     }
 }
 
-public extension CreateConversationAttributeIntegerRequestVariant1 {
-    init(dataType: CreateConversationAttributeIntegerRequestVariant1DataType? = nil) throws {
+extension CreateConversationAttributeIntegerRequestVariant1 {
+    public init(dataType: CreateConversationAttributeIntegerRequestVariant1DataType? = nil) throws {
         self.init()
         self.dataType = dataType
         if let value = self.dataType {
-            try sdkValidateRawEnum(
-                "data_type",
-                value,
-                CreateConversationAttributeIntegerRequestVariant1DataType.allCases.map(\.rawValue)
-            )
+            try sdkValidateRawEnum("data_type", value, CreateConversationAttributeIntegerRequestVariant1DataType.allCases.map(\.rawValue))
         }
     }
 }
@@ -291,27 +229,21 @@ public struct CreateConversationAttributeOptionRequest: Codable {
         case label
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateConversationAttributeOptionRequest {
-    init(from decoder: Decoder) throws {
+extension CreateConversationAttributeOptionRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.label) else {
-            throw SdkValidationError(
-                field: "label",
-                code: "required",
-                message: "Validation failed for 'label': value is required"
-            )
+            throw SdkValidationError(field: "label", code: "required", message: "Validation failed for 'label': value is required")
         }
-        label = try container.sdkDecodeRequired(.label)
+        self.label = try container.sdkDecodeRequired(.label)
     }
 }
 
-public extension CreateConversationAttributeOptionRequest {
-    init(label: String) {
+extension CreateConversationAttributeOptionRequest {
+    public init(label: String) {
         self.label = label
     }
 }
@@ -324,34 +256,26 @@ public struct CreateConversationAttributeDecimalRequestVariant1: Codable {
     }
 
     init() {
-        dataType = nil
+        self.dataType = nil
     }
 }
 
-public extension CreateConversationAttributeDecimalRequestVariant1 {
-    init(from decoder: Decoder) throws {
+extension CreateConversationAttributeDecimalRequestVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        dataType = try container.sdkDecodeIfPresent(.dataType)
-        if let value = dataType {
-            try sdkValidateRawEnum(
-                "data_type",
-                value,
-                CreateConversationAttributeDecimalRequestVariant1DataType.allCases.map(\.rawValue)
-            )
+        self.dataType = try container.sdkDecodeIfPresent(.dataType)
+        if let value = self.dataType {
+            try sdkValidateRawEnum("data_type", value, CreateConversationAttributeDecimalRequestVariant1DataType.allCases.map(\.rawValue))
         }
     }
 }
 
-public extension CreateConversationAttributeDecimalRequestVariant1 {
-    init(dataType: CreateConversationAttributeDecimalRequestVariant1DataType? = nil) throws {
+extension CreateConversationAttributeDecimalRequestVariant1 {
+    public init(dataType: CreateConversationAttributeDecimalRequestVariant1DataType? = nil) throws {
         self.init()
         self.dataType = dataType
         if let value = self.dataType {
-            try sdkValidateRawEnum(
-                "data_type",
-                value,
-                CreateConversationAttributeDecimalRequestVariant1DataType.allCases.map(\.rawValue)
-            )
+            try sdkValidateRawEnum("data_type", value, CreateConversationAttributeDecimalRequestVariant1DataType.allCases.map(\.rawValue))
         }
     }
 }
@@ -382,59 +306,34 @@ public struct CreateConversationAttributeRelationshipRequest: Codable {
         case reference
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateConversationAttributeRelationshipRequest {
-    init(from decoder: Decoder) throws {
+extension CreateConversationAttributeRelationshipRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.dataType) else {
-            throw SdkValidationError(
-                field: "data_type",
-                code: "required",
-                message: "Validation failed for 'data_type': value is required"
-            )
+            throw SdkValidationError(field: "data_type", code: "required", message: "Validation failed for 'data_type': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        dataType = try container.sdkDecodeRequired(.dataType)
-        description = try container.sdkDecodeIfPresent(.description)
-        required = try container.sdkDecodeIfPresent(.required)
-        visibleToTeamIds = try container.sdkDecodeIfPresent(.visibleToTeamIds)
-        reference = try container.sdkDecodeIfPresent(.reference)
-        try sdkValidateRawEnum(
-            "data_type",
-            dataType,
-            CreateConversationAttributeRelationshipRequestVariant1DataType.allCases.map(\.rawValue)
-        )
+        self.name = try container.sdkDecodeRequired(.name)
+        self.dataType = try container.sdkDecodeRequired(.dataType)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.required = try container.sdkDecodeIfPresent(.required)
+        self.visibleToTeamIds = try container.sdkDecodeIfPresent(.visibleToTeamIds)
+        self.reference = try container.sdkDecodeIfPresent(.reference)
+            try sdkValidateRawEnum("data_type", self.dataType, CreateConversationAttributeRelationshipRequestVariant1DataType.allCases.map(\.rawValue))
     }
 }
 
-public extension CreateConversationAttributeRelationshipRequest {
-    init(
-        name: String,
-        dataType: CreateConversationAttributeRelationshipRequestVariant1DataType,
-        description: String? = nil,
-        required: Bool? = nil,
-        visibleToTeamIds: [String]? = nil,
-        reference: CreateConversationAttributeRelationshipRequestVariant1Reference? = nil
-    ) throws {
+extension CreateConversationAttributeRelationshipRequest {
+    public init(name: String, dataType: CreateConversationAttributeRelationshipRequestVariant1DataType, description: String? = nil, required: Bool? = nil, visibleToTeamIds: [String]? = nil, reference: CreateConversationAttributeRelationshipRequestVariant1Reference? = nil) throws {
         (self.name, self.dataType) = (name, dataType)
         (self.description, self.required) = (description, required)
         (self.visibleToTeamIds, self.reference) = (visibleToTeamIds, reference)
-        try sdkValidateRawEnum(
-            "data_type",
-            self.dataType,
-            CreateConversationAttributeRelationshipRequestVariant1DataType.allCases.map(\.rawValue)
-        )
+            try sdkValidateRawEnum("data_type", self.dataType, CreateConversationAttributeRelationshipRequestVariant1DataType.allCases.map(\.rawValue))
     }
 }
 
@@ -464,59 +363,34 @@ public struct CreateConversationAttributeListRequest: Codable {
         case options
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateConversationAttributeListRequest {
-    init(from decoder: Decoder) throws {
+extension CreateConversationAttributeListRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.dataType) else {
-            throw SdkValidationError(
-                field: "data_type",
-                code: "required",
-                message: "Validation failed for 'data_type': value is required"
-            )
+            throw SdkValidationError(field: "data_type", code: "required", message: "Validation failed for 'data_type': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        dataType = try container.sdkDecodeRequired(.dataType)
-        description = try container.sdkDecodeIfPresent(.description)
-        required = try container.sdkDecodeIfPresent(.required)
-        visibleToTeamIds = try container.sdkDecodeIfPresent(.visibleToTeamIds)
-        options = try container.sdkDecodeIfPresent(.options)
-        try sdkValidateRawEnum(
-            "data_type",
-            dataType,
-            CreateConversationAttributeListRequestVariant1DataType.allCases.map(\.rawValue)
-        )
+        self.name = try container.sdkDecodeRequired(.name)
+        self.dataType = try container.sdkDecodeRequired(.dataType)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.required = try container.sdkDecodeIfPresent(.required)
+        self.visibleToTeamIds = try container.sdkDecodeIfPresent(.visibleToTeamIds)
+        self.options = try container.sdkDecodeIfPresent(.options)
+            try sdkValidateRawEnum("data_type", self.dataType, CreateConversationAttributeListRequestVariant1DataType.allCases.map(\.rawValue))
     }
 }
 
-public extension CreateConversationAttributeListRequest {
-    init(
-        name: String,
-        dataType: CreateConversationAttributeListRequestVariant1DataType,
-        description: String? = nil,
-        required: Bool? = nil,
-        visibleToTeamIds: [String]? = nil,
-        options: [CreateConversationAttributeOptionRequest]? = nil
-    ) throws {
+extension CreateConversationAttributeListRequest {
+    public init(name: String, dataType: CreateConversationAttributeListRequestVariant1DataType, description: String? = nil, required: Bool? = nil, visibleToTeamIds: [String]? = nil, options: [CreateConversationAttributeOptionRequest]? = nil) throws {
         (self.name, self.dataType) = (name, dataType)
         (self.description, self.required) = (description, required)
         (self.visibleToTeamIds, self.options) = (visibleToTeamIds, options)
-        try sdkValidateRawEnum(
-            "data_type",
-            self.dataType,
-            CreateConversationAttributeListRequestVariant1DataType.allCases.map(\.rawValue)
-        )
+            try sdkValidateRawEnum("data_type", self.dataType, CreateConversationAttributeListRequestVariant1DataType.allCases.map(\.rawValue))
     }
 }
 
@@ -534,20 +408,20 @@ public struct ConversationAttributeList: Codable {
     }
 
     init() {
-        (type, data) = (nil, nil)
+        (self.type, self.data) = (nil, nil)
     }
 }
 
-public extension ConversationAttributeList {
-    init(from decoder: Decoder) throws {
+extension ConversationAttributeList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension ConversationAttributeList {
-    init(type: ConversationAttributeListTypeX208e7954? = nil, data: [ConversationAttribute]? = nil) {
+extension ConversationAttributeList {
+    public init(type: ConversationAttributeListTypeX208e7954? = nil, data: [ConversationAttribute]? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
     }
@@ -576,37 +450,23 @@ public struct CreateConversationAttributeFilesRequest: Codable {
         case visibleToTeamIds = "visible_to_team_ids"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateConversationAttributeFilesRequest {
-    init(from decoder: Decoder) throws {
+extension CreateConversationAttributeFilesRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.dataType) else {
-            throw SdkValidationError(
-                field: "data_type",
-                code: "required",
-                message: "Validation failed for 'data_type': value is required"
-            )
+            throw SdkValidationError(field: "data_type", code: "required", message: "Validation failed for 'data_type': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        dataType = try container.sdkDecodeRequired(.dataType)
-        description = try container.sdkDecodeIfPresent(.description)
-        required = try container.sdkDecodeIfPresent(.required)
-        visibleToTeamIds = try container.sdkDecodeIfPresent(.visibleToTeamIds)
-        try sdkValidateRawEnum(
-            "data_type",
-            dataType,
-            CreateConversationAttributeFilesRequestVariant1DataType.allCases.map(\.rawValue)
-        )
+        self.name = try container.sdkDecodeRequired(.name)
+        self.dataType = try container.sdkDecodeRequired(.dataType)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.required = try container.sdkDecodeIfPresent(.required)
+        self.visibleToTeamIds = try container.sdkDecodeIfPresent(.visibleToTeamIds)
+            try sdkValidateRawEnum("data_type", self.dataType, CreateConversationAttributeFilesRequestVariant1DataType.allCases.map(\.rawValue))
     }
 }

@@ -9,213 +9,76 @@ public class TicketsNamespace {
         self.config = config
     }
 
-    /// Submits a reply or note on a ticket, either on behalf of an admin or a contact. For an admin reply, set
-    /// `message_type` and provide the fields required for that reply type; for a contact reply, identify the contact
-    /// using one of the supported identifiers. Use the ticket object's internal `id`, not the ticket number shown in
-    /// the Inbox.
+/// Submits a reply or note on a ticket, either on behalf of an admin or a contact. For an admin reply, set `message_type` and provide the fields required for that reply type; for a contact reply, identify the contact using one of the supported identifiers. Use the ticket object's internal `id`, not the ticket number shown in the Inbox.
     ///
     /// You can reply to a ticket with a message from an admin or on behalf of a contact, or with a note for admins.
-    public func reply(
-        ticketId: String,
-        intercomVersion: IntercomVersion? = nil,
-        skipNotifications: Bool? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> TicketReply {
-        try await TicketsMethods.replyTicket(
-            config: config,
-            ticketId: ticketId,
-            intercomVersion: intercomVersion,
-            skipNotifications: skipNotifications,
-            requestOptions: requestOptions
-        )
+    public func reply(ticketId: String, intercomVersion: IntercomVersion? = nil, skipNotifications: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> TicketReply {
+        return try await TicketsMethods.replyTicket(config: config, ticketId: ticketId, intercomVersion: intercomVersion, skipNotifications: skipNotifications, requestOptions: requestOptions)
     }
 
-    /// Links a conversation or customer ticket to an existing tracker ticket. Supply the tracker's `ticket_id` and the
-    /// `conversation_id` to link; the tracker ticket can have up to 2,500 linked conversations. This operation requires
-    /// the `write_tickets` OAuth scope.
+/// Links a conversation or customer ticket to an existing tracker ticket. Supply the tracker's `ticket_id` and the `conversation_id` to link; the tracker ticket can have up to 2,500 linked conversations. This operation requires the `write_tickets` OAuth scope.
     ///
-    /// Link a conversation to an existing tracker ticket. The conversation can be a regular conversation or one that
-    /// has been converted into a customer ticket. Use this when related conversations surface after a tracker ticket
-    /// has already been created. The ticket in the path must be a tracker ticket, and `conversation_id` in the body is
-    /// the conversation (or customer ticket) to link to it. This returns the linked conversation. A tracker ticket can
-    /// have up to 2,500 linked conversations; once that limit is reached, further requests return
-    /// `linked_conversation_limit_exceeded`. Requires the `write_tickets` OAuth scope.
-    public func linkConversation(
-        ticketId: String,
-        conversationId: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Conversation {
-        try await TicketsMethods.linkTicketsConversation(
-            config: config,
-            ticketId: ticketId,
-            conversationId: conversationId,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    /// Link a conversation to an existing tracker ticket. The conversation can be a regular conversation or one that has been converted into a customer ticket. Use this when related conversations surface after a tracker ticket has already been created. The ticket in the path must be a tracker ticket, and `conversation_id` in the body is the conversation (or customer ticket) to link to it. This returns the linked conversation. A tracker ticket can have up to 2,500 linked conversations; once that limit is reached, further requests return `linked_conversation_limit_exceeded`. Requires the `write_tickets` OAuth scope.
+    public func linkConversation(ticketId: String, conversationId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Conversation {
+        return try await TicketsMethods.linkTicketsConversation(config: config, ticketId: ticketId, conversationId: conversationId, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Unlinks a conversation or converted customer ticket from the tracker ticket it is linked to. Supply the tracker
-    /// ticket identifier and the identifier of the linked conversation or customer ticket. This operation requires the
-    /// `write_tickets` OAuth scope.
+/// Unlinks a conversation or converted customer ticket from the tracker ticket it is linked to. Supply the tracker ticket identifier and the identifier of the linked conversation or customer ticket. This operation requires the `write_tickets` OAuth scope.
     ///
-    /// Unlink a conversation (or converted customer ticket) from a tracker ticket it is currently linked to. The ticket
-    /// in the path must be a tracker ticket. This returns the conversation that was unlinked. Requires the
-    /// `write_tickets` OAuth scope.
-    public func unlinkConversation(
-        ticketId: String,
-        id: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Conversation {
-        try await TicketsMethods.unlinkTicketsConversation(
-            config: config,
-            ticketId: ticketId,
-            id: id,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    /// Unlink a conversation (or converted customer ticket) from a tracker ticket it is currently linked to. The ticket in the path must be a tracker ticket. This returns the conversation that was unlinked. Requires the `write_tickets` OAuth scope.
+    public func unlinkConversation(ticketId: String, id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Conversation {
+        return try await TicketsMethods.unlinkTicketsConversation(config: config, ticketId: ticketId, id: id, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Creates a ticket using a ticket type and one or more affected contacts. Supply `ticket_type_id` and `contacts`;
-    /// you can also provide ticket attributes, assignment details, or a conversation to link. A 200 response returns
-    /// the created ticket and its current state.
+/// Creates a ticket using a ticket type and one or more affected contacts. Supply `ticket_type_id` and `contacts`; you can also provide ticket attributes, assignment details, or a conversation to link. A 200 response returns the created ticket and its current state.
     ///
     /// You can create a new ticket.
-    public func create(
-        options: TicketsMethods.CreateTicketOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Ticket {
-        try await TicketsMethods.createTicket(config: config, options: options, requestOptions: requestOptions)
+    public func create(options: TicketsMethods.CreateTicketOptions, requestOptions: RequestOptions? = nil) async throws -> Ticket {
+        return try await TicketsMethods.createTicket(config: config, options: options, requestOptions: requestOptions)
     }
 
-    /// Enqueues ticket creation for asynchronous processing after performing best-effort input validation. Supply
-    /// `ticket_type_id` and `contacts`; invalid inputs are not enqueued. Use the returned job identifier or URL to
-    /// check the job's progress and retrieve the created ticket when processing completes.
+/// Enqueues ticket creation for asynchronous processing after performing best-effort input validation. Supply `ticket_type_id` and `contacts`; invalid inputs are not enqueued. Use the returned job identifier or URL to check the job's progress and retrieve the created ticket when processing completes.
     ///
-    /// Enqueues ticket creation for asynchronous processing, returning if the job was enqueued successfully to be
-    /// processed. We attempt to perform a best-effort validation on inputs before tasks are enqueued. If the given
-    /// parameters are incorrect, we won't enqueue the job.
-    public func enqueueCreate(
-        options: TicketsMethods.EnqueueCreateTicketOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Jobs {
-        try await TicketsMethods.enqueueCreateTicket(config: config, options: options, requestOptions: requestOptions)
+    /// Enqueues ticket creation for asynchronous processing, returning if the job was enqueued successfully to be processed. We attempt to perform a best-effort validation on inputs before tasks are enqueued. If the given parameters are incorrect, we won't enqueue the job.
+    public func enqueueCreate(options: TicketsMethods.EnqueueCreateTicketOptions, requestOptions: RequestOptions? = nil) async throws -> Jobs {
+        return try await TicketsMethods.enqueueCreateTicket(config: config, options: options, requestOptions: requestOptions)
     }
 
-    /// Updates an existing ticket's attributes, state, company, visibility, assignment, or open and snoozed status.
-    /// Supply only the ticket properties you want to change, and use `skip_notifications` to control update
-    /// notifications. A successful response returns the updated ticket.
+/// Updates an existing ticket's attributes, state, company, visibility, assignment, or open and snoozed status. Supply only the ticket properties you want to change, and use `skip_notifications` to control update notifications. A successful response returns the updated ticket.
     ///
     /// You can update a ticket.
-    public func update(
-        options: TicketsMethods.UpdateTicketOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Ticket {
-        try await TicketsMethods.updateTicket(config: config, options: options, requestOptions: requestOptions)
+    public func update(options: TicketsMethods.UpdateTicketOptions, requestOptions: RequestOptions? = nil) async throws -> Ticket {
+        return try await TicketsMethods.updateTicket(config: config, options: options, requestOptions: requestOptions)
     }
 
-    /// Retrieves a ticket using its unique API identifier. Use the ticket object's `id` value, not the `ticket_id`
-    /// displayed in the Inbox. The response includes ticket details such as its attributes, state, type, and
-    /// assignment.
+/// Retrieves a ticket using its unique API identifier. Use the ticket object's `id` value, not the `ticket_id` displayed in the Inbox. The response includes ticket details such as its attributes, state, type, and assignment.
     ///
     /// You can fetch the details of a single ticket.
-    public func get(
-        ticketId: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Ticket {
-        try await TicketsMethods.getTicket(
-            config: config,
-            ticketId: ticketId,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    public func get(ticketId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Ticket {
+        return try await TicketsMethods.getTicket(config: config, ticketId: ticketId, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Deletes a ticket permanently from the inbox, including its replies, attributes, uploads, and related content.
-    /// <Callout type="warning">Deleting a ticket is permanent and cannot be reversed.</Callout> The ticket remains in
-    /// reporting, although some reporting data may be incomplete.
+/// Deletes a ticket permanently from the inbox, including its replies, attributes, uploads, and related content. <Callout type="warning">Deleting a ticket is permanent and cannot be reversed.</Callout> The ticket remains in reporting, although some reporting data may be incomplete.
     ///
-    /// {% admonition type="warning" name="Irreversible operation" %} Deleting a ticket is permanent and cannot be
-    /// reversed. {% /admonition %} Deleting a ticket permanently removes it from the inbox. All sensitive data is
-    /// deleted, including admin and user replies, ticket attributes, uploads, and related content. The ticket will
-    /// still appear in reporting, though some data may be incomplete due to the deletion.
-    public func delete(
-        ticketId: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> TicketDeleted {
-        try await TicketsMethods.deleteTicket(
-            config: config,
-            ticketId: ticketId,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    /// {% admonition type="warning" name="Irreversible operation" %} Deleting a ticket is permanent and cannot be reversed. {% /admonition %} Deleting a ticket permanently removes it from the inbox. All sensitive data is deleted, including admin and user replies, ticket attributes, uploads, and related content. The ticket will still appear in reporting, though some data may be incomplete due to the deletion.
+    public func delete(ticketId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> TicketDeleted {
+        return try await TicketsMethods.deleteTicket(config: config, ticketId: ticketId, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 }
 
-public extension TicketsNamespace {
-    /// Changes a ticket to a different ticket type and sets a state for that type. The new ticket type must be in the
-    /// same category as the current type, and matching attributes transfer automatically. Values supplied in
-    /// `ticket_attributes` override transferred values.
+extension TicketsNamespace {
+/// Changes a ticket to a different ticket type and sets a state for that type. The new ticket type must be in the same category as the current type, and matching attributes transfer automatically. Values supplied in `ticket_attributes` override transferred values.
     ///
-    /// You can change the type of a ticket. The new ticket type must be in the same category as the current type.
-    /// Attributes matching by name and type are automatically transferred from the old type; values provided in
-    /// ticket_attributes override transferred values.
-    func changeType(
-        ticketId: String,
-        ticketTypeId: String,
-        ticketStateId: String,
-        intercomVersion: IntercomVersion? = nil,
-        ticketAttributes: [String: JSONValue]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Ticket {
-        try await TicketsMethods.changeTicketType(
-            config: config,
-            ticketId: ticketId,
-            ticketTypeId: ticketTypeId,
-            ticketStateId: ticketStateId,
-            intercomVersion: intercomVersion,
-            ticketAttributes: ticketAttributes,
-            requestOptions: requestOptions
-        )
+    /// You can change the type of a ticket. The new ticket type must be in the same category as the current type. Attributes matching by name and type are automatically transferred from the old type; values provided in ticket_attributes override transferred values.
+    public func changeType(ticketId: String, ticketTypeId: String, ticketStateId: String, intercomVersion: IntercomVersion? = nil, ticketAttributes: [String: JSONValue]? = nil, requestOptions: RequestOptions? = nil) async throws -> Ticket {
+        return try await TicketsMethods.changeTicketType(config: config, ticketId: ticketId, ticketTypeId: ticketTypeId, ticketStateId: ticketStateId, intercomVersion: intercomVersion, ticketAttributes: ticketAttributes, requestOptions: requestOptions)
     }
 
-    /// Searches tickets using filters on ticket attributes and other searchable fields. Supply a `query` to define a
-    /// single filter or combine filters, and use `pagination` to control page size and continue through results. Filter
-    /// values must match the type of the field being searched.
+/// Searches tickets using filters on ticket attributes and other searchable fields. Supply a `query` to define a single filter or combine filters, and use `pagination` to control page size and continue through results. Filter values must match the type of the field being searched.
     ///
-    /// You can search for multiple tickets by the value of their attributes in order to fetch exactly which ones you
-    /// want. To search for tickets, you send a `POST` request to `https://api.intercom.io/tickets/search`. This will
-    /// accept a query object in the body which will define your filters. {% admonition type="warning" name="Optimizing
-    /// search queries" %} Search queries can be complex, so optimizing them can help the performance of your search.
-    /// Use the `AND` and `OR` operators to combine multiple filters to get the exact results you need and utilize
-    /// pagination to limit the number of results returned. The default is `20` results per page. See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#example-search-conversations-request)
-    /// for more details on how to use the `starting_after` param. {% /admonition %} ### Nesting & Limitations You can
-    /// nest these filters in order to get even more granular insights that pinpoint exactly what you need. Example: (1
-    /// OR 2) AND (3 OR 4). There are some limitations to the amount of multiples there can be: - There's a limit of max
-    /// 2 nested filters - There's a limit of max 15 filters for each AND or OR group ### Accepted Fields Most keys
-    /// listed as part of the Ticket model are searchable, whether writeable or not. The value you search for has to
-    /// match the accepted type, otherwise the query will fail (ie. as `created_at` accepts a date, the `value` cannot
-    /// be a string such as `"foobar"`). The `source.body` field is unique as the search will not be performed against
-    /// the entire value, but instead against every element of the value separately. For example, when searching for a
-    /// conversation with a `"I need support"` body - the query should contain a `=` operator with the value `"support"`
-    /// for such conversation to be returned. A query with a `=` operator and a `"need support"` value will not yield a
-    /// result. | Field | Type | | :---------------------------------------- |…
-    func search(
-        query: SearchRequestQuery,
-        intercomVersion: IntercomVersion? = nil,
-        pagination: SdkOptional<StartingAfterPaging>? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> TicketList {
-        try await TicketsMethods.searchTickets(
-            config: config,
-            query: query,
-            intercomVersion: intercomVersion,
-            pagination: pagination,
-            requestOptions: requestOptions
-        )
+    /// You can search for multiple tickets by the value of their attributes in order to fetch exactly which ones you want. To search for tickets, you send a `POST` request to `https://api.intercom.io/tickets/search`. This will accept a query object in the body which will define your filters. {% admonition type="warning" name="Optimizing search queries" %} Search queries can be complex, so optimizing them can help the performance of your search. Use the `AND` and `OR` operators to combine multiple filters to get the exact results you need and utilize pagination to limit the number of results returned. The default is `20` results per page. See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#example-search-conversations-request) for more details on how to use the `starting_after` param. {% /admonition %} ### Nesting & Limitations You can nest these filters in order to get even more granular insights that pinpoint exactly what you need. Example: (1 OR 2) AND (3 OR 4). There are some limitations to the amount of multiples there can be: - There's a limit of max 2 nested filters - There's a limit of max 15 filters for each AND or OR group ### Accepted Fields Most keys listed as part of the Ticket model are searchable, whether writeable or not. The value you search for has to match the accepted type, otherwise the query will fail (ie. as `created_at` accepts a date, the `value` cannot be a string such as `"foobar"`). The `source.body` field is unique as the search will not be performed against the entire value, but instead against every element of the value separately. For example, when searching for a conversation with a `"I need support"` body - the query should contain a `=` operator with the value `"support"` for such conversation to be returned. A query with a `=` operator and a `"need support"` value will not yield a result. | Field | Type | | :---------------------------------------- |…
+    public func search(query: SearchRequestQuery, intercomVersion: IntercomVersion? = nil, pagination: SdkOptional<StartingAfterPaging>? = nil, requestOptions: RequestOptions? = nil) async throws -> TicketList {
+        return try await TicketsMethods.searchTickets(config: config, query: query, intercomVersion: intercomVersion, pagination: pagination, requestOptions: requestOptions)
     }
 }
 
@@ -225,72 +88,25 @@ public class VisitorsNamespace {
         self.config = config
     }
 
-    /// Updates an existing visitor using either the visitor's Intercom `id` or your `user_id`. Supply the identifier in
-    /// the request body along with any profile or custom attribute values to change. The response contains the updated
-    /// visitor.
+/// Updates an existing visitor using either the visitor's Intercom `id` or your `user_id`. Supply the identifier in the request body along with any profile or custom attribute values to change. The response contains the updated visitor.
     ///
-    /// Sending a PUT request to `/visitors` will result in an update of an existing Visitor. **Option 1.** You can
-    /// update a visitor by passing in the `user_id` of the visitor in the Request body. **Option 2.** You can update a
-    /// visitor by passing in the `id` of the visitor in the Request body.
-    public func update(
-        intercomVersion: IntercomVersion? = nil,
-        id: String? = nil,
-        userId: String? = nil,
-        name: String? = nil,
-        customAttributes: [String: String]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Visitor {
-        try await VisitorsMethods.updateVisitor(
-            config: config,
-            intercomVersion: intercomVersion,
-            id: id,
-            userId: userId,
-            name: name,
-            customAttributes: customAttributes,
-            requestOptions: requestOptions
-        )
+    /// Sending a PUT request to `/visitors` will result in an update of an existing Visitor. **Option 1.** You can update a visitor by passing in the `user_id` of the visitor in the Request body. **Option 2.** You can update a visitor by passing in the `id` of the visitor in the Request body.
+    public func update(intercomVersion: IntercomVersion? = nil, id: String? = nil, userId: String? = nil, name: String? = nil, customAttributes: [String: String]? = nil, requestOptions: RequestOptions? = nil) async throws -> Visitor {
+        return try await VisitorsMethods.updateVisitor(config: config, intercomVersion: intercomVersion, id: id, userId: userId, name: name, customAttributes: customAttributes, requestOptions: requestOptions)
     }
 
-    /// Retrieves a visitor using the visitor's `user_id`. Use this operation when you need the details associated with
-    /// a specific visitor identifier. The response includes visitor identity and profile information.
+/// Retrieves a visitor using the visitor's `user_id`. Use this operation when you need the details associated with a specific visitor identifier. The response includes visitor identity and profile information.
     ///
     /// You can fetch the details of a single visitor.
-    public func retrieveWithUserId(
-        userId: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Visitor {
-        try await VisitorsMethods.retrieveVisitorWithUserId(
-            config: config,
-            userId: userId,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    public func retrieveWithUserId(userId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Visitor {
+        return try await VisitorsMethods.retrieveVisitorWithUserId(config: config, userId: userId, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Converts a visitor into a contact with the specified `lead` or `user` role, merging the visitor into an existing
-    /// contact when one matches. If no matching contact exists, the visitor's identifiers are replaced with the
-    /// supplied contact identifiers. The response contains the resulting contact.
+/// Converts a visitor into a contact with the specified `lead` or `user` role, merging the visitor into an existing contact when one matches. If no matching contact exists, the visitor's identifiers are replaced with the supplied contact identifiers. The response contains the resulting contact.
     ///
-    /// You can merge a Visitor to a Contact of role type `lead` or `user`. > 📘 What happens upon a visitor being
-    /// converted? > > If the User exists, then the Visitor will be merged into it, the Visitor deleted and the User
-    /// returned. If the User does not exist, the Visitor will be converted to a User, with the User identifiers
-    /// replacing it's Visitor identifiers.
-    public func convert(
-        type: String,
-        user: ConvertVisitorRequestUser,
-        visitor: ConvertVisitorRequestVisitor,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Contact {
-        try await VisitorsMethods.convertVisitor(
-            config: config,
-            type: type,
-            user: user,
-            visitor: visitor,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    /// You can merge a Visitor to a Contact of role type `lead` or `user`. > 📘 What happens upon a visitor being converted? > > If the User exists, then the Visitor will be merged into it, the Visitor deleted and the User returned. If the User does not exist, the Visitor will be converted to a User, with the User identifiers replacing it's Visitor identifiers.
+    public func convert(type: String, user: ConvertVisitorRequestUser, visitor: ConvertVisitorRequestVisitor, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Contact {
+        return try await VisitorsMethods.convertVisitor(config: config, type: type, user: user, visitor: visitor, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 }
 
@@ -300,38 +116,18 @@ public class BrandsNamespace {
         self.config = config
     }
 
-    /// Lists all brands configured for the workspace, including the default brand. Use this operation to retrieve brand
-    /// identifiers and configuration details. The default brand's ID matches the workspace ID.
+/// Lists all brands configured for the workspace, including the default brand. Use this operation to retrieve brand identifiers and configuration details. The default brand's ID matches the workspace ID.
     ///
-    /// Retrieves all brands for the workspace, including the default brand. The default brand id always matches the
-    /// workspace
-    public func list(
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> BrandList {
-        try await BrandsMethods.listBrands(
-            config: config,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    /// Retrieves all brands for the workspace, including the default brand. The default brand id always matches the workspace
+    public func list(intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> BrandList {
+        return try await BrandsMethods.listBrands(config: config, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Retrieves a brand by its unique identifier. Use this operation to inspect a specific brand's configuration,
-    /// including whether it is the workspace's default brand. The response includes the brand's associated help center
-    /// and default email settings identifiers.
+/// Retrieves a brand by its unique identifier. Use this operation to inspect a specific brand's configuration, including whether it is the workspace's default brand. The response includes the brand's associated help center and default email settings identifiers.
     ///
     /// Fetches a specific brand by its unique identifier
-    public func retrieve(
-        id: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Brand {
-        try await BrandsMethods.retrieveBrand(
-            config: config,
-            id: id,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    public func retrieve(id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Brand {
+        return try await BrandsMethods.retrieveBrand(config: config, id: id, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 }
 
@@ -341,36 +137,18 @@ public class EmailsNamespace {
         self.config = config
     }
 
-    /// Lists sender email address settings for the workspace. Use this operation to review configured sender addresses
-    /// and their verification, domain, and forwarding details.
+/// Lists sender email address settings for the workspace. Use this operation to review configured sender addresses and their verification, domain, and forwarding details.
     ///
     /// Lists all sender email address settings for the workspace
-    public func list(
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> EmailList {
-        try await EmailsMethods.listEmails(
-            config: config,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    public func list(intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> EmailList {
+        return try await EmailsMethods.listEmails(config: config, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Retrieves a sender email address setting by its unique identifier. Use this operation to inspect an individual
-    /// setting, including its verification status, associated brand, and forwarding details.
+/// Retrieves a sender email address setting by its unique identifier. Use this operation to inspect an individual setting, including its verification status, associated brand, and forwarding details.
     ///
     /// Fetches a specific email setting by its unique identifier
-    public func retrieve(
-        id: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> EmailSetting {
-        try await EmailsMethods.retrieveEmail(
-            config: config,
-            id: id,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    public func retrieve(id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> EmailSetting {
+        return try await EmailsMethods.retrieveEmail(config: config, id: id, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 }
 
@@ -380,22 +158,10 @@ public class WorkflowsNamespace {
         self.config = config
     }
 
-    /// Exports the complete configuration for a workflow, including its steps, targeting rules, and attributes. Use
-    /// this operation to retrieve workflow configuration for EU Data Act compliance.
+/// Exports the complete configuration for a workflow, including its steps, targeting rules, and attributes. Use this operation to retrieve workflow configuration for EU Data Act compliance.
     ///
-    /// Export a workflow configuration by its ID. This endpoint returns the complete workflow definition including its
-    /// steps, targeting rules, and attributes. This endpoint is designed for EU Data Act compliance, allowing customers
-    /// to export their workflow configurations.
-    public func export(
-        id: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> WorkflowExport {
-        try await WorkflowsMethods.exportWorkflow(
-            config: config,
-            id: id,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    /// Export a workflow configuration by its ID. This endpoint returns the complete workflow definition including its steps, targeting rules, and attributes. This endpoint is designed for EU Data Act compliance, allowing customers to export their workflow configurations.
+    public func export(id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> WorkflowExport {
+        return try await WorkflowsMethods.exportWorkflow(config: config, id: id, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 }

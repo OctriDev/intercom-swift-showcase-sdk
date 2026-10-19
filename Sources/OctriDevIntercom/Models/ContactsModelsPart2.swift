@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Contacts domain models
+// Contacts domain models
 /// You can update a contact
 public struct UpdateContactRequest: Codable {
     /// The role of the contact.
@@ -60,45 +60,32 @@ public struct UpdateContactRequest: Codable {
     }
 
     init() {
-        (role, externalId, email, emailVerified, phone) = (nil, nil, nil, nil, nil)
-        (name, avatar, signedUpAt, lastSeenAt, ownerId) = (nil, nil, nil, nil, nil)
-        (unsubscribedFromEmails, customAttributes) = (nil, nil)
+        (self.role, self.externalId, self.email, self.emailVerified, self.phone) = (nil, nil, nil, nil, nil)
+        (self.name, self.avatar, self.signedUpAt, self.lastSeenAt, self.ownerId) = (nil, nil, nil, nil, nil)
+        (self.unsubscribedFromEmails, self.customAttributes) = (nil, nil)
     }
 }
 
-public extension UpdateContactRequest {
-    init(from decoder: Decoder) throws {
+extension UpdateContactRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        role = try container.sdkDecodeIfPresent(.role)
-        externalId = try container.sdkDecodeIfPresent(.externalId)
-        email = try container.sdkDecodeIfPresent(.email)
-        emailVerified = try container.sdkDecodeIfPresent(.emailVerified)
-        phone = try container.sdkDecodeIfPresent(.phone)
-        name = try container.sdkDecodeIfPresent(.name)
-        avatar = try container.sdkDecodeIfPresent(.avatar)
-        signedUpAt = try container.sdkDecodeIfPresent(.signedUpAt)
-        lastSeenAt = try container.sdkDecodeIfPresent(.lastSeenAt)
-        ownerId = try container.sdkDecodeIfPresent(.ownerId)
-        unsubscribedFromEmails = try container.sdkDecodeIfPresent(.unsubscribedFromEmails)
-        customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
+        self.role = try container.sdkDecodeIfPresent(.role)
+        self.externalId = try container.sdkDecodeIfPresent(.externalId)
+        self.email = try container.sdkDecodeIfPresent(.email)
+        self.emailVerified = try container.sdkDecodeIfPresent(.emailVerified)
+        self.phone = try container.sdkDecodeIfPresent(.phone)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.avatar = try container.sdkDecodeIfPresent(.avatar)
+        self.signedUpAt = try container.sdkDecodeIfPresent(.signedUpAt)
+        self.lastSeenAt = try container.sdkDecodeIfPresent(.lastSeenAt)
+        self.ownerId = try container.sdkDecodeIfPresent(.ownerId)
+        self.unsubscribedFromEmails = try container.sdkDecodeIfPresent(.unsubscribedFromEmails)
+        self.customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
     }
 }
 
-public extension UpdateContactRequest {
-    init(
-        role: String? = nil,
-        externalId: String? = nil,
-        email: String? = nil,
-        emailVerified: Bool? = nil,
-        phone: String? = nil,
-        name: String? = nil,
-        avatar: String? = nil,
-        signedUpAt: Int? = nil,
-        lastSeenAt: Int? = nil,
-        ownerId: String? = nil,
-        unsubscribedFromEmails: Bool? = nil,
-        customAttributes: [String: JSONValue]? = nil
-    ) {
+extension UpdateContactRequest {
+    public init(role: String? = nil, externalId: String? = nil, email: String? = nil, emailVerified: Bool? = nil, phone: String? = nil, name: String? = nil, avatar: String? = nil, signedUpAt: Int? = nil, lastSeenAt: Int? = nil, ownerId: String? = nil, unsubscribedFromEmails: Bool? = nil, customAttributes: [String: JSONValue]? = nil) {
         self.init()
         (self.role, self.externalId) = (role, externalId)
         (self.email, self.emailVerified) = (email, emailVerified)
@@ -133,27 +120,22 @@ public struct ContactAttachedCompanies: Codable {
     }
 
     init() {
-        (type, companies, totalCount, pages) = (nil, nil, nil, nil)
+        (self.type, self.companies, self.totalCount, self.pages) = (nil, nil, nil, nil)
     }
 }
 
-public extension ContactAttachedCompanies {
-    init(from decoder: Decoder) throws {
+extension ContactAttachedCompanies {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        companies = try container.sdkDecodeIfPresent(.companies)
-        totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        pages = try container.sdkDecodeIfPresent(.pages)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.companies = try container.sdkDecodeIfPresent(.companies)
+        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        self.pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-public extension ContactAttachedCompanies {
-    init(
-        type: ContactAttachedCompaniesType? = nil,
-        companies: [Company]? = nil,
-        totalCount: Int? = nil,
-        pages: PagesLink? = nil
-    ) {
+extension ContactAttachedCompanies {
+    public init(type: ContactAttachedCompaniesType? = nil, companies: [Company]? = nil, totalCount: Int? = nil, pages: PagesLink? = nil) {
         self.init()
         (self.type, self.companies) = (type, companies)
         (self.totalCount, self.pages) = (totalCount, pages)
@@ -173,20 +155,20 @@ public struct MergePreviewReason: Codable {
     }
 
     init() {
-        (code, message) = (nil, nil)
+        (self.code, self.message) = (nil, nil)
     }
 }
 
-public extension MergePreviewReason {
-    init(from decoder: Decoder) throws {
+extension MergePreviewReason {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        code = try container.sdkDecodeIfPresent(.code)
-        message = try container.sdkDecodeIfPresent(.message)
+        self.code = try container.sdkDecodeIfPresent(.code)
+        self.message = try container.sdkDecodeIfPresent(.message)
     }
 }
 
-public extension MergePreviewReason {
-    init(code: MergePreviewReasonCode? = nil, message: String? = nil) {
+extension MergePreviewReason {
+    public init(code: MergePreviewReasonCode? = nil, message: String? = nil) {
         self.init()
         (self.code, self.message) = (code, message)
     }
@@ -205,20 +187,20 @@ public struct MergePreviewAllowed: Codable {
     }
 
     init() {
-        (allowed, summary) = (nil, nil)
+        (self.allowed, self.summary) = (nil, nil)
     }
 }
 
-public extension MergePreviewAllowed {
-    init(from decoder: Decoder) throws {
+extension MergePreviewAllowed {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        allowed = try container.sdkDecodeIfPresent(.allowed)
-        summary = try container.sdkDecodeIfPresent(.summary)
+        self.allowed = try container.sdkDecodeIfPresent(.allowed)
+        self.summary = try container.sdkDecodeIfPresent(.summary)
     }
 }
 
-public extension MergePreviewAllowed {
-    init(allowed: Bool? = nil, summary: MergePreviewSummary? = nil) {
+extension MergePreviewAllowed {
+    public init(allowed: Bool? = nil, summary: MergePreviewSummary? = nil) {
         self.init()
         (self.allowed, self.summary) = (allowed, summary)
     }
@@ -271,40 +253,29 @@ public struct ContactActivity: Codable {
     }
 
     init() {
-        (type, id, eventType, contactId, externalId) = (nil, nil, nil, nil, nil)
-        (role, mergeSourceId, mergeTargetId, failureReason, createdAt) = (nil, nil, nil, nil, nil)
+        (self.type, self.id, self.eventType, self.contactId, self.externalId) = (nil, nil, nil, nil, nil)
+        (self.role, self.mergeSourceId, self.mergeTargetId, self.failureReason, self.createdAt) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ContactActivity {
-    init(from decoder: Decoder) throws {
+extension ContactActivity {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        eventType = try container.sdkDecodeIfPresent(.eventType)
-        contactId = try container.sdkDecodeIfPresent(.contactId)
-        externalId = try container.sdkDecodeIfPresent(.externalId)
-        role = try container.sdkDecodeIfPresent(.role)
-        mergeSourceId = try container.sdkDecodeIfPresent(.mergeSourceId)
-        mergeTargetId = try container.sdkDecodeIfPresent(.mergeTargetId)
-        failureReason = try container.sdkDecodeIfPresent(.failureReason)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.eventType = try container.sdkDecodeIfPresent(.eventType)
+        self.contactId = try container.sdkDecodeIfPresent(.contactId)
+        self.externalId = try container.sdkDecodeIfPresent(.externalId)
+        self.role = try container.sdkDecodeIfPresent(.role)
+        self.mergeSourceId = try container.sdkDecodeIfPresent(.mergeSourceId)
+        self.mergeTargetId = try container.sdkDecodeIfPresent(.mergeTargetId)
+        self.failureReason = try container.sdkDecodeIfPresent(.failureReason)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
     }
 }
 
-public extension ContactActivity {
-    init(
-        type: ContactActivityType? = nil,
-        id: String? = nil,
-        eventType: ContactActivityEventType? = nil,
-        contactId: String? = nil,
-        externalId: String? = nil,
-        role: String? = nil,
-        mergeSourceId: String? = nil,
-        mergeTargetId: String? = nil,
-        failureReason: String? = nil,
-        createdAt: Int? = nil
-    ) {
+extension ContactActivity {
+    public init(type: ContactActivityType? = nil, id: String? = nil, eventType: ContactActivityEventType? = nil, contactId: String? = nil, externalId: String? = nil, role: String? = nil, mergeSourceId: String? = nil, mergeTargetId: String? = nil, failureReason: String? = nil, createdAt: Int? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.eventType, self.contactId) = (eventType, contactId)
@@ -339,29 +310,23 @@ public struct MergePreviewAttributeChange: Codable {
     }
 
     init() {
-        (field, outcome, fromValue, intoValue, newIntoValue) = (nil, nil, nil, nil, nil)
+        (self.field, self.outcome, self.fromValue, self.intoValue, self.newIntoValue) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension MergePreviewAttributeChange {
-    init(from decoder: Decoder) throws {
+extension MergePreviewAttributeChange {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        field = try container.sdkDecodeIfPresent(.field)
-        outcome = try container.sdkDecodeIfPresent(.outcome)
-        fromValue = try container.sdkDecodeIfPresent(.fromValue)
-        intoValue = try container.sdkDecodeIfPresent(.intoValue)
-        newIntoValue = try container.sdkDecodeIfPresent(.newIntoValue)
+        self.field = try container.sdkDecodeIfPresent(.field)
+        self.outcome = try container.sdkDecodeIfPresent(.outcome)
+        self.fromValue = try container.sdkDecodeIfPresent(.fromValue)
+        self.intoValue = try container.sdkDecodeIfPresent(.intoValue)
+        self.newIntoValue = try container.sdkDecodeIfPresent(.newIntoValue)
     }
 }
 
-public extension MergePreviewAttributeChange {
-    init(
-        field: String? = nil,
-        outcome: MergePreviewAttributeChangeOutcome? = nil,
-        fromValue: JSONValue? = nil,
-        intoValue: JSONValue? = nil,
-        newIntoValue: JSONValue? = nil
-    ) {
+extension MergePreviewAttributeChange {
+    public init(field: String? = nil, outcome: MergePreviewAttributeChangeOutcome? = nil, fromValue: JSONValue? = nil, intoValue: JSONValue? = nil, newIntoValue: JSONValue? = nil) {
         self.init()
         (self.field, self.outcome) = (field, outcome)
         (self.fromValue, self.intoValue) = (fromValue, intoValue)
@@ -387,29 +352,23 @@ public struct BulkUpdateContactsRequestContactsItemCompaniesItem: Codable {
         case remove
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension BulkUpdateContactsRequestContactsItemCompaniesItem {
-    init(from decoder: Decoder) throws {
+extension BulkUpdateContactsRequestContactsItemCompaniesItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.companyId) else {
-            throw SdkValidationError(
-                field: "company_id",
-                code: "required",
-                message: "Validation failed for 'company_id': value is required"
-            )
+            throw SdkValidationError(field: "company_id", code: "required", message: "Validation failed for 'company_id': value is required")
         }
-        companyId = try container.sdkDecodeRequired(.companyId)
-        name = try container.sdkDecodeIfPresent(.name)
-        remove = try container.sdkDecodeIfPresent(.remove)
+        self.companyId = try container.sdkDecodeRequired(.companyId)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.remove = try container.sdkDecodeIfPresent(.remove)
     }
 }
 
-public extension BulkUpdateContactsRequestContactsItemCompaniesItem {
-    init(companyId: String, name: String? = nil, remove: Bool? = nil) {
+extension BulkUpdateContactsRequestContactsItemCompaniesItem {
+    public init(companyId: String, name: String? = nil, remove: Bool? = nil) {
         (self.companyId, self.name) = (companyId, name)
         self.remove = remove
     }
@@ -429,28 +388,22 @@ public struct BulkCreateContactsRequestContactsItemCompaniesItem: Codable {
         case name
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension BulkCreateContactsRequestContactsItemCompaniesItem {
-    init(from decoder: Decoder) throws {
+extension BulkCreateContactsRequestContactsItemCompaniesItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.companyId) else {
-            throw SdkValidationError(
-                field: "company_id",
-                code: "required",
-                message: "Validation failed for 'company_id': value is required"
-            )
+            throw SdkValidationError(field: "company_id", code: "required", message: "Validation failed for 'company_id': value is required")
         }
-        companyId = try container.sdkDecodeRequired(.companyId)
-        name = try container.sdkDecodeIfPresent(.name)
+        self.companyId = try container.sdkDecodeRequired(.companyId)
+        self.name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-public extension BulkCreateContactsRequestContactsItemCompaniesItem {
-    init(companyId: String, name: String? = nil) {
+extension BulkCreateContactsRequestContactsItemCompaniesItem {
+    public init(companyId: String, name: String? = nil) {
         (self.companyId, self.name) = (companyId, name)
     }
 }
@@ -468,35 +421,25 @@ public struct MergePreviewReassignmentsPhoneCalls: Codable {
         case into
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension MergePreviewReassignmentsPhoneCalls {
-    init(from decoder: Decoder) throws {
+extension MergePreviewReassignmentsPhoneCalls {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.from) else {
-            throw SdkValidationError(
-                field: "from",
-                code: "required",
-                message: "Validation failed for 'from': value is required"
-            )
+            throw SdkValidationError(field: "from", code: "required", message: "Validation failed for 'from': value is required")
         }
         guard container.contains(.into) else {
-            throw SdkValidationError(
-                field: "into",
-                code: "required",
-                message: "Validation failed for 'into': value is required"
-            )
+            throw SdkValidationError(field: "into", code: "required", message: "Validation failed for 'into': value is required")
         }
-        from = try container.sdkDecodeRequired(.from)
-        into = try container.sdkDecodeRequired(.into)
+        self.from = try container.sdkDecodeRequired(.from)
+        self.into = try container.sdkDecodeRequired(.into)
     }
 }
 
-public extension MergePreviewReassignmentsPhoneCalls {
-    init(from: Int, into: Int) {
+extension MergePreviewReassignmentsPhoneCalls {
+    public init(from: Int, into: Int) {
         (self.from, self.into) = (from, into)
     }
 }
@@ -563,53 +506,33 @@ public struct BulkUpdateContactsRequestContactsItem: Codable {
         case tags
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension BulkUpdateContactsRequestContactsItem {
-    init(from decoder: Decoder) throws {
+extension BulkUpdateContactsRequestContactsItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        externalId = try container.sdkDecodeIfPresent(.externalId)
-        email = try container.sdkDecodeIfPresent(.email)
-        emailVerified = try container.sdkDecodeIfPresent(.emailVerified)
-        name = try container.sdkDecodeIfPresent(.name)
-        phone = try container.sdkDecodeIfPresent(.phone)
-        avatar = try container.sdkDecodeIfPresent(.avatar)
-        ownerId = try container.sdkDecodeIfPresent(.ownerId)
-        unsubscribedFromEmails = try container.sdkDecodeIfPresent(.unsubscribedFromEmails)
-        languageOverride = try container.sdkDecodeIfPresent(.languageOverride)
-        customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
-        companies = try container.sdkDecodeIfPresent(.companies)
-        tags = try container.sdkDecodeIfPresent(.tags)
+        self.id = try container.sdkDecodeRequired(.id)
+        self.externalId = try container.sdkDecodeIfPresent(.externalId)
+        self.email = try container.sdkDecodeIfPresent(.email)
+        self.emailVerified = try container.sdkDecodeIfPresent(.emailVerified)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.phone = try container.sdkDecodeIfPresent(.phone)
+        self.avatar = try container.sdkDecodeIfPresent(.avatar)
+        self.ownerId = try container.sdkDecodeIfPresent(.ownerId)
+        self.unsubscribedFromEmails = try container.sdkDecodeIfPresent(.unsubscribedFromEmails)
+        self.languageOverride = try container.sdkDecodeIfPresent(.languageOverride)
+        self.customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
+        self.companies = try container.sdkDecodeIfPresent(.companies)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
     }
 }
 
-public extension BulkUpdateContactsRequestContactsItem {
-    init(
-        id: String,
-        externalId: String? = nil,
-        email: String? = nil,
-        emailVerified: Bool? = nil,
-        name: String? = nil,
-        phone: String? = nil,
-        avatar: String? = nil,
-        ownerId: String? = nil,
-        unsubscribedFromEmails: Bool? = nil,
-        languageOverride: String? = nil,
-        customAttributes: [String: JSONValue]? = nil,
-        companies: [BulkUpdateContactsRequestContactsItemCompaniesItem]? = nil,
-        tags: BulkUpdateContactsRequestContactsItemTags? = nil
-    ) {
+extension BulkUpdateContactsRequestContactsItem {
+    public init(id: String, externalId: String? = nil, email: String? = nil, emailVerified: Bool? = nil, name: String? = nil, phone: String? = nil, avatar: String? = nil, ownerId: String? = nil, unsubscribedFromEmails: Bool? = nil, languageOverride: String? = nil, customAttributes: [String: JSONValue]? = nil, companies: [BulkUpdateContactsRequestContactsItemCompaniesItem]? = nil, tags: BulkUpdateContactsRequestContactsItemTags? = nil) {
         (self.id, self.externalId) = (id, externalId)
         (self.email, self.emailVerified) = (email, emailVerified)
         (self.name, self.phone) = (name, phone)

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// TaggedModelsJobs domain models
+// TaggedModelsJobs domain models
 /// Jobs are tasks that are processed asynchronously by the Intercom system after being enqueued via the API. This
 /// allows for efficient handling of operations that may take time to complete, such as data imports or exports. You
 /// can check the status of your jobs to monitor their progress and ensure they are completed successfully.
@@ -38,41 +38,27 @@ public struct Jobs: Codable {
         case resourceUrl = "resource_url"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension Jobs {
-    init(from decoder: Decoder) throws {
+extension Jobs {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        type = try container.sdkDecodeIfPresent(.type)
-        url = try container.sdkDecodeIfPresent(.url)
-        status = try container.sdkDecodeIfPresent(.status)
-        resourceType = try container.sdkDecodeIfPresent(.resourceType)
-        resourceId = try container.sdkDecodeIfPresent(.resourceId)
-        resourceUrl = try container.sdkDecodeIfPresent(.resourceUrl)
+        self.id = try container.sdkDecodeRequired(.id)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.url = try container.sdkDecodeIfPresent(.url)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.resourceType = try container.sdkDecodeIfPresent(.resourceType)
+        self.resourceId = try container.sdkDecodeIfPresent(.resourceId)
+        self.resourceUrl = try container.sdkDecodeIfPresent(.resourceUrl)
     }
 }
 
-public extension Jobs {
-    init(
-        id: String,
-        type: JobsType? = nil,
-        url: String? = nil,
-        status: JobsStatus? = nil,
-        resourceType: String? = nil,
-        resourceId: String? = nil,
-        resourceUrl: String? = nil
-    ) {
+extension Jobs {
+    public init(id: String, type: JobsType? = nil, url: String? = nil, status: JobsStatus? = nil, resourceType: String? = nil, resourceId: String? = nil, resourceUrl: String? = nil) {
         (self.id, self.type) = (id, type)
         (self.url, self.status) = (url, status)
         (self.resourceType, self.resourceId) = (resourceType, resourceId)
@@ -84,17 +70,14 @@ public extension Jobs {
 public struct JobsStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let pending = JobsStatus(rawValue: "pending")
     public static let success = JobsStatus(rawValue: "success")
     public static let failed = JobsStatus(rawValue: "failed")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -107,15 +90,12 @@ public struct JobsStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWire
 public struct JobsType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let job = JobsType(rawValue: "job")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

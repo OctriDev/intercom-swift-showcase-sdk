@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// SharedEmail domain models
+// SharedEmail domain models
 /// Contains data for an email address header for a conversation part that was sent as an email.
 public struct EmailAddressHeader: Codable {
     /// The type of email address header
@@ -23,21 +23,21 @@ public struct EmailAddressHeader: Codable {
     }
 
     init() {
-        (type, emailAddress, name) = (nil, nil, nil)
+        (self.type, self.emailAddress, self.name) = (nil, nil, nil)
     }
 }
 
-public extension EmailAddressHeader {
-    init(from decoder: Decoder) throws {
+extension EmailAddressHeader {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        emailAddress = try container.sdkDecodeIfPresent(.emailAddress)
-        name = try container.sdkDecodeIfPresent(.name)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.emailAddress = try container.sdkDecodeIfPresent(.emailAddress)
+        self.name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-public extension EmailAddressHeader {
-    init(type: String? = nil, emailAddress: String? = nil, name: String? = nil) {
+extension EmailAddressHeader {
+    public init(type: String? = nil, emailAddress: String? = nil, name: String? = nil) {
         self.init()
         (self.type, self.emailAddress) = (type, emailAddress)
         self.name = name
@@ -62,21 +62,21 @@ public struct EmailMessageMetadata: Codable {
     }
 
     init() {
-        (subject, emailAddressHeaders, messageId) = (nil, nil, nil)
+        (self.subject, self.emailAddressHeaders, self.messageId) = (nil, nil, nil)
     }
 }
 
-public extension EmailMessageMetadata {
-    init(from decoder: Decoder) throws {
+extension EmailMessageMetadata {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        subject = try container.sdkDecodeIfPresent(.subject)
-        emailAddressHeaders = try container.sdkDecodeIfPresent(.emailAddressHeaders)
-        messageId = try container.sdkDecodeIfPresent(.messageId)
+        self.subject = try container.sdkDecodeIfPresent(.subject)
+        self.emailAddressHeaders = try container.sdkDecodeIfPresent(.emailAddressHeaders)
+        self.messageId = try container.sdkDecodeIfPresent(.messageId)
     }
 }
 
-public extension EmailMessageMetadata {
-    init(subject: String? = nil, emailAddressHeaders: [EmailAddressHeader]? = nil, messageId: String? = nil) {
+extension EmailMessageMetadata {
+    public init(subject: String? = nil, emailAddressHeaders: [EmailAddressHeader]? = nil, messageId: String? = nil) {
         self.init()
         (self.subject, self.emailAddressHeaders) = (subject, emailAddressHeaders)
         self.messageId = messageId

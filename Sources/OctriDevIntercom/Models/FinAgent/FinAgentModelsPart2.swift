@@ -3,22 +3,14 @@
 
 import Foundation
 
-/// TaggedModelsFinAgent domain models
-public extension FinAgentReplyChunkEvent {
-    init(
-        eventName: FinAgentReplyChunkEventEventName,
-        conversationId: String,
-        streamId: String,
-        chunkIndex: Int,
-        chunkText: String,
-        createdAtMs: Date,
-        status: FinAgentReplyChunkEventStatus? = nil
-    ) throws {
+// TaggedModelsFinAgent domain models
+extension FinAgentReplyChunkEvent {
+    public init(eventName: FinAgentReplyChunkEventEventName, conversationId: String, streamId: String, chunkIndex: Int, chunkText: String, createdAtMs: Date, status: FinAgentReplyChunkEventStatus? = nil) throws {
         (self.eventName, self.conversationId) = (eventName, conversationId)
         (self.streamId, self.chunkIndex) = (streamId, chunkIndex)
         (self.chunkText, self.createdAtMs) = (chunkText, createdAtMs)
         self.status = status
-        try sdkValidateDateTime("created_at_ms", sdkWireString(self.createdAtMs))
+            try sdkValidateDateTime("created_at_ms", sdkWireString(self.createdAtMs))
     }
 }
 
@@ -51,56 +43,36 @@ public struct FinAgentRepliedEventMessage: Codable {
         case sources
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension FinAgentRepliedEventMessage {
-    init(from decoder: Decoder) throws {
+extension FinAgentRepliedEventMessage {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.author) else {
-            throw SdkValidationError(
-                field: "author",
-                code: "required",
-                message: "Validation failed for 'author': value is required"
-            )
+            throw SdkValidationError(field: "author", code: "required", message: "Validation failed for 'author': value is required")
         }
         guard container.contains(.body) else {
-            throw SdkValidationError(
-                field: "body",
-                code: "required",
-                message: "Validation failed for 'body': value is required"
-            )
+            throw SdkValidationError(field: "body", code: "required", message: "Validation failed for 'body': value is required")
         }
         guard container.contains(.timestampMs) else {
-            throw SdkValidationError(
-                field: "timestamp_ms",
-                code: "required",
-                message: "Validation failed for 'timestamp_ms': value is required"
-            )
+            throw SdkValidationError(field: "timestamp_ms", code: "required", message: "Validation failed for 'timestamp_ms': value is required")
         }
-        author = try container.sdkDecodeRequired(.author)
-        body = try container.sdkDecodeRequired(.body)
-        timestampMs = try container.sdkDecodeRequired(.timestampMs)
-        id = try container.sdkDecodeIfPresent(.id)
-        sources = try container.sdkDecodeIfPresent(.sources)
-        try sdkValidateDateTime("timestamp_ms", sdkWireString(timestampMs))
+        self.author = try container.sdkDecodeRequired(.author)
+        self.body = try container.sdkDecodeRequired(.body)
+        self.timestampMs = try container.sdkDecodeRequired(.timestampMs)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.sources = try container.sdkDecodeIfPresent(.sources)
+            try sdkValidateDateTime("timestamp_ms", sdkWireString(self.timestampMs))
     }
 }
 
-public extension FinAgentRepliedEventMessage {
-    init(
-        author: FinAgentRepliedEventMessageAuthor,
-        body: String,
-        timestampMs: Date,
-        id: String? = nil,
-        sources: [FinAgentRepliedEventMessageSourcesItem]? = nil
-    ) throws {
+extension FinAgentRepliedEventMessage {
+    public init(author: FinAgentRepliedEventMessageAuthor, body: String, timestampMs: Date, id: String? = nil, sources: [FinAgentRepliedEventMessageSourcesItem]? = nil) throws {
         (self.author, self.body) = (author, body)
         (self.timestampMs, self.id) = (timestampMs, id)
         self.sources = sources
-        try sdkValidateDateTime("timestamp_ms", sdkWireString(self.timestampMs))
+            try sdkValidateDateTime("timestamp_ms", sdkWireString(self.timestampMs))
     }
 }
 
@@ -123,43 +95,29 @@ public struct FinAgentCsatRequestedEventCsatOptionsItem: Codable {
         case label
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension FinAgentCsatRequestedEventCsatOptionsItem {
-    init(from decoder: Decoder) throws {
+extension FinAgentCsatRequestedEventCsatOptionsItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.key) else {
-            throw SdkValidationError(
-                field: "key",
-                code: "required",
-                message: "Validation failed for 'key': value is required"
-            )
+            throw SdkValidationError(field: "key", code: "required", message: "Validation failed for 'key': value is required")
         }
         guard container.contains(.emoji) else {
-            throw SdkValidationError(
-                field: "emoji",
-                code: "required",
-                message: "Validation failed for 'emoji': value is required"
-            )
+            throw SdkValidationError(field: "emoji", code: "required", message: "Validation failed for 'emoji': value is required")
         }
         guard container.contains(.label) else {
-            throw SdkValidationError(
-                field: "label",
-                code: "required",
-                message: "Validation failed for 'label': value is required"
-            )
+            throw SdkValidationError(field: "label", code: "required", message: "Validation failed for 'label': value is required")
         }
-        key = try container.sdkDecodeRequired(.key)
-        emoji = try container.sdkDecodeRequired(.emoji)
-        label = try container.sdkDecodeRequired(.label)
+        self.key = try container.sdkDecodeRequired(.key)
+        self.emoji = try container.sdkDecodeRequired(.emoji)
+        self.label = try container.sdkDecodeRequired(.label)
     }
 }
 
-public extension FinAgentCsatRequestedEventCsatOptionsItem {
-    init(key: FinAgentCsatRequestedEventCsatOptionsItemKey, emoji: String, label: String) {
+extension FinAgentCsatRequestedEventCsatOptionsItem {
+    public init(key: FinAgentCsatRequestedEventCsatOptionsItemKey, emoji: String, label: String) {
         (self.key, self.emoji) = (key, emoji)
         self.label = label
     }
@@ -175,27 +133,21 @@ public struct FinAgentCsatRequestedEventCsat: Codable {
         case options
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension FinAgentCsatRequestedEventCsat {
-    init(from decoder: Decoder) throws {
+extension FinAgentCsatRequestedEventCsat {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.options) else {
-            throw SdkValidationError(
-                field: "options",
-                code: "required",
-                message: "Validation failed for 'options': value is required"
-            )
+            throw SdkValidationError(field: "options", code: "required", message: "Validation failed for 'options': value is required")
         }
-        options = try container.sdkDecodeRequired(.options)
+        self.options = try container.sdkDecodeRequired(.options)
     }
 }
 
-public extension FinAgentCsatRequestedEventCsat {
-    init(options: [FinAgentCsatRequestedEventCsatOptionsItem]) {
+extension FinAgentCsatRequestedEventCsat {
+    public init(options: [FinAgentCsatRequestedEventCsatOptionsItem]) {
         self.options = options
     }
 }
@@ -224,33 +176,27 @@ public struct FinAgentUser: Codable {
         case attributes
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension FinAgentUser {
-    init(from decoder: Decoder) throws {
+extension FinAgentUser {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        email = try container.sdkDecodeIfPresent(.email)
-        attributes = try container.sdkDecodeIfPresent(.attributes)
-        if let value = email {
+        self.id = try container.sdkDecodeRequired(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.email = try container.sdkDecodeIfPresent(.email)
+        self.attributes = try container.sdkDecodeIfPresent(.attributes)
+        if let value = self.email {
             try sdkValidateEmail("email", value)
         }
     }
 }
 
-public extension FinAgentUser {
-    init(id: String, name: String? = nil, email: String? = nil, attributes: [String: JSONValue]? = nil) throws {
+extension FinAgentUser {
+    public init(id: String, name: String? = nil, email: String? = nil, attributes: [String: JSONValue]? = nil) throws {
         (self.id, self.name) = (id, name)
         (self.email, self.attributes) = (email, attributes)
         if let value = self.email {
@@ -272,20 +218,20 @@ public struct FinAgentAttributeErrors: Codable {
     }
 
     init() {
-        (user, conversation) = (nil, nil)
+        (self.user, self.conversation) = (nil, nil)
     }
 }
 
-public extension FinAgentAttributeErrors {
-    init(from decoder: Decoder) throws {
+extension FinAgentAttributeErrors {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        user = try container.sdkDecodeIfPresent(.user)
-        conversation = try container.sdkDecodeIfPresent(.conversation)
+        self.user = try container.sdkDecodeIfPresent(.user)
+        self.conversation = try container.sdkDecodeIfPresent(.conversation)
     }
 }
 
-public extension FinAgentAttributeErrors {
-    init(user: FinAgentAttributeErrorsUser? = nil, conversation: FinAgentAttributeErrorsConversation? = nil) {
+extension FinAgentAttributeErrors {
+    public init(user: FinAgentAttributeErrorsUser? = nil, conversation: FinAgentAttributeErrorsConversation? = nil) {
         self.init()
         (self.user, self.conversation) = (user, conversation)
     }
@@ -327,72 +273,43 @@ public struct FinAgentStatusUpdatedEvent: Codable {
         case reason
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension FinAgentStatusUpdatedEvent {
-    init(from decoder: Decoder) throws {
+extension FinAgentStatusUpdatedEvent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.eventName) else {
-            throw SdkValidationError(
-                field: "event_name",
-                code: "required",
-                message: "Validation failed for 'event_name': value is required"
-            )
+            throw SdkValidationError(field: "event_name", code: "required", message: "Validation failed for 'event_name': value is required")
         }
         guard container.contains(.conversationId) else {
-            throw SdkValidationError(
-                field: "conversation_id",
-                code: "required",
-                message: "Validation failed for 'conversation_id': value is required"
-            )
+            throw SdkValidationError(field: "conversation_id", code: "required", message: "Validation failed for 'conversation_id': value is required")
         }
         guard container.contains(.userId) else {
-            throw SdkValidationError(
-                field: "user_id",
-                code: "required",
-                message: "Validation failed for 'user_id': value is required"
-            )
+            throw SdkValidationError(field: "user_id", code: "required", message: "Validation failed for 'user_id': value is required")
         }
         guard container.contains(.status) else {
-            throw SdkValidationError(
-                field: "status",
-                code: "required",
-                message: "Validation failed for 'status': value is required"
-            )
+            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
         }
         guard container.contains(.createdAtMs) else {
-            throw SdkValidationError(
-                field: "created_at_ms",
-                code: "required",
-                message: "Validation failed for 'created_at_ms': value is required"
-            )
+            throw SdkValidationError(field: "created_at_ms", code: "required", message: "Validation failed for 'created_at_ms': value is required")
         }
-        eventName = try container.sdkDecodeRequired(.eventName)
-        conversationId = try container.sdkDecodeRequired(.conversationId)
-        userId = try container.sdkDecodeRequired(.userId)
-        status = try container.sdkDecodeRequired(.status)
-        createdAtMs = try container.sdkDecodeRequired(.createdAtMs)
-        reason = try container.sdkDecodeIfPresent(.reason)
-        try sdkValidateDateTime("created_at_ms", sdkWireString(createdAtMs))
+        self.eventName = try container.sdkDecodeRequired(.eventName)
+        self.conversationId = try container.sdkDecodeRequired(.conversationId)
+        self.userId = try container.sdkDecodeRequired(.userId)
+        self.status = try container.sdkDecodeRequired(.status)
+        self.createdAtMs = try container.sdkDecodeRequired(.createdAtMs)
+        self.reason = try container.sdkDecodeIfPresent(.reason)
+            try sdkValidateDateTime("created_at_ms", sdkWireString(self.createdAtMs))
     }
 }
 
-public extension FinAgentStatusUpdatedEvent {
-    init(
-        eventName: FinAgentStatusUpdatedEventEventName,
-        conversationId: String,
-        userId: String,
-        status: FinAgentStatusUpdatedEventStatus,
-        createdAtMs: Date,
-        reason: String? = nil
-    ) throws {
+extension FinAgentStatusUpdatedEvent {
+    public init(eventName: FinAgentStatusUpdatedEventEventName, conversationId: String, userId: String, status: FinAgentStatusUpdatedEventStatus, createdAtMs: Date, reason: String? = nil) throws {
         (self.eventName, self.conversationId) = (eventName, conversationId)
         (self.userId, self.status) = (userId, status)
         (self.createdAtMs, self.reason) = (createdAtMs, reason)
-        try sdkValidateDateTime("created_at_ms", sdkWireString(self.createdAtMs))
+            try sdkValidateDateTime("created_at_ms", sdkWireString(self.createdAtMs))
     }
 }
 
@@ -400,16 +317,13 @@ public extension FinAgentStatusUpdatedEvent {
 public struct FinAgentAttachmentType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let url = FinAgentAttachmentType(rawValue: "url")
     public static let file = FinAgentAttachmentType(rawValue: "file")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -422,15 +336,12 @@ public struct FinAgentAttachmentType: RawRepresentable, Hashable, Codable, Senda
 public struct FinAgentRepliedEventMessageAuthor: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let fin = FinAgentRepliedEventMessageAuthor(rawValue: "fin")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -440,14 +351,10 @@ public struct FinAgentRepliedEventMessageAuthor: RawRepresentable, Hashable, Cod
 }
 
 /// The stable key to send back as 'rating' on POST /fin/csat.
-public struct FinAgentCsatRequestedEventCsatOptionsItemKey: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct FinAgentCsatRequestedEventCsatOptionsItemKey: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let terrible = FinAgentCsatRequestedEventCsatOptionsItemKey(rawValue: "terrible")
     public static let bad = FinAgentCsatRequestedEventCsatOptionsItemKey(rawValue: "bad")
     public static let ok = FinAgentCsatRequestedEventCsatOptionsItemKey(rawValue: "ok")
@@ -456,7 +363,7 @@ public struct FinAgentCsatRequestedEventCsatOptionsItemKey: RawRepresentable, Ha
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -469,17 +376,14 @@ public struct FinAgentCsatRequestedEventCsatOptionsItemKey: RawRepresentable, Ha
 public struct FinAgentMessageAuthor: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let user = FinAgentMessageAuthor(rawValue: "user")
     public static let agent = FinAgentMessageAuthor(rawValue: "agent")
     public static let fin = FinAgentMessageAuthor(rawValue: "fin")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -494,16 +398,13 @@ public struct FinAgentMessageAuthor: RawRepresentable, Hashable, Codable, Sendab
 public struct FinAgentRepliedEventStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let replying = FinAgentRepliedEventStatus(rawValue: "replying")
     public static let awaitingUserReply = FinAgentRepliedEventStatus(rawValue: "awaiting_user_reply")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -516,15 +417,12 @@ public struct FinAgentRepliedEventStatus: RawRepresentable, Hashable, Codable, S
 public struct FinAgentCsatRequestedEventEventName: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let csatRequested = FinAgentCsatRequestedEventEventName(rawValue: "csat_requested")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -534,20 +432,16 @@ public struct FinAgentCsatRequestedEventEventName: RawRepresentable, Hashable, C
 }
 
 /// Whether the source is an Intercom article or external content.
-public struct FinAgentRepliedEventMessageSourcesItemType: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct FinAgentRepliedEventMessageSourcesItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let article = FinAgentRepliedEventMessageSourcesItemType(rawValue: "article")
     public static let external = FinAgentRepliedEventMessageSourcesItemType(rawValue: "external")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -560,15 +454,12 @@ public struct FinAgentRepliedEventMessageSourcesItemType: RawRepresentable, Hash
 public struct FinAgentReplyChunkEventEventName: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let finReplyChunk = FinAgentReplyChunkEventEventName(rawValue: "fin_reply_chunk")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -584,10 +475,7 @@ public struct FinAgentReplyChunkEventEventName: RawRepresentable, Hashable, Coda
 public struct FinAgentStatusUpdatedEventStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let awaitingUserReply = FinAgentStatusUpdatedEventStatus(rawValue: "awaiting_user_reply")
     public static let escalated = FinAgentStatusUpdatedEventStatus(rawValue: "escalated")
     public static let resolved = FinAgentStatusUpdatedEventStatus(rawValue: "resolved")
@@ -595,7 +483,7 @@ public struct FinAgentStatusUpdatedEventStatus: RawRepresentable, Hashable, Coda
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -608,15 +496,12 @@ public struct FinAgentStatusUpdatedEventStatus: RawRepresentable, Hashable, Coda
 public struct FinAgentRepliedEventEventName: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let finReplied = FinAgentRepliedEventEventName(rawValue: "fin_replied")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -629,15 +514,12 @@ public struct FinAgentRepliedEventEventName: RawRepresentable, Hashable, Codable
 public struct FinAgentStatusUpdatedEventEventName: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let finStatusUpdated = FinAgentStatusUpdatedEventEventName(rawValue: "fin_status_updated")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

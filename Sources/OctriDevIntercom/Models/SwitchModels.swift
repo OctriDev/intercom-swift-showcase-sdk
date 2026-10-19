@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Switch domain models
+// Switch domain models
 /// You can create an phone switch
 public struct CreatePhoneSwitchRequest: Codable {
     /// Phone number in E.164 format, that will receive the SMS to continue the conversation in the Messenger.
@@ -22,28 +22,22 @@ public struct CreatePhoneSwitchRequest: Codable {
         case customAttributes = "custom_attributes"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreatePhoneSwitchRequest {
-    init(from decoder: Decoder) throws {
+extension CreatePhoneSwitchRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.phone) else {
-            throw SdkValidationError(
-                field: "phone",
-                code: "required",
-                message: "Validation failed for 'phone': value is required"
-            )
+            throw SdkValidationError(field: "phone", code: "required", message: "Validation failed for 'phone': value is required")
         }
-        phone = try container.sdkDecodeRequired(.phone)
-        customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
+        self.phone = try container.sdkDecodeRequired(.phone)
+        self.customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
     }
 }
 
-public extension CreatePhoneSwitchRequest {
-    init(phone: String, customAttributes: CustomAttributesRequest? = nil) {
+extension CreatePhoneSwitchRequest {
+    public init(phone: String, customAttributes: CustomAttributesRequest? = nil) {
         (self.phone, self.customAttributes) = (phone, customAttributes)
     }
 }
@@ -63,20 +57,20 @@ public struct PhoneSwitch: Codable {
     }
 
     init() {
-        (type, phone) = (nil, nil)
+        (self.type, self.phone) = (nil, nil)
     }
 }
 
-public extension PhoneSwitch {
-    init(from decoder: Decoder) throws {
+extension PhoneSwitch {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        phone = try container.sdkDecodeIfPresent(.phone)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.phone = try container.sdkDecodeIfPresent(.phone)
     }
 }
 
-public extension PhoneSwitch {
-    init(type: PhoneSwitchType? = nil, phone: String? = nil) {
+extension PhoneSwitch {
+    public init(type: PhoneSwitchType? = nil, phone: String? = nil) {
         self.init()
         (self.type, self.phone) = (type, phone)
     }
@@ -86,15 +80,12 @@ public extension PhoneSwitch {
 public struct PhoneSwitchType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let phoneCallRedirect = PhoneSwitchType(rawValue: "phone_call_redirect")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

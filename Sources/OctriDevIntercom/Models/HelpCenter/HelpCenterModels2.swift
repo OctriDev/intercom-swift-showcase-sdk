@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// TaggedModelsHelpCenter domain models
+// TaggedModelsHelpCenter domain models
 /// Collections are top level containers for Articles within the Help Center.
 public struct Collection: Codable {
     /// The unique identifier for the collection which is given by Intercom.
@@ -69,47 +69,33 @@ public struct Collection: Codable {
     }
 
     init() {
-        (id, workspaceId, name, description, createdAt) = (nil, nil, nil, nil, nil)
-        (updatedAt, url, icon, order, defaultLocale) = (nil, nil, nil, nil, nil)
-        (translatedContent, parentId, helpCenterId) = (nil, nil, nil)
+        (self.id, self.workspaceId, self.name, self.description, self.createdAt) = (nil, nil, nil, nil, nil)
+        (self.updatedAt, self.url, self.icon, self.order, self.defaultLocale) = (nil, nil, nil, nil, nil)
+        (self.translatedContent, self.parentId, self.helpCenterId) = (nil, nil, nil)
     }
 }
 
-public extension Collection {
-    init(from decoder: Decoder) throws {
+extension Collection {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        workspaceId = try container.sdkDecodeIfPresent(.workspaceId)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        url = try container.sdkDecodeIfPresent(.url)
-        icon = try container.sdkDecodeIfPresent(.icon)
-        order = try container.sdkDecodeIfPresent(.order)
-        defaultLocale = try container.sdkDecodeIfPresent(.defaultLocale)
-        translatedContent = try container.sdkDecodeIfPresent(.translatedContent)
-        parentId = try container.sdkDecodeIfPresent(.parentId)
-        helpCenterId = try container.sdkDecodeIfPresent(.helpCenterId)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.workspaceId = try container.sdkDecodeIfPresent(.workspaceId)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.url = try container.sdkDecodeIfPresent(.url)
+        self.icon = try container.sdkDecodeIfPresent(.icon)
+        self.order = try container.sdkDecodeIfPresent(.order)
+        self.defaultLocale = try container.sdkDecodeIfPresent(.defaultLocale)
+        self.translatedContent = try container.sdkDecodeIfPresent(.translatedContent)
+        self.parentId = try container.sdkDecodeIfPresent(.parentId)
+        self.helpCenterId = try container.sdkDecodeIfPresent(.helpCenterId)
     }
 }
 
-public extension Collection {
-    init(
-        id: String? = nil,
-        workspaceId: String? = nil,
-        name: String? = nil,
-        description: String? = nil,
-        createdAt: Int? = nil,
-        updatedAt: Int? = nil,
-        url: String? = nil,
-        icon: String? = nil,
-        order: Int? = nil,
-        defaultLocale: String? = nil,
-        translatedContent: GroupTranslatedContent? = nil,
-        parentId: String? = nil,
-        helpCenterId: Int? = nil
-    ) {
+extension Collection {
+    public init(id: String? = nil, workspaceId: String? = nil, name: String? = nil, description: String? = nil, createdAt: Int? = nil, updatedAt: Int? = nil, url: String? = nil, icon: String? = nil, order: Int? = nil, defaultLocale: String? = nil, translatedContent: GroupTranslatedContent? = nil, parentId: String? = nil, helpCenterId: Int? = nil) {
         self.init()
         (self.id, self.workspaceId) = (id, workspaceId)
         (self.name, self.description) = (name, description)
@@ -172,49 +158,37 @@ public struct HelpCenter: Codable {
     }
 
     init() {
-        (id, workspaceId, createdAt, updatedAt, identifier) = (nil, nil, nil, nil, nil)
-        (websiteTurnedOn, displayName, url, customDomain, self.default) = (nil, nil, nil, nil, nil)
-        locales = nil
+        (self.id, self.workspaceId, self.createdAt, self.updatedAt, self.identifier) = (nil, nil, nil, nil, nil)
+        (self.websiteTurnedOn, self.displayName, self.url, self.customDomain, self.`default`) = (nil, nil, nil, nil, nil)
+        self.locales = nil
     }
 }
 
-public extension HelpCenter {
-    init(from decoder: Decoder) throws {
+extension HelpCenter {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        workspaceId = try container.sdkDecodeIfPresent(.workspaceId)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        identifier = try container.sdkDecodeIfPresent(.identifier)
-        websiteTurnedOn = try container.sdkDecodeIfPresent(.websiteTurnedOn)
-        displayName = try container.sdkDecodeIfPresent(.displayName)
-        url = try container.sdkDecodeIfPresent(.url)
-        customDomain = try container.sdkDecodeIfPresent(.customDomain)
-        self.default = try container.sdkDecodeIfPresent(.default)
-        locales = try container.sdkDecodeIfPresent(.locales)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.workspaceId = try container.sdkDecodeIfPresent(.workspaceId)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.identifier = try container.sdkDecodeIfPresent(.identifier)
+        self.websiteTurnedOn = try container.sdkDecodeIfPresent(.websiteTurnedOn)
+        self.displayName = try container.sdkDecodeIfPresent(.displayName)
+        self.url = try container.sdkDecodeIfPresent(.url)
+        self.customDomain = try container.sdkDecodeIfPresent(.customDomain)
+        self.`default` = try container.sdkDecodeIfPresent(.`default`)
+        self.locales = try container.sdkDecodeIfPresent(.locales)
     }
 }
 
-public extension HelpCenter {
-    init(
-        id: String? = nil,
-        workspaceId: String? = nil,
-        createdAt: Int? = nil,
-        updatedAt: Int? = nil,
-        identifier: String? = nil,
-        websiteTurnedOn: Bool? = nil,
-        displayName: String? = nil,
-        url: String? = nil,
-        customDomain: String? = nil,
-        default: Bool? = nil,
-        locales: [String]? = nil
-    ) {
+extension HelpCenter {
+    public init(id: String? = nil, workspaceId: String? = nil, createdAt: Int? = nil, updatedAt: Int? = nil, identifier: String? = nil, websiteTurnedOn: Bool? = nil, displayName: String? = nil, url: String? = nil, customDomain: String? = nil, `default`: Bool? = nil, locales: [String]? = nil) {
         self.init()
         (self.id, self.workspaceId) = (id, workspaceId)
         (self.createdAt, self.updatedAt) = (createdAt, updatedAt)
         (self.identifier, self.websiteTurnedOn) = (identifier, websiteTurnedOn)
         (self.displayName, self.url) = (displayName, url)
-        (self.customDomain, self.default) = (customDomain, `default`)
+        (self.customDomain, self.`default`) = (customDomain, `default`)
         self.locales = locales
     }
 }
@@ -233,24 +207,28 @@ public struct HelpCenterList: Codable {
     }
 
     init() {
-        (type, data) = (nil, nil)
+        (self.type, self.data) = (nil, nil)
     }
 }
 
-public extension HelpCenterList {
-    init(from decoder: Decoder) throws {
+extension HelpCenterList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension HelpCenterList {
-    init(type: HelpCenterListType? = nil, data: [HelpCenter]? = nil) {
+extension HelpCenterList {
+    public init(type: HelpCenterListType? = nil, data: [HelpCenter]? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
     }
 }
+
+
+
+
 
 /// A redirect maps a source URL (`from_url`) to an article or collection within a help center, so that links to old
 /// or external URLs resolve to live content.
@@ -297,38 +275,28 @@ public struct HelpCenterRedirect: Codable {
     }
 
     init() {
-        (id, type, fromUrl, locale, helpCenterId) = (nil, nil, nil, nil, nil)
-        (targetType, targetId, createdAt, updatedAt) = (nil, nil, nil, nil)
+        (self.id, self.type, self.fromUrl, self.locale, self.helpCenterId) = (nil, nil, nil, nil, nil)
+        (self.targetType, self.targetId, self.createdAt, self.updatedAt) = (nil, nil, nil, nil)
     }
 }
 
-public extension HelpCenterRedirect {
-    init(from decoder: Decoder) throws {
+extension HelpCenterRedirect {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        type = try container.sdkDecodeIfPresent(.type)
-        fromUrl = try container.sdkDecodeIfPresent(.fromUrl)
-        locale = try container.sdkDecodeIfPresent(.locale)
-        helpCenterId = try container.sdkDecodeIfPresent(.helpCenterId)
-        targetType = try container.sdkDecodeIfPresent(.targetType)
-        targetId = try container.sdkDecodeIfPresent(.targetId)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.fromUrl = try container.sdkDecodeIfPresent(.fromUrl)
+        self.locale = try container.sdkDecodeIfPresent(.locale)
+        self.helpCenterId = try container.sdkDecodeIfPresent(.helpCenterId)
+        self.targetType = try container.sdkDecodeIfPresent(.targetType)
+        self.targetId = try container.sdkDecodeIfPresent(.targetId)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
     }
 }
 
-public extension HelpCenterRedirect {
-    init(
-        id: String? = nil,
-        type: HelpCenterRedirectType? = nil,
-        fromUrl: String? = nil,
-        locale: String? = nil,
-        helpCenterId: String? = nil,
-        targetType: HelpCenterRedirectTargetType? = nil,
-        targetId: String? = nil,
-        createdAt: Int? = nil,
-        updatedAt: Int? = nil
-    ) {
+extension HelpCenterRedirect {
+    public init(id: String? = nil, type: HelpCenterRedirectType? = nil, fromUrl: String? = nil, locale: String? = nil, helpCenterId: String? = nil, targetType: HelpCenterRedirectTargetType? = nil, targetId: String? = nil, createdAt: Int? = nil, updatedAt: Int? = nil) {
         self.init()
         (self.id, self.type) = (id, type)
         (self.fromUrl, self.locale) = (fromUrl, locale)
@@ -342,15 +310,12 @@ public extension HelpCenterRedirect {
 public struct HelpCenterRedirectType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let helpCenterRedirect = HelpCenterRedirectType(rawValue: "help_center_redirect")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -363,16 +328,13 @@ public struct HelpCenterRedirectType: RawRepresentable, Hashable, Codable, Senda
 public struct HelpCenterRedirectTargetType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let article = HelpCenterRedirectTargetType(rawValue: "article")
     public static let collection = HelpCenterRedirectTargetType(rawValue: "collection")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -385,15 +347,12 @@ public struct HelpCenterRedirectTargetType: RawRepresentable, Hashable, Codable,
 public struct HelpCenterListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let list = HelpCenterListType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

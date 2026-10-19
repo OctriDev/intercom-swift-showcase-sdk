@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// TaggedModelsDataConnectors domain models
+// TaggedModelsDataConnectors domain models
 /// Required object value serialized in the `headers[]` wire field.
 public struct DataConnectorDetailHeadersItem: Codable {
     /// The header name.
@@ -19,20 +19,20 @@ public struct DataConnectorDetailHeadersItem: Codable {
     }
 
     init() {
-        (name, value) = (nil, nil)
+        (self.name, self.value) = (nil, nil)
     }
 }
 
-public extension DataConnectorDetailHeadersItem {
-    init(from decoder: Decoder) throws {
+extension DataConnectorDetailHeadersItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        value = try container.sdkDecodeIfPresent(.value)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.value = try container.sdkDecodeIfPresent(.value)
     }
 }
 
-public extension DataConnectorDetailHeadersItem {
-    init(name: String? = nil, value: String? = nil) {
+extension DataConnectorDetailHeadersItem {
+    public init(name: String? = nil, value: String? = nil) {
         self.init()
         (self.name, self.value) = (name, value)
     }
@@ -60,29 +60,23 @@ public struct DataConnectorVersionDefinitionDataInputsItem: Codable {
     }
 
     init() {
-        (name, type, description, required, defaultValue) = (nil, nil, nil, nil, nil)
+        (self.name, self.type, self.description, self.required, self.defaultValue) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension DataConnectorVersionDefinitionDataInputsItem {
-    init(from decoder: Decoder) throws {
+extension DataConnectorVersionDefinitionDataInputsItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        type = try container.sdkDecodeIfPresent(.type)
-        description = try container.sdkDecodeIfPresent(.description)
-        required = try container.sdkDecodeIfPresent(.required)
-        defaultValue = try container.sdkDecodeIfPresent(.defaultValue)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.required = try container.sdkDecodeIfPresent(.required)
+        self.defaultValue = try container.sdkDecodeIfPresent(.defaultValue)
     }
 }
 
-public extension DataConnectorVersionDefinitionDataInputsItem {
-    init(
-        name: String? = nil,
-        type: String? = nil,
-        description: String? = nil,
-        required: Bool? = nil,
-        defaultValue: JSONValue? = nil
-    ) {
+extension DataConnectorVersionDefinitionDataInputsItem {
+    public init(name: String? = nil, type: String? = nil, description: String? = nil, required: Bool? = nil, defaultValue: JSONValue? = nil) {
         self.init()
         (self.name, self.type) = (name, type)
         (self.description, self.required) = (description, required)
@@ -144,51 +138,38 @@ public struct DataConnector: Codable {
     }
 
     init() {
-        (type, id, name, description, state) = (nil, nil, nil, nil, nil)
-        (httpMethod, directFinUsage, createdByAdminId, updatedByAdminId, createdAt) = (nil, nil, nil, nil, nil)
-        (updatedAt, executionResultsUrl) = (nil, nil)
+        (self.type, self.id, self.name, self.description, self.state) = (nil, nil, nil, nil, nil)
+        (self.httpMethod, self.directFinUsage, self.createdByAdminId, self.updatedByAdminId, self.createdAt) = (nil, nil, nil, nil, nil)
+        (self.updatedAt, self.executionResultsUrl) = (nil, nil)
     }
 }
 
-public extension DataConnector {
-    init(from decoder: Decoder) throws {
+extension DataConnector {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        state = try container.sdkDecodeIfPresent(.state)
-        httpMethod = try container.sdkDecodeIfPresent(.httpMethod)
-        directFinUsage = try container.sdkDecodeIfPresent(.directFinUsage)
-        createdByAdminId = try container.sdkDecodeIfPresent(.createdByAdminId)
-        updatedByAdminId = try container.sdkDecodeIfPresent(.updatedByAdminId)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        executionResultsUrl = try container.sdkDecodeIfPresent(.executionResultsUrl)
-        if let value = createdAt {
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.state = try container.sdkDecodeIfPresent(.state)
+        self.httpMethod = try container.sdkDecodeIfPresent(.httpMethod)
+        self.directFinUsage = try container.sdkDecodeIfPresent(.directFinUsage)
+        self.createdByAdminId = try container.sdkDecodeIfPresent(.createdByAdminId)
+        self.updatedByAdminId = try container.sdkDecodeIfPresent(.updatedByAdminId)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.executionResultsUrl = try container.sdkDecodeIfPresent(.executionResultsUrl)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = updatedAt {
+        if let value = self.updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-public extension DataConnector {
-    init(
-        type: DataConnectorType? = nil,
-        id: String? = nil,
-        name: String? = nil,
-        description: String? = nil,
-        state: DataConnectorState? = nil,
-        httpMethod: DataConnectorHttpMethod? = nil,
-        directFinUsage: Bool? = nil,
-        createdByAdminId: String? = nil,
-        updatedByAdminId: String? = nil,
-        createdAt: Date? = nil,
-        updatedAt: Date? = nil,
-        executionResultsUrl: String? = nil
-    ) throws {
+extension DataConnector {
+    public init(type: DataConnectorType? = nil, id: String? = nil, name: String? = nil, description: String? = nil, state: DataConnectorState? = nil, httpMethod: DataConnectorHttpMethod? = nil, directFinUsage: Bool? = nil, createdByAdminId: String? = nil, updatedByAdminId: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, executionResultsUrl: String? = nil) throws {
         self.init()
         (self.type, self.id) = (type, id)
         (self.name, self.description) = (name, description)
@@ -230,29 +211,23 @@ public struct DataConnectorDetailDataInputsItem: Codable {
     }
 
     init() {
-        (name, type, description, required, defaultValue) = (nil, nil, nil, nil, nil)
+        (self.name, self.type, self.description, self.required, self.defaultValue) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension DataConnectorDetailDataInputsItem {
-    init(from decoder: Decoder) throws {
+extension DataConnectorDetailDataInputsItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        type = try container.sdkDecodeIfPresent(.type)
-        description = try container.sdkDecodeIfPresent(.description)
-        required = try container.sdkDecodeIfPresent(.required)
-        defaultValue = try container.sdkDecodeIfPresent(.defaultValue)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.required = try container.sdkDecodeIfPresent(.required)
+        self.defaultValue = try container.sdkDecodeIfPresent(.defaultValue)
     }
 }
 
-public extension DataConnectorDetailDataInputsItem {
-    init(
-        name: String? = nil,
-        type: DataConnectorDetailDataInputsItemType? = nil,
-        description: String? = nil,
-        required: Bool? = nil,
-        defaultValue: String? = nil
-    ) {
+extension DataConnectorDetailDataInputsItem {
+    public init(name: String? = nil, type: DataConnectorDetailDataInputsItemType? = nil, description: String? = nil, required: Bool? = nil, defaultValue: String? = nil) {
         self.init()
         (self.name, self.type) = (name, type)
         (self.description, self.required) = (description, required)
@@ -370,104 +345,57 @@ public struct DataConnectorDetail: Codable {
     }
 
     init() {
-        (type, id, name, description, state) = (nil, nil, nil, nil, nil)
-        (url, body, headers, httpMethod, directFinUsage) = (nil, nil, nil, nil, nil)
-        (audiences, executionType, configurationResponseType, dataTransformationType, clientFunctionName) = (
-            nil,
-            nil,
-            nil,
-            nil,
-            nil
-        )
-        (clientFunctionTimeoutMs, dataInputs, responseFields, objectMappings, tokenIds) = (nil, nil, nil, nil, nil)
-        (
-            customerAuthentication,
-            bypassAuthentication,
-            validateMissingAttributes,
-            createdByAdminId,
-            updatedByAdminId
-        ) = (
-            nil,
-            nil,
-            nil,
-            nil,
-            nil
-        )
-        (createdAt, updatedAt, executionResultsUrl) = (nil, nil, nil)
+        (self.type, self.id, self.name, self.description, self.state) = (nil, nil, nil, nil, nil)
+        (self.url, self.body, self.headers, self.httpMethod, self.directFinUsage) = (nil, nil, nil, nil, nil)
+        (self.audiences, self.executionType, self.configurationResponseType, self.dataTransformationType, self.clientFunctionName) = (nil, nil, nil, nil, nil)
+        (self.clientFunctionTimeoutMs, self.dataInputs, self.responseFields, self.objectMappings, self.tokenIds) = (nil, nil, nil, nil, nil)
+        (self.customerAuthentication, self.bypassAuthentication, self.validateMissingAttributes, self.createdByAdminId, self.updatedByAdminId) = (nil, nil, nil, nil, nil)
+        (self.createdAt, self.updatedAt, self.executionResultsUrl) = (nil, nil, nil)
     }
 }
 
-public extension DataConnectorDetail {
-    init(from decoder: Decoder) throws {
+extension DataConnectorDetail {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        state = try container.sdkDecodeIfPresent(.state)
-        url = try container.sdkDecodeIfPresent(.url)
-        body = try container.sdkDecodeIfPresent(.body)
-        headers = try container.sdkDecodeIfPresent(.headers)
-        httpMethod = try container.sdkDecodeIfPresent(.httpMethod)
-        directFinUsage = try container.sdkDecodeIfPresent(.directFinUsage)
-        audiences = try container.sdkDecodeIfPresent(.audiences)
-        executionType = try container.sdkDecodeIfPresent(.executionType)
-        configurationResponseType = try container.sdkDecodeIfPresent(.configurationResponseType)
-        dataTransformationType = try container.sdkDecodeIfPresent(.dataTransformationType)
-        clientFunctionName = try container.sdkDecodeIfPresent(.clientFunctionName)
-        clientFunctionTimeoutMs = try container.sdkDecodeIfPresent(.clientFunctionTimeoutMs)
-        dataInputs = try container.sdkDecodeIfPresent(.dataInputs)
-        responseFields = try container.sdkDecodeIfPresent(.responseFields)
-        objectMappings = try container.sdkDecodeIfPresent(.objectMappings)
-        tokenIds = try container.sdkDecodeIfPresent(.tokenIds)
-        customerAuthentication = try container.sdkDecodeIfPresent(.customerAuthentication)
-        bypassAuthentication = try container.sdkDecodeIfPresent(.bypassAuthentication)
-        validateMissingAttributes = try container.sdkDecodeIfPresent(.validateMissingAttributes)
-        createdByAdminId = try container.sdkDecodeIfPresent(.createdByAdminId)
-        updatedByAdminId = try container.sdkDecodeIfPresent(.updatedByAdminId)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        executionResultsUrl = try container.sdkDecodeIfPresent(.executionResultsUrl)
-        if let value = createdAt {
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.state = try container.sdkDecodeIfPresent(.state)
+        self.url = try container.sdkDecodeIfPresent(.url)
+        self.body = try container.sdkDecodeIfPresent(.body)
+        self.headers = try container.sdkDecodeIfPresent(.headers)
+        self.httpMethod = try container.sdkDecodeIfPresent(.httpMethod)
+        self.directFinUsage = try container.sdkDecodeIfPresent(.directFinUsage)
+        self.audiences = try container.sdkDecodeIfPresent(.audiences)
+        self.executionType = try container.sdkDecodeIfPresent(.executionType)
+        self.configurationResponseType = try container.sdkDecodeIfPresent(.configurationResponseType)
+        self.dataTransformationType = try container.sdkDecodeIfPresent(.dataTransformationType)
+        self.clientFunctionName = try container.sdkDecodeIfPresent(.clientFunctionName)
+        self.clientFunctionTimeoutMs = try container.sdkDecodeIfPresent(.clientFunctionTimeoutMs)
+        self.dataInputs = try container.sdkDecodeIfPresent(.dataInputs)
+        self.responseFields = try container.sdkDecodeIfPresent(.responseFields)
+        self.objectMappings = try container.sdkDecodeIfPresent(.objectMappings)
+        self.tokenIds = try container.sdkDecodeIfPresent(.tokenIds)
+        self.customerAuthentication = try container.sdkDecodeIfPresent(.customerAuthentication)
+        self.bypassAuthentication = try container.sdkDecodeIfPresent(.bypassAuthentication)
+        self.validateMissingAttributes = try container.sdkDecodeIfPresent(.validateMissingAttributes)
+        self.createdByAdminId = try container.sdkDecodeIfPresent(.createdByAdminId)
+        self.updatedByAdminId = try container.sdkDecodeIfPresent(.updatedByAdminId)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.executionResultsUrl = try container.sdkDecodeIfPresent(.executionResultsUrl)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = updatedAt {
+        if let value = self.updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-public extension DataConnectorDetail {
-    init(
-        type: DataConnectorDetailType? = nil,
-        id: String? = nil,
-        name: String? = nil,
-        description: String? = nil,
-        state: DataConnectorDetailState? = nil,
-        url: String? = nil,
-        body: String? = nil,
-        headers: [DataConnectorDetailHeadersItem]? = nil,
-        httpMethod: DataConnectorDetailHttpMethod? = nil,
-        directFinUsage: Bool? = nil,
-        audiences: [DataConnectorDetailAudiencesItem]? = nil,
-        executionType: DataConnectorDetailExecutionType? = nil,
-        configurationResponseType: DataConnectorDetailConfigurationResponseType? = nil,
-        dataTransformationType: DataConnectorDetailDataTransformationType? = nil,
-        clientFunctionName: String? = nil,
-        clientFunctionTimeoutMs: Int? = nil,
-        dataInputs: [DataConnectorDetailDataInputsItem]? = nil,
-        responseFields: [DataConnectorDetailResponseFieldsItem]? = nil,
-        objectMappings: [DataConnectorDetailObjectMappingsItem]? = nil,
-        tokenIds: [String]? = nil,
-        customerAuthentication: Bool? = nil,
-        bypassAuthentication: Bool? = nil,
-        validateMissingAttributes: Bool? = nil,
-        createdByAdminId: String? = nil,
-        updatedByAdminId: String? = nil,
-        createdAt: Date? = nil,
-        updatedAt: Date? = nil,
-        executionResultsUrl: String? = nil
-    ) throws {
+extension DataConnectorDetail {
+    public init(type: DataConnectorDetailType? = nil, id: String? = nil, name: String? = nil, description: String? = nil, state: DataConnectorDetailState? = nil, url: String? = nil, body: String? = nil, headers: [DataConnectorDetailHeadersItem]? = nil, httpMethod: DataConnectorDetailHttpMethod? = nil, directFinUsage: Bool? = nil, audiences: [DataConnectorDetailAudiencesItem]? = nil, executionType: DataConnectorDetailExecutionType? = nil, configurationResponseType: DataConnectorDetailConfigurationResponseType? = nil, dataTransformationType: DataConnectorDetailDataTransformationType? = nil, clientFunctionName: String? = nil, clientFunctionTimeoutMs: Int? = nil, dataInputs: [DataConnectorDetailDataInputsItem]? = nil, responseFields: [DataConnectorDetailResponseFieldsItem]? = nil, objectMappings: [DataConnectorDetailObjectMappingsItem]? = nil, tokenIds: [String]? = nil, customerAuthentication: Bool? = nil, bypassAuthentication: Bool? = nil, validateMissingAttributes: Bool? = nil, createdByAdminId: String? = nil, updatedByAdminId: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, executionResultsUrl: String? = nil) throws {
         self.init()
         (self.type, self.id) = (type, id)
         (self.name, self.description) = (name, description)
@@ -570,9 +498,9 @@ public struct DataConnectorExecutionResult: Codable {
     }
 
     init() {
-        (type, id, dataConnectorId, success, httpStatus) = (nil, nil, nil, nil, nil)
-        (httpMethod, errorType, errorMessage, executionTimeMs, sourceType) = (nil, nil, nil, nil, nil)
-        (sourceId, conversationId, createdAt, requestUrl, requestBody) = (nil, nil, nil, nil, nil)
-        (responseBody, rawResponseBody) = (nil, nil)
+        (self.type, self.id, self.dataConnectorId, self.success, self.httpStatus) = (nil, nil, nil, nil, nil)
+        (self.httpMethod, self.errorType, self.errorMessage, self.executionTimeMs, self.sourceType) = (nil, nil, nil, nil, nil)
+        (self.sourceId, self.conversationId, self.createdAt, self.requestUrl, self.requestBody) = (nil, nil, nil, nil, nil)
+        (self.responseBody, self.rawResponseBody) = (nil, nil)
     }
 }

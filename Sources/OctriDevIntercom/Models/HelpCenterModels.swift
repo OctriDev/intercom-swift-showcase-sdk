@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// HelpCenter domain models
+// HelpCenter domain models
 /// Response returned when a redirect is deleted.
 public struct DeletedHelpCenterRedirectObject: Codable {
     /// The unique identifier for the redirect which you provided in the URL.
@@ -23,21 +23,21 @@ public struct DeletedHelpCenterRedirectObject: Codable {
     }
 
     init() {
-        (id, object, deleted) = (nil, nil, nil)
+        (self.id, self.object, self.deleted) = (nil, nil, nil)
     }
 }
 
-public extension DeletedHelpCenterRedirectObject {
-    init(from decoder: Decoder) throws {
+extension DeletedHelpCenterRedirectObject {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        object = try container.sdkDecodeIfPresent(.object)
-        deleted = try container.sdkDecodeIfPresent(.deleted)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-public extension DeletedHelpCenterRedirectObject {
-    init(id: String? = nil, object: DeletedHelpCenterRedirectObjectObject? = nil, deleted: Bool? = nil) {
+extension DeletedHelpCenterRedirectObject {
+    public init(id: String? = nil, object: DeletedHelpCenterRedirectObjectObject? = nil, deleted: Bool? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
         self.deleted = deleted
@@ -63,21 +63,21 @@ public struct GroupContent: Codable {
     }
 
     init() {
-        (type, name, description) = (nil, nil, nil)
+        (self.type, self.name, self.description) = (nil, nil, nil)
     }
 }
 
-public extension GroupContent {
-    init(from decoder: Decoder) throws {
+extension GroupContent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
     }
 }
 
-public extension GroupContent {
-    init(type: GroupContentType? = nil, name: String? = nil, description: String? = nil) {
+extension GroupContent {
+    public init(type: GroupContentType? = nil, name: String? = nil, description: String? = nil) {
         self.init()
         (self.type, self.name) = (type, name)
         self.description = description
@@ -107,51 +107,33 @@ public struct CreateHelpCenterRedirectRequest: Codable {
         case targetId = "target_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateHelpCenterRedirectRequest {
-    init(from decoder: Decoder) throws {
+extension CreateHelpCenterRedirectRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.fromUrl) else {
-            throw SdkValidationError(
-                field: "from_url",
-                code: "required",
-                message: "Validation failed for 'from_url': value is required"
-            )
+            throw SdkValidationError(field: "from_url", code: "required", message: "Validation failed for 'from_url': value is required")
         }
         guard container.contains(.locale) else {
-            throw SdkValidationError(
-                field: "locale",
-                code: "required",
-                message: "Validation failed for 'locale': value is required"
-            )
+            throw SdkValidationError(field: "locale", code: "required", message: "Validation failed for 'locale': value is required")
         }
         guard container.contains(.targetType) else {
-            throw SdkValidationError(
-                field: "target_type",
-                code: "required",
-                message: "Validation failed for 'target_type': value is required"
-            )
+            throw SdkValidationError(field: "target_type", code: "required", message: "Validation failed for 'target_type': value is required")
         }
         guard container.contains(.targetId) else {
-            throw SdkValidationError(
-                field: "target_id",
-                code: "required",
-                message: "Validation failed for 'target_id': value is required"
-            )
+            throw SdkValidationError(field: "target_id", code: "required", message: "Validation failed for 'target_id': value is required")
         }
-        fromUrl = try container.sdkDecodeRequired(.fromUrl)
-        locale = try container.sdkDecodeRequired(.locale)
-        targetType = try container.sdkDecodeRequired(.targetType)
-        targetId = try container.sdkDecodeRequired(.targetId)
+        self.fromUrl = try container.sdkDecodeRequired(.fromUrl)
+        self.locale = try container.sdkDecodeRequired(.locale)
+        self.targetType = try container.sdkDecodeRequired(.targetType)
+        self.targetId = try container.sdkDecodeRequired(.targetId)
     }
 }
 
-public extension CreateHelpCenterRedirectRequest {
-    init(fromUrl: String, locale: String, targetType: CreateHelpCenterRedirectRequestTargetType, targetId: String) {
+extension CreateHelpCenterRedirectRequest {
+    public init(fromUrl: String, locale: String, targetType: CreateHelpCenterRedirectRequestTargetType, targetId: String) {
         (self.fromUrl, self.locale) = (fromUrl, locale)
         (self.targetType, self.targetId) = (targetType, targetId)
     }
@@ -186,37 +168,25 @@ public struct CreateCollectionRequest: Codable {
         case helpCenterId = "help_center_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateCollectionRequest {
-    init(from decoder: Decoder) throws {
+extension CreateCollectionRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        translatedContent = try container.sdkDecodeIfPresent(.translatedContent)
-        parentId = try container.sdkDecodeIfPresent(.parentId)
-        helpCenterId = try container.sdkDecodeIfPresent(.helpCenterId)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.translatedContent = try container.sdkDecodeIfPresent(.translatedContent)
+        self.parentId = try container.sdkDecodeIfPresent(.parentId)
+        self.helpCenterId = try container.sdkDecodeIfPresent(.helpCenterId)
     }
 }
 
-public extension CreateCollectionRequest {
-    init(
-        name: String,
-        description: String? = nil,
-        translatedContent: GroupTranslatedContent? = nil,
-        parentId: String? = nil,
-        helpCenterId: Int? = nil
-    ) {
+extension CreateCollectionRequest {
+    public init(name: String, description: String? = nil, translatedContent: GroupTranslatedContent? = nil, parentId: String? = nil, helpCenterId: Int? = nil) {
         (self.name, self.description) = (name, description)
         (self.translatedContent, self.parentId) = (translatedContent, parentId)
         self.helpCenterId = helpCenterId
@@ -246,27 +216,22 @@ public struct CollectionList: Codable {
     }
 
     init() {
-        (type, pages, totalCount, data) = (nil, nil, nil, nil)
+        (self.type, self.pages, self.totalCount, self.data) = (nil, nil, nil, nil)
     }
 }
 
-public extension CollectionList {
-    init(from decoder: Decoder) throws {
+extension CollectionList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        pages = try container.sdkDecodeIfPresent(.pages)
-        totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.pages = try container.sdkDecodeIfPresent(.pages)
+        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension CollectionList {
-    init(
-        type: CollectionListType? = nil,
-        pages: CursorPages? = nil,
-        totalCount: Int? = nil,
-        data: [Collection]? = nil
-    ) {
+extension CollectionList {
+    public init(type: CollectionListType? = nil, pages: CursorPages? = nil, totalCount: Int? = nil, data: [Collection]? = nil) {
         self.init()
         (self.type, self.pages) = (type, pages)
         (self.totalCount, self.data) = (totalCount, data)
@@ -298,27 +263,22 @@ public struct UpdateCollectionRequest: Codable {
     }
 
     init() {
-        (name, description, translatedContent, parentId) = (nil, nil, nil, nil)
+        (self.name, self.description, self.translatedContent, self.parentId) = (nil, nil, nil, nil)
     }
 }
 
-public extension UpdateCollectionRequest {
-    init(from decoder: Decoder) throws {
+extension UpdateCollectionRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        translatedContent = try container.sdkDecodeIfPresent(.translatedContent)
-        parentId = try container.sdkDecodeIfPresent(.parentId)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.translatedContent = try container.sdkDecodeIfPresent(.translatedContent)
+        self.parentId = try container.sdkDecodeIfPresent(.parentId)
     }
 }
 
-public extension UpdateCollectionRequest {
-    init(
-        name: String? = nil,
-        description: String? = nil,
-        translatedContent: GroupTranslatedContent? = nil,
-        parentId: String? = nil
-    ) {
+extension UpdateCollectionRequest {
+    public init(name: String? = nil, description: String? = nil, translatedContent: GroupTranslatedContent? = nil, parentId: String? = nil) {
         self.init()
         (self.name, self.description) = (name, description)
         (self.translatedContent, self.parentId) = (translatedContent, parentId)
@@ -448,102 +408,63 @@ public struct GroupTranslatedContent: Codable {
     }
 
     init() {
-        (type, ar, bg, bs, ca) = (nil, nil, nil, nil, nil)
-        (cs, da, de, el, en) = (nil, nil, nil, nil, nil)
-        (es, et, fi, fr, he) = (nil, nil, nil, nil, nil)
-        (hr, hu, id, it, ja) = (nil, nil, nil, nil, nil)
-        (ko, lt, lv, mn, nb) = (nil, nil, nil, nil, nil)
-        (nl, pl, pt, ro, ru) = (nil, nil, nil, nil, nil)
-        (sl, sr, sv, tr, vi) = (nil, nil, nil, nil, nil)
-        (ptBr, zhCn, zhTw) = (nil, nil, nil)
+        (self.type, self.ar, self.bg, self.bs, self.ca) = (nil, nil, nil, nil, nil)
+        (self.cs, self.da, self.de, self.el, self.en) = (nil, nil, nil, nil, nil)
+        (self.es, self.et, self.fi, self.fr, self.he) = (nil, nil, nil, nil, nil)
+        (self.hr, self.hu, self.id, self.it, self.ja) = (nil, nil, nil, nil, nil)
+        (self.ko, self.lt, self.lv, self.mn, self.nb) = (nil, nil, nil, nil, nil)
+        (self.nl, self.pl, self.pt, self.ro, self.ru) = (nil, nil, nil, nil, nil)
+        (self.sl, self.sr, self.sv, self.tr, self.vi) = (nil, nil, nil, nil, nil)
+        (self.ptBr, self.zhCn, self.zhTw) = (nil, nil, nil)
     }
 }
 
-public extension GroupTranslatedContent {
-    init(from decoder: Decoder) throws {
+extension GroupTranslatedContent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        ar = try container.sdkDecodeIfPresent(.ar)
-        bg = try container.sdkDecodeIfPresent(.bg)
-        bs = try container.sdkDecodeIfPresent(.bs)
-        ca = try container.sdkDecodeIfPresent(.ca)
-        cs = try container.sdkDecodeIfPresent(.cs)
-        da = try container.sdkDecodeIfPresent(.da)
-        de = try container.sdkDecodeIfPresent(.de)
-        el = try container.sdkDecodeIfPresent(.el)
-        en = try container.sdkDecodeIfPresent(.en)
-        es = try container.sdkDecodeIfPresent(.es)
-        et = try container.sdkDecodeIfPresent(.et)
-        fi = try container.sdkDecodeIfPresent(.fi)
-        fr = try container.sdkDecodeIfPresent(.fr)
-        he = try container.sdkDecodeIfPresent(.he)
-        hr = try container.sdkDecodeIfPresent(.hr)
-        hu = try container.sdkDecodeIfPresent(.hu)
-        id = try container.sdkDecodeIfPresent(.id)
-        it = try container.sdkDecodeIfPresent(.it)
-        ja = try container.sdkDecodeIfPresent(.ja)
-        ko = try container.sdkDecodeIfPresent(.ko)
-        lt = try container.sdkDecodeIfPresent(.lt)
-        lv = try container.sdkDecodeIfPresent(.lv)
-        mn = try container.sdkDecodeIfPresent(.mn)
-        nb = try container.sdkDecodeIfPresent(.nb)
-        nl = try container.sdkDecodeIfPresent(.nl)
-        pl = try container.sdkDecodeIfPresent(.pl)
-        pt = try container.sdkDecodeIfPresent(.pt)
-        ro = try container.sdkDecodeIfPresent(.ro)
-        ru = try container.sdkDecodeIfPresent(.ru)
-        sl = try container.sdkDecodeIfPresent(.sl)
-        sr = try container.sdkDecodeIfPresent(.sr)
-        sv = try container.sdkDecodeIfPresent(.sv)
-        tr = try container.sdkDecodeIfPresent(.tr)
-        vi = try container.sdkDecodeIfPresent(.vi)
-        ptBr = try container.sdkDecodeIfPresent(.ptBr)
-        zhCn = try container.sdkDecodeIfPresent(.zhCn)
-        zhTw = try container.sdkDecodeIfPresent(.zhTw)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.ar = try container.sdkDecodeIfPresent(.ar)
+        self.bg = try container.sdkDecodeIfPresent(.bg)
+        self.bs = try container.sdkDecodeIfPresent(.bs)
+        self.ca = try container.sdkDecodeIfPresent(.ca)
+        self.cs = try container.sdkDecodeIfPresent(.cs)
+        self.da = try container.sdkDecodeIfPresent(.da)
+        self.de = try container.sdkDecodeIfPresent(.de)
+        self.el = try container.sdkDecodeIfPresent(.el)
+        self.en = try container.sdkDecodeIfPresent(.en)
+        self.es = try container.sdkDecodeIfPresent(.es)
+        self.et = try container.sdkDecodeIfPresent(.et)
+        self.fi = try container.sdkDecodeIfPresent(.fi)
+        self.fr = try container.sdkDecodeIfPresent(.fr)
+        self.he = try container.sdkDecodeIfPresent(.he)
+        self.hr = try container.sdkDecodeIfPresent(.hr)
+        self.hu = try container.sdkDecodeIfPresent(.hu)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.it = try container.sdkDecodeIfPresent(.it)
+        self.ja = try container.sdkDecodeIfPresent(.ja)
+        self.ko = try container.sdkDecodeIfPresent(.ko)
+        self.lt = try container.sdkDecodeIfPresent(.lt)
+        self.lv = try container.sdkDecodeIfPresent(.lv)
+        self.mn = try container.sdkDecodeIfPresent(.mn)
+        self.nb = try container.sdkDecodeIfPresent(.nb)
+        self.nl = try container.sdkDecodeIfPresent(.nl)
+        self.pl = try container.sdkDecodeIfPresent(.pl)
+        self.pt = try container.sdkDecodeIfPresent(.pt)
+        self.ro = try container.sdkDecodeIfPresent(.ro)
+        self.ru = try container.sdkDecodeIfPresent(.ru)
+        self.sl = try container.sdkDecodeIfPresent(.sl)
+        self.sr = try container.sdkDecodeIfPresent(.sr)
+        self.sv = try container.sdkDecodeIfPresent(.sv)
+        self.tr = try container.sdkDecodeIfPresent(.tr)
+        self.vi = try container.sdkDecodeIfPresent(.vi)
+        self.ptBr = try container.sdkDecodeIfPresent(.ptBr)
+        self.zhCn = try container.sdkDecodeIfPresent(.zhCn)
+        self.zhTw = try container.sdkDecodeIfPresent(.zhTw)
     }
 }
 
-public extension GroupTranslatedContent {
-    init(
-        type: GroupTranslatedContentType? = nil,
-        ar: GroupContent? = nil,
-        bg: GroupContent? = nil,
-        bs: GroupContent? = nil,
-        ca: GroupContent? = nil,
-        cs: GroupContent? = nil,
-        da: GroupContent? = nil,
-        de: GroupContent? = nil,
-        el: GroupContent? = nil,
-        en: GroupContent? = nil,
-        es: GroupContent? = nil,
-        et: GroupContent? = nil,
-        fi: GroupContent? = nil,
-        fr: GroupContent? = nil,
-        he: GroupContent? = nil,
-        hr: GroupContent? = nil,
-        hu: GroupContent? = nil,
-        id: GroupContent? = nil,
-        it: GroupContent? = nil,
-        ja: GroupContent? = nil,
-        ko: GroupContent? = nil,
-        lt: GroupContent? = nil,
-        lv: GroupContent? = nil,
-        mn: GroupContent? = nil,
-        nb: GroupContent? = nil,
-        nl: GroupContent? = nil,
-        pl: GroupContent? = nil,
-        pt: GroupContent? = nil,
-        ro: GroupContent? = nil,
-        ru: GroupContent? = nil,
-        sl: GroupContent? = nil,
-        sr: GroupContent? = nil,
-        sv: GroupContent? = nil,
-        tr: GroupContent? = nil,
-        vi: GroupContent? = nil,
-        ptBr: GroupContent? = nil,
-        zhCn: GroupContent? = nil,
-        zhTw: GroupContent? = nil
-    ) {
+extension GroupTranslatedContent {
+    public init(type: GroupTranslatedContentType? = nil, ar: GroupContent? = nil, bg: GroupContent? = nil, bs: GroupContent? = nil, ca: GroupContent? = nil, cs: GroupContent? = nil, da: GroupContent? = nil, de: GroupContent? = nil, el: GroupContent? = nil, en: GroupContent? = nil, es: GroupContent? = nil, et: GroupContent? = nil, fi: GroupContent? = nil, fr: GroupContent? = nil, he: GroupContent? = nil, hr: GroupContent? = nil, hu: GroupContent? = nil, id: GroupContent? = nil, it: GroupContent? = nil, ja: GroupContent? = nil, ko: GroupContent? = nil, lt: GroupContent? = nil, lv: GroupContent? = nil, mn: GroupContent? = nil, nb: GroupContent? = nil, nl: GroupContent? = nil, pl: GroupContent? = nil, pt: GroupContent? = nil, ro: GroupContent? = nil, ru: GroupContent? = nil, sl: GroupContent? = nil, sr: GroupContent? = nil, sv: GroupContent? = nil, tr: GroupContent? = nil, vi: GroupContent? = nil, ptBr: GroupContent? = nil, zhCn: GroupContent? = nil, zhTw: GroupContent? = nil) {
         self.init()
         (self.type, self.ar) = (type, ar)
         (self.bg, self.bs) = (bg, bs)
@@ -590,27 +511,22 @@ public struct HelpCenterRedirectList: Codable {
     }
 
     init() {
-        (type, pages, totalCount, data) = (nil, nil, nil, nil)
+        (self.type, self.pages, self.totalCount, self.data) = (nil, nil, nil, nil)
     }
 }
 
-public extension HelpCenterRedirectList {
-    init(from decoder: Decoder) throws {
+extension HelpCenterRedirectList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        pages = try container.sdkDecodeIfPresent(.pages)
-        totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.pages = try container.sdkDecodeIfPresent(.pages)
+        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension HelpCenterRedirectList {
-    init(
-        type: HelpCenterRedirectListType? = nil,
-        pages: CursorPages? = nil,
-        totalCount: Int? = nil,
-        data: [HelpCenterRedirect]? = nil
-    ) {
+extension HelpCenterRedirectList {
+    public init(type: HelpCenterRedirectListType? = nil, pages: CursorPages? = nil, totalCount: Int? = nil, data: [HelpCenterRedirect]? = nil) {
         self.init()
         (self.type, self.pages) = (type, pages)
         (self.totalCount, self.data) = (totalCount, data)

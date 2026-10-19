@@ -3,34 +3,19 @@
 
 import Foundation
 
-public extension AiContentNamespace {
-    /// Retrieves an external page from your Fin Content Library by its page identifier. Use this operation to inspect
-    /// the page content, source association, availability settings, and audience targeting.
+extension AiContentNamespace {
+/// Retrieves an external page from your Fin Content Library by its page identifier. Use this operation to inspect the page content, source association, availability settings, and audience targeting.
     ///
     /// You can retrieve an external page.
-    func getExternalPage(
-        pageId: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ExternalPage {
-        try await AiContentMethods.getExternalPage(
-            config: config,
-            pageId: pageId,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    public func getExternalPage(pageId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ExternalPage {
+        return try await AiContentMethods.getExternalPage(config: config, pageId: pageId, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Replaces the specified external page's details in your Fin Content Library; this operation applies to pages
-    /// created through the API. Provide `title`, `html`, `url`, `locale`, and `source_id`, and include `audience_ids`
-    /// to replace the existing audience memberships.
+/// Replaces the specified external page's details in your Fin Content Library; this operation applies to pages created through the API. Provide `title`, `html`, `url`, `locale`, and `source_id`, and include `audience_ids` to replace the existing audience memberships.
     ///
     /// You can update an existing external page (if it was created via the API).
-    func updateExternalPage(
-        options: AiContentMethods.UpdateExternalPageOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ExternalPage {
-        try await AiContentMethods.updateExternalPage(config: config, options: options, requestOptions: requestOptions)
+    public func updateExternalPage(options: AiContentMethods.UpdateExternalPageOptions, requestOptions: RequestOptions? = nil) async throws -> ExternalPage {
+        return try await AiContentMethods.updateExternalPage(config: config, options: options, requestOptions: requestOptions)
     }
 }
 
@@ -40,272 +25,97 @@ public class ArticlesNamespace {
         self.config = config
     }
 
-    /// Lists articles in your workspace. Results are ordered by `updated_at` in descending order, with the most
-    /// recently updated articles first.
+/// Lists articles in your workspace. Results are ordered by `updated_at` in descending order, with the most recently updated articles first.
     ///
-    /// You can fetch a list of all articles by making a GET request to `https://api.intercom.io/articles`. > 📘 How are
-    /// the articles sorted and ordered? > > Articles will be returned in descending order on the `updated_at`
-    /// attribute. This means if you need to iterate through results then we'll show the most recently updated articles
-    /// first.
-    public func list(
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ArticleList {
-        try await ArticlesMethods.listArticles(
-            config: config,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    /// You can fetch a list of all articles by making a GET request to `https://api.intercom.io/articles`. > 📘 How are the articles sorted and ordered? > > Articles will be returned in descending order on the `updated_at` attribute. This means if you need to iterate through results then we'll show the most recently updated articles first.
+    public func list(intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ArticleList {
+        return try await ArticlesMethods.listArticles(config: config, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Creates a new article in the help center. Supply `title` and `author_id`; `state` defaults to draft, and you can
-    /// provide article content in HTML or Markdown. Article tags are read-only through the Articles API and must be
-    /// managed through the Tags API or the Intercom UI.
+/// Creates a new article in the help center. Supply `title` and `author_id`; `state` defaults to draft, and you can provide article content in HTML or Markdown. Article tags are read-only through the Articles API and must be managed through the Tags API or the Intercom UI.
     ///
-    /// You can create a new article by making a POST request to `https://api.intercom.io/articles`. > 📘 Tags cannot be
-    /// managed via the Articles API > > Article tags are read-only in responses. To create, update, or delete tags, use
-    /// the Intercom UI or the Tags API endpoints.
-    public func create(
-        options: ArticlesMethods.CreateArticleOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Article {
-        try await ArticlesMethods.createArticle(config: config, options: options, requestOptions: requestOptions)
+    /// You can create a new article by making a POST request to `https://api.intercom.io/articles`. > 📘 Tags cannot be managed via the Articles API > > Article tags are read-only in responses. To create, update, or delete tags, use the Intercom UI or the Tags API endpoints.
+    public func create(options: ArticlesMethods.CreateArticleOptions, requestOptions: RequestOptions? = nil) async throws -> Article {
+        return try await ArticlesMethods.createArticle(config: config, options: options, requestOptions: requestOptions)
     }
 
-    /// Retrieves a single article by its unique identifier. Use the `article_id` path parameter to select the article
-    /// whose details you need. The response includes the article content and metadata.
+/// Retrieves a single article by its unique identifier. Use the `article_id` path parameter to select the article whose details you need. The response includes the article content and metadata.
     ///
-    /// You can fetch the details of a single article by making a GET request to
-    /// `https://api.intercom.io/articles/<id>`.
-    public func retrieve(
-        articleId: Int,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Article {
-        try await ArticlesMethods.retrieveArticle(
-            config: config,
-            articleId: articleId,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    /// You can fetch the details of a single article by making a GET request to `https://api.intercom.io/articles/<id>`.
+    public func retrieve(articleId: Int, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Article {
+        return try await ArticlesMethods.retrieveArticle(config: config, articleId: articleId, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Updates an existing article's content and settings. Use the `article_id` path parameter to identify the article
-    /// and provide only the fields you want to change; `body` and `body_markdown` cannot be supplied together. Article
-    /// tags are read-only through the Articles API and must be managed through the Tags API or the Intercom UI.
+/// Updates an existing article's content and settings. Use the `article_id` path parameter to identify the article and provide only the fields you want to change; `body` and `body_markdown` cannot be supplied together. Article tags are read-only through the Articles API and must be managed through the Tags API or the Intercom UI.
     ///
-    /// You can update the details of a single article by making a PUT request to
-    /// `https://api.intercom.io/articles/<id>`. > 📘 Tags cannot be managed via the Articles API > > Article tags are
-    /// read-only in responses. To create, update, or delete tags, use the Intercom UI or the Tags API endpoints.
-    public func update(
-        options: ArticlesMethods.UpdateArticleOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Article {
-        try await ArticlesMethods.updateArticle(config: config, options: options, requestOptions: requestOptions)
+    /// You can update the details of a single article by making a PUT request to `https://api.intercom.io/articles/<id>`. > 📘 Tags cannot be managed via the Articles API > > Article tags are read-only in responses. To create, update, or delete tags, use the Intercom UI or the Tags API endpoints.
+    public func update(options: ArticlesMethods.UpdateArticleOptions, requestOptions: RequestOptions? = nil) async throws -> Article {
+        return try await ArticlesMethods.updateArticle(config: config, options: options, requestOptions: requestOptions)
     }
 
-    /// Deletes an article from the help center. Use the `article_id` path parameter to identify the article to remove.
-    /// The response confirms whether the article was deleted.
+/// Deletes an article from the help center. Use the `article_id` path parameter to identify the article to remove. The response confirms whether the article was deleted.
     ///
     /// You can delete a single article by making a DELETE request to `https://api.intercom.io/articles/<id>`.
-    public func delete(
-        articleId: Int,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DeletedArticleObject {
-        try await ArticlesMethods.deleteArticle(
-            config: config,
-            articleId: articleId,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    public func delete(articleId: Int, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DeletedArticleObject {
+        return try await ArticlesMethods.deleteArticle(config: config, articleId: articleId, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Retrieves the staged draft of a published article without changing its live content. Use the `id` path parameter
-    /// to identify the article; a draft exists only when unpublished changes have been staged. You need the
-    /// `read_articles_scope` OAuth scope to retrieve the draft.
+/// Retrieves the staged draft of a published article without changing its live content. Use the `id` path parameter to identify the article; a draft exists only when unpublished changes have been staged. You need the `read_articles_scope` OAuth scope to retrieve the draft.
     ///
-    /// Fetch the staged draft of a published article by making a GET request to
-    /// `https://api.intercom.io/articles/<id>/draft`. The response is the article rendered with its draft content,
-    /// leaving the live article untouched. A draft exists only when a published article has unpublished changes staged
-    /// on top of it. Returns `404` when the article has no staged draft. Requires the `read_articles_scope` OAuth
-    /// scope.
-    public func retrieveDraft(
-        id: Int,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Article {
-        try await ArticlesMethods.retrieveArticleDraft(
-            config: config,
-            id: id,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    /// Fetch the staged draft of a published article by making a GET request to `https://api.intercom.io/articles/<id>/draft`. The response is the article rendered with its draft content, leaving the live article untouched. A draft exists only when a published article has unpublished changes staged on top of it. Returns `404` when the article has no staged draft. Requires the `read_articles_scope` OAuth scope.
+    public func retrieveDraft(id: Int, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Article {
+        return try await ArticlesMethods.retrieveArticleDraft(config: config, id: id, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Stages changes to a published article as a draft, leaving the live article unchanged. Use the `id` path
-    /// parameter to identify the article and supply versioned text content to stage; non-versioned fields such as AI
-    /// availability are ignored. The article must already be published, and you need the `read_write_articles_scope`
-    /// OAuth scope.
+/// Stages changes to a published article as a draft, leaving the live article unchanged. Use the `id` path parameter to identify the article and supply versioned text content to stage; non-versioned fields such as AI availability are ignored. The article must already be published, and you need the `read_write_articles_scope` OAuth scope.
     ///
-    /// Stage changes to a published article as a draft by making a PUT request to
-    /// `https://api.intercom.io/articles/<id>/draft`. The live article remains unchanged until the draft is published.
-    /// The article must already be published; staging a draft on an article that has never been published returns
-    /// `422`. Only versioned text content (such as `title` and `body`) is staged. Non-versioned fields like AI
-    /// availability are ignored, leaving the live values untouched. Requires the `read_write_articles_scope` OAuth
-    /// scope.
-    public func stageDraft(
-        options: ArticlesMethods.StageArticleDraftOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Article {
-        try await ArticlesMethods.stageArticleDraft(config: config, options: options, requestOptions: requestOptions)
+    /// Stage changes to a published article as a draft by making a PUT request to `https://api.intercom.io/articles/<id>/draft`. The live article remains unchanged until the draft is published. The article must already be published; staging a draft on an article that has never been published returns `422`. Only versioned text content (such as `title` and `body`) is staged. Non-versioned fields like AI availability are ignored, leaving the live values untouched. Requires the `read_write_articles_scope` OAuth scope.
+    public func stageDraft(options: ArticlesMethods.StageArticleDraftOptions, requestOptions: RequestOptions? = nil) async throws -> Article {
+        return try await ArticlesMethods.stageArticleDraft(config: config, options: options, requestOptions: requestOptions)
     }
 
-    /// Publishes a staged article draft, promoting its content to live. Use the `id` path parameter to identify the
-    /// article; on a multilingual workspace, provide the `locales` array to choose which locale drafts to publish. You
-    /// need the `read_write_articles_scope` OAuth scope.
+/// Publishes a staged article draft, promoting its content to live. Use the `id` path parameter to identify the article; on a multilingual workspace, provide the `locales` array to choose which locale drafts to publish. You need the `read_write_articles_scope` OAuth scope.
     ///
-    /// Publish a staged draft by making a POST request to `https://api.intercom.io/articles/<id>/draft/publish`,
-    /// promoting the draft content to live. On a single-language workspace no body is required. On a multilingual
-    /// workspace you must list which locales to publish via the `locales` array; omitting it returns `422`. Returns
-    /// `422` when there is no staged draft to publish, or when a requested locale has no pending changes. Requires the
-    /// `read_write_articles_scope` OAuth scope.
-    public func publishDraft(
-        id: Int,
-        intercomVersion: IntercomVersion? = nil,
-        locales: [String]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Article {
-        try await ArticlesMethods.publishArticleDraft(
-            config: config,
-            id: id,
-            intercomVersion: intercomVersion,
-            locales: locales,
-            requestOptions: requestOptions
-        )
+    /// Publish a staged draft by making a POST request to `https://api.intercom.io/articles/<id>/draft/publish`, promoting the draft content to live. On a single-language workspace no body is required. On a multilingual workspace you must list which locales to publish via the `locales` array; omitting it returns `422`. Returns `422` when there is no staged draft to publish, or when a requested locale has no pending changes. Requires the `read_write_articles_scope` OAuth scope.
+    public func publishDraft(id: Int, intercomVersion: IntercomVersion? = nil, locales: [String]? = nil, requestOptions: RequestOptions? = nil) async throws -> Article {
+        return try await ArticlesMethods.publishArticleDraft(config: config, id: id, intercomVersion: intercomVersion, locales: locales, requestOptions: requestOptions)
     }
 }
 
-public extension ArticlesNamespace {
-    /// Applies an existing workspace tag to an article. Provide the tag's `id` in the request body and use `article_id`
-    /// to identify the article. The authenticated teammate needs the `manage_knowledge_base_content` permission and the
-    /// `read_write_articles_scope` OAuth scope.
+extension ArticlesNamespace {
+/// Applies an existing workspace tag to an article. Provide the tag's `id` in the request body and use `article_id` to identify the article. The authenticated teammate needs the `manage_knowledge_base_content` permission and the `read_write_articles_scope` OAuth scope.
     ///
-    /// Apply an existing tag to an article. Returns the tag that was applied. The tag must already exist in the
-    /// workspace (create tags with the Tags API), and the authenticating teammate must have the
-    /// `manage_knowledge_base_content` permission. Requires the `read_write_articles_scope` OAuth scope.
-    func attachTag(
-        articleId: Int,
-        id: String,
-        intercomVersion: IntercomVersion? = nil,
-        adminId: SdkOptional<String>? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Tag {
-        try await ArticlesMethods.attachArticlesTag(
-            config: config,
-            articleId: articleId,
-            id: id,
-            intercomVersion: intercomVersion,
-            adminId: adminId,
-            requestOptions: requestOptions
-        )
+    /// Apply an existing tag to an article. Returns the tag that was applied. The tag must already exist in the workspace (create tags with the Tags API), and the authenticating teammate must have the `manage_knowledge_base_content` permission. Requires the `read_write_articles_scope` OAuth scope.
+    public func attachTag(articleId: Int, id: String, intercomVersion: IntercomVersion? = nil, adminId: SdkOptional<String>? = nil, requestOptions: RequestOptions? = nil) async throws -> Tag {
+        return try await ArticlesMethods.attachArticlesTag(config: config, articleId: articleId, id: id, intercomVersion: intercomVersion, adminId: adminId, requestOptions: requestOptions)
     }
 
-    /// Removes a tag from an article. Use the `article_id` and `id` path parameters to identify the article and tag to
-    /// detach. The authenticated teammate needs the `manage_knowledge_base_content` permission and the
-    /// `read_write_articles_scope` OAuth scope.
+/// Removes a tag from an article. Use the `article_id` and `id` path parameters to identify the article and tag to detach. The authenticated teammate needs the `manage_knowledge_base_content` permission and the `read_write_articles_scope` OAuth scope.
     ///
-    /// Remove a tag from an article. Returns the tag that was removed, with null `applied_at` and `applied_by`. The
-    /// authenticating teammate must have the `manage_knowledge_base_content` permission. Requires the
-    /// `read_write_articles_scope` OAuth scope.
-    func detachTag(
-        articleId: Int,
-        id: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Tag {
-        try await ArticlesMethods.detachArticlesTag(
-            config: config,
-            articleId: articleId,
-            id: id,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    /// Remove a tag from an article. Returns the tag that was removed, with null `applied_at` and `applied_by`. The authenticating teammate must have the `manage_knowledge_base_content` permission. Requires the `read_write_articles_scope` OAuth scope.
+    public func detachTag(articleId: Int, id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Tag {
+        return try await ArticlesMethods.detachArticlesTag(config: config, articleId: articleId, id: id, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Lists an article's version history as paginated metadata, with the newest versions first. Use `locale` to filter
-    /// the history to a configured locale, and use `page` and `per_page` to paginate the results. Retrieve an
-    /// individual version to access its full content.
+/// Lists an article's version history as paginated metadata, with the newest versions first. Use `locale` to filter the history to a configured locale, and use `page` and `per_page` to paginate the results. Retrieve an individual version to access its full content.
     ///
-    /// Fetch the version history of an article by making a GET request to
-    /// `https://api.intercom.io/articles/<article_id>/versions`. Versions are returned newest-first as a paginated list
-    /// of metadata. Use `GET /articles/{article_id}/versions/{id}` to retrieve a single version with its full content.
-    /// Requires the `read_articles_scope` OAuth scope.
-    func listVersions(
-        articleId: Int,
-        page: Int? = nil,
-        perPage: Int? = nil,
-        locale: String? = nil,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ArticleVersionList {
-        try await ArticlesMethods.listArticleVersions(
-            config: config,
-            articleId: articleId,
-            page: page,
-            perPage: perPage,
-            locale: locale,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    /// Fetch the version history of an article by making a GET request to `https://api.intercom.io/articles/<article_id>/versions`. Versions are returned newest-first as a paginated list of metadata. Use `GET /articles/{article_id}/versions/{id}` to retrieve a single version with its full content. Requires the `read_articles_scope` OAuth scope.
+    public func listVersions(articleId: Int, page: Int? = nil, perPage: Int? = nil, locale: String? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ArticleVersionList {
+        return try await ArticlesMethods.listArticleVersions(config: config, articleId: articleId, page: page, perPage: perPage, locale: locale, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Retrieves a historical version of an article, including its title, description, and body content. Use
-    /// `article_id` and `id` to identify the article and version, and `locale` to request content for a specific
-    /// locale. Access requires the `read_articles_scope` OAuth scope.
+/// Retrieves a historical version of an article, including its title, description, and body content. Use `article_id` and `id` to identify the article and version, and `locale` to request content for a specific locale. Access requires the `read_articles_scope` OAuth scope.
     ///
-    /// Fetch a single prior version of an article, including its body content, by making a GET request to
-    /// `https://api.intercom.io/articles/<article_id>/versions/<id>`. Returns the version's full content; the live
-    /// article remains untouched. Requires the `read_articles_scope` OAuth scope.
-    func retrieveVersion(
-        articleId: Int,
-        id: String,
-        locale: String? = nil,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ArticleVersion {
-        try await ArticlesMethods.retrieveArticleVersion(
-            config: config,
-            articleId: articleId,
-            id: id,
-            locale: locale,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    /// Fetch a single prior version of an article, including its body content, by making a GET request to `https://api.intercom.io/articles/<article_id>/versions/<id>`. Returns the version's full content; the live article remains untouched. Requires the `read_articles_scope` OAuth scope.
+    public func retrieveVersion(articleId: Int, id: String, locale: String? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ArticleVersion {
+        return try await ArticlesMethods.retrieveArticleVersion(config: config, articleId: articleId, id: id, locale: locale, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Searches articles by phrase and can filter results by article state and Help Center. Use `highlight` to request
-    /// highlighted matching content; results include article data, optional highlights, and cursor-based page
-    /// information.
+/// Searches articles by phrase and can filter results by article state and Help Center. Use `highlight` to request highlighted matching content; results include article data, optional highlights, and cursor-based page information.
     ///
     /// You can search for articles by making a GET request to `https://api.intercom.io/articles/search`.
-    func search(
-        phrase: String? = nil,
-        state: String? = nil,
-        helpCenterId: Int? = nil,
-        highlight: Bool? = nil,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ArticleSearchResponse {
-        try await ArticlesMethods.searchArticles(
-            config: config,
-            phrase: phrase,
-            state: state,
-            helpCenterId: helpCenterId,
-            highlight: highlight,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    public func search(phrase: String? = nil, state: String? = nil, helpCenterId: Int? = nil, highlight: Bool? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ArticleSearchResponse {
+        return try await ArticlesMethods.searchArticles(config: config, phrase: phrase, state: state, helpCenterId: helpCenterId, highlight: highlight, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 }
 
@@ -315,19 +125,11 @@ public class AwayStatusReasonsNamespace {
         self.config = config
     }
 
-    /// Lists the away status reasons configured for the workspace, including reasons marked as deleted. Use this
-    /// endpoint to retrieve reason labels and their associated identifiers, ordering, and status information.
+/// Lists the away status reasons configured for the workspace, including reasons marked as deleted. Use this endpoint to retrieve reason labels and their associated identifiers, ordering, and status information.
     ///
     /// Returns a list of all away status reasons configured for the workspace, including deleted ones.
-    public func list(
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AwayStatusReasonList {
-        try await AwayStatusReasonsMethods.listAwayStatusReasons(
-            config: config,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    public func list(intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> AwayStatusReasonList {
+        return try await AwayStatusReasonsMethods.listAwayStatusReasons(config: config, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 }
 
@@ -337,123 +139,46 @@ public class AudiencesNamespace {
         self.config = config
     }
 
-    /// Lists audiences configured for the workspace, with pagination metadata. Use `page` and `per_page` to paginate
-    /// the results, and note that `per_page` is capped at 50.
+/// Lists audiences configured for the workspace, with pagination metadata. Use `page` and `per_page` to paginate the results, and note that `per_page` is capped at 50.
     ///
     /// You can fetch a list of all audiences for the workspace.
-    public func list(
-        page: Int? = nil,
-        perPage: Int? = nil,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AudienceList {
-        try await AudiencesMethods.listAudiences(
-            config: config,
-            page: page,
-            perPage: perPage,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    public func list(page: Int? = nil, perPage: Int? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> AudienceList {
+        return try await AudiencesMethods.listAudiences(config: config, page: page, perPage: perPage, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Lists audiences configured for the workspace, with pagination metadata. Use `page` and `per_page` to paginate
-    /// the results, and note that `per_page` is capped at 50.
+/// Lists audiences configured for the workspace, with pagination metadata. Use `page` and `per_page` to paginate the results, and note that `per_page` is capped at 50.
     ///
     /// You can fetch a list of all audiences for the workspace.
-    public func listPaginated(
-        page: Int? = nil,
-        perPage: Int? = nil,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) -> AsyncThrowingStream<Audience, Swift.Error> {
-        AudiencesMethods.listAudiencesPaginated(
-            config: config,
-            page: page,
-            perPage: perPage,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    public func listPaginated(page: Int? = nil, perPage: Int? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<Audience, Swift.Error> {
+        return AudiencesMethods.listAudiencesPaginated(config: config, page: page, perPage: perPage, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Creates an audience that groups contacts for targeting by Fin. Supply a `name` and optionally define membership
-    /// with `predicates` and role-based filters with `role_predicates`. A 201 response returns the created audience and
-    /// its generated identifier.
+/// Creates an audience that groups contacts for targeting by Fin. Supply a `name` and optionally define membership with `predicates` and role-based filters with `role_predicates`. A 201 response returns the created audience and its generated identifier.
     ///
     /// You can create a new audience by making a POST request to `https://api.intercom.io/audiences`.
-    public func create(
-        name: String,
-        intercomVersion: IntercomVersion? = nil,
-        predicates: [Predicate]? = nil,
-        rolePredicates: [Predicate]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Audience {
-        try await AudiencesMethods.createAudience(
-            config: config,
-            name: name,
-            intercomVersion: intercomVersion,
-            predicates: predicates,
-            rolePredicates: rolePredicates,
-            requestOptions: requestOptions
-        )
+    public func create(name: String, intercomVersion: IntercomVersion? = nil, predicates: [Predicate]? = nil, rolePredicates: [Predicate]? = nil, requestOptions: RequestOptions? = nil) async throws -> Audience {
+        return try await AudiencesMethods.createAudience(config: config, name: name, intercomVersion: intercomVersion, predicates: predicates, rolePredicates: rolePredicates, requestOptions: requestOptions)
     }
 
-    /// Retrieves an audience configured for the workspace, including its contact and role-based membership predicates.
-    /// Use the audience `id` to retrieve the audience details.
+/// Retrieves an audience configured for the workspace, including its contact and role-based membership predicates. Use the audience `id` to retrieve the audience details.
     ///
-    /// You can fetch the details of a single audience by making a GET request to
-    /// `https://api.intercom.io/audiences/{id}`.
-    public func retrieve(
-        id: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Audience {
-        try await AudiencesMethods.retrieveAudience(
-            config: config,
-            id: id,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    /// You can fetch the details of a single audience by making a GET request to `https://api.intercom.io/audiences/{id}`.
+    public func retrieve(id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Audience {
+        return try await AudiencesMethods.retrieveAudience(config: config, id: id, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Replaces the supplied audience properties while leaving omitted properties unchanged. Send any combination of
-    /// `name`, `predicates`, and `role_predicates` to update the audience identified by `id`.
+/// Replaces the supplied audience properties while leaving omitted properties unchanged. Send any combination of `name`, `predicates`, and `role_predicates` to update the audience identified by `id`.
     ///
-    /// You can update the details of a single audience by making a PUT request to
-    /// `https://api.intercom.io/audiences/{id}`.
-    public func update(
-        id: String,
-        intercomVersion: IntercomVersion? = nil,
-        name: String? = nil,
-        predicates: [Predicate]? = nil,
-        rolePredicates: [Predicate]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Audience {
-        try await AudiencesMethods.updateAudience(
-            config: config,
-            id: id,
-            intercomVersion: intercomVersion,
-            name: name,
-            predicates: predicates,
-            rolePredicates: rolePredicates,
-            requestOptions: requestOptions
-        )
+    /// You can update the details of a single audience by making a PUT request to `https://api.intercom.io/audiences/{id}`.
+    public func update(id: String, intercomVersion: IntercomVersion? = nil, name: String? = nil, predicates: [Predicate]? = nil, rolePredicates: [Predicate]? = nil, requestOptions: RequestOptions? = nil) async throws -> Audience {
+        return try await AudiencesMethods.updateAudience(config: config, id: id, intercomVersion: intercomVersion, name: name, predicates: predicates, rolePredicates: rolePredicates, requestOptions: requestOptions)
     }
 
-    /// Deletes the audience identified by `id` from the workspace. Use this endpoint when the audience is no longer
-    /// needed; a successful response has no response body.
+/// Deletes the audience identified by `id` from the workspace. Use this endpoint when the audience is no longer needed; a successful response has no response body.
     ///
     /// You can delete a single audience by making a DELETE request to `https://api.intercom.io/audiences/{id}`.
-    public func delete(
-        id: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await AudiencesMethods.deleteAudience(
-            config: config,
-            id: id,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    public func delete(id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try await AudiencesMethods.deleteAudience(config: config, id: id, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 }
 
@@ -463,89 +188,27 @@ public class ReportingDataExportNamespace {
         self.config = config
     }
 
-    /// Enqueues a reporting data export job for a selected dataset, attributes, and time range. Supply `dataset_id`,
-    /// `attribute_ids`, `start_time`, and `end_time`; for conversation exports in the current API version, the export
-    /// includes conversations that received no user reply. Use the returned job identifier to check the job status and
-    /// retrieve its data.
+/// Enqueues a reporting data export job for a selected dataset, attributes, and time range. Supply `dataset_id`, `attribute_ids`, `start_time`, and `end_time`; for conversation exports in the current API version, the export includes conversations that received no user reply. Use the returned job identifier to check the job status and retrieve its data.
     ///
-    /// For the conversation dataset, from this version onward this export returns all conversations, including those
-    /// that never received a user reply. Earlier versions return only conversations that received at least one user
-    /// reply. Other datasets are unaffected.
-    public func createEnqueue(
-        datasetId: String,
-        attributeIds: [String],
-        startTime: Int,
-        endTime: Int,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> CreateEnqueueResponse {
-        try await ReportingDataExportMethods.createEnqueue(
-            config: config,
-            datasetId: datasetId,
-            attributeIds: attributeIds,
-            startTime: startTime,
-            endTime: endTime,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    /// For the conversation dataset, from this version onward this export returns all conversations, including those that never received a user reply. Earlier versions return only conversations that received at least one user reply. Other datasets are unaffected.
+    public func createEnqueue(datasetId: String, attributeIds: [String], startTime: Int, endTime: Int, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> CreateEnqueueResponse {
+        return try await ReportingDataExportMethods.createEnqueue(config: config, datasetId: datasetId, attributeIds: attributeIds, startTime: startTime, endTime: endTime, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Retrieves the status and download details for a reporting data export job. Supply the workspace and client
-    /// identifiers along with the job identifier to look up the export. Use the returned status to determine whether
-    /// the job is ready to download.
-    public func getReportingData(
-        jobIdentifier: String,
-        appId: String,
-        clientId: String,
-        jobIdentifier2: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> GetReportingDataResponse {
-        try await ReportingDataExportMethods.getReportingData(
-            config: config,
-            jobIdentifier: jobIdentifier,
-            appId: appId,
-            clientId: clientId,
-            jobIdentifier2: jobIdentifier2,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+/// Retrieves the status and download details for a reporting data export job. Supply the workspace and client identifiers along with the job identifier to look up the export. Use the returned status to determine whether the job is ready to download.
+    public func getReportingData(jobIdentifier: String, appId: String, clientId: String, jobIdentifier2: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> GetReportingDataResponse {
+        return try await ReportingDataExportMethods.getReportingData(config: config, jobIdentifier: jobIdentifier, appId: appId, clientId: clientId, jobIdentifier2: jobIdentifier2, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Lists the datasets and attributes available for reporting data exports. Use the returned dataset identifiers and
-    /// attribute details to determine which data you can include in an export.
-    public func listGetDatasets(
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ListGetDatasetsResponse {
-        try await ReportingDataExportMethods.listGetDatasets(
-            config: config,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+/// Lists the datasets and attributes available for reporting data exports. Use the returned dataset identifiers and attribute details to determine which data you can include in an export.
+    public func listGetDatasets(intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ListGetDatasetsResponse {
+        return try await ReportingDataExportMethods.listGetDatasets(config: config, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Downloads the data file for a completed reporting data export job. Provide the job identifier and app ID, and
-    /// send the required `Accept` header to receive the file as an octet stream.
+/// Downloads the data file for a completed reporting data export job. Provide the job identifier and app ID, and send the required `Accept` header to receive the file as an octet stream.
     ///
-    /// Download the data from a completed reporting data export job. > Octet header required > > You will have to
-    /// specify the header Accept: `application/octet-stream` when hitting this endpoint.
-    public func getReportingData2(
-        jobIdentifier: String,
-        appId: String,
-        jobIdentifier2: String,
-        accept: GetReportingData2Parameter,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await ReportingDataExportMethods.getReportingData2(
-            config: config,
-            jobIdentifier: jobIdentifier,
-            appId: appId,
-            jobIdentifier2: jobIdentifier2,
-            accept: accept,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    /// Download the data from a completed reporting data export job. > Octet header required > > You will have to specify the header Accept: `application/octet-stream` when hitting this endpoint.
+    public func getReportingData2(jobIdentifier: String, appId: String, jobIdentifier2: String, accept: GetReportingData2Parameter, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try await ReportingDataExportMethods.getReportingData2(config: config, jobIdentifier: jobIdentifier, appId: appId, jobIdentifier2: jobIdentifier2, accept: accept, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 }

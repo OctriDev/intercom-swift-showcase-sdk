@@ -11,7 +11,7 @@ struct CreateFolderRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(folder, forKey: SdkCodingKey("folder"))
+        try keyedContainer.encode(self.folder, forKey: SdkCodingKey("folder"))
     }
 }
 
@@ -20,7 +20,7 @@ struct UpdateFolderRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(folder, forKey: SdkCodingKey("folder"))
+        try keyedContainer.encode(self.folder, forKey: SdkCodingKey("folder"))
     }
 }
 
@@ -31,9 +31,9 @@ struct UpdateIpAllowlistRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(type, forKey: SdkCodingKey("type"))
-        try keyedContainer.encodeIfPresent(enabled, forKey: SdkCodingKey("enabled"))
-        try keyedContainer.encodeIfPresent(ipAllowlist, forKey: SdkCodingKey("ip_allowlist"))
+        try keyedContainer.encodeIfPresent(self.type, forKey: SdkCodingKey("type"))
+        try keyedContainer.encodeIfPresent(self.enabled, forKey: SdkCodingKey("enabled"))
+        try keyedContainer.encodeIfPresent(self.ipAllowlist, forKey: SdkCodingKey("ip_allowlist"))
     }
 }
 
@@ -51,29 +51,29 @@ struct CreateOrUpdateCompanyRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(companyId, forKey: SdkCodingKey("company_id"))
-        try keyedContainer.encodeIfPresent(plan, forKey: SdkCodingKey("plan"))
-        try keyedContainer.encodeIfPresent(size, forKey: SdkCodingKey("size"))
-        try keyedContainer.encodeIfPresent(website, forKey: SdkCodingKey("website"))
-        try keyedContainer.encodeIfPresent(industry, forKey: SdkCodingKey("industry"))
-        try keyedContainer.encodeIfPresent(customAttributes, forKey: SdkCodingKey("custom_attributes"))
-        try keyedContainer.encodeIfPresent(remoteCreatedAt, forKey: SdkCodingKey("remote_created_at"))
-        try keyedContainer.encodeIfPresent(updateLastRequestAt, forKey: SdkCodingKey("update_last_request_at"))
-        try keyedContainer.encodeIfPresent(monthlySpend, forKey: SdkCodingKey("monthly_spend"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.companyId, forKey: SdkCodingKey("company_id"))
+        try keyedContainer.encodeIfPresent(self.plan, forKey: SdkCodingKey("plan"))
+        try keyedContainer.encodeIfPresent(self.size, forKey: SdkCodingKey("size"))
+        try keyedContainer.encodeIfPresent(self.website, forKey: SdkCodingKey("website"))
+        try keyedContainer.encodeIfPresent(self.industry, forKey: SdkCodingKey("industry"))
+        try keyedContainer.encodeIfPresent(self.customAttributes, forKey: SdkCodingKey("custom_attributes"))
+        try keyedContainer.encodeIfPresent(self.remoteCreatedAt, forKey: SdkCodingKey("remote_created_at"))
+        try keyedContainer.encodeIfPresent(self.updateLastRequestAt, forKey: SdkCodingKey("update_last_request_at"))
+        try keyedContainer.encodeIfPresent(self.monthlySpend, forKey: SdkCodingKey("monthly_spend"))
     }
 
     init(options: CompaniesMethods.CreateOrUpdateCompanyOptions) {
-        name = options.name
-        companyId = options.companyId
-        plan = options.plan
-        size = options.size
-        website = options.website
-        industry = options.industry
-        customAttributes = options.customAttributes
-        remoteCreatedAt = options.remoteCreatedAt
-        updateLastRequestAt = options.updateLastRequestAt
-        monthlySpend = options.monthlySpend
+        self.name = options.name
+        self.companyId = options.companyId
+        self.plan = options.plan
+        self.size = options.size
+        self.website = options.website
+        self.industry = options.industry
+        self.customAttributes = options.customAttributes
+        self.remoteCreatedAt = options.remoteCreatedAt
+        self.updateLastRequestAt = options.updateLastRequestAt
+        self.monthlySpend = options.monthlySpend
     }
 }
 
@@ -88,23 +88,23 @@ struct UpdateCompanyRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(plan, forKey: SdkCodingKey("plan"))
-        try keyedContainer.encodeIfPresent(size, forKey: SdkCodingKey("size"))
-        try keyedContainer.encodeIfPresent(website, forKey: SdkCodingKey("website"))
-        try keyedContainer.encodeIfPresent(industry, forKey: SdkCodingKey("industry"))
-        try keyedContainer.encodeIfPresent(customAttributes, forKey: SdkCodingKey("custom_attributes"))
-        try keyedContainer.encodeIfPresent(monthlySpend, forKey: SdkCodingKey("monthly_spend"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.plan, forKey: SdkCodingKey("plan"))
+        try keyedContainer.encodeIfPresent(self.size, forKey: SdkCodingKey("size"))
+        try keyedContainer.encodeIfPresent(self.website, forKey: SdkCodingKey("website"))
+        try keyedContainer.encodeIfPresent(self.industry, forKey: SdkCodingKey("industry"))
+        try keyedContainer.encodeIfPresent(self.customAttributes, forKey: SdkCodingKey("custom_attributes"))
+        try keyedContainer.encodeIfPresent(self.monthlySpend, forKey: SdkCodingKey("monthly_spend"))
     }
 
     init(options: CompaniesMethods.UpdateCompanyOptions) {
-        name = options.name
-        plan = options.plan
-        size = options.size
-        website = options.website
-        industry = options.industry
-        customAttributes = options.customAttributes
-        monthlySpend = options.monthlySpend
+        self.name = options.name
+        self.plan = options.plan
+        self.size = options.size
+        self.website = options.website
+        self.industry = options.industry
+        self.customAttributes = options.customAttributes
+        self.monthlySpend = options.monthlySpend
     }
 }
 
@@ -115,9 +115,9 @@ struct SearchCompaniesRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(query, forKey: SdkCodingKey("query"))
-        try keyedContainer.encodeIfPresent(pagination, forKey: SdkCodingKey("pagination"))
-        try keyedContainer.encodeIfPresent(sort, forKey: SdkCodingKey("sort"))
+        try keyedContainer.encode(self.query, forKey: SdkCodingKey("query"))
+        try keyedContainer.encodeIfPresent(self.pagination, forKey: SdkCodingKey("pagination"))
+        try keyedContainer.encodeIfPresent(self.sort, forKey: SdkCodingKey("sort"))
     }
 }
 
@@ -126,7 +126,7 @@ struct AttachCompaniesContactRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(id, forKey: SdkCodingKey("id"))
+        try keyedContainer.encode(self.id, forKey: SdkCodingKey("id"))
     }
 }
 
@@ -136,8 +136,8 @@ struct CreateCompanyNoteRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(body, forKey: SdkCodingKey("body"))
-        try keyedContainer.encodeIfPresent(adminId, forKey: SdkCodingKey("admin_id"))
+        try keyedContainer.encode(self.body, forKey: SdkCodingKey("body"))
+        try keyedContainer.encodeIfPresent(self.adminId, forKey: SdkCodingKey("admin_id"))
     }
 }
 
@@ -147,8 +147,8 @@ struct CreateNoteRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(body, forKey: SdkCodingKey("body"))
-        try keyedContainer.encodeIfPresent(adminId, forKey: SdkCodingKey("admin_id"))
+        try keyedContainer.encode(self.body, forKey: SdkCodingKey("body"))
+        try keyedContainer.encodeIfPresent(self.adminId, forKey: SdkCodingKey("admin_id"))
     }
 }
 
@@ -159,9 +159,9 @@ struct MergeContactRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(from, forKey: SdkCodingKey("from"))
-        try keyedContainer.encode(into, forKey: SdkCodingKey("into"))
-        try keyedContainer.encodeIfPresent(skipDuplicateValidation, forKey: SdkCodingKey("skip_duplicate_validation"))
+        try keyedContainer.encode(self.from, forKey: SdkCodingKey("from"))
+        try keyedContainer.encode(self.into, forKey: SdkCodingKey("into"))
+        try keyedContainer.encodeIfPresent(self.skipDuplicateValidation, forKey: SdkCodingKey("skip_duplicate_validation"))
     }
 }
 
@@ -173,10 +173,10 @@ struct PreviewMergeContactRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(from, forKey: SdkCodingKey("from"))
-        try keyedContainer.encode(into, forKey: SdkCodingKey("into"))
-        try keyedContainer.encodeIfPresent(skipDuplicateValidation, forKey: SdkCodingKey("skip_duplicate_validation"))
-        try keyedContainer.encodeIfPresent(customAttributeNames, forKey: SdkCodingKey("custom_attribute_names"))
+        try keyedContainer.encode(self.from, forKey: SdkCodingKey("from"))
+        try keyedContainer.encode(self.into, forKey: SdkCodingKey("into"))
+        try keyedContainer.encodeIfPresent(self.skipDuplicateValidation, forKey: SdkCodingKey("skip_duplicate_validation"))
+        try keyedContainer.encodeIfPresent(self.customAttributeNames, forKey: SdkCodingKey("custom_attribute_names"))
     }
 }
 
@@ -187,9 +187,9 @@ struct SearchContactsRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(query, forKey: SdkCodingKey("query"))
-        try keyedContainer.encodeIfPresent(pagination, forKey: SdkCodingKey("pagination"))
-        try keyedContainer.encodeIfPresent(sort, forKey: SdkCodingKey("sort"))
+        try keyedContainer.encode(self.query, forKey: SdkCodingKey("query"))
+        try keyedContainer.encodeIfPresent(self.pagination, forKey: SdkCodingKey("pagination"))
+        try keyedContainer.encodeIfPresent(self.sort, forKey: SdkCodingKey("sort"))
     }
 }
 
@@ -199,7 +199,7 @@ struct BulkCreateContactsRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(contacts, forKey: SdkCodingKey("contacts"))
-        try keyedContainer.encodeIfPresent(job, forKey: SdkCodingKey("job"))
+        try keyedContainer.encode(self.contacts, forKey: SdkCodingKey("contacts"))
+        try keyedContainer.encodeIfPresent(self.job, forKey: SdkCodingKey("job"))
     }
 }

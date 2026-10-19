@@ -3,21 +3,18 @@
 
 import Foundation
 
-/// TaggedModelsConversations domain models
+// TaggedModelsConversations domain models
 /// The kind of reviewer. `ai` if the review is assigned to Fin; `admin` if it is assigned to a teammate.
 public struct ConversationScorecardReviewerType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let ai = ConversationScorecardReviewerType(rawValue: "ai")
     public static let admin = ConversationScorecardReviewerType(rawValue: "admin")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -30,10 +27,7 @@ public struct ConversationScorecardReviewerType: RawRepresentable, Hashable, Cod
 public struct ConversationListItemPriority: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let none = ConversationListItemPriority(rawValue: "none")
     public static let low = ConversationListItemPriority(rawValue: "low")
     public static let medium = ConversationListItemPriority(rawValue: "medium")
@@ -42,7 +36,7 @@ public struct ConversationListItemPriority: RawRepresentable, Hashable, Codable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -55,16 +49,13 @@ public struct ConversationListItemPriority: RawRepresentable, Hashable, Codable,
 public struct ConversationScorecardSubmittedByType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let ai = ConversationScorecardSubmittedByType(rawValue: "ai")
     public static let admin = ConversationScorecardSubmittedByType(rawValue: "admin")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -75,20 +66,16 @@ public struct ConversationScorecardSubmittedByType: RawRepresentable, Hashable, 
 
 /// The kind of reviewee. `ai` if the conversation was handled by Fin or scored without a specific teammate;
 /// `admin` if a specific teammate was reviewed.
-public struct ConversationScorecardReviewedTeammateType: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct ConversationScorecardReviewedTeammateType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let ai = ConversationScorecardReviewedTeammateType(rawValue: "ai")
     public static let admin = ConversationScorecardReviewedTeammateType(rawValue: "admin")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -101,16 +88,13 @@ public struct ConversationScorecardReviewedTeammateType: RawRepresentable, Hasha
 public struct ConversationScorecardNoteAuthorType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let ai = ConversationScorecardNoteAuthorType(rawValue: "ai")
     public static let admin = ConversationScorecardNoteAuthorType(rawValue: "admin")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -123,10 +107,7 @@ public struct ConversationScorecardNoteAuthorType: RawRepresentable, Hashable, C
 public struct ConversationPriority: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let none = ConversationPriority(rawValue: "none")
     public static let low = ConversationPriority(rawValue: "low")
     public static let medium = ConversationPriority(rawValue: "medium")
@@ -135,7 +116,7 @@ public struct ConversationPriority: RawRepresentable, Hashable, Codable, Sendabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -148,17 +129,14 @@ public struct ConversationPriority: RawRepresentable, Hashable, Codable, Sendabl
 public struct ConversationListItemState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let open = ConversationListItemState(rawValue: "open")
     public static let closed = ConversationListItemState(rawValue: "closed")
     public static let snoozed = ConversationListItemState(rawValue: "snoozed")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -174,10 +152,7 @@ public struct ConversationListItemState: RawRepresentable, Hashable, Codable, Se
 public struct ConversationScorecardReviewStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let unreviewed = ConversationScorecardReviewStatus(rawValue: "unreviewed")
     public static let submitted = ConversationScorecardReviewStatus(rawValue: "submitted")
     public static let passedReview = ConversationScorecardReviewStatus(rawValue: "passed_review")
@@ -187,7 +162,7 @@ public struct ConversationScorecardReviewStatus: RawRepresentable, Hashable, Cod
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -200,17 +175,14 @@ public struct ConversationScorecardReviewStatus: RawRepresentable, Hashable, Cod
 public struct ConversationState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let open = ConversationState(rawValue: "open")
     public static let closed = ConversationState(rawValue: "closed")
     public static let snoozed = ConversationState(rawValue: "snoozed")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

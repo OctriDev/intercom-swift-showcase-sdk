@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// TaggedModelsTeams domain models
+// TaggedModelsTeams domain models
 /// Teams are groups of admins in Intercom.
 public struct Team: Codable {
     /// Value is always "team"
@@ -39,34 +39,26 @@ public struct Team: Codable {
     }
 
     init() {
-        (type, id, name, adminIds, adminPriorityLevel) = (nil, nil, nil, nil, nil)
-        (assignmentLimit, distributionMethod) = (nil, nil)
+        (self.type, self.id, self.name, self.adminIds, self.adminPriorityLevel) = (nil, nil, nil, nil, nil)
+        (self.assignmentLimit, self.distributionMethod) = (nil, nil)
     }
 }
 
-public extension Team {
-    init(from decoder: Decoder) throws {
+extension Team {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        adminIds = try container.sdkDecodeIfPresent(.adminIds)
-        adminPriorityLevel = try container.sdkDecodeIfPresent(.adminPriorityLevel)
-        assignmentLimit = try container.sdkDecodeIfPresent(.assignmentLimit)
-        distributionMethod = try container.sdkDecodeIfPresent(.distributionMethod)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.adminIds = try container.sdkDecodeIfPresent(.adminIds)
+        self.adminPriorityLevel = try container.sdkDecodeIfPresent(.adminPriorityLevel)
+        self.assignmentLimit = try container.sdkDecodeIfPresent(.assignmentLimit)
+        self.distributionMethod = try container.sdkDecodeIfPresent(.distributionMethod)
     }
 }
 
-public extension Team {
-    init(
-        type: String? = nil,
-        id: String? = nil,
-        name: String? = nil,
-        adminIds: [Int]? = nil,
-        adminPriorityLevel: AdminPriorityLevel? = nil,
-        assignmentLimit: Int? = nil,
-        distributionMethod: String? = nil
-    ) {
+extension Team {
+    public init(type: String? = nil, id: String? = nil, name: String? = nil, adminIds: [Int]? = nil, adminPriorityLevel: AdminPriorityLevel? = nil, assignmentLimit: Int? = nil, distributionMethod: String? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.name, self.adminIds) = (name, adminIds)

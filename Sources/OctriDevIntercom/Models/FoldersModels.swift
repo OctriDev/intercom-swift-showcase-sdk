@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Folders domain models
+// Folders domain models
 /// Response returned when a folder is deleted
 public struct DeletedFolderObject: Codable {
     /// The unique identifier for the deleted folder
@@ -23,21 +23,21 @@ public struct DeletedFolderObject: Codable {
     }
 
     init() {
-        (id, object, deleted) = (nil, nil, nil)
+        (self.id, self.object, self.deleted) = (nil, nil, nil)
     }
 }
 
-public extension DeletedFolderObject {
-    init(from decoder: Decoder) throws {
+extension DeletedFolderObject {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        object = try container.sdkDecodeIfPresent(.object)
-        deleted = try container.sdkDecodeIfPresent(.deleted)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-public extension DeletedFolderObject {
-    init(id: String? = nil, object: DeletedFolderObjectObject? = nil, deleted: Bool? = nil) {
+extension DeletedFolderObject {
+    public init(id: String? = nil, object: DeletedFolderObjectObject? = nil, deleted: Bool? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
         self.deleted = deleted
@@ -48,15 +48,12 @@ public extension DeletedFolderObject {
 public struct DeletedFolderObjectObject: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let folder = DeletedFolderObjectObject(rawValue: "folder")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

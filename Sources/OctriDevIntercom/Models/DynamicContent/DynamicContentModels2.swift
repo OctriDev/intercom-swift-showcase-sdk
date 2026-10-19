@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// TaggedModelsDynamicContent domain models
+// TaggedModelsDynamicContent domain models
 /// The value of a dynamic content for one locale, and optionally one brand.
 public struct DynamicContentVariation: Codable {
     /// String representing the object's type. Always has the value `dynamic_content_variation`.
@@ -48,38 +48,28 @@ public struct DynamicContentVariation: Codable {
     }
 
     init() {
-        (type, id, locale, brandId, textContent) = (nil, nil, nil, nil, nil)
-        (jsonBlocks, intentionallyEmpty, createdAt, updatedAt) = (nil, nil, nil, nil)
+        (self.type, self.id, self.locale, self.brandId, self.textContent) = (nil, nil, nil, nil, nil)
+        (self.jsonBlocks, self.intentionallyEmpty, self.createdAt, self.updatedAt) = (nil, nil, nil, nil)
     }
 }
 
-public extension DynamicContentVariation {
-    init(from decoder: Decoder) throws {
+extension DynamicContentVariation {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        locale = try container.sdkDecodeIfPresent(.locale)
-        brandId = try container.sdkDecodeIfPresent(.brandId)
-        textContent = try container.sdkDecodeIfPresent(.textContent)
-        jsonBlocks = try container.sdkDecodeIfPresent(.jsonBlocks)
-        intentionallyEmpty = try container.sdkDecodeIfPresent(.intentionallyEmpty)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.locale = try container.sdkDecodeIfPresent(.locale)
+        self.brandId = try container.sdkDecodeIfPresent(.brandId)
+        self.textContent = try container.sdkDecodeIfPresent(.textContent)
+        self.jsonBlocks = try container.sdkDecodeIfPresent(.jsonBlocks)
+        self.intentionallyEmpty = try container.sdkDecodeIfPresent(.intentionallyEmpty)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
     }
 }
 
-public extension DynamicContentVariation {
-    init(
-        type: String? = nil,
-        id: String? = nil,
-        locale: String? = nil,
-        brandId: String? = nil,
-        textContent: String? = nil,
-        jsonBlocks: [[String: JSONValue]]? = nil,
-        intentionallyEmpty: Bool? = nil,
-        createdAt: Int? = nil,
-        updatedAt: Int? = nil
-    ) {
+extension DynamicContentVariation {
+    public init(type: String? = nil, id: String? = nil, locale: String? = nil, brandId: String? = nil, textContent: String? = nil, jsonBlocks: [[String: JSONValue]]? = nil, intentionallyEmpty: Bool? = nil, createdAt: Int? = nil, updatedAt: Int? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.locale, self.brandId) = (locale, brandId)
@@ -133,38 +123,28 @@ public struct DynamicContent: Codable {
     }
 
     init() {
-        (type, id, name, key, contentType) = (nil, nil, nil, nil, nil)
-        (defaultLocale, variations, createdAt, updatedAt) = (nil, nil, nil, nil)
+        (self.type, self.id, self.name, self.key, self.contentType) = (nil, nil, nil, nil, nil)
+        (self.defaultLocale, self.variations, self.createdAt, self.updatedAt) = (nil, nil, nil, nil)
     }
 }
 
-public extension DynamicContent {
-    init(from decoder: Decoder) throws {
+extension DynamicContent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        key = try container.sdkDecodeIfPresent(.key)
-        contentType = try container.sdkDecodeIfPresent(.contentType)
-        defaultLocale = try container.sdkDecodeIfPresent(.defaultLocale)
-        variations = try container.sdkDecodeIfPresent(.variations)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.key = try container.sdkDecodeIfPresent(.key)
+        self.contentType = try container.sdkDecodeIfPresent(.contentType)
+        self.defaultLocale = try container.sdkDecodeIfPresent(.defaultLocale)
+        self.variations = try container.sdkDecodeIfPresent(.variations)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
     }
 }
 
-public extension DynamicContent {
-    init(
-        type: String? = nil,
-        id: String? = nil,
-        name: String? = nil,
-        key: String? = nil,
-        contentType: DynamicContentContentType? = nil,
-        defaultLocale: String? = nil,
-        variations: [DynamicContentVariation]? = nil,
-        createdAt: Int? = nil,
-        updatedAt: Int? = nil
-    ) {
+extension DynamicContent {
+    public init(type: String? = nil, id: String? = nil, name: String? = nil, key: String? = nil, contentType: DynamicContentContentType? = nil, defaultLocale: String? = nil, variations: [DynamicContentVariation]? = nil, createdAt: Int? = nil, updatedAt: Int? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.name, self.key) = (name, key)
@@ -178,16 +158,13 @@ public extension DynamicContent {
 public struct DynamicContentContentType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let inline = DynamicContentContentType(rawValue: "inline")
     public static let block = DynamicContentContentType(rawValue: "block")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

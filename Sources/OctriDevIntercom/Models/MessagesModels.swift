@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Messages domain models
+// Messages domain models
 /// A recipient of a message
 public struct Recipient: Codable {
     /// The role associated to the contact - `user` or `lead`.
@@ -18,35 +18,25 @@ public struct Recipient: Codable {
         case id
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension Recipient {
-    init(from decoder: Decoder) throws {
+extension Recipient {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        id = try container.sdkDecodeRequired(.id)
+        self.type = try container.sdkDecodeRequired(.type)
+        self.id = try container.sdkDecodeRequired(.id)
     }
 }
 
-public extension Recipient {
-    init(type: RecipientType, id: String) {
+extension Recipient {
+    public init(type: RecipientType, id: String) {
         (self.type, self.id) = (type, id)
     }
 }
@@ -61,19 +51,19 @@ public struct WhatsappMessageStatusListPagesNext: Codable {
     }
 
     init() {
-        startingAfter = nil
+        self.startingAfter = nil
     }
 }
 
-public extension WhatsappMessageStatusListPagesNext {
-    init(from decoder: Decoder) throws {
+extension WhatsappMessageStatusListPagesNext {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        startingAfter = try container.sdkDecodeIfPresent(.startingAfter)
+        self.startingAfter = try container.sdkDecodeIfPresent(.startingAfter)
     }
 }
 
-public extension WhatsappMessageStatusListPagesNext {
-    init(startingAfter: String? = nil) {
+extension WhatsappMessageStatusListPagesNext {
+    public init(startingAfter: String? = nil) {
         self.init()
         self.startingAfter = startingAfter
     }
@@ -92,20 +82,20 @@ public struct WhatsappMessageStatusError: Codable {
     }
 
     init() {
-        (message, details) = (nil, nil)
+        (self.message, self.details) = (nil, nil)
     }
 }
 
-public extension WhatsappMessageStatusError {
-    init(from decoder: Decoder) throws {
+extension WhatsappMessageStatusError {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        message = try container.sdkDecodeIfPresent(.message)
-        details = try container.sdkDecodeIfPresent(.details)
+        self.message = try container.sdkDecodeIfPresent(.message)
+        self.details = try container.sdkDecodeIfPresent(.details)
     }
 }
 
-public extension WhatsappMessageStatusError {
-    init(message: String? = nil, details: String? = nil) {
+extension WhatsappMessageStatusError {
+    public init(message: String? = nil, details: String? = nil) {
         self.init()
         (self.message, self.details) = (message, details)
     }
@@ -155,40 +145,29 @@ public struct CreateMessageRequest: Codable {
     }
 
     init() {
-        (messageType, subject, body, template, from) = (nil, nil, nil, nil, nil)
-        (to, cc, bcc, createdAt, createConversationWithoutContactReply) = (nil, nil, nil, nil, nil)
+        (self.messageType, self.subject, self.body, self.template, self.from) = (nil, nil, nil, nil, nil)
+        (self.to, self.cc, self.bcc, self.createdAt, self.createConversationWithoutContactReply) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension CreateMessageRequest {
-    init(from decoder: Decoder) throws {
+extension CreateMessageRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        messageType = try container.sdkDecodeIfPresent(.messageType)
-        subject = try container.sdkDecodeIfPresent(.subject)
-        body = try container.sdkDecodeIfPresent(.body)
-        template = try container.sdkDecodeIfPresent(.template)
-        from = try container.sdkDecodeIfPresent(.from)
-        to = try container.sdkDecodeIfPresent(.to)
-        cc = try container.sdkDecodeIfPresent(.cc)
-        bcc = try container.sdkDecodeIfPresent(.bcc)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        createConversationWithoutContactReply = try container.sdkDecodeIfPresent(.createConversationWithoutContactReply)
+        self.messageType = try container.sdkDecodeIfPresent(.messageType)
+        self.subject = try container.sdkDecodeIfPresent(.subject)
+        self.body = try container.sdkDecodeIfPresent(.body)
+        self.template = try container.sdkDecodeIfPresent(.template)
+        self.from = try container.sdkDecodeIfPresent(.from)
+        self.to = try container.sdkDecodeIfPresent(.to)
+        self.cc = try container.sdkDecodeIfPresent(.cc)
+        self.bcc = try container.sdkDecodeIfPresent(.bcc)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.createConversationWithoutContactReply = try container.sdkDecodeIfPresent(.createConversationWithoutContactReply)
     }
 }
 
-public extension CreateMessageRequest {
-    init(
-        messageType: CreateMessageRequestMessageType? = nil,
-        subject: String? = nil,
-        body: String? = nil,
-        template: String? = nil,
-        from: CreateMessageRequestFrom? = nil,
-        to: CreateMessageRequestTo? = nil,
-        cc: CreateMessageRequestCc? = nil,
-        bcc: CreateMessageRequestBcc? = nil,
-        createdAt: Int? = nil,
-        createConversationWithoutContactReply: Bool? = nil
-    ) {
+extension CreateMessageRequest {
+    public init(messageType: CreateMessageRequestMessageType? = nil, subject: String? = nil, body: String? = nil, template: String? = nil, from: CreateMessageRequestFrom? = nil, to: CreateMessageRequestTo? = nil, cc: CreateMessageRequestCc? = nil, bcc: CreateMessageRequestBcc? = nil, createdAt: Int? = nil, createConversationWithoutContactReply: Bool? = nil) {
         self.init()
         (self.messageType, self.subject) = (messageType, subject)
         (self.body, self.template) = (body, template)
@@ -205,32 +184,22 @@ public indirect enum CreateMessageRequestTo {
 }
 
 extension CreateMessageRequestTo: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for CreateMessageRequestTo"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for CreateMessageRequestTo")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
 extension CreateMessageRequestTo {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(Recipient.self) {
-            return .recipient(value)
-        }
-        if let value = try? container.decode([Recipient].self) {
-            return .recipientList(value)
-        }
+        if let value = try? container.decode(Recipient.self) { return .recipient(value) }
+        if let value = try? container.decode([Recipient].self) { return .recipientList(value) }
         return nil
     }
 }
@@ -283,36 +252,27 @@ public struct WhatsappMessageStatus: Codable {
     }
 
     init() {
-        (conversationId, status, type, createdAt, updatedAt) = (nil, nil, nil, nil, nil)
-        (templateName, messageId, error) = (nil, nil, nil)
+        (self.conversationId, self.status, self.type, self.createdAt, self.updatedAt) = (nil, nil, nil, nil, nil)
+        (self.templateName, self.messageId, self.error) = (nil, nil, nil)
     }
 }
 
-public extension WhatsappMessageStatus {
-    init(from decoder: Decoder) throws {
+extension WhatsappMessageStatus {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        conversationId = try container.sdkDecodeIfPresent(.conversationId)
-        status = try container.sdkDecodeIfPresent(.status)
-        type = try container.sdkDecodeIfPresent(.type)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        templateName = try container.sdkDecodeIfPresent(.templateName)
-        messageId = try container.sdkDecodeIfPresent(.messageId)
-        error = try container.sdkDecodeIfPresent(.error)
+        self.conversationId = try container.sdkDecodeIfPresent(.conversationId)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.templateName = try container.sdkDecodeIfPresent(.templateName)
+        self.messageId = try container.sdkDecodeIfPresent(.messageId)
+        self.error = try container.sdkDecodeIfPresent(.error)
     }
 }
 
-public extension WhatsappMessageStatus {
-    init(
-        conversationId: String? = nil,
-        status: WhatsappMessageStatusStatus? = nil,
-        type: String? = nil,
-        createdAt: Int? = nil,
-        updatedAt: Int? = nil,
-        templateName: String? = nil,
-        messageId: String? = nil,
-        error: WhatsappMessageStatusError? = nil
-    ) {
+extension WhatsappMessageStatus {
+    public init(conversationId: String? = nil, status: WhatsappMessageStatusStatus? = nil, type: String? = nil, createdAt: Int? = nil, updatedAt: Int? = nil, templateName: String? = nil, messageId: String? = nil, error: WhatsappMessageStatusError? = nil) {
         self.init()
         (self.conversationId, self.status) = (conversationId, status)
         (self.type, self.createdAt) = (type, createdAt)
@@ -327,32 +287,22 @@ public indirect enum CreateMessageRequestBcc {
 }
 
 extension CreateMessageRequestBcc: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for CreateMessageRequestBcc"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for CreateMessageRequestBcc")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
 extension CreateMessageRequestBcc {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(Recipient.self) {
-            return .recipient(value)
-        }
-        if let value = try? container.decode([Recipient].self) {
-            return .recipientList(value)
-        }
+        if let value = try? container.decode(Recipient.self) { return .recipient(value) }
+        if let value = try? container.decode([Recipient].self) { return .recipientList(value) }
         return nil
     }
 }
@@ -397,85 +347,46 @@ public struct WhatsappMessageStatusListEventsItem: Codable {
         case templateName = "template_name"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension WhatsappMessageStatusListEventsItem {
-    init(from decoder: Decoder) throws {
+extension WhatsappMessageStatusListEventsItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
         guard container.contains(.conversationId) else {
-            throw SdkValidationError(
-                field: "conversation_id",
-                code: "required",
-                message: "Validation failed for 'conversation_id': value is required"
-            )
+            throw SdkValidationError(field: "conversation_id", code: "required", message: "Validation failed for 'conversation_id': value is required")
         }
         guard container.contains(.status) else {
-            throw SdkValidationError(
-                field: "status",
-                code: "required",
-                message: "Validation failed for 'status': value is required"
-            )
+            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
         }
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
         guard container.contains(.updatedAt) else {
-            throw SdkValidationError(
-                field: "updated_at",
-                code: "required",
-                message: "Validation failed for 'updated_at': value is required"
-            )
+            throw SdkValidationError(field: "updated_at", code: "required", message: "Validation failed for 'updated_at': value is required")
         }
         guard container.contains(.whatsappMessageId) else {
-            throw SdkValidationError(
-                field: "whatsapp_message_id",
-                code: "required",
-                message: "Validation failed for 'whatsapp_message_id': value is required"
-            )
+            throw SdkValidationError(field: "whatsapp_message_id", code: "required", message: "Validation failed for 'whatsapp_message_id': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        conversationId = try container.sdkDecodeRequired(.conversationId)
-        status = try container.sdkDecodeRequired(.status)
-        type = try container.sdkDecodeRequired(.type)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        updatedAt = try container.sdkDecodeRequired(.updatedAt)
-        whatsappMessageId = try container.sdkDecodeRequired(.whatsappMessageId)
-        templateName = try container.sdkDecodeIfPresent(.templateName)
+        self.id = try container.sdkDecodeRequired(.id)
+        self.conversationId = try container.sdkDecodeRequired(.conversationId)
+        self.status = try container.sdkDecodeRequired(.status)
+        self.type = try container.sdkDecodeRequired(.type)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.updatedAt = try container.sdkDecodeRequired(.updatedAt)
+        self.whatsappMessageId = try container.sdkDecodeRequired(.whatsappMessageId)
+        self.templateName = try container.sdkDecodeIfPresent(.templateName)
     }
 }
 
-public extension WhatsappMessageStatusListEventsItem {
-    init(
-        id: String,
-        conversationId: String,
-        status: WhatsappMessageStatusListEventsItemStatus,
-        type: WhatsappMessageStatusListEventsItemType,
-        createdAt: Int,
-        updatedAt: Int,
-        whatsappMessageId: String,
-        templateName: String? = nil
-    ) {
+extension WhatsappMessageStatusListEventsItem {
+    public init(id: String, conversationId: String, status: WhatsappMessageStatusListEventsItemStatus, type: WhatsappMessageStatusListEventsItemType, createdAt: Int, updatedAt: Int, whatsappMessageId: String, templateName: String? = nil) {
         (self.id, self.conversationId) = (id, conversationId)
         (self.status, self.type) = (status, type)
         (self.createdAt, self.updatedAt) = (createdAt, updatedAt)
@@ -489,32 +400,22 @@ public indirect enum CreateMessageRequestCc {
 }
 
 extension CreateMessageRequestCc: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for CreateMessageRequestCc"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for CreateMessageRequestCc")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
 extension CreateMessageRequestCc {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(Recipient.self) {
-            return .recipient(value)
-        }
-        if let value = try? container.decode([Recipient].self) {
-            return .recipientList(value)
-        }
+        if let value = try? container.decode(Recipient.self) { return .recipient(value) }
+        if let value = try? container.decode([Recipient].self) { return .recipientList(value) }
         return nil
     }
 }
@@ -550,65 +451,37 @@ public struct WhatsappMessageStatusList: Codable {
         case events
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension WhatsappMessageStatusList {
-    init(from decoder: Decoder) throws {
+extension WhatsappMessageStatusList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.rulesetId) else {
-            throw SdkValidationError(
-                field: "ruleset_id",
-                code: "required",
-                message: "Validation failed for 'ruleset_id': value is required"
-            )
+            throw SdkValidationError(field: "ruleset_id", code: "required", message: "Validation failed for 'ruleset_id': value is required")
         }
         guard container.contains(.pages) else {
-            throw SdkValidationError(
-                field: "pages",
-                code: "required",
-                message: "Validation failed for 'pages': value is required"
-            )
+            throw SdkValidationError(field: "pages", code: "required", message: "Validation failed for 'pages': value is required")
         }
         guard container.contains(.totalCount) else {
-            throw SdkValidationError(
-                field: "total_count",
-                code: "required",
-                message: "Validation failed for 'total_count': value is required"
-            )
+            throw SdkValidationError(field: "total_count", code: "required", message: "Validation failed for 'total_count': value is required")
         }
         guard container.contains(.events) else {
-            throw SdkValidationError(
-                field: "events",
-                code: "required",
-                message: "Validation failed for 'events': value is required"
-            )
+            throw SdkValidationError(field: "events", code: "required", message: "Validation failed for 'events': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        rulesetId = try container.sdkDecodeRequired(.rulesetId)
-        pages = try container.sdkDecodeRequired(.pages)
-        totalCount = try container.sdkDecodeRequired(.totalCount)
-        events = try container.sdkDecodeRequired(.events)
+        self.type = try container.sdkDecodeRequired(.type)
+        self.rulesetId = try container.sdkDecodeRequired(.rulesetId)
+        self.pages = try container.sdkDecodeRequired(.pages)
+        self.totalCount = try container.sdkDecodeRequired(.totalCount)
+        self.events = try container.sdkDecodeRequired(.events)
     }
 }
 
-public extension WhatsappMessageStatusList {
-    init(
-        type: WhatsappMessageStatusListType,
-        rulesetId: String,
-        pages: WhatsappMessageStatusListPages,
-        totalCount: Int,
-        events: [WhatsappMessageStatusListEventsItem]
-    ) {
+extension WhatsappMessageStatusList {
+    public init(type: WhatsappMessageStatusListType, rulesetId: String, pages: WhatsappMessageStatusListPages, totalCount: Int, events: [WhatsappMessageStatusListEventsItem]) {
         (self.type, self.rulesetId) = (type, rulesetId)
         (self.pages, self.totalCount) = (pages, totalCount)
         self.events = events

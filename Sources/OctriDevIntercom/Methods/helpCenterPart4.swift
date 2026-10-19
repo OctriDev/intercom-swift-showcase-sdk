@@ -6,77 +6,30 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension HelpCenterMethods {
-    /// Retrieves a redirect from a specific help center. Use the help center and redirect identifiers to fetch the
-    /// redirect's source URL, locale, and target details. Access requires the `read_help_center_redirects_scope` OAuth
-    /// scope.
+extension HelpCenterMethods {
+    /// Retrieves a redirect from a specific help center. Use the help center and redirect identifiers to fetch the redirect's source URL, locale, and target details. Access requires the `read_help_center_redirects_scope` OAuth scope.
     ///
-    /// You can fetch the details of a single redirect by making a GET request to
-    /// `https://api.intercom.io/help_center/help_centers/{help_center_id}/redirects/{id}`. Requires the
-    /// `read_help_center_redirects_scope` OAuth scope.
+    /// You can fetch the details of a single redirect by making a GET request to `https://api.intercom.io/help_center/help_centers/{help_center_id}/redirects/{id}`. Requires the `read_help_center_redirects_scope` OAuth scope.
     ///
     /// - Parameters:
     /// - helpCenterId: The unique identifier for the help center.
     /// - id: The unique identifier for the redirect.
-    static func retrieveHelpCenterRedirect(
-        config: ClientConfig,
-        helpCenterId: String,
-        id: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> HelpCenterRedirect {
-        try await (sdkRequest(
-            "GET",
-            [
-                "/help_center/help_centers/",
-                sdkEncodePathSegment(sdkWireString(helpCenterId)),
-                "/redirects/",
-                sdkEncodePathSegment(sdkWireString(id)),
-            ].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "retrieveHelpCenterRedirect",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "404": Error2.self]
-        )).data
+    public static func retrieveHelpCenterRedirect(config: ClientConfig, helpCenterId: String, id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> HelpCenterRedirect {
+        return try (await sdkRequest("GET", ["/help_center/help_centers/", sdkEncodePathSegment(sdkWireString(helpCenterId)), "/redirects/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "retrieveHelpCenterRedirect", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
     }
 
-    /// Deletes a redirect from a help center. Provide the help center and redirect identifiers to specify which
-    /// redirect to remove. Access requires the `read_write_help_center_redirects_scope` OAuth scope.
+    /// Deletes a redirect from a help center. Provide the help center and redirect identifiers to specify which redirect to remove. Access requires the `read_write_help_center_redirects_scope` OAuth scope.
     ///
-    /// You can delete a single redirect by making a DELETE request to
-    /// `https://api.intercom.io/help_center/help_centers/{help_center_id}/redirects/{id}`. Requires the
-    /// `read_write_help_center_redirects_scope` OAuth scope.
+    /// You can delete a single redirect by making a DELETE request to `https://api.intercom.io/help_center/help_centers/{help_center_id}/redirects/{id}`. Requires the `read_write_help_center_redirects_scope` OAuth scope.
     ///
     /// - Parameters:
     /// - helpCenterId: The unique identifier for the help center.
     /// - id: The unique identifier for the redirect.
-    static func deleteHelpCenterRedirect(
-        config: ClientConfig,
-        helpCenterId: String,
-        id: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DeletedHelpCenterRedirectObject {
-        try await (sdkRequest(
-            "DELETE",
-            [
-                "/help_center/help_centers/",
-                sdkEncodePathSegment(sdkWireString(helpCenterId)),
-                "/redirects/",
-                sdkEncodePathSegment(sdkWireString(id)),
-            ].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "deleteHelpCenterRedirect",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "404": Error2.self]
-        )).data
+    public static func deleteHelpCenterRedirect(config: ClientConfig, helpCenterId: String, id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DeletedHelpCenterRedirectObject {
+        return try (await sdkRequest("DELETE", ["/help_center/help_centers/", sdkEncodePathSegment(sdkWireString(helpCenterId)), "/redirects/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "deleteHelpCenterRedirect", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
     }
 }

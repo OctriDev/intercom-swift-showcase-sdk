@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// TaggedModelsBrands domain models
+// TaggedModelsBrands domain models
 /// A list of brands
 public struct BrandList: Codable {
     /// The type of object
@@ -18,20 +18,20 @@ public struct BrandList: Codable {
     }
 
     init() {
-        (type, data) = (nil, nil)
+        (self.type, self.data) = (nil, nil)
     }
 }
 
-public extension BrandList {
-    init(from decoder: Decoder) throws {
+extension BrandList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension BrandList {
-    init(type: String? = nil, data: [Brand]? = nil) {
+extension BrandList {
+    public init(type: String? = nil, data: [Brand]? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
     }
@@ -76,36 +76,27 @@ public struct Brand: Codable {
     }
 
     init() {
-        (type, id, name, isDefault, createdAt) = (nil, nil, nil, nil, nil)
-        (updatedAt, helpCenterId, defaultAddressSettingsId) = (nil, nil, nil)
+        (self.type, self.id, self.name, self.isDefault, self.createdAt) = (nil, nil, nil, nil, nil)
+        (self.updatedAt, self.helpCenterId, self.defaultAddressSettingsId) = (nil, nil, nil)
     }
 }
 
-public extension Brand {
-    init(from decoder: Decoder) throws {
+extension Brand {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        isDefault = try container.sdkDecodeIfPresent(.isDefault)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        helpCenterId = try container.sdkDecodeIfPresent(.helpCenterId)
-        defaultAddressSettingsId = try container.sdkDecodeIfPresent(.defaultAddressSettingsId)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.isDefault = try container.sdkDecodeIfPresent(.isDefault)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.helpCenterId = try container.sdkDecodeIfPresent(.helpCenterId)
+        self.defaultAddressSettingsId = try container.sdkDecodeIfPresent(.defaultAddressSettingsId)
     }
 }
 
-public extension Brand {
-    init(
-        type: String? = nil,
-        id: String? = nil,
-        name: String? = nil,
-        isDefault: Bool? = nil,
-        createdAt: Int? = nil,
-        updatedAt: Int? = nil,
-        helpCenterId: String? = nil,
-        defaultAddressSettingsId: String? = nil
-    ) {
+extension Brand {
+    public init(type: String? = nil, id: String? = nil, name: String? = nil, isDefault: Bool? = nil, createdAt: Int? = nil, updatedAt: Int? = nil, helpCenterId: String? = nil, defaultAddressSettingsId: String? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.name, self.isDefault) = (name, isDefault)

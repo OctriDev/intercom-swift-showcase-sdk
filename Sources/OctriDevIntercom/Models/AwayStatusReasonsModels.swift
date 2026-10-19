@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AwayStatusReasons domain models
+// AwayStatusReasons domain models
 /// A list of away status reasons.
 public struct AwayStatusReasonList: Codable {
     /// The type of the object
@@ -18,20 +18,20 @@ public struct AwayStatusReasonList: Codable {
     }
 
     init() {
-        (type, data) = (nil, nil)
+        (self.type, self.data) = (nil, nil)
     }
 }
 
-public extension AwayStatusReasonList {
-    init(from decoder: Decoder) throws {
+extension AwayStatusReasonList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension AwayStatusReasonList {
-    init(type: AwayStatusReasonListType? = nil, data: [AwayStatusReason]? = nil) {
+extension AwayStatusReasonList {
+    public init(type: AwayStatusReasonListType? = nil, data: [AwayStatusReason]? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
     }
@@ -74,36 +74,27 @@ public struct AwayStatusReason: Codable {
     }
 
     init() {
-        (type, id, label, emoji, order) = (nil, nil, nil, nil, nil)
-        (deleted, createdAt, updatedAt) = (nil, nil, nil)
+        (self.type, self.id, self.label, self.emoji, self.order) = (nil, nil, nil, nil, nil)
+        (self.deleted, self.createdAt, self.updatedAt) = (nil, nil, nil)
     }
 }
 
-public extension AwayStatusReason {
-    init(from decoder: Decoder) throws {
+extension AwayStatusReason {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        label = try container.sdkDecodeIfPresent(.label)
-        emoji = try container.sdkDecodeIfPresent(.emoji)
-        order = try container.sdkDecodeIfPresent(.order)
-        deleted = try container.sdkDecodeIfPresent(.deleted)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.label = try container.sdkDecodeIfPresent(.label)
+        self.emoji = try container.sdkDecodeIfPresent(.emoji)
+        self.order = try container.sdkDecodeIfPresent(.order)
+        self.deleted = try container.sdkDecodeIfPresent(.deleted)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
     }
 }
 
-public extension AwayStatusReason {
-    init(
-        type: String? = nil,
-        id: String? = nil,
-        label: String? = nil,
-        emoji: String? = nil,
-        order: Int? = nil,
-        deleted: Bool? = nil,
-        createdAt: Int? = nil,
-        updatedAt: Int? = nil
-    ) {
+extension AwayStatusReason {
+    public init(type: String? = nil, id: String? = nil, label: String? = nil, emoji: String? = nil, order: Int? = nil, deleted: Bool? = nil, createdAt: Int? = nil, updatedAt: Int? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.label, self.emoji) = (label, emoji)
@@ -116,15 +107,12 @@ public extension AwayStatusReason {
 public struct AwayStatusReasonListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let list = AwayStatusReasonListType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

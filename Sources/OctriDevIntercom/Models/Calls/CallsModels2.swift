@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// TaggedModelsCalls domain models
+// TaggedModelsCalls domain models
 /// Represents a phone call in Intercom
 public struct Call: Codable {
     /// String representing the object's type. Always has the value `call`.
@@ -80,72 +80,52 @@ public struct Call: Codable {
     }
 
     init() {
-        (type, id, conversationId, adminId, contactId) = (nil, nil, nil, nil, nil)
-        (state, initiatedAt, answeredAt, endedAt, createdAt) = (nil, nil, nil, nil, nil)
-        (updatedAt, recordingUrl, transcriptionUrl, callType, direction) = (nil, nil, nil, nil, nil)
-        (endedReason, phone, finRecordingUrl, finTranscriptionUrl) = (nil, nil, nil, nil)
+        (self.type, self.id, self.conversationId, self.adminId, self.contactId) = (nil, nil, nil, nil, nil)
+        (self.state, self.initiatedAt, self.answeredAt, self.endedAt, self.createdAt) = (nil, nil, nil, nil, nil)
+        (self.updatedAt, self.recordingUrl, self.transcriptionUrl, self.callType, self.direction) = (nil, nil, nil, nil, nil)
+        (self.endedReason, self.phone, self.finRecordingUrl, self.finTranscriptionUrl) = (nil, nil, nil, nil)
     }
 }
 
-public extension Call {
-    init(from decoder: Decoder) throws {
+extension Call {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        conversationId = try container.sdkDecodeIfPresent(.conversationId)
-        adminId = try container.sdkDecodeIfPresent(.adminId)
-        contactId = try container.sdkDecodeIfPresent(.contactId)
-        state = try container.sdkDecodeIfPresent(.state)
-        initiatedAt = try container.sdkDecodeIfPresent(.initiatedAt)
-        answeredAt = try container.sdkDecodeIfPresent(.answeredAt)
-        endedAt = try container.sdkDecodeIfPresent(.endedAt)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        recordingUrl = try container.sdkDecodeIfPresent(.recordingUrl)
-        transcriptionUrl = try container.sdkDecodeIfPresent(.transcriptionUrl)
-        callType = try container.sdkDecodeIfPresent(.callType)
-        direction = try container.sdkDecodeIfPresent(.direction)
-        endedReason = try container.sdkDecodeIfPresent(.endedReason)
-        phone = try container.sdkDecodeIfPresent(.phone)
-        finRecordingUrl = try container.sdkDecodeIfPresent(.finRecordingUrl)
-        finTranscriptionUrl = try container.sdkDecodeIfPresent(.finTranscriptionUrl)
-        if let value = recordingUrl {
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.conversationId = try container.sdkDecodeIfPresent(.conversationId)
+        self.adminId = try container.sdkDecodeIfPresent(.adminId)
+        self.contactId = try container.sdkDecodeIfPresent(.contactId)
+        self.state = try container.sdkDecodeIfPresent(.state)
+        self.initiatedAt = try container.sdkDecodeIfPresent(.initiatedAt)
+        self.answeredAt = try container.sdkDecodeIfPresent(.answeredAt)
+        self.endedAt = try container.sdkDecodeIfPresent(.endedAt)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.recordingUrl = try container.sdkDecodeIfPresent(.recordingUrl)
+        self.transcriptionUrl = try container.sdkDecodeIfPresent(.transcriptionUrl)
+        self.callType = try container.sdkDecodeIfPresent(.callType)
+        self.direction = try container.sdkDecodeIfPresent(.direction)
+        self.endedReason = try container.sdkDecodeIfPresent(.endedReason)
+        self.phone = try container.sdkDecodeIfPresent(.phone)
+        self.finRecordingUrl = try container.sdkDecodeIfPresent(.finRecordingUrl)
+        self.finTranscriptionUrl = try container.sdkDecodeIfPresent(.finTranscriptionUrl)
+        if let value = self.recordingUrl {
             try sdkValidateUri("recording_url", value)
         }
-        if let value = transcriptionUrl {
+        if let value = self.transcriptionUrl {
             try sdkValidateUri("transcription_url", value)
         }
-        if let value = finRecordingUrl {
+        if let value = self.finRecordingUrl {
             try sdkValidateUri("fin_recording_url", value)
         }
-        if let value = finTranscriptionUrl {
+        if let value = self.finTranscriptionUrl {
             try sdkValidateUri("fin_transcription_url", value)
         }
     }
 }
 
-public extension Call {
-    init(
-        type: String? = nil,
-        id: String? = nil,
-        conversationId: String? = nil,
-        adminId: String? = nil,
-        contactId: String? = nil,
-        state: String? = nil,
-        initiatedAt: Datetime? = nil,
-        answeredAt: Datetime? = nil,
-        endedAt: Datetime? = nil,
-        createdAt: Datetime? = nil,
-        updatedAt: Datetime? = nil,
-        recordingUrl: String? = nil,
-        transcriptionUrl: String? = nil,
-        callType: String? = nil,
-        direction: String? = nil,
-        endedReason: String? = nil,
-        phone: String? = nil,
-        finRecordingUrl: String? = nil,
-        finTranscriptionUrl: String? = nil
-    ) throws {
+extension Call {
+    public init(type: String? = nil, id: String? = nil, conversationId: String? = nil, adminId: String? = nil, contactId: String? = nil, state: String? = nil, initiatedAt: Datetime? = nil, answeredAt: Datetime? = nil, endedAt: Datetime? = nil, createdAt: Datetime? = nil, updatedAt: Datetime? = nil, recordingUrl: String? = nil, transcriptionUrl: String? = nil, callType: String? = nil, direction: String? = nil, endedReason: String? = nil, phone: String? = nil, finRecordingUrl: String? = nil, finTranscriptionUrl: String? = nil) throws {
         self.init()
         (self.type, self.id) = (type, id)
         (self.conversationId, self.adminId) = (conversationId, adminId)

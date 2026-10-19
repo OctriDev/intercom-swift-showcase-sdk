@@ -6,58 +6,28 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension NotesMethods {
-    /// Retrieves a note attached to a contact or company. Supply `note_id` to identify the note. The response includes
-    /// the note body, creation time, author, and associated contact or company.
+extension NotesMethods {
+    /// Retrieves a note attached to a contact or company. Supply `note_id` to identify the note. The response includes the note body, creation time, author, and associated contact or company.
     ///
     /// You can fetch the details of a single note.
     ///
     /// - Parameters:
     /// - noteId: The unique identifier of a given note
-    static func retrieveNote(
-        config: ClientConfig,
-        noteId: Int,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Note {
-        try await (sdkRequest(
-            "GET",
-            ["/notes/", sdkEncodePathSegment(sdkWireString(noteId))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "retrieveNote",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "404": Error2.self]
-        )).data
+    public static func retrieveNote(config: ClientConfig, noteId: Int, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Note {
+        return try (await sdkRequest("GET", ["/notes/", sdkEncodePathSegment(sdkWireString(noteId))].joined(), config: config, decoder: .json, operationId: "retrieveNote", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
     }
 
-    /// Deletes a note attached to a contact or company. Use `note_id` to identify the note to remove. Notes of other
-    /// kinds cannot be deleted through the API.
+    /// Deletes a note attached to a contact or company. Use `note_id` to identify the note to remove. Notes of other kinds cannot be deleted through the API.
     ///
     /// You can delete a single contact or company note. Notes of other kinds cannot be deleted through the API.
     ///
     /// - Parameters:
     /// - noteId: The unique identifier of a given note
-    static func deleteNote(
-        config: ClientConfig,
-        noteId: Int,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DeletedNoteObject {
-        try await (sdkRequest(
-            "DELETE",
-            ["/notes/", sdkEncodePathSegment(sdkWireString(noteId))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "deleteNote",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self]
-        )).data
+    public static func deleteNote(config: ClientConfig, noteId: Int, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DeletedNoteObject {
+        return try (await sdkRequest("DELETE", ["/notes/", sdkEncodePathSegment(sdkWireString(noteId))].joined(), config: config, decoder: .json, operationId: "deleteNote", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self])).data
     }
 }

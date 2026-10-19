@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Calls domain models
+// Calls domain models
 /// A paginated list of calls.
 public struct CallList: Codable {
     /// String representing the object's type. Always has the value `list`.
@@ -26,22 +26,22 @@ public struct CallList: Codable {
     }
 
     init() {
-        (type, data, totalCount, pages) = (nil, nil, nil, nil)
+        (self.type, self.data, self.totalCount, self.pages) = (nil, nil, nil, nil)
     }
 }
 
-public extension CallList {
-    init(from decoder: Decoder) throws {
+extension CallList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        data = try container.sdkDecodeIfPresent(.data)
-        totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        pages = try container.sdkDecodeIfPresent(.pages)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.data = try container.sdkDecodeIfPresent(.data)
+        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        self.pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-public extension CallList {
-    init(type: String? = nil, data: [Call]? = nil, totalCount: Int? = nil, pages: CursorPages? = nil) {
+extension CallList {
+    public init(type: String? = nil, data: [Call]? = nil, totalCount: Int? = nil, pages: CursorPages? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
         (self.totalCount, self.pages) = (totalCount, pages)
@@ -100,43 +100,31 @@ public struct AiCallResponse: Codable {
     }
 
     init() {
-        (id, appId, userPhoneNumber, status, intercomCallId) = (nil, nil, nil, nil, nil)
-        (externalCallId, intercomConversationId, callTranscript, callSummary, intent) = (nil, nil, nil, nil, nil)
-        data = nil
+        (self.id, self.appId, self.userPhoneNumber, self.status, self.intercomCallId) = (nil, nil, nil, nil, nil)
+        (self.externalCallId, self.intercomConversationId, self.callTranscript, self.callSummary, self.intent) = (nil, nil, nil, nil, nil)
+        self.data = nil
     }
 }
 
-public extension AiCallResponse {
-    init(from decoder: Decoder) throws {
+extension AiCallResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        appId = try container.sdkDecodeIfPresent(.appId)
-        userPhoneNumber = try container.sdkDecodeIfPresent(.userPhoneNumber)
-        status = try container.sdkDecodeIfPresent(.status)
-        intercomCallId = try container.sdkDecodeIfPresent(.intercomCallId)
-        externalCallId = try container.sdkDecodeIfPresent(.externalCallId)
-        intercomConversationId = try container.sdkDecodeIfPresent(.intercomConversationId)
-        callTranscript = try container.sdkDecodeIfPresent(.callTranscript)
-        callSummary = try container.sdkDecodeIfPresent(.callSummary)
-        intent = try container.sdkDecodeIfPresent(.intent)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.appId = try container.sdkDecodeIfPresent(.appId)
+        self.userPhoneNumber = try container.sdkDecodeIfPresent(.userPhoneNumber)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.intercomCallId = try container.sdkDecodeIfPresent(.intercomCallId)
+        self.externalCallId = try container.sdkDecodeIfPresent(.externalCallId)
+        self.intercomConversationId = try container.sdkDecodeIfPresent(.intercomConversationId)
+        self.callTranscript = try container.sdkDecodeIfPresent(.callTranscript)
+        self.callSummary = try container.sdkDecodeIfPresent(.callSummary)
+        self.intent = try container.sdkDecodeIfPresent(.intent)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension AiCallResponse {
-    init(
-        id: Int? = nil,
-        appId: Int? = nil,
-        userPhoneNumber: String? = nil,
-        status: String? = nil,
-        intercomCallId: String? = nil,
-        externalCallId: String? = nil,
-        intercomConversationId: String? = nil,
-        callTranscript: [[String: JSONValue]]? = nil,
-        callSummary: String? = nil,
-        intent: [[String: JSONValue]]? = nil,
-        data: [String: JSONValue]? = nil
-    ) {
+extension AiCallResponse {
+    public init(id: Int? = nil, appId: Int? = nil, userPhoneNumber: String? = nil, status: String? = nil, intercomCallId: String? = nil, externalCallId: String? = nil, intercomConversationId: String? = nil, callTranscript: [[String: JSONValue]]? = nil, callSummary: String? = nil, intent: [[String: JSONValue]]? = nil, data: [String: JSONValue]? = nil) {
         self.init()
         (self.id, self.appId) = (id, appId)
         (self.userPhoneNumber, self.status) = (userPhoneNumber, status)
@@ -169,42 +157,27 @@ public struct RegisterFinVoiceCallRequest: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension RegisterFinVoiceCallRequest {
-    init(from decoder: Decoder) throws {
+extension RegisterFinVoiceCallRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.phoneNumber) else {
-            throw SdkValidationError(
-                field: "phone_number",
-                code: "required",
-                message: "Validation failed for 'phone_number': value is required"
-            )
+            throw SdkValidationError(field: "phone_number", code: "required", message: "Validation failed for 'phone_number': value is required")
         }
         guard container.contains(.callId) else {
-            throw SdkValidationError(
-                field: "call_id",
-                code: "required",
-                message: "Validation failed for 'call_id': value is required"
-            )
+            throw SdkValidationError(field: "call_id", code: "required", message: "Validation failed for 'call_id': value is required")
         }
-        phoneNumber = try container.sdkDecodeRequired(.phoneNumber)
-        callId = try container.sdkDecodeRequired(.callId)
-        source = try container.sdkDecodeIfPresent(.source)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.phoneNumber = try container.sdkDecodeRequired(.phoneNumber)
+        self.callId = try container.sdkDecodeRequired(.callId)
+        self.source = try container.sdkDecodeIfPresent(.source)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension RegisterFinVoiceCallRequest {
-    init(
-        phoneNumber: String,
-        callId: String,
-        source: RegisterFinVoiceCallRequestSource? = nil,
-        data: [String: JSONValue]? = nil
-    ) {
+extension RegisterFinVoiceCallRequest {
+    public init(phoneNumber: String, callId: String, source: RegisterFinVoiceCallRequestSource? = nil, data: [String: JSONValue]? = nil) {
         (self.phoneNumber, self.callId) = (phoneNumber, callId)
         (self.source, self.data) = (source, data)
     }
@@ -214,17 +187,14 @@ public extension RegisterFinVoiceCallRequest {
 public struct RegisterFinVoiceCallRequestSource: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let five9 = RegisterFinVoiceCallRequestSource(rawValue: "five9")
     public static let zoomPhone = RegisterFinVoiceCallRequestSource(rawValue: "zoom_phone")
     public static let awsConnect = RegisterFinVoiceCallRequestSource(rawValue: "aws_connect")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

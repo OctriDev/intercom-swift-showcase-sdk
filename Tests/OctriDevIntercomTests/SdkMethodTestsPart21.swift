@@ -41,14 +41,14 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.finAgent.startFinConversation(
-                conversationId: decoded("\"ext-123\""),
-                message: decoded(sdkMethodFixture447Value1),
-                user: decoded(sdkMethodFixture447Value2),
-                intercomVersion: decoded("\"2.17\""),
-                attachments: decoded("null"),
-                conversationMetadata: decoded("null"),
-                environment: decoded("null")
-            )
+            conversationId: decoded("\"ext-123\""),
+            message: decoded(sdkMethodFixture447Value1),
+            user: decoded(sdkMethodFixture447Value2),
+            intercomVersion: decoded("\"2.17\""),
+            attachments: decoded("null"),
+            conversationMetadata: decoded("null"),
+            environment: decoded("null")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -96,11 +96,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.finAgent.submitFinCsat(
-                conversationId: decoded("\"ext-123\""),
-                rating: decoded("\"amazing\""),
-                intercomVersion: decoded("\"2.17\""),
-                remark: decoded("null")
-            )
+            conversationId: decoded("\"ext-123\""),
+            rating: decoded("\"amazing\""),
+            intercomVersion: decoded("\"2.17\""),
+            remark: decoded("null")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -166,10 +166,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.tickets.unlinkConversation(
-                ticketId: decoded("\"64619700005694\""),
-                id: decoded("\"204\""),
-                intercomVersion: decoded("\"2.17\"")
-            )
+            ticketId: decoded("\"64619700005694\""),
+            id: decoded("\"204\""),
+            intercomVersion: decoded("\"2.17\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -250,8 +250,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.articles.update(
-                options: options
-            )
+            options: options
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -300,12 +300,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.audiences.update(
-                id: decoded("\"123\""),
-                intercomVersion: decoded("\"2.17\""),
-                name: decoded("\"Enterprise Accounts\""),
-                predicates: decoded(sdkMethodFixture456Value1),
-                rolePredicates: decoded("null")
-            )
+            id: decoded("\"123\""),
+            intercomVersion: decoded("\"2.17\""),
+            name: decoded("\"Enterprise Accounts\""),
+            predicates: decoded(sdkMethodFixture456Value1),
+            rolePredicates: decoded("null")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -355,13 +355,13 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.helpCenter.updateCollection(
-                collectionId: decoded("123"),
-                intercomVersion: decoded("\"2.17\""),
-                name: decoded("\"Update collection name\""),
-                description: decoded("null"),
-                translatedContent: decoded("null"),
-                parentId: decoded("null")
-            )
+            collectionId: decoded("123"),
+            intercomVersion: decoded("\"2.17\""),
+            name: decoded("\"Update collection name\""),
+            description: decoded("null"),
+            translatedContent: decoded("null"),
+            parentId: decoded("null")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -382,8 +382,7 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try CompaniesMethods
-            .UpdateCompanyOptions(companyId: decoded("\"5f4d3c1c-7b1b-4d7d-a97e-6095715c6632\""))
+        var options = try CompaniesMethods.UpdateCompanyOptions(companyId: decoded("\"5f4d3c1c-7b1b-4d7d-a97e-6095715c6632\""))
         options.intercomVersion = try decoded("\"2.17\"")
         options.name = try decoded("\"my company\"")
         options.plan = try decoded("null")
@@ -410,8 +409,7 @@ extension SdkMethodTests {
             return
         }
         _ = client
-        var options = try CompaniesMethods
-            .UpdateCompanyOptions(companyId: decoded("\"5f4d3c1c-7b1b-4d7d-a97e-6095715c6632\""))
+        var options = try CompaniesMethods.UpdateCompanyOptions(companyId: decoded("\"5f4d3c1c-7b1b-4d7d-a97e-6095715c6632\""))
         options.intercomVersion = try decoded("\"2.17\"")
         options.name = try decoded("\"my company\"")
         options.plan = try decoded("null")
@@ -426,8 +424,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.companies.update(
-                options: options
-            )
+            options: options
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -475,11 +473,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.contacts.update(
-                contactId: decoded("\"63a07ddf05a32042dffac965\""),
-                includeMergeHistory: decoded("false"),
-                intercomVersion: decoded("\"2.17\""),
-                body: decoded("{\"email\":\"joebloggs@intercom.io\",\"name\":\"joe bloggs\"}")
-            )
+            contactId: decoded("\"63a07ddf05a32042dffac965\""),
+            includeMergeHistory: decoded("false"),
+            intercomVersion: decoded("\"2.17\""),
+            body: decoded("{\"email\":\"joebloggs@intercom.io\",\"name\":\"joe bloggs\"}")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -530,14 +528,14 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.aiContent.updateContentImportSource(
-                sourceId: decoded("\"source-1\""),
-                syncBehavior: decoded("\"api\""),
-                url: decoded("\"https://www.example.com\""),
-                intercomVersion: decoded("\"2.17\""),
-                status: decoded("null"),
-                audienceIds: decoded("null"),
-                applyAudienceToExistingContent: decoded("null")
-            )
+            sourceId: decoded("\"source-1\""),
+            syncBehavior: decoded("\"api\""),
+            url: decoded("\"https://www.example.com\""),
+            intercomVersion: decoded("\"2.17\""),
+            status: decoded("null"),
+            audienceIds: decoded("null"),
+            applyAudienceToExistingContent: decoded("null")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

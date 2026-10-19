@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// TaggedModelsFinAgent domain models
+// TaggedModelsFinAgent domain models
 /// User-related attribute errors.
 public struct FinAgentAttributeErrorsUser: Codable {
     /// Map of user attribute names to error messages.
@@ -15,19 +15,19 @@ public struct FinAgentAttributeErrorsUser: Codable {
     }
 
     init() {
-        attributes = nil
+        self.attributes = nil
     }
 }
 
-public extension FinAgentAttributeErrorsUser {
-    init(from decoder: Decoder) throws {
+extension FinAgentAttributeErrorsUser {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        attributes = try container.sdkDecodeIfPresent(.attributes)
+        self.attributes = try container.sdkDecodeIfPresent(.attributes)
     }
 }
 
-public extension FinAgentAttributeErrorsUser {
-    init(attributes: [String: String]? = nil) {
+extension FinAgentAttributeErrorsUser {
+    public init(attributes: [String: String]? = nil) {
         self.init()
         self.attributes = attributes
     }
@@ -44,19 +44,19 @@ public struct FinAgentAttributeErrorsConversation: Codable {
     }
 
     init() {
-        attributes = nil
+        self.attributes = nil
     }
 }
 
-public extension FinAgentAttributeErrorsConversation {
-    init(from decoder: Decoder) throws {
+extension FinAgentAttributeErrorsConversation {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        attributes = try container.sdkDecodeIfPresent(.attributes)
+        self.attributes = try container.sdkDecodeIfPresent(.attributes)
     }
 }
 
-public extension FinAgentAttributeErrorsConversation {
-    init(attributes: [String: String]? = nil) {
+extension FinAgentAttributeErrorsConversation {
+    public init(attributes: [String: String]? = nil) {
         self.init()
         self.attributes = attributes
     }
@@ -89,40 +89,28 @@ public struct FinAgentAttachment: Codable {
         case data
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension FinAgentAttachment {
-    init(from decoder: Decoder) throws {
+extension FinAgentAttachment {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        url = try container.sdkDecodeIfPresent(.url)
-        name = try container.sdkDecodeIfPresent(.name)
-        contentType = try container.sdkDecodeIfPresent(.contentType)
-        data = try container.sdkDecodeIfPresent(.data)
-        if let value = url {
+        self.type = try container.sdkDecodeRequired(.type)
+        self.url = try container.sdkDecodeIfPresent(.url)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.contentType = try container.sdkDecodeIfPresent(.contentType)
+        self.data = try container.sdkDecodeIfPresent(.data)
+        if let value = self.url {
             try sdkValidateUri("url", value)
         }
     }
 }
 
-public extension FinAgentAttachment {
-    init(
-        type: FinAgentAttachmentType,
-        url: String? = nil,
-        name: String? = nil,
-        contentType: String? = nil,
-        data: Data? = nil
-    ) throws {
+extension FinAgentAttachment {
+    public init(type: FinAgentAttachmentType, url: String? = nil, name: String? = nil, contentType: String? = nil, data: Data? = nil) throws {
         (self.type, self.url) = (type, url)
         (self.name, self.contentType) = (name, contentType)
         self.data = data
@@ -170,82 +158,48 @@ public struct FinAgentRepliedEvent: Codable {
         case streamId = "stream_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension FinAgentRepliedEvent {
-    init(from decoder: Decoder) throws {
+extension FinAgentRepliedEvent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.eventName) else {
-            throw SdkValidationError(
-                field: "event_name",
-                code: "required",
-                message: "Validation failed for 'event_name': value is required"
-            )
+            throw SdkValidationError(field: "event_name", code: "required", message: "Validation failed for 'event_name': value is required")
         }
         guard container.contains(.conversationId) else {
-            throw SdkValidationError(
-                field: "conversation_id",
-                code: "required",
-                message: "Validation failed for 'conversation_id': value is required"
-            )
+            throw SdkValidationError(field: "conversation_id", code: "required", message: "Validation failed for 'conversation_id': value is required")
         }
         guard container.contains(.userId) else {
-            throw SdkValidationError(
-                field: "user_id",
-                code: "required",
-                message: "Validation failed for 'user_id': value is required"
-            )
+            throw SdkValidationError(field: "user_id", code: "required", message: "Validation failed for 'user_id': value is required")
         }
         guard container.contains(.message) else {
-            throw SdkValidationError(
-                field: "message",
-                code: "required",
-                message: "Validation failed for 'message': value is required"
-            )
+            throw SdkValidationError(field: "message", code: "required", message: "Validation failed for 'message': value is required")
         }
         guard container.contains(.status) else {
-            throw SdkValidationError(
-                field: "status",
-                code: "required",
-                message: "Validation failed for 'status': value is required"
-            )
+            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
         }
         guard container.contains(.createdAtMs) else {
-            throw SdkValidationError(
-                field: "created_at_ms",
-                code: "required",
-                message: "Validation failed for 'created_at_ms': value is required"
-            )
+            throw SdkValidationError(field: "created_at_ms", code: "required", message: "Validation failed for 'created_at_ms': value is required")
         }
-        eventName = try container.sdkDecodeRequired(.eventName)
-        conversationId = try container.sdkDecodeRequired(.conversationId)
-        userId = try container.sdkDecodeRequired(.userId)
-        message = try container.sdkDecodeRequired(.message)
-        status = try container.sdkDecodeRequired(.status)
-        createdAtMs = try container.sdkDecodeRequired(.createdAtMs)
-        streamId = try container.sdkDecodeIfPresent(.streamId)
-        try sdkValidateDateTime("created_at_ms", sdkWireString(createdAtMs))
+        self.eventName = try container.sdkDecodeRequired(.eventName)
+        self.conversationId = try container.sdkDecodeRequired(.conversationId)
+        self.userId = try container.sdkDecodeRequired(.userId)
+        self.message = try container.sdkDecodeRequired(.message)
+        self.status = try container.sdkDecodeRequired(.status)
+        self.createdAtMs = try container.sdkDecodeRequired(.createdAtMs)
+        self.streamId = try container.sdkDecodeIfPresent(.streamId)
+            try sdkValidateDateTime("created_at_ms", sdkWireString(self.createdAtMs))
     }
 }
 
-public extension FinAgentRepliedEvent {
-    init(
-        eventName: FinAgentRepliedEventEventName,
-        conversationId: String,
-        userId: String,
-        message: FinAgentRepliedEventMessage,
-        status: FinAgentRepliedEventStatus,
-        createdAtMs: Date,
-        streamId: String? = nil
-    ) throws {
+extension FinAgentRepliedEvent {
+    public init(eventName: FinAgentRepliedEventEventName, conversationId: String, userId: String, message: FinAgentRepliedEventMessage, status: FinAgentRepliedEventStatus, createdAtMs: Date, streamId: String? = nil) throws {
         (self.eventName, self.conversationId) = (eventName, conversationId)
         (self.userId, self.message) = (userId, message)
         (self.status, self.createdAtMs) = (status, createdAtMs)
         self.streamId = streamId
-        try sdkValidateDateTime("created_at_ms", sdkWireString(self.createdAtMs))
+            try sdkValidateDateTime("created_at_ms", sdkWireString(self.createdAtMs))
     }
 }
 
@@ -280,70 +234,42 @@ public struct FinAgentCsatRequestedEvent: Codable {
         case createdAtMs = "created_at_ms"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension FinAgentCsatRequestedEvent {
-    init(from decoder: Decoder) throws {
+extension FinAgentCsatRequestedEvent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.eventName) else {
-            throw SdkValidationError(
-                field: "event_name",
-                code: "required",
-                message: "Validation failed for 'event_name': value is required"
-            )
+            throw SdkValidationError(field: "event_name", code: "required", message: "Validation failed for 'event_name': value is required")
         }
         guard container.contains(.conversationId) else {
-            throw SdkValidationError(
-                field: "conversation_id",
-                code: "required",
-                message: "Validation failed for 'conversation_id': value is required"
-            )
+            throw SdkValidationError(field: "conversation_id", code: "required", message: "Validation failed for 'conversation_id': value is required")
         }
         guard container.contains(.userId) else {
-            throw SdkValidationError(
-                field: "user_id",
-                code: "required",
-                message: "Validation failed for 'user_id': value is required"
-            )
+            throw SdkValidationError(field: "user_id", code: "required", message: "Validation failed for 'user_id': value is required")
         }
         guard container.contains(.csat) else {
-            throw SdkValidationError(
-                field: "csat",
-                code: "required",
-                message: "Validation failed for 'csat': value is required"
-            )
+            throw SdkValidationError(field: "csat", code: "required", message: "Validation failed for 'csat': value is required")
         }
         guard container.contains(.createdAtMs) else {
-            throw SdkValidationError(
-                field: "created_at_ms",
-                code: "required",
-                message: "Validation failed for 'created_at_ms': value is required"
-            )
+            throw SdkValidationError(field: "created_at_ms", code: "required", message: "Validation failed for 'created_at_ms': value is required")
         }
-        eventName = try container.sdkDecodeRequired(.eventName)
-        conversationId = try container.sdkDecodeRequired(.conversationId)
-        userId = try container.sdkDecodeRequired(.userId)
-        csat = try container.sdkDecodeRequired(.csat)
-        createdAtMs = try container.sdkDecodeRequired(.createdAtMs)
-        try sdkValidateDateTime("created_at_ms", sdkWireString(createdAtMs))
+        self.eventName = try container.sdkDecodeRequired(.eventName)
+        self.conversationId = try container.sdkDecodeRequired(.conversationId)
+        self.userId = try container.sdkDecodeRequired(.userId)
+        self.csat = try container.sdkDecodeRequired(.csat)
+        self.createdAtMs = try container.sdkDecodeRequired(.createdAtMs)
+            try sdkValidateDateTime("created_at_ms", sdkWireString(self.createdAtMs))
     }
 }
 
-public extension FinAgentCsatRequestedEvent {
-    init(
-        eventName: FinAgentCsatRequestedEventEventName,
-        conversationId: String,
-        userId: String,
-        csat: FinAgentCsatRequestedEventCsat,
-        createdAtMs: Date
-    ) throws {
+extension FinAgentCsatRequestedEvent {
+    public init(eventName: FinAgentCsatRequestedEventEventName, conversationId: String, userId: String, csat: FinAgentCsatRequestedEventCsat, createdAtMs: Date) throws {
         (self.eventName, self.conversationId) = (eventName, conversationId)
         (self.userId, self.csat) = (userId, csat)
         self.createdAtMs = createdAtMs
-        try sdkValidateDateTime("created_at_ms", sdkWireString(self.createdAtMs))
+            try sdkValidateDateTime("created_at_ms", sdkWireString(self.createdAtMs))
     }
 }
 
@@ -363,23 +289,23 @@ public struct FinAgentConversationMetadata: Codable {
     }
 
     init() {
-        (history, attributes) = (nil, nil)
+        (self.history, self.attributes) = (nil, nil)
     }
 }
 
-public extension FinAgentConversationMetadata {
-    init(from decoder: Decoder) throws {
+extension FinAgentConversationMetadata {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        history = try container.sdkDecodeIfPresent(.history)
-        attributes = try container.sdkDecodeIfPresent(.attributes)
-        if let value = history {
+        self.history = try container.sdkDecodeIfPresent(.history)
+        self.attributes = try container.sdkDecodeIfPresent(.attributes)
+        if let value = self.history {
             try validateItems("history", value, min: nil, max: 10)
         }
     }
 }
 
-public extension FinAgentConversationMetadata {
-    init(history: [FinAgentMessage]? = nil, attributes: [String: JSONValue]? = nil) throws {
+extension FinAgentConversationMetadata {
+    public init(history: [FinAgentMessage]? = nil, attributes: [String: JSONValue]? = nil) throws {
         self.init()
         (self.history, self.attributes) = (history, attributes)
         if let value = self.history {
@@ -406,43 +332,29 @@ public struct FinAgentRepliedEventMessageSourcesItem: Codable {
         case url
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension FinAgentRepliedEventMessageSourcesItem {
-    init(from decoder: Decoder) throws {
+extension FinAgentRepliedEventMessageSourcesItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.title) else {
-            throw SdkValidationError(
-                field: "title",
-                code: "required",
-                message: "Validation failed for 'title': value is required"
-            )
+            throw SdkValidationError(field: "title", code: "required", message: "Validation failed for 'title': value is required")
         }
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.url) else {
-            throw SdkValidationError(
-                field: "url",
-                code: "required",
-                message: "Validation failed for 'url': value is required"
-            )
+            throw SdkValidationError(field: "url", code: "required", message: "Validation failed for 'url': value is required")
         }
-        title = try container.sdkDecodeRequired(.title)
-        type = try container.sdkDecodeRequired(.type)
-        url = try container.sdkDecodeRequired(.url)
+        self.title = try container.sdkDecodeRequired(.title)
+        self.type = try container.sdkDecodeRequired(.type)
+        self.url = try container.sdkDecodeRequired(.url)
     }
 }
 
-public extension FinAgentRepliedEventMessageSourcesItem {
-    init(title: String, type: FinAgentRepliedEventMessageSourcesItemType, url: String) {
+extension FinAgentRepliedEventMessageSourcesItem {
+    public init(title: String, type: FinAgentRepliedEventMessageSourcesItemType, url: String) {
         (self.title, self.type) = (title, type)
         self.url = url
     }
@@ -473,51 +385,37 @@ public struct FinAgentMessage: Codable {
         case timestampMs = "timestamp_ms"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension FinAgentMessage {
-    init(from decoder: Decoder) throws {
+extension FinAgentMessage {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.author) else {
-            throw SdkValidationError(
-                field: "author",
-                code: "required",
-                message: "Validation failed for 'author': value is required"
-            )
+            throw SdkValidationError(field: "author", code: "required", message: "Validation failed for 'author': value is required")
         }
         guard container.contains(.body) else {
-            throw SdkValidationError(
-                field: "body",
-                code: "required",
-                message: "Validation failed for 'body': value is required"
-            )
+            throw SdkValidationError(field: "body", code: "required", message: "Validation failed for 'body': value is required")
         }
         guard container.contains(.timestamp) else {
-            throw SdkValidationError(
-                field: "timestamp",
-                code: "required",
-                message: "Validation failed for 'timestamp': value is required"
-            )
+            throw SdkValidationError(field: "timestamp", code: "required", message: "Validation failed for 'timestamp': value is required")
         }
-        author = try container.sdkDecodeRequired(.author)
-        body = try container.sdkDecodeRequired(.body)
-        timestamp = try container.sdkDecodeRequired(.timestamp)
-        timestampMs = try container.sdkDecodeIfPresent(.timestampMs)
-        try sdkValidateDateTime("timestamp", sdkWireString(timestamp))
-        if let value = timestampMs {
+        self.author = try container.sdkDecodeRequired(.author)
+        self.body = try container.sdkDecodeRequired(.body)
+        self.timestamp = try container.sdkDecodeRequired(.timestamp)
+        self.timestampMs = try container.sdkDecodeIfPresent(.timestampMs)
+            try sdkValidateDateTime("timestamp", sdkWireString(self.timestamp))
+        if let value = self.timestampMs {
             try sdkValidateDateTime("timestamp_ms", sdkWireString(value))
         }
     }
 }
 
-public extension FinAgentMessage {
-    init(author: FinAgentMessageAuthor, body: String, timestamp: Date, timestampMs: Date? = nil) throws {
+extension FinAgentMessage {
+    public init(author: FinAgentMessageAuthor, body: String, timestamp: Date, timestampMs: Date? = nil) throws {
         (self.author, self.body) = (author, body)
         (self.timestamp, self.timestampMs) = (timestamp, timestampMs)
-        try sdkValidateDateTime("timestamp", sdkWireString(self.timestamp))
+            try sdkValidateDateTime("timestamp", sdkWireString(self.timestamp))
         if let value = self.timestampMs {
             try sdkValidateDateTime("timestamp_ms", sdkWireString(value))
         }
@@ -563,63 +461,37 @@ public struct FinAgentReplyChunkEvent: Codable {
         case status
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension FinAgentReplyChunkEvent {
-    init(from decoder: Decoder) throws {
+extension FinAgentReplyChunkEvent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.eventName) else {
-            throw SdkValidationError(
-                field: "event_name",
-                code: "required",
-                message: "Validation failed for 'event_name': value is required"
-            )
+            throw SdkValidationError(field: "event_name", code: "required", message: "Validation failed for 'event_name': value is required")
         }
         guard container.contains(.conversationId) else {
-            throw SdkValidationError(
-                field: "conversation_id",
-                code: "required",
-                message: "Validation failed for 'conversation_id': value is required"
-            )
+            throw SdkValidationError(field: "conversation_id", code: "required", message: "Validation failed for 'conversation_id': value is required")
         }
         guard container.contains(.streamId) else {
-            throw SdkValidationError(
-                field: "stream_id",
-                code: "required",
-                message: "Validation failed for 'stream_id': value is required"
-            )
+            throw SdkValidationError(field: "stream_id", code: "required", message: "Validation failed for 'stream_id': value is required")
         }
         guard container.contains(.chunkIndex) else {
-            throw SdkValidationError(
-                field: "chunk_index",
-                code: "required",
-                message: "Validation failed for 'chunk_index': value is required"
-            )
+            throw SdkValidationError(field: "chunk_index", code: "required", message: "Validation failed for 'chunk_index': value is required")
         }
         guard container.contains(.chunkText) else {
-            throw SdkValidationError(
-                field: "chunk_text",
-                code: "required",
-                message: "Validation failed for 'chunk_text': value is required"
-            )
+            throw SdkValidationError(field: "chunk_text", code: "required", message: "Validation failed for 'chunk_text': value is required")
         }
         guard container.contains(.createdAtMs) else {
-            throw SdkValidationError(
-                field: "created_at_ms",
-                code: "required",
-                message: "Validation failed for 'created_at_ms': value is required"
-            )
+            throw SdkValidationError(field: "created_at_ms", code: "required", message: "Validation failed for 'created_at_ms': value is required")
         }
-        eventName = try container.sdkDecodeRequired(.eventName)
-        conversationId = try container.sdkDecodeRequired(.conversationId)
-        streamId = try container.sdkDecodeRequired(.streamId)
-        chunkIndex = try container.sdkDecodeRequired(.chunkIndex)
-        chunkText = try container.sdkDecodeRequired(.chunkText)
-        createdAtMs = try container.sdkDecodeRequired(.createdAtMs)
-        status = try container.sdkDecodeIfPresent(.status)
-        try sdkValidateDateTime("created_at_ms", sdkWireString(createdAtMs))
+        self.eventName = try container.sdkDecodeRequired(.eventName)
+        self.conversationId = try container.sdkDecodeRequired(.conversationId)
+        self.streamId = try container.sdkDecodeRequired(.streamId)
+        self.chunkIndex = try container.sdkDecodeRequired(.chunkIndex)
+        self.chunkText = try container.sdkDecodeRequired(.chunkText)
+        self.createdAtMs = try container.sdkDecodeRequired(.createdAtMs)
+        self.status = try container.sdkDecodeIfPresent(.status)
+            try sdkValidateDateTime("created_at_ms", sdkWireString(self.createdAtMs))
     }
 }

@@ -6,9 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension TagsMethods {
-    /// Adds a tag to a contact. Supply the tag's `id` in the request body to identify which tag to apply; the response
-    /// returns the applied tag.
+extension TagsMethods {
+    /// Adds a tag to a contact. Supply the tag's `id` in the request body to identify which tag to apply; the response returns the applied tag.
     ///
     /// You can tag a specific contact. This will return a tag object for the tag that was added to the contact.
     ///
@@ -16,63 +15,25 @@ public extension TagsMethods {
     /// - contactId: The unique identifier for the contact which is given by
     ///   Intercom
     /// - id: The unique identifier for the tag which is given by Intercom
-    static func attachTagToContact(
-        config: ClientConfig,
-        contactId: String,
-        id: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Tag {
+    public static func attachTagToContact(config: ClientConfig, contactId: String, id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Tag {
         let requestBody = AttachTagToContactRequestBody(id: id)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/contacts/", sdkEncodePathSegment(sdkWireString(contactId)), "/tags"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "attachTagToContact",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "404": Error2.self]
-        )).data
+        return try (await sdkRequest("POST", ["/contacts/", sdkEncodePathSegment(sdkWireString(contactId)), "/tags"].joined(), config: config, body: requestBody, decoder: .json, operationId: "attachTagToContact", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
     }
 
-    /// Removes a tag from a contact. Identify the contact and tag with the `contact_id` and `tag_id` path parameters;
-    /// the response returns the removed tag.
+    /// Removes a tag from a contact. Identify the contact and tag with the `contact_id` and `tag_id` path parameters; the response returns the removed tag.
     ///
-    /// You can remove tag from a specific contact. This will return a tag object for the tag that was removed from the
-    /// contact.
+    /// You can remove tag from a specific contact. This will return a tag object for the tag that was removed from the contact.
     ///
     /// - Parameters:
     /// - contactId: The unique identifier for the contact which is given by
     ///   Intercom
     /// - tagId: The unique identifier for the tag which is given by Intercom
-    static func detachTagFromContact(
-        config: ClientConfig,
-        contactId: String,
-        tagId: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Tag {
-        try await (sdkRequest(
-            "DELETE",
-            [
-                "/contacts/",
-                sdkEncodePathSegment(sdkWireString(contactId)),
-                "/tags/",
-                sdkEncodePathSegment(sdkWireString(tagId)),
-            ].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "detachTagFromContact",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "404": Error2.self]
-        )).data
+    public static func detachTagFromContact(config: ClientConfig, contactId: String, tagId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Tag {
+        return try (await sdkRequest("DELETE", ["/contacts/", sdkEncodePathSegment(sdkWireString(contactId)), "/tags/", sdkEncodePathSegment(sdkWireString(tagId))].joined(), config: config, decoder: .json, operationId: "detachTagFromContact", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
     }
 }

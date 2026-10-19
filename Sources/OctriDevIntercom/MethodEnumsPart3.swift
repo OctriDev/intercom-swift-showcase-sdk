@@ -9,16 +9,13 @@ import Foundation
 public struct SearchContentParameterX1aa5d7b1: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let on = SearchContentParameterX1aa5d7b1(rawValue: "on")
     public static let off = SearchContentParameterX1aa5d7b1(rawValue: "off")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -30,16 +27,13 @@ public struct SearchContentParameterX1aa5d7b1: RawRepresentable, Hashable, Codab
 public struct ListContactMergeHistoryParameter: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let asc = ListContactMergeHistoryParameter(rawValue: "asc")
     public static let desc = ListContactMergeHistoryParameter(rawValue: "desc")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -52,15 +46,12 @@ public struct ListContactMergeHistoryParameter: RawRepresentable, Hashable, Coda
 public struct EnqueueCreateTicketRequestBodyChannel: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let email = EnqueueCreateTicketRequestBodyChannel(rawValue: "email")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -73,10 +64,7 @@ public struct EnqueueCreateTicketRequestBodyChannel: RawRepresentable, Hashable,
 public struct AskFinResponseStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let thinking = AskFinResponseStatus(rawValue: "thinking")
     public static let replying = AskFinResponseStatus(rawValue: "replying")
     public static let resolved = AskFinResponseStatus(rawValue: "resolved")
@@ -84,7 +72,7 @@ public struct AskFinResponseStatus: RawRepresentable, Hashable, Codable, Sendabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -96,16 +84,13 @@ public struct AskFinResponseStatus: RawRepresentable, Hashable, Codable, Sendabl
 public struct SearchContentParameterXb4dcc85a: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let on = SearchContentParameterXb4dcc85a(rawValue: "on")
     public static let off = SearchContentParameterXb4dcc85a(rawValue: "off")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -114,20 +99,16 @@ public struct SearchContentParameterXb4dcc85a: RawRepresentable, Hashable, Codab
     }
 }
 
-public struct ListDataConnectorExecutionResultsParameter: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct ListDataConnectorExecutionResultsParameter: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let `true` = ListDataConnectorExecutionResultsParameter(rawValue: "true")
     public static let `false` = ListDataConnectorExecutionResultsParameter(rawValue: "false")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -143,9 +124,9 @@ struct SetAwayAdminRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(awayModeEnabled, forKey: SdkCodingKey("away_mode_enabled"))
-        try keyedContainer.encode(awayModeReassign, forKey: SdkCodingKey("away_mode_reassign"))
-        try keyedContainer.encodeIfPresent(awayStatusReasonId, forKey: SdkCodingKey("away_status_reason_id"))
+        try keyedContainer.encode(self.awayModeEnabled, forKey: SdkCodingKey("away_mode_enabled"))
+        try keyedContainer.encode(self.awayModeReassign, forKey: SdkCodingKey("away_mode_reassign"))
+        try keyedContainer.encodeIfPresent(self.awayStatusReasonId, forKey: SdkCodingKey("away_status_reason_id"))
     }
 }
 
@@ -158,11 +139,11 @@ struct SearchActivityLogsRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(createdAtAfter, forKey: SdkCodingKey("created_at_after"))
-        try keyedContainer.encodeIfPresent(createdAtBefore, forKey: SdkCodingKey("created_at_before"))
-        try keyedContainer.encodeIfPresent(eventTypes, forKey: SdkCodingKey("event_types"))
-        try keyedContainer.encodeIfPresent(page, forKey: SdkCodingKey("page"))
-        try keyedContainer.encodeIfPresent(perPage, forKey: SdkCodingKey("per_page"))
+        try keyedContainer.encode(self.createdAtAfter, forKey: SdkCodingKey("created_at_after"))
+        try keyedContainer.encodeIfPresent(self.createdAtBefore, forKey: SdkCodingKey("created_at_before"))
+        try keyedContainer.encodeIfPresent(self.eventTypes, forKey: SdkCodingKey("event_types"))
+        try keyedContainer.encodeIfPresent(self.page, forKey: SdkCodingKey("page"))
+        try keyedContainer.encodeIfPresent(self.perPage, forKey: SdkCodingKey("per_page"))
     }
 }
 
@@ -175,19 +156,19 @@ struct UpdateOfficeHoursExceptionRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(exceptionDate, forKey: SdkCodingKey("exception_date"))
-        try keyedContainer.encodeIfPresent(exceptionType, forKey: SdkCodingKey("exception_type"))
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(timeIntervals, forKey: SdkCodingKey("time_intervals"))
-        try keyedContainer.encodeIfPresent(recurringAnnually, forKey: SdkCodingKey("recurring_annually"))
+        try keyedContainer.encodeIfPresent(self.exceptionDate, forKey: SdkCodingKey("exception_date"))
+        try keyedContainer.encodeIfPresent(self.exceptionType, forKey: SdkCodingKey("exception_type"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.timeIntervals, forKey: SdkCodingKey("time_intervals"))
+        try keyedContainer.encodeIfPresent(self.recurringAnnually, forKey: SdkCodingKey("recurring_annually"))
     }
 
     init(options: OfficeHoursMethods.UpdateOfficeHoursExceptionOptions) {
-        exceptionDate = options.exceptionDate
-        exceptionType = options.exceptionType
-        name = options.name
-        timeIntervals = options.timeIntervals
-        recurringAnnually = options.recurringAnnually
+        self.exceptionDate = options.exceptionDate
+        self.exceptionType = options.exceptionType
+        self.name = options.name
+        self.timeIntervals = options.timeIntervals
+        self.recurringAnnually = options.recurringAnnually
     }
 }
 
@@ -200,11 +181,11 @@ struct CreateOfficeHoursExceptionRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(exceptionDate, forKey: SdkCodingKey("exception_date"))
-        try keyedContainer.encode(exceptionType, forKey: SdkCodingKey("exception_type"))
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(timeIntervals, forKey: SdkCodingKey("time_intervals"))
-        try keyedContainer.encodeIfPresent(recurringAnnually, forKey: SdkCodingKey("recurring_annually"))
+        try keyedContainer.encode(self.exceptionDate, forKey: SdkCodingKey("exception_date"))
+        try keyedContainer.encode(self.exceptionType, forKey: SdkCodingKey("exception_type"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.timeIntervals, forKey: SdkCodingKey("time_intervals"))
+        try keyedContainer.encodeIfPresent(self.recurringAnnually, forKey: SdkCodingKey("recurring_annually"))
     }
 }
 
@@ -215,9 +196,9 @@ struct UpdateOfficeHoursScheduleRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(timeZoneName, forKey: SdkCodingKey("time_zone_name"))
-        try keyedContainer.encodeIfPresent(timeIntervals, forKey: SdkCodingKey("time_intervals"))
+        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(self.timeZoneName, forKey: SdkCodingKey("time_zone_name"))
+        try keyedContainer.encodeIfPresent(self.timeIntervals, forKey: SdkCodingKey("time_intervals"))
     }
 }
 
@@ -228,8 +209,8 @@ struct CreateOfficeHoursScheduleRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encode(timeZoneName, forKey: SdkCodingKey("time_zone_name"))
-        try keyedContainer.encode(timeIntervals, forKey: SdkCodingKey("time_intervals"))
+        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encode(self.timeZoneName, forKey: SdkCodingKey("time_zone_name"))
+        try keyedContainer.encode(self.timeIntervals, forKey: SdkCodingKey("time_intervals"))
     }
 }

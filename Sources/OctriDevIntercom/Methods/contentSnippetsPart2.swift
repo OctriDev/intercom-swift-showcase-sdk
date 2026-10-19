@@ -6,23 +6,16 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ContentSnippetsMethods {
-    /// Lists content snippets in a workspace. Use `page` and `per_page` to paginate the results; each page includes
-    /// snippet objects and pagination metadata.
+extension ContentSnippetsMethods {
+    /// Lists content snippets in a workspace. Use `page` and `per_page` to paginate the results; each page includes snippet objects and pagination metadata.
     ///
     /// You can fetch a list of all content snippets for a workspace.
     ///
     /// - Parameters:
     /// - page: The page of results to fetch.
     /// - perPage: The number of results to return per page. Max value of 50.
-    static func listContentSnippets(
-        config: ClientConfig,
-        page: Int? = nil,
-        perPage: Int? = nil,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ContentSnippetList {
-        try await (sdkRequest("GET", "/content_snippets", config: config, query: [
+    public static func listContentSnippets(config: ClientConfig, page: Int? = nil, perPage: Int? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ContentSnippetList {
+        return try (await sdkRequest("GET", "/content_snippets", config: config, query: [
             SdkQueryParameter("page", value: page),
             SdkQueryParameter("per_page", value: perPage),
         ], decoder: .json, operationId: "listContentSnippets", extraHeaders: sdkHeaders([
@@ -30,46 +23,24 @@ public extension ContentSnippetsMethods {
         ]), options: requestOptions)).data
     }
 
-    /// Lists content snippets in a workspace. Use `page` and `per_page` to paginate the results; each page includes
-    /// snippet objects and pagination metadata.
+    /// Lists content snippets in a workspace. Use `page` and `per_page` to paginate the results; each page includes snippet objects and pagination metadata.
     ///
     /// You can fetch a list of all content snippets for a workspace.
     ///
     /// - Parameters:
     /// - page: The page of results to fetch.
     /// - perPage: The number of results to return per page. Max value of 50.
-    static func listContentSnippetsPaginated(
-        config: ClientConfig,
-        page: Int? = nil,
-        perPage: Int? = nil,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) -> AsyncThrowingStream<ContentSnippet, Swift.Error> {
-        AsyncThrowingStream<ContentSnippet, Swift.Error> { (continuation: AsyncThrowingStream<
-            ContentSnippet,
-            Swift.Error
-        >.Continuation) in
+    public static func listContentSnippetsPaginated(config: ClientConfig, page: Int? = nil, perPage: Int? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<ContentSnippet, Swift.Error> {
+        return AsyncThrowingStream<ContentSnippet, Swift.Error> { (continuation: AsyncThrowingStream<ContentSnippet, Swift.Error>.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageNumber: Int = page ?? 1
                     while true {
-                        let pageResponse = try await listContentSnippets(
-                            config: config,
-                            page: pageNumber,
-                            perPage: perPage,
-                            intercomVersion: intercomVersion,
-                            requestOptions: requestOptions
-                        )
+                        let pageResponse = try await listContentSnippets(config: config, page: pageNumber, perPage: perPage, intercomVersion: intercomVersion, requestOptions: requestOptions)
                         let pageItems = (pageResponse.data ?? [])
-                        if pageItems.isEmpty {
-                            break
-                        }
-                        for item in pageItems {
-                            continuation.yield(item)
-                        }
-                        if let totalPages = pageResponse.totalPages, pageNumber >= totalPages {
-                            break
-                        }
+                        if pageItems.isEmpty { break }
+                        for item in pageItems { continuation.yield(item) }
+                        if let totalPages = pageResponse.totalPages, pageNumber >= totalPages { break }
                         pageNumber += 1
                     }
                 } catch {
@@ -82,48 +53,24 @@ public extension ContentSnippetsMethods {
         }
     }
 
-    struct ListContentSnippetsPage {
+    public struct ListContentSnippetsPage {
         public let data: ContentSnippetList
         public let items: [ContentSnippet]
         public let hasMore: Bool
     }
 
-    static func listContentSnippetsPages(
-        config: ClientConfig,
-        page: Int? = nil,
-        perPage: Int? = nil,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) -> AsyncThrowingStream<ListContentSnippetsPage, Swift.Error> {
-        AsyncThrowingStream<ListContentSnippetsPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<
-            ListContentSnippetsPage,
-            Swift.Error
-        >.Continuation) in
+    public static func listContentSnippetsPages(config: ClientConfig, page: Int? = nil, perPage: Int? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<ListContentSnippetsPage, Swift.Error> {
+        return AsyncThrowingStream<ListContentSnippetsPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<ListContentSnippetsPage, Swift.Error>.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageNumber: Int = page ?? 1
                     while true {
-                        let pageResponse = try await listContentSnippets(
-                            config: config,
-                            page: pageNumber,
-                            perPage: perPage,
-                            intercomVersion: intercomVersion,
-                            requestOptions: requestOptions
-                        )
+                        let pageResponse = try await listContentSnippets(config: config, page: pageNumber, perPage: perPage, intercomVersion: intercomVersion, requestOptions: requestOptions)
                         let pageItems = (pageResponse.data ?? [])
-                        if pageItems.isEmpty {
-                            break
-                        }
-                        let hasMore = true && pageNumber + 1 != pageNumber &&
-                            (pageResponse.totalPages == nil || pageNumber + 1 <= pageResponse.totalPages!)
-                        pageContinuation.yield(ListContentSnippetsPage(
-                            data: pageResponse,
-                            items: pageItems,
-                            hasMore: hasMore
-                        ))
-                        if !hasMore {
-                            break
-                        }
+                        if pageItems.isEmpty { break }
+                        let hasMore = true && pageNumber + 1 != pageNumber && (pageResponse.totalPages == nil || pageNumber + 1 <= pageResponse.totalPages!)
+                        pageContinuation.yield(ListContentSnippetsPage(data: pageResponse, items: pageItems, hasMore: hasMore))
+                        if !hasMore { break }
                         pageNumber += 1
                     }
                 } catch {

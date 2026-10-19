@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// SharedAi domain models
+// SharedAi domain models
 public typealias AiTopicSubtopicList = [AiTopicSubtopicListItem]
 
 /// Details of the failed verification
@@ -18,19 +18,19 @@ public struct AiAgentEventOtpEmailVerificationFailedEventDataOtpEmailVerifiX59f0
     }
 
     init() {
-        reason = nil
+        self.reason = nil
     }
 }
 
-public extension AiAgentEventOtpEmailVerificationFailedEventDataOtpEmailVerifiX59f0b7402b {
-    init(from decoder: Decoder) throws {
+extension AiAgentEventOtpEmailVerificationFailedEventDataOtpEmailVerifiX59f0b7402b {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        reason = try container.sdkDecodeIfPresent(.reason)
+        self.reason = try container.sdkDecodeIfPresent(.reason)
     }
 }
 
-public extension AiAgentEventOtpEmailVerificationFailedEventDataOtpEmailVerifiX59f0b7402b {
-    init(reason: String? = nil) {
+extension AiAgentEventOtpEmailVerificationFailedEventDataOtpEmailVerifiX59f0b7402b {
+    public init(reason: String? = nil) {
         self.init()
         self.reason = reason
     }
@@ -55,21 +55,21 @@ public struct AiAgentEventOtpEmailVerificationFailedEvent: Codable {
     }
 
     init() {
-        (type, value, data) = (nil, nil, nil)
+        (self.type, self.value, self.data) = (nil, nil, nil)
     }
 }
 
-public extension AiAgentEventOtpEmailVerificationFailedEvent {
-    init(from decoder: Decoder) throws {
+extension AiAgentEventOtpEmailVerificationFailedEvent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        value = try container.sdkDecodeIfPresent(.value)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.value = try container.sdkDecodeIfPresent(.value)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension AiAgentEventOtpEmailVerificationFailedEvent {
-    init(type: String? = nil, value: String? = nil, data: AiAgentEventOtpEmailVerificationFailedEventData? = nil) {
+extension AiAgentEventOtpEmailVerificationFailedEvent {
+    public init(type: String? = nil, value: String? = nil, data: AiAgentEventOtpEmailVerificationFailedEventData? = nil) {
         self.init()
         (self.type, self.value) = (type, value)
         self.data = data
@@ -94,21 +94,21 @@ public struct AiTopicSubtopicListItem: Codable {
     }
 
     init() {
-        (topicName, subtopicName, id) = (nil, nil, nil)
+        (self.topicName, self.subtopicName, self.id) = (nil, nil, nil)
     }
 }
 
-public extension AiTopicSubtopicListItem {
-    init(from decoder: Decoder) throws {
+extension AiTopicSubtopicListItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        topicName = try container.sdkDecodeIfPresent(.topicName)
-        subtopicName = try container.sdkDecodeIfPresent(.subtopicName)
-        id = try container.sdkDecodeIfPresent(.id)
+        self.topicName = try container.sdkDecodeIfPresent(.topicName)
+        self.subtopicName = try container.sdkDecodeIfPresent(.subtopicName)
+        self.id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-public extension AiTopicSubtopicListItem {
-    init(topicName: String? = nil, subtopicName: String? = nil, id: Int? = nil) {
+extension AiTopicSubtopicListItem {
+    public init(topicName: String? = nil, subtopicName: String? = nil, id: Int? = nil) {
         self.init()
         (self.topicName, self.subtopicName) = (topicName, subtopicName)
         self.id = id
@@ -129,19 +129,19 @@ public struct AiAgentEventOtpEmailVerificationFailed: Codable {
     }
 
     init() {
-        event = nil
+        self.event = nil
     }
 }
 
-public extension AiAgentEventOtpEmailVerificationFailed {
-    init(from decoder: Decoder) throws {
+extension AiAgentEventOtpEmailVerificationFailed {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        event = try container.sdkDecodeIfPresent(.event)
+        self.event = try container.sdkDecodeIfPresent(.event)
     }
 }
 
-public extension AiAgentEventOtpEmailVerificationFailed {
-    init(event: AiAgentEventOtpEmailVerificationFailedEvent? = nil) {
+extension AiAgentEventOtpEmailVerificationFailed {
+    public init(event: AiAgentEventOtpEmailVerificationFailedEvent? = nil) {
         self.init()
         self.event = event
     }
@@ -158,19 +158,19 @@ public struct AiAgentEventOtpEmailVerificationFailedEventData: Codable {
     }
 
     init() {
-        otpEmailVerificationFailed = nil
+        self.otpEmailVerificationFailed = nil
     }
 }
 
-public extension AiAgentEventOtpEmailVerificationFailedEventData {
-    init(from decoder: Decoder) throws {
+extension AiAgentEventOtpEmailVerificationFailedEventData {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        otpEmailVerificationFailed = try container.sdkDecodeIfPresent(.otpEmailVerificationFailed)
+        self.otpEmailVerificationFailed = try container.sdkDecodeIfPresent(.otpEmailVerificationFailed)
     }
 }
 
-public extension AiAgentEventOtpEmailVerificationFailedEventData {
-    init(otpEmailVerificationFailed: AiAgentEventOtpEmailVerificationFailedEventDataOtpEmailVerifiX59f0b7402b? = nil) {
+extension AiAgentEventOtpEmailVerificationFailedEventData {
+    public init(otpEmailVerificationFailed: AiAgentEventOtpEmailVerificationFailedEventDataOtpEmailVerifiX59f0b7402b? = nil) {
         self.init()
         self.otpEmailVerificationFailed = otpEmailVerificationFailed
     }

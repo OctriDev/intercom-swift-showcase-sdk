@@ -6,15 +6,10 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ConversationsMethods {
-    /// Lists conversations and returns cursor-based pagination details with the results. Use `per_page` to set the page
-    /// size and `starting_after` to continue from a cursor; the default page size is 20 and the maximum is 150. Set
-    /// `include_monitors` or `include_scorecards` to include the corresponding QA results on each conversation.
+extension ConversationsMethods {
+    /// Lists conversations and returns cursor-based pagination details with the results. Use `per_page` to set the page size and `starting_after` to continue from a cursor; the default page size is 20 and the maximum is 150. Set `include_monitors` or `include_scorecards` to include the corresponding QA results on each conversation.
     ///
-    /// You can fetch a list of all conversations. You can optionally request the result page size and the cursor to
-    /// start after to fetch the result. {% admonition type="warning" name="Pagination" %} You can use pagination to
-    /// limit the number of results returned. The default is `20` results per page. See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#pagination-for-list-apis)
-    /// for more details on how to use the `starting_after` param. {% /admonition %}
+    /// You can fetch a list of all conversations. You can optionally request the result page size and the cursor to start after to fetch the result. {% admonition type="warning" name="Pagination" %} You can use pagination to limit the number of results returned. The default is `20` results per page. See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#pagination-for-list-apis) for more details on how to use the `starting_after` param. {% /admonition %}
     ///
     /// - Parameters:
     /// - perPage: How many results per page
@@ -24,20 +19,12 @@ public extension ConversationsMethods {
     ///   that flagged it.
     /// - includeScorecards: If set to true, the response will include a
     ///   `scorecards` array on each conversation with any QA scorecard results.
-    static func listConversations(
-        config: ClientConfig,
-        perPage: Int? = nil,
-        startingAfter: String? = nil,
-        includeMonitors: Bool? = nil,
-        includeScorecards: Bool? = nil,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ConversationList {
-        if let perPage {
+    public static func listConversations(config: ClientConfig, perPage: Int? = nil, startingAfter: String? = nil, includeMonitors: Bool? = nil, includeScorecards: Bool? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ConversationList {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), max: 150)
         }
 
-        return try await (sdkRequest("GET", "/conversations", config: config, query: [
+        return try (await sdkRequest("GET", "/conversations", config: config, query: [
             SdkQueryParameter("per_page", value: perPage),
             SdkQueryParameter("starting_after", value: startingAfter),
             SdkQueryParameter("include_monitors", value: includeMonitors),

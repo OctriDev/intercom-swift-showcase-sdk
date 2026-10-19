@@ -7,9 +7,9 @@ import XCTest
 
 let sdkMethodFixture502Expected = String(
     data: Data(base64Encoded: [
-        "eyJ0eXBlIjoiZXJyb3IubGlzdCIsInJlcXVlc3RfaWQiOiIzZjQ3NGVjNC00ZTYxLTQyZWUtOWFjYy1l",
-        "YWM2NDk4MmUzOTMiLCJlcnJvcnMiOlt7ImNvZGUiOiJ1bmF1dGhvcml6ZWQiLCJtZXNzYWdlIjoiQWNj",
-        "ZXNzIFRva2VuIEludmFsaWQifV19",
+    "eyJ0eXBlIjoiZXJyb3IubGlzdCIsInJlcXVlc3RfaWQiOiIzZjQ3NGVjNC00ZTYxLTQyZWUtOWFjYy1l",
+    "YWM2NDk4MmUzOTMiLCJlcnJvcnMiOlt7ImNvZGUiOiJ1bmF1dGhvcml6ZWQiLCJtZXNzYWdlIjoiQWNj",
+    "ZXNzIFRva2VuIEludmFsaWQifV19",
     ].joined())!,
     encoding: .utf8
 )!

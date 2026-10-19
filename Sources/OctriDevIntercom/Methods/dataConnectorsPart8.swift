@@ -6,50 +6,24 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DataConnectorsMethods {
-    /// Retrieves a single version snapshot of a data connector, including the connector configuration as it was at that
-    /// version. Use the version's `entity_version_id` as `version_id`. Access requires a version-reading OAuth scope.
+extension DataConnectorsMethods {
+    /// Retrieves a single version snapshot of a data connector, including the connector configuration as it was at that version. Use the version's `entity_version_id` as `version_id`. Access requires a version-reading OAuth scope.
     ///
-    /// Retrieve a single version of a data connector, including the connector configuration as it was at that version.
-    /// Requires the `read_data_connector_versions` or `read_write_data_connector_versions` OAuth scope.
+    /// Retrieve a single version of a data connector, including the connector configuration as it was at that version. Requires the `read_data_connector_versions` or `read_write_data_connector_versions` OAuth scope.
     ///
     /// - Parameters:
     /// - id: The unique identifier for the data connector.
     /// - versionId: The `entity_version_id` of the version, as returned by List
     ///   versions of a data connector.
-    static func retrieveDataConnectorVersion(
-        config: ClientConfig,
-        id: String,
-        versionId: Int,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DataConnectorVersion {
-        try await (sdkRequest(
-            "GET",
-            [
-                "/data_connectors/",
-                sdkEncodePathSegment(sdkWireString(id)),
-                "/versions/",
-                sdkEncodePathSegment(sdkWireString(versionId)),
-            ].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "retrieveDataConnectorVersion",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "404": Error2.self]
-        )).data
+    public static func retrieveDataConnectorVersion(config: ClientConfig, id: String, versionId: Int, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DataConnectorVersion {
+        return try (await sdkRequest("GET", ["/data_connectors/", sdkEncodePathSegment(sdkWireString(id)), "/versions/", sdkEncodePathSegment(sdkWireString(versionId))].joined(), config: config, decoder: .json, operationId: "retrieveDataConnectorVersion", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
     }
 
-    /// Updates the note on a data connector version; no other version field can be changed. Send an empty or
-    /// whitespace-only string to clear the note. This operation does not publish the version or roll the connector
-    /// back, and it requires the `read_write_data_connector_versions` OAuth scope.
+    /// Updates the note on a data connector version; no other version field can be changed. Send an empty or whitespace-only string to clear the note. This operation does not publish the version or roll the connector back, and it requires the `read_write_data_connector_versions` OAuth scope.
     ///
-    /// Update the note on a data connector version. The note is the only field that can be changed. This does not
-    /// publish the version or roll the connector back to it. Send an empty string to clear the note. Requires the
-    /// `read_write_data_connector_versions` OAuth scope.
+    /// Update the note on a data connector version. The note is the only field that can be changed. This does not publish the version or roll the connector back to it. Send an empty string to clear the note. Requires the `read_write_data_connector_versions` OAuth scope.
     ///
     /// - Parameters:
     /// - id: The unique identifier for the data connector.
@@ -57,33 +31,11 @@ public extension DataConnectorsMethods {
     ///   versions of a data connector.
     /// - note: The new note for the version. Sending `null`, an empty string, or a
     ///   whitespace-only string clears the note.
-    static func updateDataConnectorVersion(
-        config: ClientConfig,
-        id: String,
-        versionId: Int,
-        note: String?,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DataConnectorVersion {
+    public static func updateDataConnectorVersion(config: ClientConfig, id: String, versionId: Int, note: String?, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DataConnectorVersion {
         let requestBody = UpdateDataConnectorVersionRequestBody(note: note)
 
-        return try await (sdkRequest(
-            "PATCH",
-            [
-                "/data_connectors/",
-                sdkEncodePathSegment(sdkWireString(id)),
-                "/versions/",
-                sdkEncodePathSegment(sdkWireString(versionId)),
-            ].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "updateDataConnectorVersion",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self]
-        )).data
+        return try (await sdkRequest("PATCH", ["/data_connectors/", sdkEncodePathSegment(sdkWireString(id)), "/versions/", sdkEncodePathSegment(sdkWireString(versionId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "updateDataConnectorVersion", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self])).data
     }
 }

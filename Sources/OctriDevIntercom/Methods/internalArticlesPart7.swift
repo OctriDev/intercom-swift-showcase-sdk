@@ -6,61 +6,30 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension InternalArticlesMethods {
-    /// Removes a tag from an internal article. Use `internal_article_id` and `id` to identify the article and tag; the
-    /// authenticated user must have the `manage_knowledge_base_content` permission and the `read_write_articles_scope`
-    /// OAuth scope.
+extension InternalArticlesMethods {
+    /// Removes a tag from an internal article. Use `internal_article_id` and `id` to identify the article and tag; the authenticated user must have the `manage_knowledge_base_content` permission and the `read_write_articles_scope` OAuth scope.
     ///
-    /// Remove a tag from an internal article. Returns the tag that was removed, with null `applied_at` and
-    /// `applied_by`. The authenticating teammate must have the `manage_knowledge_base_content` permission. Requires the
-    /// `read_write_articles_scope` OAuth scope.
+    /// Remove a tag from an internal article. Returns the tag that was removed, with null `applied_at` and `applied_by`. The authenticating teammate must have the `manage_knowledge_base_content` permission. Requires the `read_write_articles_scope` OAuth scope.
     ///
     /// - Parameters:
     /// - internalArticleId: The unique identifier for the internal article which is
     ///   given by Intercom.
     /// - id: The unique identifier of the tag to remove, as given by Intercom.
-    static func detachInternalArticlesTag(
-        config: ClientConfig,
-        internalArticleId: Int,
-        id: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Tag {
-        try await (sdkRequest(
-            "DELETE",
-            [
-                "/internal_articles/",
-                sdkEncodePathSegment(sdkWireString(internalArticleId)),
-                "/tags/",
-                sdkEncodePathSegment(sdkWireString(id)),
-            ].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "detachInternalArticlesTag",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self]
-        )).data
+    public static func detachInternalArticlesTag(config: ClientConfig, internalArticleId: Int, id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Tag {
+        return try (await sdkRequest("DELETE", ["/internal_articles/", sdkEncodePathSegment(sdkWireString(internalArticleId)), "/tags/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "detachInternalArticlesTag", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self])).data
     }
 
-    /// Searches internal articles and returns matching results. Use `folder_id` to limit results to a folder and its
-    /// descendant folders; the response includes the matching article count and pagination metadata.
+    /// Searches internal articles and returns matching results. Use `folder_id` to limit results to a folder and its descendant folders; the response includes the matching article count and pagination metadata.
     ///
-    /// You can search for internal articles by making a GET request to
-    /// `https://api.intercom.io/internal_articles/search`.
+    /// You can search for internal articles by making a GET request to `https://api.intercom.io/internal_articles/search`.
     ///
     /// - Parameters:
     /// - folderId: The ID of the folder to search in. Results will include articles
     ///   from this folder and all its descendant folders.
-    static func searchInternalArticles(
-        config: ClientConfig,
-        folderId: Int? = nil,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> InternalArticleSearchResponse {
-        try await (sdkRequest("GET", "/internal_articles/search", config: config, query: [
+    public static func searchInternalArticles(config: ClientConfig, folderId: Int? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> InternalArticleSearchResponse {
+        return try (await sdkRequest("GET", "/internal_articles/search", config: config, query: [
             SdkQueryParameter("folder_id", value: folderId),
         ], decoder: .json, operationId: "searchInternalArticles", extraHeaders: sdkHeaders([
             ("Intercom-Version", sdkHeaderValue(intercomVersion)),

@@ -6,42 +6,18 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ArticlesMethods {
-    /// Removes a tag from an article. Use the `article_id` and `id` path parameters to identify the article and tag to
-    /// detach. The authenticated teammate needs the `manage_knowledge_base_content` permission and the
-    /// `read_write_articles_scope` OAuth scope.
+extension ArticlesMethods {
+    /// Removes a tag from an article. Use the `article_id` and `id` path parameters to identify the article and tag to detach. The authenticated teammate needs the `manage_knowledge_base_content` permission and the `read_write_articles_scope` OAuth scope.
     ///
-    /// Remove a tag from an article. Returns the tag that was removed, with null `applied_at` and `applied_by`. The
-    /// authenticating teammate must have the `manage_knowledge_base_content` permission. Requires the
-    /// `read_write_articles_scope` OAuth scope.
+    /// Remove a tag from an article. Returns the tag that was removed, with null `applied_at` and `applied_by`. The authenticating teammate must have the `manage_knowledge_base_content` permission. Requires the `read_write_articles_scope` OAuth scope.
     ///
     /// - Parameters:
     /// - articleId: The unique identifier for the article which is given by
     ///   Intercom.
     /// - id: The unique identifier of the tag to remove, as given by Intercom.
-    static func detachArticlesTag(
-        config: ClientConfig,
-        articleId: Int,
-        id: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Tag {
-        try await (sdkRequest(
-            "DELETE",
-            [
-                "/articles/",
-                sdkEncodePathSegment(sdkWireString(articleId)),
-                "/tags/",
-                sdkEncodePathSegment(sdkWireString(id)),
-            ].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "detachArticlesTag",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self]
-        )).data
+    public static func detachArticlesTag(config: ClientConfig, articleId: Int, id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Tag {
+        return try (await sdkRequest("DELETE", ["/articles/", sdkEncodePathSegment(sdkWireString(articleId)), "/tags/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "detachArticlesTag", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self])).data
     }
 }

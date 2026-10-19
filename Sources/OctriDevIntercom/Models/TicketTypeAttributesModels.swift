@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// TicketTypeAttributes domain models
+// TicketTypeAttributes domain models
 /// You can create a Ticket Type Attribute
 public struct CreateTicketTypeAttributeRequest: Codable {
     /// The name of the ticket type attribute
@@ -46,61 +46,36 @@ public struct CreateTicketTypeAttributeRequest: Codable {
         case allowMultipleValues = "allow_multiple_values"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateTicketTypeAttributeRequest {
-    init(from decoder: Decoder) throws {
+extension CreateTicketTypeAttributeRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
         guard container.contains(.description) else {
-            throw SdkValidationError(
-                field: "description",
-                code: "required",
-                message: "Validation failed for 'description': value is required"
-            )
+            throw SdkValidationError(field: "description", code: "required", message: "Validation failed for 'description': value is required")
         }
         guard container.contains(.dataType) else {
-            throw SdkValidationError(
-                field: "data_type",
-                code: "required",
-                message: "Validation failed for 'data_type': value is required"
-            )
+            throw SdkValidationError(field: "data_type", code: "required", message: "Validation failed for 'data_type': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        description = try container.sdkDecodeRequired(.description)
-        dataType = try container.sdkDecodeRequired(.dataType)
-        requiredToCreate = try container.sdkDecodeIfPresent(.requiredToCreate)
-        requiredToCreateForContacts = try container.sdkDecodeIfPresent(.requiredToCreateForContacts)
-        visibleOnCreate = try container.sdkDecodeIfPresent(.visibleOnCreate)
-        visibleToContacts = try container.sdkDecodeIfPresent(.visibleToContacts)
-        multiline = try container.sdkDecodeIfPresent(.multiline)
-        listItems = try container.sdkDecodeIfPresent(.listItems)
-        allowMultipleValues = try container.sdkDecodeIfPresent(.allowMultipleValues)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.description = try container.sdkDecodeRequired(.description)
+        self.dataType = try container.sdkDecodeRequired(.dataType)
+        self.requiredToCreate = try container.sdkDecodeIfPresent(.requiredToCreate)
+        self.requiredToCreateForContacts = try container.sdkDecodeIfPresent(.requiredToCreateForContacts)
+        self.visibleOnCreate = try container.sdkDecodeIfPresent(.visibleOnCreate)
+        self.visibleToContacts = try container.sdkDecodeIfPresent(.visibleToContacts)
+        self.multiline = try container.sdkDecodeIfPresent(.multiline)
+        self.listItems = try container.sdkDecodeIfPresent(.listItems)
+        self.allowMultipleValues = try container.sdkDecodeIfPresent(.allowMultipleValues)
     }
 }
 
-public extension CreateTicketTypeAttributeRequest {
-    init(
-        name: String,
-        description: String,
-        dataType: CreateTicketTypeAttributeRequestDataType,
-        requiredToCreate: Bool? = nil,
-        requiredToCreateForContacts: Bool? = nil,
-        visibleOnCreate: Bool? = nil,
-        visibleToContacts: Bool? = nil,
-        multiline: Bool? = nil,
-        listItems: String? = nil,
-        allowMultipleValues: Bool? = nil
-    ) {
+extension CreateTicketTypeAttributeRequest {
+    public init(name: String, description: String, dataType: CreateTicketTypeAttributeRequestDataType, requiredToCreate: Bool? = nil, requiredToCreateForContacts: Bool? = nil, visibleOnCreate: Bool? = nil, visibleToContacts: Bool? = nil, multiline: Bool? = nil, listItems: String? = nil, allowMultipleValues: Bool? = nil) {
         (self.name, self.description) = (name, description)
         (self.dataType, self.requiredToCreate) = (dataType, requiredToCreate)
         self.requiredToCreateForContacts = requiredToCreateForContacts
@@ -153,40 +128,29 @@ public struct UpdateTicketTypeAttributeRequest: Codable {
     }
 
     init() {
-        (name, description, requiredToCreate, requiredToCreateForContacts, visibleOnCreate) = (nil, nil, nil, nil, nil)
-        (visibleToContacts, multiline, listItems, allowMultipleValues, archived) = (nil, nil, nil, nil, nil)
+        (self.name, self.description, self.requiredToCreate, self.requiredToCreateForContacts, self.visibleOnCreate) = (nil, nil, nil, nil, nil)
+        (self.visibleToContacts, self.multiline, self.listItems, self.allowMultipleValues, self.archived) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension UpdateTicketTypeAttributeRequest {
-    init(from decoder: Decoder) throws {
+extension UpdateTicketTypeAttributeRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        requiredToCreate = try container.sdkDecodeIfPresent(.requiredToCreate)
-        requiredToCreateForContacts = try container.sdkDecodeIfPresent(.requiredToCreateForContacts)
-        visibleOnCreate = try container.sdkDecodeIfPresent(.visibleOnCreate)
-        visibleToContacts = try container.sdkDecodeIfPresent(.visibleToContacts)
-        multiline = try container.sdkDecodeIfPresent(.multiline)
-        listItems = try container.sdkDecodeIfPresent(.listItems)
-        allowMultipleValues = try container.sdkDecodeIfPresent(.allowMultipleValues)
-        archived = try container.sdkDecodeIfPresent(.archived)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.requiredToCreate = try container.sdkDecodeIfPresent(.requiredToCreate)
+        self.requiredToCreateForContacts = try container.sdkDecodeIfPresent(.requiredToCreateForContacts)
+        self.visibleOnCreate = try container.sdkDecodeIfPresent(.visibleOnCreate)
+        self.visibleToContacts = try container.sdkDecodeIfPresent(.visibleToContacts)
+        self.multiline = try container.sdkDecodeIfPresent(.multiline)
+        self.listItems = try container.sdkDecodeIfPresent(.listItems)
+        self.allowMultipleValues = try container.sdkDecodeIfPresent(.allowMultipleValues)
+        self.archived = try container.sdkDecodeIfPresent(.archived)
     }
 }
 
-public extension UpdateTicketTypeAttributeRequest {
-    init(
-        name: String? = nil,
-        description: String? = nil,
-        requiredToCreate: Bool? = nil,
-        requiredToCreateForContacts: Bool? = nil,
-        visibleOnCreate: Bool? = nil,
-        visibleToContacts: Bool? = nil,
-        multiline: Bool? = nil,
-        listItems: String? = nil,
-        allowMultipleValues: Bool? = nil,
-        archived: Bool? = nil
-    ) {
+extension UpdateTicketTypeAttributeRequest {
+    public init(name: String? = nil, description: String? = nil, requiredToCreate: Bool? = nil, requiredToCreateForContacts: Bool? = nil, visibleOnCreate: Bool? = nil, visibleToContacts: Bool? = nil, multiline: Bool? = nil, listItems: String? = nil, allowMultipleValues: Bool? = nil, archived: Bool? = nil) {
         self.init()
         (self.name, self.description) = (name, description)
         self.requiredToCreate = requiredToCreate
@@ -198,14 +162,10 @@ public extension UpdateTicketTypeAttributeRequest {
 }
 
 /// The data type of the attribute
-public struct CreateTicketTypeAttributeRequestDataType: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct CreateTicketTypeAttributeRequestDataType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let string = CreateTicketTypeAttributeRequestDataType(rawValue: "string")
     public static let list = CreateTicketTypeAttributeRequestDataType(rawValue: "list")
     public static let integer = CreateTicketTypeAttributeRequestDataType(rawValue: "integer")
@@ -216,7 +176,7 @@ public struct CreateTicketTypeAttributeRequestDataType: RawRepresentable, Hashab
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -3,9 +3,9 @@
 
 import Foundation
 
-/// Contacts domain models
-public extension MergePreviewSummary {
-    init(attributeChanges: MergePreviewAttributeChanges? = nil, reassignments: MergePreviewReassignments? = nil) {
+// Contacts domain models
+extension MergePreviewSummary {
+    public init(attributeChanges: MergePreviewAttributeChanges? = nil, reassignments: MergePreviewReassignments? = nil) {
         self.init()
         (self.attributeChanges, self.reassignments) = (attributeChanges, reassignments)
     }
@@ -26,23 +26,20 @@ public struct BulkUpdateContactsRequestContactsItemTags: Codable {
     }
 
     init() {
-        (add, remove) = (nil, nil)
+        (self.add, self.remove) = (nil, nil)
     }
 }
 
-public extension BulkUpdateContactsRequestContactsItemTags {
-    init(from decoder: Decoder) throws {
+extension BulkUpdateContactsRequestContactsItemTags {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        add = try container.sdkDecodeIfPresent(.add)
-        remove = try container.sdkDecodeIfPresent(.remove)
+        self.add = try container.sdkDecodeIfPresent(.add)
+        self.remove = try container.sdkDecodeIfPresent(.remove)
     }
 }
 
-public extension BulkUpdateContactsRequestContactsItemTags {
-    init(
-        add: [BulkUpdateContactsRequestContactsItemTagsAddItem]? = nil,
-        remove: [BulkUpdateContactsRequestContactsItemTagsRemoveItem]? = nil
-    ) {
+extension BulkUpdateContactsRequestContactsItemTags {
+    public init(add: [BulkUpdateContactsRequestContactsItemTagsAddItem]? = nil, remove: [BulkUpdateContactsRequestContactsItemTagsRemoveItem]? = nil) {
         self.init()
         (self.add, self.remove) = (add, remove)
     }
@@ -71,22 +68,22 @@ public struct DeletedContactListPages: Codable {
     }
 
     init() {
-        (type, page, perPage, totalPages) = (nil, nil, nil, nil)
+        (self.type, self.page, self.perPage, self.totalPages) = (nil, nil, nil, nil)
     }
 }
 
-public extension DeletedContactListPages {
-    init(from decoder: Decoder) throws {
+extension DeletedContactListPages {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        page = try container.sdkDecodeIfPresent(.page)
-        perPage = try container.sdkDecodeIfPresent(.perPage)
-        totalPages = try container.sdkDecodeIfPresent(.totalPages)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.page = try container.sdkDecodeIfPresent(.page)
+        self.perPage = try container.sdkDecodeIfPresent(.perPage)
+        self.totalPages = try container.sdkDecodeIfPresent(.totalPages)
     }
 }
 
-public extension DeletedContactListPages {
-    init(type: DeletedContactListPagesType? = nil, page: Int? = nil, perPage: Int? = nil, totalPages: Int? = nil) {
+extension DeletedContactListPages {
+    public init(type: DeletedContactListPagesType? = nil, page: Int? = nil, perPage: Int? = nil, totalPages: Int? = nil) {
         self.init()
         (self.type, self.page) = (type, page)
         (self.perPage, self.totalPages) = (perPage, totalPages)
@@ -97,15 +94,12 @@ public extension DeletedContactListPages {
 public struct ContactActivityType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let contactActivity = ContactActivityType(rawValue: "contact_activity")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -118,15 +112,12 @@ public struct ContactActivityType: RawRepresentable, Hashable, Codable, Sendable
 public struct DeletedContactListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let list = DeletedContactListType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -139,15 +130,12 @@ public struct DeletedContactListType: RawRepresentable, Hashable, Codable, Senda
 public struct ContactDeletedType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let contact = ContactDeletedType(rawValue: "contact")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -161,16 +149,13 @@ public struct ContactDeletedType: RawRepresentable, Hashable, Codable, Sendable,
 public struct ContactSearchRequestSortOrder: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let ascending = ContactSearchRequestSortOrder(rawValue: "ascending")
     public static let descending = ContactSearchRequestSortOrder(rawValue: "descending")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -184,17 +169,14 @@ public struct ContactSearchRequestSortOrder: RawRepresentable, Hashable, Codable
 public struct MergePreviewAttributeChangeOutcome: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let adopted = MergePreviewAttributeChangeOutcome(rawValue: "adopted")
     public static let discarded = MergePreviewAttributeChangeOutcome(rawValue: "discarded")
     public static let merged = MergePreviewAttributeChangeOutcome(rawValue: "merged")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -207,15 +189,12 @@ public struct MergePreviewAttributeChangeOutcome: RawRepresentable, Hashable, Co
 public struct ContactAttachedCompaniesType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let list = ContactAttachedCompaniesType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -228,15 +207,12 @@ public struct ContactAttachedCompaniesType: RawRepresentable, Hashable, Codable,
 public struct ContactActivityListPagesType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let pages = ContactActivityListPagesType(rawValue: "pages")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -249,15 +225,12 @@ public struct ContactActivityListPagesType: RawRepresentable, Hashable, Codable,
 public struct ContactArchivedType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let contact = ContactArchivedType(rawValue: "contact")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -270,15 +243,12 @@ public struct ContactArchivedType: RawRepresentable, Hashable, Codable, Sendable
 public struct ContactActivityListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let list = ContactActivityListType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -291,16 +261,13 @@ public struct ContactActivityListType: RawRepresentable, Hashable, Codable, Send
 public struct DeletedContactRole: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let user = DeletedContactRole(rawValue: "user")
     public static let lead = DeletedContactRole(rawValue: "lead")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -313,10 +280,7 @@ public struct DeletedContactRole: RawRepresentable, Hashable, Codable, Sendable,
 public struct DeletedContactStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let archived = DeletedContactStatus(rawValue: "archived")
     public static let blocked = DeletedContactStatus(rawValue: "blocked")
     public static let merged = DeletedContactStatus(rawValue: "merged")
@@ -325,7 +289,7 @@ public struct DeletedContactStatus: RawRepresentable, Hashable, Codable, Sendabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -338,15 +302,12 @@ public struct DeletedContactStatus: RawRepresentable, Hashable, Codable, Sendabl
 public struct ContactBlockedType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let contact = ContactBlockedType(rawValue: "contact")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -359,15 +320,12 @@ public struct ContactBlockedType: RawRepresentable, Hashable, Codable, Sendable,
 public struct DeletedContactType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let contact = DeletedContactType(rawValue: "contact")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -380,15 +338,12 @@ public struct DeletedContactType: RawRepresentable, Hashable, Codable, Sendable,
 public struct ContactListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let list = ContactListType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -401,15 +356,12 @@ public struct ContactListType: RawRepresentable, Hashable, Codable, Sendable, Sd
 public struct MergeHistoryListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let list = MergeHistoryListType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -422,15 +374,12 @@ public struct MergeHistoryListType: RawRepresentable, Hashable, Codable, Sendabl
 public struct ContactSegmentsType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let list = ContactSegmentsType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -443,15 +392,12 @@ public struct ContactSegmentsType: RawRepresentable, Hashable, Codable, Sendable
 public struct ContactUnarchivedType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let contact = ContactUnarchivedType(rawValue: "contact")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -464,10 +410,7 @@ public struct ContactUnarchivedType: RawRepresentable, Hashable, Codable, Sendab
 public struct ContactActivityEventType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let contactCreated = ContactActivityEventType(rawValue: "contact.created")
     public static let contactRoleUpdated = ContactActivityEventType(rawValue: "contact.role_updated")
     public static let contactDeleted = ContactActivityEventType(rawValue: "contact.deleted")
@@ -476,7 +419,7 @@ public struct ContactActivityEventType: RawRepresentable, Hashable, Codable, Sen
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -489,15 +432,12 @@ public struct ContactActivityEventType: RawRepresentable, Hashable, Codable, Sen
 public struct DeletedContactListPagesType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let pages = DeletedContactListPagesType(rawValue: "pages")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -510,16 +450,12 @@ public struct DeletedContactListPagesType: RawRepresentable, Hashable, Codable, 
 public struct MergePreviewReasonCode: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let sourceSameAsTarget = MergePreviewReasonCode(rawValue: "source_same_as_target")
     public static let invalidMergeRolePair = MergePreviewReasonCode(rawValue: "invalid_merge_role_pair")
     public static let noSharedIdentifier = MergePreviewReasonCode(rawValue: "no_shared_identifier")
     public static let facebookUser = MergePreviewReasonCode(rawValue: "facebook_user")
-    public static let externalLeadChannelNotAllowed =
-        MergePreviewReasonCode(rawValue: "external_lead_channel_not_allowed")
+    public static let externalLeadChannelNotAllowed = MergePreviewReasonCode(rawValue: "external_lead_channel_not_allowed")
     public static let mailingList = MergePreviewReasonCode(rawValue: "mailing_list")
     public static let whatsappDataCannotBeMerged = MergePreviewReasonCode(rawValue: "whatsapp_data_cannot_be_merged")
     public static let telegramDataCannotBeMerged = MergePreviewReasonCode(rawValue: "telegram_data_cannot_be_merged")
@@ -528,7 +464,7 @@ public struct MergePreviewReasonCode: RawRepresentable, Hashable, Codable, Senda
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

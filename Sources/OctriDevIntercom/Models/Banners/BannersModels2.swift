@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// TaggedModelsBanners domain models
+// TaggedModelsBanners domain models
 /// The result of dismissing a banner for a contact.
 public struct BannerDismiss: Codable {
     /// String representing the object's type. Always has the value `banner_dismiss`.
@@ -23,21 +23,21 @@ public struct BannerDismiss: Codable {
     }
 
     init() {
-        (type, viewId, dismissed) = (nil, nil, nil)
+        (self.type, self.viewId, self.dismissed) = (nil, nil, nil)
     }
 }
 
-public extension BannerDismiss {
-    init(from decoder: Decoder) throws {
+extension BannerDismiss {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        viewId = try container.sdkDecodeIfPresent(.viewId)
-        dismissed = try container.sdkDecodeIfPresent(.dismissed)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.viewId = try container.sdkDecodeIfPresent(.viewId)
+        self.dismissed = try container.sdkDecodeIfPresent(.dismissed)
     }
 }
 
-public extension BannerDismiss {
-    init(type: String? = nil, viewId: String? = nil, dismissed: Bool? = nil) {
+extension BannerDismiss {
+    public init(type: String? = nil, viewId: String? = nil, dismissed: Bool? = nil) {
         self.init()
         (self.type, self.viewId) = (type, viewId)
         self.dismissed = dismissed
@@ -76,32 +76,25 @@ public struct BannerAction: Codable {
     }
 
     init() {
-        (type, label, target, reactionSet, tourId) = (nil, nil, nil, nil, nil)
-        tourUrl = nil
+        (self.type, self.label, self.target, self.reactionSet, self.tourId) = (nil, nil, nil, nil, nil)
+        self.tourUrl = nil
     }
 }
 
-public extension BannerAction {
-    init(from decoder: Decoder) throws {
+extension BannerAction {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        label = try container.sdkDecodeIfPresent(.label)
-        target = try container.sdkDecodeIfPresent(.target)
-        reactionSet = try container.sdkDecodeIfPresent(.reactionSet)
-        tourId = try container.sdkDecodeIfPresent(.tourId)
-        tourUrl = try container.sdkDecodeIfPresent(.tourUrl)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.label = try container.sdkDecodeIfPresent(.label)
+        self.target = try container.sdkDecodeIfPresent(.target)
+        self.reactionSet = try container.sdkDecodeIfPresent(.reactionSet)
+        self.tourId = try container.sdkDecodeIfPresent(.tourId)
+        self.tourUrl = try container.sdkDecodeIfPresent(.tourUrl)
     }
 }
 
-public extension BannerAction {
-    init(
-        type: String? = nil,
-        label: String? = nil,
-        target: String? = nil,
-        reactionSet: [BannerActionReactionSetItem]? = nil,
-        tourId: String? = nil,
-        tourUrl: String? = nil
-    ) {
+extension BannerAction {
+    public init(type: String? = nil, label: String? = nil, target: String? = nil, reactionSet: [BannerActionReactionSetItem]? = nil, tourId: String? = nil, tourUrl: String? = nil) {
         self.init()
         (self.type, self.label) = (type, label)
         (self.target, self.reactionSet) = (target, reactionSet)
@@ -123,20 +116,20 @@ public struct BannerActionReactionSetItem: Codable {
     }
 
     init() {
-        (index, unicodeEmoticon) = (nil, nil)
+        (self.index, self.unicodeEmoticon) = (nil, nil)
     }
 }
 
-public extension BannerActionReactionSetItem {
-    init(from decoder: Decoder) throws {
+extension BannerActionReactionSetItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        index = try container.sdkDecodeIfPresent(.index)
-        unicodeEmoticon = try container.sdkDecodeIfPresent(.unicodeEmoticon)
+        self.index = try container.sdkDecodeIfPresent(.index)
+        self.unicodeEmoticon = try container.sdkDecodeIfPresent(.unicodeEmoticon)
     }
 }
 
-public extension BannerActionReactionSetItem {
-    init(index: Int? = nil, unicodeEmoticon: String? = nil) {
+extension BannerActionReactionSetItem {
+    public init(index: Int? = nil, unicodeEmoticon: String? = nil) {
         self.init()
         (self.index, self.unicodeEmoticon) = (index, unicodeEmoticon)
     }
@@ -194,43 +187,31 @@ public struct Banner: Codable {
     }
 
     init() {
-        (type, id, viewId, title, body) = (nil, nil, nil, nil, nil)
-        (style, position, showDismissButton, action, clientTargeting) = (nil, nil, nil, nil, nil)
-        createdAt = nil
+        (self.type, self.id, self.viewId, self.title, self.body) = (nil, nil, nil, nil, nil)
+        (self.style, self.position, self.showDismissButton, self.action, self.clientTargeting) = (nil, nil, nil, nil, nil)
+        self.createdAt = nil
     }
 }
 
-public extension Banner {
-    init(from decoder: Decoder) throws {
+extension Banner {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        viewId = try container.sdkDecodeIfPresent(.viewId)
-        title = try container.sdkDecodeIfPresent(.title)
-        body = try container.sdkDecodeIfPresent(.body)
-        style = try container.sdkDecodeIfPresent(.style)
-        position = try container.sdkDecodeIfPresent(.position)
-        showDismissButton = try container.sdkDecodeIfPresent(.showDismissButton)
-        action = try container.sdkDecodeIfPresent(.action)
-        clientTargeting = try container.sdkDecodeIfPresent(.clientTargeting)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.viewId = try container.sdkDecodeIfPresent(.viewId)
+        self.title = try container.sdkDecodeIfPresent(.title)
+        self.body = try container.sdkDecodeIfPresent(.body)
+        self.style = try container.sdkDecodeIfPresent(.style)
+        self.position = try container.sdkDecodeIfPresent(.position)
+        self.showDismissButton = try container.sdkDecodeIfPresent(.showDismissButton)
+        self.action = try container.sdkDecodeIfPresent(.action)
+        self.clientTargeting = try container.sdkDecodeIfPresent(.clientTargeting)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
     }
 }
 
-public extension Banner {
-    init(
-        type: String? = nil,
-        id: String? = nil,
-        viewId: String? = nil,
-        title: String? = nil,
-        body: String? = nil,
-        style: String? = nil,
-        position: String? = nil,
-        showDismissButton: Bool? = nil,
-        action: BannerAction? = nil,
-        clientTargeting: [[String: JSONValue]]? = nil,
-        createdAt: Int? = nil
-    ) {
+extension Banner {
+    public init(type: String? = nil, id: String? = nil, viewId: String? = nil, title: String? = nil, body: String? = nil, style: String? = nil, position: String? = nil, showDismissButton: Bool? = nil, action: BannerAction? = nil, clientTargeting: [[String: JSONValue]]? = nil, createdAt: Int? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.viewId, self.title) = (viewId, title)

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// TaggedModelsMacros domain models
+// TaggedModelsMacros domain models
 /// A paginated list of macros (saved replies) in the workspace.
 public struct MacroList: Codable {
     /// Always list
@@ -21,26 +21,32 @@ public struct MacroList: Codable {
     }
 
     init() {
-        (type, data, pages) = (nil, nil, nil)
+        (self.type, self.data, self.pages) = (nil, nil, nil)
     }
 }
 
-public extension MacroList {
-    init(from decoder: Decoder) throws {
+extension MacroList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        data = try container.sdkDecodeIfPresent(.data)
-        pages = try container.sdkDecodeIfPresent(.pages)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.data = try container.sdkDecodeIfPresent(.data)
+        self.pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-public extension MacroList {
-    init(type: MacroListType? = nil, data: [Macro?]? = nil, pages: MacroListPages? = nil) {
+extension MacroList {
+    public init(type: MacroListType? = nil, data: [Macro?]? = nil, pages: MacroListPages? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
         self.pages = pages
     }
 }
+
+
+
+
+
+
 
 /// A macro is a pre-defined response template (saved reply) that can be used to quickly reply to conversations.
 public struct Macro: Codable {
@@ -89,46 +95,35 @@ public struct Macro: Codable {
     }
 
     init() {
-        (type, id, name, body, bodyText) = (nil, nil, nil, nil, nil)
-        (createdAt, updatedAt, visibleTo, visibleToTeamIds, availableOn) = (nil, nil, nil, nil, nil)
+        (self.type, self.id, self.name, self.body, self.bodyText) = (nil, nil, nil, nil, nil)
+        (self.createdAt, self.updatedAt, self.visibleTo, self.visibleToTeamIds, self.availableOn) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension Macro {
-    init(from decoder: Decoder) throws {
+extension Macro {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        body = try container.sdkDecodeIfPresent(.body)
-        bodyText = try container.sdkDecodeIfPresent(.bodyText)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        visibleTo = try container.sdkDecodeIfPresent(.visibleTo)
-        visibleToTeamIds = try container.sdkDecodeIfPresent(.visibleToTeamIds)
-        availableOn = try container.sdkDecodeIfPresent(.availableOn)
-        if let value = createdAt {
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.body = try container.sdkDecodeIfPresent(.body)
+        self.bodyText = try container.sdkDecodeIfPresent(.bodyText)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.visibleTo = try container.sdkDecodeIfPresent(.visibleTo)
+        self.visibleToTeamIds = try container.sdkDecodeIfPresent(.visibleToTeamIds)
+        self.availableOn = try container.sdkDecodeIfPresent(.availableOn)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = updatedAt {
+        if let value = self.updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-public extension Macro {
-    init(
-        type: MacroType? = nil,
-        id: String? = nil,
-        name: String? = nil,
-        body: String? = nil,
-        bodyText: String? = nil,
-        createdAt: Date? = nil,
-        updatedAt: Date? = nil,
-        visibleTo: MacroVisibleTo? = nil,
-        visibleToTeamIds: [String]? = nil,
-        availableOn: [MacroAvailableOnItem]? = nil
-    ) throws {
+extension Macro {
+    public init(type: MacroType? = nil, id: String? = nil, name: String? = nil, body: String? = nil, bodyText: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, visibleTo: MacroVisibleTo? = nil, visibleToTeamIds: [String]? = nil, availableOn: [MacroAvailableOnItem]? = nil) throws {
         self.init()
         (self.type, self.id) = (type, id)
         (self.name, self.body) = (name, body)
@@ -155,19 +150,19 @@ public struct MacroListPagesNext: Codable {
     }
 
     init() {
-        startingAfter = nil
+        self.startingAfter = nil
     }
 }
 
-public extension MacroListPagesNext {
-    init(from decoder: Decoder) throws {
+extension MacroListPagesNext {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        startingAfter = try container.sdkDecodeIfPresent(.startingAfter)
+        self.startingAfter = try container.sdkDecodeIfPresent(.startingAfter)
     }
 }
 
-public extension MacroListPagesNext {
-    init(startingAfter: String? = nil) {
+extension MacroListPagesNext {
+    public init(startingAfter: String? = nil) {
         self.init()
         self.startingAfter = startingAfter
     }
@@ -191,21 +186,21 @@ public struct MacroListPages: Codable {
     }
 
     init() {
-        (type, perPage, next) = (nil, nil, nil)
+        (self.type, self.perPage, self.next) = (nil, nil, nil)
     }
 }
 
-public extension MacroListPages {
-    init(from decoder: Decoder) throws {
+extension MacroListPages {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        perPage = try container.sdkDecodeIfPresent(.perPage)
-        next = try container.sdkDecodeIfPresent(.next)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.perPage = try container.sdkDecodeIfPresent(.perPage)
+        self.next = try container.sdkDecodeIfPresent(.next)
     }
 }
 
-public extension MacroListPages {
-    init(type: MacroListPagesType? = nil, perPage: Int? = nil, next: MacroListPagesNext? = nil) {
+extension MacroListPages {
+    public init(type: MacroListPagesType? = nil, perPage: Int? = nil, next: MacroListPagesNext? = nil) {
         self.init()
         (self.type, self.perPage) = (type, perPage)
         self.next = next
@@ -216,16 +211,13 @@ public extension MacroListPages {
 public struct MacroVisibleTo: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let everyone = MacroVisibleTo(rawValue: "everyone")
     public static let specificTeams = MacroVisibleTo(rawValue: "specific_teams")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -238,15 +230,12 @@ public struct MacroVisibleTo: RawRepresentable, Hashable, Codable, Sendable, Sdk
 public struct MacroType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let macro = MacroType(rawValue: "macro")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -259,15 +248,12 @@ public struct MacroType: RawRepresentable, Hashable, Codable, Sendable, SdkWireC
 public struct MacroListPagesType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let pages = MacroListPagesType(rawValue: "pages")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -280,15 +266,12 @@ public struct MacroListPagesType: RawRepresentable, Hashable, Codable, Sendable,
 public struct MacroListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let list = MacroListType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -301,16 +284,13 @@ public struct MacroListType: RawRepresentable, Hashable, Codable, Sendable, SdkW
 public struct MacroAvailableOnItem: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let inbox = MacroAvailableOnItem(rawValue: "inbox")
     public static let messenger = MacroAvailableOnItem(rawValue: "messenger")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

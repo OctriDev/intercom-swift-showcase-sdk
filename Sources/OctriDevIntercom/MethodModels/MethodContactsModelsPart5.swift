@@ -7,7 +7,7 @@ import Foundation
     import FoundationNetworking
 #endif
 
-/// Canonical contacts operation model declarations
+// Canonical contacts operation model declarations
 public struct CreateContactResponse: Codable {
     /// The type of object.
     /// - Example: "contact"
@@ -212,8 +212,8 @@ extension CreateContactResponse {
     }
 }
 
-public extension CreateContactResponse {
-    init(from decoder: Decoder) throws {
+extension CreateContactResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.init(sdkDefaults: ())
         try sdkDecodeFieldsPart1(container)
@@ -223,57 +223,8 @@ public extension CreateContactResponse {
     }
 }
 
-public extension CreateContactResponse {
-    init(
-        type: String? = nil,
-        id: String? = nil,
-        externalId: String? = nil,
-        workspaceId: String? = nil,
-        role: String? = nil,
-        email: String? = nil,
-        emailDomain: String? = nil,
-        emailVerified: Bool? = nil,
-        phone: String? = nil,
-        name: String? = nil,
-        ownerId: String? = nil,
-        hasHardBounced: Bool? = nil,
-        markedEmailAsSpam: Bool? = nil,
-        unsubscribedFromEmails: Bool? = nil,
-        createdAt: Int? = nil,
-        updatedAt: Int? = nil,
-        signedUpAt: Int? = nil,
-        lastSeenAt: Int? = nil,
-        lastRepliedAt: Int? = nil,
-        lastContactedAt: Int? = nil,
-        lastEmailOpenedAt: Int? = nil,
-        lastEmailClickedAt: Int? = nil,
-        languageOverride: String? = nil,
-        browser: String? = nil,
-        browserVersion: String? = nil,
-        browserLanguage: String? = nil,
-        os: String? = nil,
-        androidAppName: String? = nil,
-        androidAppVersion: String? = nil,
-        androidDevice: String? = nil,
-        androidOsVersion: String? = nil,
-        androidSdkVersion: String? = nil,
-        androidLastSeenAt: Int? = nil,
-        iosAppName: String? = nil,
-        iosAppVersion: String? = nil,
-        iosDevice: String? = nil,
-        iosOsVersion: String? = nil,
-        iosSdkVersion: String? = nil,
-        iosLastSeenAt: Int? = nil,
-        customAttributes: [String: JSONValue]? = nil,
-        avatar: CreateContactResponseAvatar? = nil,
-        tags: ContactTags? = nil,
-        notes: ContactNotes? = nil,
-        companies: ContactCompanies? = nil,
-        location: ContactLocation? = nil,
-        socialProfiles: ContactSocialProfiles? = nil,
-        mergeHistory: [MergeHistoryItem]? = nil,
-        enabledPushMessaging: Bool? = nil
-    ) {
+extension CreateContactResponse {
+    public init(type: String? = nil, id: String? = nil, externalId: String? = nil, workspaceId: String? = nil, role: String? = nil, email: String? = nil, emailDomain: String? = nil, emailVerified: Bool? = nil, phone: String? = nil, name: String? = nil, ownerId: String? = nil, hasHardBounced: Bool? = nil, markedEmailAsSpam: Bool? = nil, unsubscribedFromEmails: Bool? = nil, createdAt: Int? = nil, updatedAt: Int? = nil, signedUpAt: Int? = nil, lastSeenAt: Int? = nil, lastRepliedAt: Int? = nil, lastContactedAt: Int? = nil, lastEmailOpenedAt: Int? = nil, lastEmailClickedAt: Int? = nil, languageOverride: String? = nil, browser: String? = nil, browserVersion: String? = nil, browserLanguage: String? = nil, os: String? = nil, androidAppName: String? = nil, androidAppVersion: String? = nil, androidDevice: String? = nil, androidOsVersion: String? = nil, androidSdkVersion: String? = nil, androidLastSeenAt: Int? = nil, iosAppName: String? = nil, iosAppVersion: String? = nil, iosDevice: String? = nil, iosOsVersion: String? = nil, iosSdkVersion: String? = nil, iosLastSeenAt: Int? = nil, customAttributes: [String: JSONValue]? = nil, avatar: CreateContactResponseAvatar? = nil, tags: ContactTags? = nil, notes: ContactNotes? = nil, companies: ContactCompanies? = nil, location: ContactLocation? = nil, socialProfiles: ContactSocialProfiles? = nil, mergeHistory: [MergeHistoryItem]? = nil, enabledPushMessaging: Bool? = nil) {
         self.init(sdkDefaults: ())
         sdkSet1(type, id, externalId, workspaceId, role)
         sdkSet2(email, emailDomain, emailVerified, phone, name)
@@ -289,13 +240,7 @@ public extension CreateContactResponse {
 }
 
 extension CreateContactResponse {
-    mutating func sdkSet1(
-        _ type: String?,
-        _ id: String?,
-        _ externalId: String?,
-        _ workspaceId: String?,
-        _ role: String?
-    ) {
+    mutating func sdkSet1(_ type: String?, _ id: String?, _ externalId: String?, _ workspaceId: String?, _ role: String?) {
         self.type = type
         self.id = id
         self.externalId = externalId
@@ -305,13 +250,7 @@ extension CreateContactResponse {
 }
 
 extension CreateContactResponse {
-    mutating func sdkSet2(
-        _ email: String?,
-        _ emailDomain: String?,
-        _ emailVerified: Bool?,
-        _ phone: String?,
-        _ name: String?
-    ) {
+    mutating func sdkSet2(_ email: String?, _ emailDomain: String?, _ emailVerified: Bool?, _ phone: String?, _ name: String?) {
         self.email = email
         self.emailDomain = emailDomain
         self.emailVerified = emailVerified
@@ -321,13 +260,7 @@ extension CreateContactResponse {
 }
 
 extension CreateContactResponse {
-    mutating func sdkSet3(
-        _ ownerId: String?,
-        _ hasHardBounced: Bool?,
-        _ markedEmailAsSpam: Bool?,
-        _ unsubscribedFromEmails: Bool?,
-        _ createdAt: Int?
-    ) {
+    mutating func sdkSet3(_ ownerId: String?, _ hasHardBounced: Bool?, _ markedEmailAsSpam: Bool?, _ unsubscribedFromEmails: Bool?, _ createdAt: Int?) {
         self.ownerId = ownerId
         self.hasHardBounced = hasHardBounced
         self.markedEmailAsSpam = markedEmailAsSpam
@@ -337,13 +270,7 @@ extension CreateContactResponse {
 }
 
 extension CreateContactResponse {
-    mutating func sdkSet4(
-        _ updatedAt: Int?,
-        _ signedUpAt: Int?,
-        _ lastSeenAt: Int?,
-        _ lastRepliedAt: Int?,
-        _ lastContactedAt: Int?
-    ) {
+    mutating func sdkSet4(_ updatedAt: Int?, _ signedUpAt: Int?, _ lastSeenAt: Int?, _ lastRepliedAt: Int?, _ lastContactedAt: Int?) {
         self.updatedAt = updatedAt
         self.signedUpAt = signedUpAt
         self.lastSeenAt = lastSeenAt
@@ -353,13 +280,7 @@ extension CreateContactResponse {
 }
 
 extension CreateContactResponse {
-    mutating func sdkSet5(
-        _ lastEmailOpenedAt: Int?,
-        _ lastEmailClickedAt: Int?,
-        _ languageOverride: String?,
-        _ browser: String?,
-        _ browserVersion: String?
-    ) {
+    mutating func sdkSet5(_ lastEmailOpenedAt: Int?, _ lastEmailClickedAt: Int?, _ languageOverride: String?, _ browser: String?, _ browserVersion: String?) {
         self.lastEmailOpenedAt = lastEmailOpenedAt
         self.lastEmailClickedAt = lastEmailClickedAt
         self.languageOverride = languageOverride
@@ -369,13 +290,7 @@ extension CreateContactResponse {
 }
 
 extension CreateContactResponse {
-    mutating func sdkSet6(
-        _ browserLanguage: String?,
-        _ os: String?,
-        _ androidAppName: String?,
-        _ androidAppVersion: String?,
-        _ androidDevice: String?
-    ) {
+    mutating func sdkSet6(_ browserLanguage: String?, _ os: String?, _ androidAppName: String?, _ androidAppVersion: String?, _ androidDevice: String?) {
         self.browserLanguage = browserLanguage
         self.os = os
         self.androidAppName = androidAppName
@@ -385,13 +300,7 @@ extension CreateContactResponse {
 }
 
 extension CreateContactResponse {
-    mutating func sdkSet7(
-        _ androidOsVersion: String?,
-        _ androidSdkVersion: String?,
-        _ androidLastSeenAt: Int?,
-        _ iosAppName: String?,
-        _ iosAppVersion: String?
-    ) {
+    mutating func sdkSet7(_ androidOsVersion: String?, _ androidSdkVersion: String?, _ androidLastSeenAt: Int?, _ iosAppName: String?, _ iosAppVersion: String?) {
         self.androidOsVersion = androidOsVersion
         self.androidSdkVersion = androidSdkVersion
         self.androidLastSeenAt = androidLastSeenAt
@@ -401,13 +310,7 @@ extension CreateContactResponse {
 }
 
 extension CreateContactResponse {
-    mutating func sdkSet8(
-        _ iosDevice: String?,
-        _ iosOsVersion: String?,
-        _ iosSdkVersion: String?,
-        _ iosLastSeenAt: Int?,
-        _ customAttributes: [String: JSONValue]?
-    ) {
+    mutating func sdkSet8(_ iosDevice: String?, _ iosOsVersion: String?, _ iosSdkVersion: String?, _ iosLastSeenAt: Int?, _ customAttributes: [String: JSONValue]?) {
         self.iosDevice = iosDevice
         self.iosOsVersion = iosOsVersion
         self.iosSdkVersion = iosSdkVersion
@@ -417,13 +320,7 @@ extension CreateContactResponse {
 }
 
 extension CreateContactResponse {
-    mutating func sdkSet9(
-        _ avatar: CreateContactResponseAvatar?,
-        _ tags: ContactTags?,
-        _ notes: ContactNotes?,
-        _ companies: ContactCompanies?,
-        _ location: ContactLocation?
-    ) {
+    mutating func sdkSet9(_ avatar: CreateContactResponseAvatar?, _ tags: ContactTags?, _ notes: ContactNotes?, _ companies: ContactCompanies?, _ location: ContactLocation?) {
         self.avatar = avatar
         self.tags = tags
         self.notes = notes
@@ -433,11 +330,7 @@ extension CreateContactResponse {
 }
 
 extension CreateContactResponse {
-    mutating func sdkSet10(
-        _ socialProfiles: ContactSocialProfiles?,
-        _ mergeHistory: [MergeHistoryItem]?,
-        _ enabledPushMessaging: Bool?
-    ) {
+    mutating func sdkSet10(_ socialProfiles: ContactSocialProfiles?, _ mergeHistory: [MergeHistoryItem]?, _ enabledPushMessaging: Bool?) {
         self.socialProfiles = socialProfiles
         self.mergeHistory = mergeHistory
         self.enabledPushMessaging = enabledPushMessaging
@@ -446,69 +339,69 @@ extension CreateContactResponse {
 
 extension CreateContactResponse {
     mutating func sdkDecodeFieldsPart1(_ container: KeyedDecodingContainer<CodingKeys>) throws {
-        type = try container.sdkDecodeIfPresent(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        externalId = try container.sdkDecodeIfPresent(.externalId)
-        workspaceId = try container.sdkDecodeIfPresent(.workspaceId)
-        role = try container.sdkDecodeIfPresent(.role)
-        email = try container.sdkDecodeIfPresent(.email)
-        emailDomain = try container.sdkDecodeIfPresent(.emailDomain)
-        emailVerified = try container.sdkDecodeIfPresent(.emailVerified)
-        phone = try container.sdkDecodeIfPresent(.phone)
-        name = try container.sdkDecodeIfPresent(.name)
-        ownerId = try container.sdkDecodeIfPresent(.ownerId)
-        hasHardBounced = try container.sdkDecodeIfPresent(.hasHardBounced)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.externalId = try container.sdkDecodeIfPresent(.externalId)
+        self.workspaceId = try container.sdkDecodeIfPresent(.workspaceId)
+        self.role = try container.sdkDecodeIfPresent(.role)
+        self.email = try container.sdkDecodeIfPresent(.email)
+        self.emailDomain = try container.sdkDecodeIfPresent(.emailDomain)
+        self.emailVerified = try container.sdkDecodeIfPresent(.emailVerified)
+        self.phone = try container.sdkDecodeIfPresent(.phone)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.ownerId = try container.sdkDecodeIfPresent(.ownerId)
+        self.hasHardBounced = try container.sdkDecodeIfPresent(.hasHardBounced)
     }
 }
 
 extension CreateContactResponse {
     mutating func sdkDecodeFieldsPart2(_ container: KeyedDecodingContainer<CodingKeys>) throws {
-        markedEmailAsSpam = try container.sdkDecodeIfPresent(.markedEmailAsSpam)
-        unsubscribedFromEmails = try container.sdkDecodeIfPresent(.unsubscribedFromEmails)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        signedUpAt = try container.sdkDecodeIfPresent(.signedUpAt)
-        lastSeenAt = try container.sdkDecodeIfPresent(.lastSeenAt)
-        lastRepliedAt = try container.sdkDecodeIfPresent(.lastRepliedAt)
-        lastContactedAt = try container.sdkDecodeIfPresent(.lastContactedAt)
-        lastEmailOpenedAt = try container.sdkDecodeIfPresent(.lastEmailOpenedAt)
-        lastEmailClickedAt = try container.sdkDecodeIfPresent(.lastEmailClickedAt)
-        languageOverride = try container.sdkDecodeIfPresent(.languageOverride)
-        browser = try container.sdkDecodeIfPresent(.browser)
+        self.markedEmailAsSpam = try container.sdkDecodeIfPresent(.markedEmailAsSpam)
+        self.unsubscribedFromEmails = try container.sdkDecodeIfPresent(.unsubscribedFromEmails)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.signedUpAt = try container.sdkDecodeIfPresent(.signedUpAt)
+        self.lastSeenAt = try container.sdkDecodeIfPresent(.lastSeenAt)
+        self.lastRepliedAt = try container.sdkDecodeIfPresent(.lastRepliedAt)
+        self.lastContactedAt = try container.sdkDecodeIfPresent(.lastContactedAt)
+        self.lastEmailOpenedAt = try container.sdkDecodeIfPresent(.lastEmailOpenedAt)
+        self.lastEmailClickedAt = try container.sdkDecodeIfPresent(.lastEmailClickedAt)
+        self.languageOverride = try container.sdkDecodeIfPresent(.languageOverride)
+        self.browser = try container.sdkDecodeIfPresent(.browser)
     }
 }
 
 extension CreateContactResponse {
     mutating func sdkDecodeFieldsPart3(_ container: KeyedDecodingContainer<CodingKeys>) throws {
-        browserVersion = try container.sdkDecodeIfPresent(.browserVersion)
-        browserLanguage = try container.sdkDecodeIfPresent(.browserLanguage)
-        os = try container.sdkDecodeIfPresent(.os)
-        androidAppName = try container.sdkDecodeIfPresent(.androidAppName)
-        androidAppVersion = try container.sdkDecodeIfPresent(.androidAppVersion)
-        androidDevice = try container.sdkDecodeIfPresent(.androidDevice)
-        androidOsVersion = try container.sdkDecodeIfPresent(.androidOsVersion)
-        androidSdkVersion = try container.sdkDecodeIfPresent(.androidSdkVersion)
-        androidLastSeenAt = try container.sdkDecodeIfPresent(.androidLastSeenAt)
-        iosAppName = try container.sdkDecodeIfPresent(.iosAppName)
-        iosAppVersion = try container.sdkDecodeIfPresent(.iosAppVersion)
-        iosDevice = try container.sdkDecodeIfPresent(.iosDevice)
+        self.browserVersion = try container.sdkDecodeIfPresent(.browserVersion)
+        self.browserLanguage = try container.sdkDecodeIfPresent(.browserLanguage)
+        self.os = try container.sdkDecodeIfPresent(.os)
+        self.androidAppName = try container.sdkDecodeIfPresent(.androidAppName)
+        self.androidAppVersion = try container.sdkDecodeIfPresent(.androidAppVersion)
+        self.androidDevice = try container.sdkDecodeIfPresent(.androidDevice)
+        self.androidOsVersion = try container.sdkDecodeIfPresent(.androidOsVersion)
+        self.androidSdkVersion = try container.sdkDecodeIfPresent(.androidSdkVersion)
+        self.androidLastSeenAt = try container.sdkDecodeIfPresent(.androidLastSeenAt)
+        self.iosAppName = try container.sdkDecodeIfPresent(.iosAppName)
+        self.iosAppVersion = try container.sdkDecodeIfPresent(.iosAppVersion)
+        self.iosDevice = try container.sdkDecodeIfPresent(.iosDevice)
     }
 }
 
 extension CreateContactResponse {
     mutating func sdkDecodeFieldsPart4(_ container: KeyedDecodingContainer<CodingKeys>) throws {
-        iosOsVersion = try container.sdkDecodeIfPresent(.iosOsVersion)
-        iosSdkVersion = try container.sdkDecodeIfPresent(.iosSdkVersion)
-        iosLastSeenAt = try container.sdkDecodeIfPresent(.iosLastSeenAt)
-        customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
-        avatar = try container.sdkDecodeIfPresent(.avatar)
-        tags = try container.sdkDecodeIfPresent(.tags)
-        notes = try container.sdkDecodeIfPresent(.notes)
-        companies = try container.sdkDecodeIfPresent(.companies)
-        location = try container.sdkDecodeIfPresent(.location)
-        socialProfiles = try container.sdkDecodeIfPresent(.socialProfiles)
-        mergeHistory = try container.sdkDecodeIfPresent(.mergeHistory)
-        enabledPushMessaging = try container.sdkDecodeIfPresent(.enabledPushMessaging)
+        self.iosOsVersion = try container.sdkDecodeIfPresent(.iosOsVersion)
+        self.iosSdkVersion = try container.sdkDecodeIfPresent(.iosSdkVersion)
+        self.iosLastSeenAt = try container.sdkDecodeIfPresent(.iosLastSeenAt)
+        self.customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
+        self.avatar = try container.sdkDecodeIfPresent(.avatar)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
+        self.notes = try container.sdkDecodeIfPresent(.notes)
+        self.companies = try container.sdkDecodeIfPresent(.companies)
+        self.location = try container.sdkDecodeIfPresent(.location)
+        self.socialProfiles = try container.sdkDecodeIfPresent(.socialProfiles)
+        self.mergeHistory = try container.sdkDecodeIfPresent(.mergeHistory)
+        self.enabledPushMessaging = try container.sdkDecodeIfPresent(.enabledPushMessaging)
     }
 }
 
@@ -517,29 +410,21 @@ public indirect enum CreateContactRequestBody {
 }
 
 extension CreateContactRequestBody: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for CreateContactRequestBody"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for CreateContactRequestBody")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
 extension CreateContactRequestBody {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(CreateContactRequest.self) {
-            return .createContactRequest(value)
-        }
+        if let value = try? container.decode(CreateContactRequest.self) { return .createContactRequest(value) }
         return nil
     }
 }
@@ -568,23 +453,23 @@ public struct MergeContactResponseAvatar: Codable {
     }
 
     init() {
-        (type, imageUrl) = (nil, nil)
+        (self.type, self.imageUrl) = (nil, nil)
     }
 }
 
-public extension MergeContactResponseAvatar {
-    init(from decoder: Decoder) throws {
+extension MergeContactResponseAvatar {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        imageUrl = try container.sdkDecodeIfPresent(.imageUrl)
-        if let value = imageUrl {
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.imageUrl = try container.sdkDecodeIfPresent(.imageUrl)
+        if let value = self.imageUrl {
             try sdkValidateUri("image_url", value)
         }
     }
 }
 
-public extension MergeContactResponseAvatar {
-    init(type: String? = nil, imageUrl: String? = nil) throws {
+extension MergeContactResponseAvatar {
+    public init(type: String? = nil, imageUrl: String? = nil) throws {
         self.init()
         (self.type, self.imageUrl) = (type, imageUrl)
         if let value = self.imageUrl {

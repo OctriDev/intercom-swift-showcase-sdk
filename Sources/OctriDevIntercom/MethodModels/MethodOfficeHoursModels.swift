@@ -7,7 +7,7 @@ import Foundation
     import FoundationNetworking
 #endif
 
-/// Canonical officeHours operation model declarations
+// Canonical officeHours operation model declarations
 public struct DeleteOfficeHoursScheduleResponse: Codable {
     /// - Example: "123"
     public var id: String?
@@ -23,21 +23,21 @@ public struct DeleteOfficeHoursScheduleResponse: Codable {
     }
 
     init() {
-        (id, object, deleted) = (nil, nil, nil)
+        (self.id, self.object, self.deleted) = (nil, nil, nil)
     }
 }
 
-public extension DeleteOfficeHoursScheduleResponse {
-    init(from decoder: Decoder) throws {
+extension DeleteOfficeHoursScheduleResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        object = try container.sdkDecodeIfPresent(.object)
-        deleted = try container.sdkDecodeIfPresent(.deleted)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-public extension DeleteOfficeHoursScheduleResponse {
-    init(id: String? = nil, object: String? = nil, deleted: Bool? = nil) {
+extension DeleteOfficeHoursScheduleResponse {
+    public init(id: String? = nil, object: String? = nil, deleted: Bool? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
         self.deleted = deleted
@@ -59,21 +59,21 @@ public struct DeleteOfficeHoursExceptionResponse: Codable {
     }
 
     init() {
-        (id, object, deleted) = (nil, nil, nil)
+        (self.id, self.object, self.deleted) = (nil, nil, nil)
     }
 }
 
-public extension DeleteOfficeHoursExceptionResponse {
-    init(from decoder: Decoder) throws {
+extension DeleteOfficeHoursExceptionResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        object = try container.sdkDecodeIfPresent(.object)
-        deleted = try container.sdkDecodeIfPresent(.deleted)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-public extension DeleteOfficeHoursExceptionResponse {
-    init(id: String? = nil, object: String? = nil, deleted: Bool? = nil) {
+extension DeleteOfficeHoursExceptionResponse {
+    public init(id: String? = nil, object: String? = nil, deleted: Bool? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
         self.deleted = deleted

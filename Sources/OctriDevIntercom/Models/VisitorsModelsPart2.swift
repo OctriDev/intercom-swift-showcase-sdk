@@ -3,39 +3,27 @@
 
 import Foundation
 
-/// Visitors domain models
-public extension ConvertVisitorRequest {
-    init(from decoder: Decoder) throws {
+// Visitors domain models
+extension ConvertVisitorRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.user) else {
-            throw SdkValidationError(
-                field: "user",
-                code: "required",
-                message: "Validation failed for 'user': value is required"
-            )
+            throw SdkValidationError(field: "user", code: "required", message: "Validation failed for 'user': value is required")
         }
         guard container.contains(.visitor) else {
-            throw SdkValidationError(
-                field: "visitor",
-                code: "required",
-                message: "Validation failed for 'visitor': value is required"
-            )
+            throw SdkValidationError(field: "visitor", code: "required", message: "Validation failed for 'visitor': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        user = try container.sdkDecodeRequired(.user)
-        visitor = try container.sdkDecodeRequired(.visitor)
+        self.type = try container.sdkDecodeRequired(.type)
+        self.user = try container.sdkDecodeRequired(.user)
+        self.visitor = try container.sdkDecodeRequired(.visitor)
     }
 }
 
-public extension ConvertVisitorRequest {
-    init(type: String, user: ConvertVisitorRequestUser, visitor: ConvertVisitorRequestVisitor) {
+extension ConvertVisitorRequest {
+    public init(type: String, user: ConvertVisitorRequestUser, visitor: ConvertVisitorRequestVisitor) {
         (self.type, self.user) = (type, user)
         self.visitor = visitor
     }
@@ -56,23 +44,23 @@ public struct VisitorAvatar: Codable {
     }
 
     init() {
-        (type, imageUrl) = (nil, nil)
+        (self.type, self.imageUrl) = (nil, nil)
     }
 }
 
-public extension VisitorAvatar {
-    init(from decoder: Decoder) throws {
+extension VisitorAvatar {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        imageUrl = try container.sdkDecodeIfPresent(.imageUrl)
-        if let value = imageUrl {
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.imageUrl = try container.sdkDecodeIfPresent(.imageUrl)
+        if let value = self.imageUrl {
             try sdkValidateUri("image_url", value)
         }
     }
 }
 
-public extension VisitorAvatar {
-    init(type: String? = nil, imageUrl: String? = nil) throws {
+extension VisitorAvatar {
+    public init(type: String? = nil, imageUrl: String? = nil) throws {
         self.init()
         (self.type, self.imageUrl) = (type, imageUrl)
         if let value = self.imageUrl {
@@ -95,20 +83,20 @@ public struct VisitorTags: Codable {
     }
 
     init() {
-        (type, tags) = (nil, nil)
+        (self.type, self.tags) = (nil, nil)
     }
 }
 
-public extension VisitorTags {
-    init(from decoder: Decoder) throws {
+extension VisitorTags {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        tags = try container.sdkDecodeIfPresent(.tags)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
     }
 }
 
-public extension VisitorTags {
-    init(type: VisitorTagsType? = nil, tags: [VisitorTagsTagsItem]? = nil) {
+extension VisitorTags {
+    public init(type: VisitorTagsType? = nil, tags: [VisitorTagsTagsItem]? = nil) {
         self.init()
         (self.type, self.tags) = (type, tags)
     }
@@ -133,21 +121,21 @@ public struct ConvertVisitorRequestVisitor: Codable {
     }
 
     init() {
-        (id, userId, email) = (nil, nil, nil)
+        (self.id, self.userId, self.email) = (nil, nil, nil)
     }
 }
 
-public extension ConvertVisitorRequestVisitor {
-    init(from decoder: Decoder) throws {
+extension ConvertVisitorRequestVisitor {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        userId = try container.sdkDecodeIfPresent(.userId)
-        email = try container.sdkDecodeIfPresent(.email)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.userId = try container.sdkDecodeIfPresent(.userId)
+        self.email = try container.sdkDecodeIfPresent(.email)
     }
 }
 
-public extension ConvertVisitorRequestVisitor {
-    init(id: String? = nil, userId: String? = nil, email: String? = nil) {
+extension ConvertVisitorRequestVisitor {
+    public init(id: String? = nil, userId: String? = nil, email: String? = nil) {
         self.init()
         (self.id, self.userId) = (id, userId)
         self.email = email
@@ -158,15 +146,12 @@ public extension ConvertVisitorRequestVisitor {
 public struct VisitorSocialProfilesType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let socialProfileList = VisitorSocialProfilesType(rawValue: "social_profile.list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -179,15 +164,12 @@ public struct VisitorSocialProfilesType: RawRepresentable, Hashable, Codable, Se
 public struct VisitorCompaniesType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let companyList = VisitorCompaniesType(rawValue: "company.list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -200,15 +182,12 @@ public struct VisitorCompaniesType: RawRepresentable, Hashable, Codable, Sendabl
 public struct VisitorTagsTagsItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let tag = VisitorTagsTagsItemType(rawValue: "tag")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -221,15 +200,12 @@ public struct VisitorTagsTagsItemType: RawRepresentable, Hashable, Codable, Send
 public struct VisitorTagsType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let tagList = VisitorTagsType(rawValue: "tag.list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -242,15 +218,12 @@ public struct VisitorTagsType: RawRepresentable, Hashable, Codable, Sendable, Sd
 public struct VisitorSegmentsType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let segmentList = VisitorSegmentsType(rawValue: "segment.list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -7,7 +7,7 @@ import Foundation
     import FoundationNetworking
 #endif
 
-/// Canonical dataEvents operation model declarations
+// Canonical dataEvents operation model declarations
 public struct ListDataEventsParameterVariant2: Codable {
     public var email: String
 
@@ -15,27 +15,21 @@ public struct ListDataEventsParameterVariant2: Codable {
         case email
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ListDataEventsParameterVariant2 {
-    init(from decoder: Decoder) throws {
+extension ListDataEventsParameterVariant2 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.email) else {
-            throw SdkValidationError(
-                field: "email",
-                code: "required",
-                message: "Validation failed for 'email': value is required"
-            )
+            throw SdkValidationError(field: "email", code: "required", message: "Validation failed for 'email': value is required")
         }
-        email = try container.sdkDecodeRequired(.email)
+        self.email = try container.sdkDecodeRequired(.email)
     }
 }
 
-public extension ListDataEventsParameterVariant2 {
-    init(email: String) {
+extension ListDataEventsParameterVariant2 {
+    public init(email: String) {
         self.email = email
     }
 }
@@ -47,27 +41,21 @@ public struct ListDataEventsParameterVariant0: Codable {
         case userId = "user_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ListDataEventsParameterVariant0 {
-    init(from decoder: Decoder) throws {
+extension ListDataEventsParameterVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.userId) else {
-            throw SdkValidationError(
-                field: "user_id",
-                code: "required",
-                message: "Validation failed for 'user_id': value is required"
-            )
+            throw SdkValidationError(field: "user_id", code: "required", message: "Validation failed for 'user_id': value is required")
         }
-        userId = try container.sdkDecodeRequired(.userId)
+        self.userId = try container.sdkDecodeRequired(.userId)
     }
 }
 
-public extension ListDataEventsParameterVariant0 {
-    init(userId: String) {
+extension ListDataEventsParameterVariant0 {
+    public init(userId: String) {
         self.userId = userId
     }
 }
@@ -79,26 +67,18 @@ public indirect enum ListDataEventsParameter {
 }
 
 extension ListDataEventsParameter: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) {
-                self = value; return
-            }
+            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
         }
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for ListDataEventsParameter"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for ListDataEventsParameter")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
@@ -119,18 +99,9 @@ extension ListDataEventsParameter {
 
 extension ListDataEventsParameter {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container
-            .decode(ListDataEventsParameterVariant0.self) {
-            return .listDataEventsParameterVariant0(value)
-        }
-        if let value = try? container
-            .decode(ListDataEventsParameterVariant1.self) {
-            return .listDataEventsParameterVariant1(value)
-        }
-        if let value = try? container
-            .decode(ListDataEventsParameterVariant2.self) {
-            return .listDataEventsParameterVariant2(value)
-        }
+        if let value = try? container.decode(ListDataEventsParameterVariant0.self) { return .listDataEventsParameterVariant0(value) }
+        if let value = try? container.decode(ListDataEventsParameterVariant1.self) { return .listDataEventsParameterVariant1(value) }
+        if let value = try? container.decode(ListDataEventsParameterVariant2.self) { return .listDataEventsParameterVariant2(value) }
         return nil
     }
 }
@@ -153,27 +124,21 @@ public struct ListDataEventsParameterVariant1: Codable {
         case intercomUserId = "intercom_user_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ListDataEventsParameterVariant1 {
-    init(from decoder: Decoder) throws {
+extension ListDataEventsParameterVariant1 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.intercomUserId) else {
-            throw SdkValidationError(
-                field: "intercom_user_id",
-                code: "required",
-                message: "Validation failed for 'intercom_user_id': value is required"
-            )
+            throw SdkValidationError(field: "intercom_user_id", code: "required", message: "Validation failed for 'intercom_user_id': value is required")
         }
-        intercomUserId = try container.sdkDecodeRequired(.intercomUserId)
+        self.intercomUserId = try container.sdkDecodeRequired(.intercomUserId)
     }
 }
 
-public extension ListDataEventsParameterVariant1 {
-    init(intercomUserId: String) {
+extension ListDataEventsParameterVariant1 {
+    public init(intercomUserId: String) {
         self.intercomUserId = intercomUserId
     }
 }

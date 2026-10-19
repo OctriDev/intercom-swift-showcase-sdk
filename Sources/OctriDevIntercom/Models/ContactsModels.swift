@@ -3,33 +3,25 @@
 
 import Foundation
 
-/// Contacts domain models
+// Contacts domain models
 public indirect enum ContactSearchRequestQuery {
     case singleFilterSearchRequest(SingleFilterSearchRequest)
     case multipleFilterSearchRequest(MultipleFilterSearchRequest)
 }
 
 extension ContactSearchRequestQuery: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) {
-                self = value; return
-            }
+            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
         }
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for ContactSearchRequestQuery"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for ContactSearchRequestQuery")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
@@ -47,14 +39,8 @@ extension ContactSearchRequestQuery {
 
 extension ContactSearchRequestQuery {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container
-            .decode(SingleFilterSearchRequest.self) {
-            return .singleFilterSearchRequest(value)
-        }
-        if let value = try? container
-            .decode(MultipleFilterSearchRequest.self) {
-            return .multipleFilterSearchRequest(value)
-        }
+        if let value = try? container.decode(SingleFilterSearchRequest.self) { return .singleFilterSearchRequest(value) }
+        if let value = try? container.decode(MultipleFilterSearchRequest.self) { return .multipleFilterSearchRequest(value) }
         return nil
     }
 }
@@ -75,26 +61,18 @@ public indirect enum MergePreviewResponse {
 }
 
 extension MergePreviewResponse: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) {
-                self = value; return
-            }
+            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
         }
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for MergePreviewResponse"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for MergePreviewResponse")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
@@ -112,12 +90,8 @@ extension MergePreviewResponse {
 
 extension MergePreviewResponse {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(MergePreviewAllowed.self) {
-            return .mergePreviewAllowed(value)
-        }
-        if let value = try? container.decode(MergePreviewBlocked.self) {
-            return .mergePreviewBlocked(value)
-        }
+        if let value = try? container.decode(MergePreviewAllowed.self) { return .mergePreviewAllowed(value) }
+        if let value = try? container.decode(MergePreviewBlocked.self) { return .mergePreviewBlocked(value) }
         return nil
     }
 }
@@ -150,21 +124,21 @@ public struct ContactActivityListPages: Codable {
     }
 
     init() {
-        (type, perPage, next) = (nil, nil, nil)
+        (self.type, self.perPage, self.next) = (nil, nil, nil)
     }
 }
 
-public extension ContactActivityListPages {
-    init(from decoder: Decoder) throws {
+extension ContactActivityListPages {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        perPage = try container.sdkDecodeIfPresent(.perPage)
-        next = try container.sdkDecodeIfPresent(.next)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.perPage = try container.sdkDecodeIfPresent(.perPage)
+        self.next = try container.sdkDecodeIfPresent(.next)
     }
 }
 
-public extension ContactActivityListPages {
-    init(type: ContactActivityListPagesType? = nil, perPage: Int? = nil, next: ContactActivityListPagesNext? = nil) {
+extension ContactActivityListPages {
+    public init(type: ContactActivityListPagesType? = nil, perPage: Int? = nil, next: ContactActivityListPagesNext? = nil) {
         self.init()
         (self.type, self.perPage) = (type, perPage)
         self.next = next
@@ -193,27 +167,22 @@ public struct MergeHistoryList: Codable {
     }
 
     init() {
-        (type, data, nextCursor, hasMore) = (nil, nil, nil, nil)
+        (self.type, self.data, self.nextCursor, self.hasMore) = (nil, nil, nil, nil)
     }
 }
 
-public extension MergeHistoryList {
-    init(from decoder: Decoder) throws {
+extension MergeHistoryList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        data = try container.sdkDecodeIfPresent(.data)
-        nextCursor = try container.sdkDecodeIfPresent(.nextCursor)
-        hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.data = try container.sdkDecodeIfPresent(.data)
+        self.nextCursor = try container.sdkDecodeIfPresent(.nextCursor)
+        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
     }
 }
 
-public extension MergeHistoryList {
-    init(
-        type: MergeHistoryListType? = nil,
-        data: [MergeHistoryItem]? = nil,
-        nextCursor: String? = nil,
-        hasMore: Bool? = nil
-    ) {
+extension MergeHistoryList {
+    public init(type: MergeHistoryListType? = nil, data: [MergeHistoryItem]? = nil, nextCursor: String? = nil, hasMore: Bool? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
         (self.nextCursor, self.hasMore) = (nextCursor, hasMore)
@@ -243,22 +212,22 @@ public struct ContactDeleted: Codable {
     }
 
     init() {
-        (type, id, externalId, deleted) = (nil, nil, nil, nil)
+        (self.type, self.id, self.externalId, self.deleted) = (nil, nil, nil, nil)
     }
 }
 
-public extension ContactDeleted {
-    init(from decoder: Decoder) throws {
+extension ContactDeleted {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        externalId = try container.sdkDecodeIfPresent(.externalId)
-        deleted = try container.sdkDecodeIfPresent(.deleted)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.externalId = try container.sdkDecodeIfPresent(.externalId)
+        self.deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-public extension ContactDeleted {
-    init(type: ContactDeletedType? = nil, id: String? = nil, externalId: String? = nil, deleted: Bool? = nil) {
+extension ContactDeleted {
+    public init(type: ContactDeletedType? = nil, id: String? = nil, externalId: String? = nil, deleted: Bool? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.externalId, self.deleted) = (externalId, deleted)
@@ -282,21 +251,21 @@ public struct ContactActivityList: Codable {
     }
 
     init() {
-        (type, data, pages) = (nil, nil, nil)
+        (self.type, self.data, self.pages) = (nil, nil, nil)
     }
 }
 
-public extension ContactActivityList {
-    init(from decoder: Decoder) throws {
+extension ContactActivityList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        data = try container.sdkDecodeIfPresent(.data)
-        pages = try container.sdkDecodeIfPresent(.pages)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.data = try container.sdkDecodeIfPresent(.data)
+        self.pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-public extension ContactActivityList {
-    init(type: ContactActivityListType? = nil, data: [ContactActivity]? = nil, pages: ContactActivityListPages? = nil) {
+extension ContactActivityList {
+    public init(type: ContactActivityListType? = nil, data: [ContactActivity]? = nil, pages: ContactActivityListPages? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
         self.pages = pages
@@ -317,20 +286,20 @@ public struct ContactSegments: Codable {
     }
 
     init() {
-        (type, data) = (nil, nil)
+        (self.type, self.data) = (nil, nil)
     }
 }
 
-public extension ContactSegments {
-    init(from decoder: Decoder) throws {
+extension ContactSegments {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension ContactSegments {
-    init(type: ContactSegmentsType? = nil, data: [Segment]? = nil) {
+extension ContactSegments {
+    public init(type: ContactSegmentsType? = nil, data: [Segment]? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
     }
@@ -349,20 +318,20 @@ public struct MergePreviewBlocked: Codable {
     }
 
     init() {
-        (allowed, reasons) = (nil, nil)
+        (self.allowed, self.reasons) = (nil, nil)
     }
 }
 
-public extension MergePreviewBlocked {
-    init(from decoder: Decoder) throws {
+extension MergePreviewBlocked {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        allowed = try container.sdkDecodeIfPresent(.allowed)
-        reasons = try container.sdkDecodeIfPresent(.reasons)
+        self.allowed = try container.sdkDecodeIfPresent(.allowed)
+        self.reasons = try container.sdkDecodeIfPresent(.reasons)
     }
 }
 
-public extension MergePreviewBlocked {
-    init(allowed: Bool? = nil, reasons: [MergePreviewReason]? = nil) {
+extension MergePreviewBlocked {
+    public init(allowed: Bool? = nil, reasons: [MergePreviewReason]? = nil) {
         self.init()
         (self.allowed, self.reasons) = (allowed, reasons)
     }
@@ -384,20 +353,20 @@ public struct ContactSearchRequestSort: Codable {
     }
 
     init() {
-        (field, order) = (nil, nil)
+        (self.field, self.order) = (nil, nil)
     }
 }
 
-public extension ContactSearchRequestSort {
-    init(from decoder: Decoder) throws {
+extension ContactSearchRequestSort {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        field = try container.sdkDecodeIfPresent(.field)
-        order = try container.sdkDecodeIfPresent(.order)
+        self.field = try container.sdkDecodeIfPresent(.field)
+        self.order = try container.sdkDecodeIfPresent(.order)
     }
 }
 
-public extension ContactSearchRequestSort {
-    init(field: String? = nil, order: ContactSearchRequestSortOrder? = nil) {
+extension ContactSearchRequestSort {
+    public init(field: String? = nil, order: ContactSearchRequestSortOrder? = nil) {
         self.init()
         (self.field, self.order) = (field, order)
     }
@@ -413,27 +382,21 @@ public struct BulkDeleteContactsRequestContactsItem: Codable {
         case id
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension BulkDeleteContactsRequestContactsItem {
-    init(from decoder: Decoder) throws {
+extension BulkDeleteContactsRequestContactsItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
+        self.id = try container.sdkDecodeRequired(.id)
     }
 }
 
-public extension BulkDeleteContactsRequestContactsItem {
-    init(id: String) {
+extension BulkDeleteContactsRequestContactsItem {
+    public init(id: String) {
         self.id = id
     }
 }
@@ -464,29 +427,23 @@ public struct MergePreviewReassignments: Codable {
     }
 
     init() {
-        (conversations, tickets, phoneCalls, tags, notes) = (nil, nil, nil, nil, nil)
+        (self.conversations, self.tickets, self.phoneCalls, self.tags, self.notes) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension MergePreviewReassignments {
-    init(from decoder: Decoder) throws {
+extension MergePreviewReassignments {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        conversations = try container.sdkDecodeIfPresent(.conversations)
-        tickets = try container.sdkDecodeIfPresent(.tickets)
-        phoneCalls = try container.sdkDecodeIfPresent(.phoneCalls)
-        tags = try container.sdkDecodeIfPresent(.tags)
-        notes = try container.sdkDecodeIfPresent(.notes)
+        self.conversations = try container.sdkDecodeIfPresent(.conversations)
+        self.tickets = try container.sdkDecodeIfPresent(.tickets)
+        self.phoneCalls = try container.sdkDecodeIfPresent(.phoneCalls)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
+        self.notes = try container.sdkDecodeIfPresent(.notes)
     }
 }
 
-public extension MergePreviewReassignments {
-    init(
-        conversations: MergePreviewReassignmentsConversations? = nil,
-        tickets: MergePreviewReassignmentsTickets? = nil,
-        phoneCalls: MergePreviewReassignmentsPhoneCalls? = nil,
-        tags: MergePreviewReassignmentsTags? = nil,
-        notes: MergePreviewReassignmentsNotes? = nil
-    ) {
+extension MergePreviewReassignments {
+    public init(conversations: MergePreviewReassignmentsConversations? = nil, tickets: MergePreviewReassignmentsTickets? = nil, phoneCalls: MergePreviewReassignmentsPhoneCalls? = nil, tags: MergePreviewReassignmentsTags? = nil, notes: MergePreviewReassignmentsNotes? = nil) {
         self.init()
         (self.conversations, self.tickets) = (conversations, tickets)
         (self.phoneCalls, self.tags) = (phoneCalls, tags)
@@ -507,31 +464,25 @@ public struct BulkUpdateContactsRequest: Codable {
         case job
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension BulkUpdateContactsRequest {
-    init(from decoder: Decoder) throws {
+extension BulkUpdateContactsRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.contacts) else {
-            throw SdkValidationError(
-                field: "contacts",
-                code: "required",
-                message: "Validation failed for 'contacts': value is required"
-            )
+            throw SdkValidationError(field: "contacts", code: "required", message: "Validation failed for 'contacts': value is required")
         }
-        contacts = try container.sdkDecodeRequired(.contacts)
-        job = try container.sdkDecodeIfPresent(.job)
-        try validateItems("contacts", contacts, min: nil, max: 100)
+        self.contacts = try container.sdkDecodeRequired(.contacts)
+        self.job = try container.sdkDecodeIfPresent(.job)
+            try validateItems("contacts", self.contacts, min: nil, max: 100)
     }
 }
 
-public extension BulkUpdateContactsRequest {
-    init(contacts: [BulkUpdateContactsRequestContactsItem], job: BulkUpdateContactsRequestJob? = nil) throws {
+extension BulkUpdateContactsRequest {
+    public init(contacts: [BulkUpdateContactsRequestContactsItem], job: BulkUpdateContactsRequestJob? = nil) throws {
         (self.contacts, self.job) = (contacts, job)
-        try validateItems("contacts", self.contacts, min: nil, max: 100)
+            try validateItems("contacts", self.contacts, min: nil, max: 100)
     }
 }
 
@@ -547,19 +498,19 @@ public struct BulkCreateContactsRequestContactsItemTags: Codable {
     }
 
     init() {
-        add = nil
+        self.add = nil
     }
 }
 
-public extension BulkCreateContactsRequestContactsItemTags {
-    init(from decoder: Decoder) throws {
+extension BulkCreateContactsRequestContactsItemTags {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        add = try container.sdkDecodeIfPresent(.add)
+        self.add = try container.sdkDecodeIfPresent(.add)
     }
 }
 
-public extension BulkCreateContactsRequestContactsItemTags {
-    init(add: [BulkCreateContactsRequestContactsItemTagsAddItem]? = nil) {
+extension BulkCreateContactsRequestContactsItemTags {
+    public init(add: [BulkCreateContactsRequestContactsItemTagsAddItem]? = nil) {
         self.init()
         self.add = add
     }
@@ -580,33 +531,23 @@ public struct ContactSearchRequest: Codable {
         case sort
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ContactSearchRequest {
-    init(from decoder: Decoder) throws {
+extension ContactSearchRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.query) else {
-            throw SdkValidationError(
-                field: "query",
-                code: "required",
-                message: "Validation failed for 'query': value is required"
-            )
+            throw SdkValidationError(field: "query", code: "required", message: "Validation failed for 'query': value is required")
         }
-        query = try container.sdkDecodeRequired(.query)
-        pagination = try container.sdkDecodeIfPresent(.pagination)
-        sort = try container.sdkDecodeIfPresent(.sort)
+        self.query = try container.sdkDecodeRequired(.query)
+        self.pagination = try container.sdkDecodeIfPresent(.pagination)
+        self.sort = try container.sdkDecodeIfPresent(.sort)
     }
 }
 
-public extension ContactSearchRequest {
-    init(
-        query: ContactSearchRequestQuery,
-        pagination: StartingAfterPaging? = nil,
-        sort: ContactSearchRequestSort? = nil
-    ) {
+extension ContactSearchRequest {
+    public init(query: ContactSearchRequestQuery, pagination: StartingAfterPaging? = nil, sort: ContactSearchRequestSort? = nil) {
         (self.query, self.pagination) = (query, pagination)
         self.sort = sort
     }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Conversations domain models
+// Conversations domain models
 public indirect enum AttachContactToConversationRequestCustomer {
     case attachContactToConversationRequestCustomerVariant0(AttachContactToConversationRequestCustomerVariant0)
     case attachContactToConversationRequestCustomerVariant1(AttachContactToConversationRequestCustomerVariant1)
@@ -11,47 +11,30 @@ public indirect enum AttachContactToConversationRequestCustomer {
 }
 
 extension AttachContactToConversationRequestCustomer: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) {
-                self = value; return
-            }
+            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
         }
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for AttachContactToConversationRequestCustomer"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for AttachContactToConversationRequestCustomer")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
 extension AttachContactToConversationRequestCustomer {
     static func decodeLossless1(from container: SingleValueDecodingContainer, _ raw: JSONValue) -> Self? {
-        if let value = try? container.decode(AttachContactToConversationRequestCustomerVariant0.self), sdkKeepsEveryKey(
-            value,
-            of: raw
-        ) {
+        if let value = try? container.decode(AttachContactToConversationRequestCustomerVariant0.self), sdkKeepsEveryKey(value, of: raw) {
             return .attachContactToConversationRequestCustomerVariant0(value)
         }
-        if let value = try? container.decode(AttachContactToConversationRequestCustomerVariant1.self), sdkKeepsEveryKey(
-            value,
-            of: raw
-        ) {
+        if let value = try? container.decode(AttachContactToConversationRequestCustomerVariant1.self), sdkKeepsEveryKey(value, of: raw) {
             return .attachContactToConversationRequestCustomerVariant1(value)
         }
-        if let value = try? container.decode(AttachContactToConversationRequestCustomerVariant2.self), sdkKeepsEveryKey(
-            value,
-            of: raw
-        ) {
+        if let value = try? container.decode(AttachContactToConversationRequestCustomerVariant2.self), sdkKeepsEveryKey(value, of: raw) {
             return .attachContactToConversationRequestCustomerVariant2(value)
         }
         return nil
@@ -63,17 +46,17 @@ extension AttachContactToConversationRequestCustomer {
         if let value = try? container.decode(
             AttachContactToConversationRequestCustomerVariant0.self
         ) {
-            return .attachContactToConversationRequestCustomerVariant0(value)
+            return             .attachContactToConversationRequestCustomerVariant0(value)
         }
         if let value = try? container.decode(
             AttachContactToConversationRequestCustomerVariant1.self
         ) {
-            return .attachContactToConversationRequestCustomerVariant1(value)
+            return             .attachContactToConversationRequestCustomerVariant1(value)
         }
         if let value = try? container.decode(
             AttachContactToConversationRequestCustomerVariant2.self
         ) {
-            return .attachContactToConversationRequestCustomerVariant2(value)
+            return             .attachContactToConversationRequestCustomerVariant2(value)
         }
         return nil
     }
@@ -97,26 +80,18 @@ public indirect enum ContactReplyConversationRequest {
 }
 
 extension ContactReplyConversationRequest: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) {
-                self = value; return
-            }
+            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
         }
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for ContactReplyConversationRequest"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for ContactReplyConversationRequest")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
@@ -137,17 +112,9 @@ extension ContactReplyConversationRequest {
 
 extension ContactReplyConversationRequest {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container
-            .decode(ContactReplyIntercomUserIdRequest.self) {
-            return .contactReplyIntercomUserIdRequest(value)
-        }
-        if let value = try? container.decode(ContactReplyEmailRequest.self) {
-            return .contactReplyEmailRequest(value)
-        }
-        if let value = try? container
-            .decode(ContactReplyUserIdRequest.self) {
-            return .contactReplyUserIdRequest(value)
-        }
+        if let value = try? container.decode(ContactReplyIntercomUserIdRequest.self) { return .contactReplyIntercomUserIdRequest(value) }
+        if let value = try? container.decode(ContactReplyEmailRequest.self) { return .contactReplyEmailRequest(value) }
+        if let value = try? container.decode(ContactReplyUserIdRequest.self) { return .contactReplyUserIdRequest(value) }
         return nil
     }
 }
@@ -170,26 +137,18 @@ public indirect enum CustomerRequest {
 }
 
 extension CustomerRequest: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) {
-                self = value; return
-            }
+            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
         }
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for CustomerRequest"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for CustomerRequest")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
@@ -210,15 +169,9 @@ extension CustomerRequest {
 
 extension CustomerRequest {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(CustomerRequestVariant0.self) {
-            return .customerRequestVariant0(value)
-        }
-        if let value = try? container.decode(CustomerRequestVariant1.self) {
-            return .customerRequestVariant1(value)
-        }
-        if let value = try? container.decode(CustomerRequestVariant2.self) {
-            return .customerRequestVariant2(value)
-        }
+        if let value = try? container.decode(CustomerRequestVariant0.self) { return .customerRequestVariant0(value) }
+        if let value = try? container.decode(CustomerRequestVariant1.self) { return .customerRequestVariant1(value) }
+        if let value = try? container.decode(CustomerRequestVariant2.self) { return .customerRequestVariant2(value) }
         return nil
     }
 }
@@ -240,26 +193,18 @@ public indirect enum RedactConversationRequest {
 }
 
 extension RedactConversationRequest: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) {
-                self = value; return
-            }
+            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
         }
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for RedactConversationRequest"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for RedactConversationRequest")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
@@ -277,14 +222,8 @@ extension RedactConversationRequest {
 
 extension RedactConversationRequest {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container
-            .decode(RedactConversationRequestVariant0.self) {
-            return .redactConversationRequestVariant0(value)
-        }
-        if let value = try? container
-            .decode(RedactConversationRequestVariant1.self) {
-            return .redactConversationRequestVariant1(value)
-        }
+        if let value = try? container.decode(RedactConversationRequestVariant0.self) { return .redactConversationRequestVariant0(value) }
+        if let value = try? container.decode(RedactConversationRequestVariant1.self) { return .redactConversationRequestVariant1(value) }
         return nil
     }
 }
@@ -305,26 +244,18 @@ public indirect enum ReplyConversationRequest {
 }
 
 extension ReplyConversationRequest: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) {
-                self = value; return
-            }
+            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
         }
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for ReplyConversationRequest"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for ReplyConversationRequest")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
@@ -342,14 +273,8 @@ extension ReplyConversationRequest {
 
 extension ReplyConversationRequest {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container
-            .decode(ContactReplyConversationRequest.self) {
-            return .contactReplyConversationRequest(value)
-        }
-        if let value = try? container
-            .decode(AdminReplyConversationRequest.self) {
-            return .adminReplyConversationRequest(value)
-        }
+        if let value = try? container.decode(ContactReplyConversationRequest.self) { return .contactReplyConversationRequest(value) }
+        if let value = try? container.decode(AdminReplyConversationRequest.self) { return .adminReplyConversationRequest(value) }
         return nil
     }
 }
@@ -387,22 +312,22 @@ public struct SideConversationListPages: Codable {
     }
 
     init() {
-        (type, page, perPage, totalPages) = (nil, nil, nil, nil)
+        (self.type, self.page, self.perPage, self.totalPages) = (nil, nil, nil, nil)
     }
 }
 
-public extension SideConversationListPages {
-    init(from decoder: Decoder) throws {
+extension SideConversationListPages {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        page = try container.sdkDecodeIfPresent(.page)
-        perPage = try container.sdkDecodeIfPresent(.perPage)
-        totalPages = try container.sdkDecodeIfPresent(.totalPages)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.page = try container.sdkDecodeIfPresent(.page)
+        self.perPage = try container.sdkDecodeIfPresent(.perPage)
+        self.totalPages = try container.sdkDecodeIfPresent(.totalPages)
     }
 }
 
-public extension SideConversationListPages {
-    init(type: SideConversationListPagesType? = nil, page: Int? = nil, perPage: Int? = nil, totalPages: Int? = nil) {
+extension SideConversationListPages {
+    public init(type: SideConversationListPagesType? = nil, page: Int? = nil, perPage: Int? = nil, totalPages: Int? = nil) {
         self.init()
         (self.type, self.page) = (type, page)
         (self.perPage, self.totalPages) = (perPage, totalPages)
@@ -430,27 +355,22 @@ public struct SideConversationList: Codable {
     }
 
     init() {
-        (type, sideConversations, totalCount, pages) = (nil, nil, nil, nil)
+        (self.type, self.sideConversations, self.totalCount, self.pages) = (nil, nil, nil, nil)
     }
 }
 
-public extension SideConversationList {
-    init(from decoder: Decoder) throws {
+extension SideConversationList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        sideConversations = try container.sdkDecodeIfPresent(.sideConversations)
-        totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        pages = try container.sdkDecodeIfPresent(.pages)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.sideConversations = try container.sdkDecodeIfPresent(.sideConversations)
+        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        self.pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-public extension SideConversationList {
-    init(
-        type: SideConversationListType? = nil,
-        sideConversations: [SideConversationSummary]? = nil,
-        totalCount: Int? = nil,
-        pages: SideConversationListPages? = nil
-    ) {
+extension SideConversationList {
+    public init(type: SideConversationListType? = nil, sideConversations: [SideConversationSummary]? = nil, totalCount: Int? = nil, pages: SideConversationListPages? = nil) {
         self.init()
         (self.type, self.sideConversations) = (type, sideConversations)
         (self.totalCount, self.pages) = (totalCount, pages)
@@ -467,27 +387,21 @@ public struct DetachContactFromConversationRequest: Codable {
         case adminId = "admin_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DetachContactFromConversationRequest {
-    init(from decoder: Decoder) throws {
+extension DetachContactFromConversationRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.adminId) else {
-            throw SdkValidationError(
-                field: "admin_id",
-                code: "required",
-                message: "Validation failed for 'admin_id': value is required"
-            )
+            throw SdkValidationError(field: "admin_id", code: "required", message: "Validation failed for 'admin_id': value is required")
         }
-        adminId = try container.sdkDecodeRequired(.adminId)
+        self.adminId = try container.sdkDecodeRequired(.adminId)
     }
 }
 
-public extension DetachContactFromConversationRequest {
-    init(adminId: String) {
+extension DetachContactFromConversationRequest {
+    public init(adminId: String) {
         self.adminId = adminId
     }
 }
@@ -502,27 +416,21 @@ public struct CustomerRequestVariant0: Codable {
         case intercomUserId = "intercom_user_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CustomerRequestVariant0 {
-    init(from decoder: Decoder) throws {
+extension CustomerRequestVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.intercomUserId) else {
-            throw SdkValidationError(
-                field: "intercom_user_id",
-                code: "required",
-                message: "Validation failed for 'intercom_user_id': value is required"
-            )
+            throw SdkValidationError(field: "intercom_user_id", code: "required", message: "Validation failed for 'intercom_user_id': value is required")
         }
-        intercomUserId = try container.sdkDecodeRequired(.intercomUserId)
+        self.intercomUserId = try container.sdkDecodeRequired(.intercomUserId)
     }
 }
 
-public extension CustomerRequestVariant0 {
-    init(intercomUserId: String) {
+extension CustomerRequestVariant0 {
+    public init(intercomUserId: String) {
         self.intercomUserId = intercomUserId
     }
 }
@@ -540,28 +448,22 @@ public struct AttachContactToConversationRequestCustomerVariant0: Codable {
         case customer
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension AttachContactToConversationRequestCustomerVariant0 {
-    init(from decoder: Decoder) throws {
+extension AttachContactToConversationRequestCustomerVariant0 {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.intercomUserId) else {
-            throw SdkValidationError(
-                field: "intercom_user_id",
-                code: "required",
-                message: "Validation failed for 'intercom_user_id': value is required"
-            )
+            throw SdkValidationError(field: "intercom_user_id", code: "required", message: "Validation failed for 'intercom_user_id': value is required")
         }
-        intercomUserId = try container.sdkDecodeRequired(.intercomUserId)
-        customer = try container.sdkDecodeIfPresent(.customer)
+        self.intercomUserId = try container.sdkDecodeRequired(.intercomUserId)
+        self.customer = try container.sdkDecodeIfPresent(.customer)
     }
 }
 
-public extension AttachContactToConversationRequestCustomerVariant0 {
-    init(intercomUserId: String, customer: CustomerRequest? = nil) {
+extension AttachContactToConversationRequestCustomerVariant0 {
+    public init(intercomUserId: String, customer: CustomerRequest? = nil) {
         (self.intercomUserId, self.customer) = (intercomUserId, customer)
     }
 }
@@ -584,7 +486,5 @@ public struct SnoozeConversationRequest: Codable {
         case snoozedUntil = "snoozed_until"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }

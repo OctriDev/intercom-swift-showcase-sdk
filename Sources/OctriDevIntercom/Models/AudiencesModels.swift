@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Audiences domain models
+// Audiences domain models
 /// The request payload for creating an audience.
 public struct CreateAudienceRequest: Codable {
     /// The name of the audience.
@@ -22,29 +22,23 @@ public struct CreateAudienceRequest: Codable {
         case rolePredicates = "role_predicates"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateAudienceRequest {
-    init(from decoder: Decoder) throws {
+extension CreateAudienceRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        predicates = try container.sdkDecodeIfPresent(.predicates)
-        rolePredicates = try container.sdkDecodeIfPresent(.rolePredicates)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.predicates = try container.sdkDecodeIfPresent(.predicates)
+        self.rolePredicates = try container.sdkDecodeIfPresent(.rolePredicates)
     }
 }
 
-public extension CreateAudienceRequest {
-    init(name: String, predicates: [Predicate]? = nil, rolePredicates: [Predicate]? = nil) {
+extension CreateAudienceRequest {
+    public init(name: String, predicates: [Predicate]? = nil, rolePredicates: [Predicate]? = nil) {
         (self.name, self.predicates) = (name, predicates)
         self.rolePredicates = rolePredicates
     }
@@ -80,32 +74,25 @@ public struct AudienceList: Codable {
     }
 
     init() {
-        (type, data, totalCount, page, perPage) = (nil, nil, nil, nil, nil)
-        totalPages = nil
+        (self.type, self.data, self.totalCount, self.page, self.perPage) = (nil, nil, nil, nil, nil)
+        self.totalPages = nil
     }
 }
 
-public extension AudienceList {
-    init(from decoder: Decoder) throws {
+extension AudienceList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        data = try container.sdkDecodeIfPresent(.data)
-        totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        page = try container.sdkDecodeIfPresent(.page)
-        perPage = try container.sdkDecodeIfPresent(.perPage)
-        totalPages = try container.sdkDecodeIfPresent(.totalPages)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.data = try container.sdkDecodeIfPresent(.data)
+        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        self.page = try container.sdkDecodeIfPresent(.page)
+        self.perPage = try container.sdkDecodeIfPresent(.perPage)
+        self.totalPages = try container.sdkDecodeIfPresent(.totalPages)
     }
 }
 
-public extension AudienceList {
-    init(
-        type: AudienceListType? = nil,
-        data: [Audience]? = nil,
-        totalCount: Int? = nil,
-        page: Int? = nil,
-        perPage: Int? = nil,
-        totalPages: Int? = nil
-    ) {
+extension AudienceList {
+    public init(type: AudienceListType? = nil, data: [Audience]? = nil, totalCount: Int? = nil, page: Int? = nil, perPage: Int? = nil, totalPages: Int? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
         (self.totalCount, self.page) = (totalCount, page)
@@ -132,21 +119,21 @@ public struct UpdateAudienceRequest: Codable {
     }
 
     init() {
-        (name, predicates, rolePredicates) = (nil, nil, nil)
+        (self.name, self.predicates, self.rolePredicates) = (nil, nil, nil)
     }
 }
 
-public extension UpdateAudienceRequest {
-    init(from decoder: Decoder) throws {
+extension UpdateAudienceRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        predicates = try container.sdkDecodeIfPresent(.predicates)
-        rolePredicates = try container.sdkDecodeIfPresent(.rolePredicates)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.predicates = try container.sdkDecodeIfPresent(.predicates)
+        self.rolePredicates = try container.sdkDecodeIfPresent(.rolePredicates)
     }
 }
 
-public extension UpdateAudienceRequest {
-    init(name: String? = nil, predicates: [Predicate]? = nil, rolePredicates: [Predicate]? = nil) {
+extension UpdateAudienceRequest {
+    public init(name: String? = nil, predicates: [Predicate]? = nil, rolePredicates: [Predicate]? = nil) {
         self.init()
         (self.name, self.predicates) = (name, predicates)
         self.rolePredicates = rolePredicates
@@ -176,22 +163,22 @@ public struct Predicate: Codable {
     }
 
     init() {
-        (attribute, type, comparison, value) = (nil, nil, nil, nil)
+        (self.attribute, self.type, self.comparison, self.value) = (nil, nil, nil, nil)
     }
 }
 
-public extension Predicate {
-    init(from decoder: Decoder) throws {
+extension Predicate {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        attribute = try container.sdkDecodeIfPresent(.attribute)
-        type = try container.sdkDecodeIfPresent(.type)
-        comparison = try container.sdkDecodeIfPresent(.comparison)
-        value = try container.sdkDecodeIfPresent(.value)
+        self.attribute = try container.sdkDecodeIfPresent(.attribute)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.comparison = try container.sdkDecodeIfPresent(.comparison)
+        self.value = try container.sdkDecodeIfPresent(.value)
     }
 }
 
-public extension Predicate {
-    init(attribute: String? = nil, type: String? = nil, comparison: String? = nil, value: String? = nil) {
+extension Predicate {
+    public init(attribute: String? = nil, type: String? = nil, comparison: String? = nil, value: String? = nil) {
         self.init()
         (self.attribute, self.type) = (attribute, type)
         (self.comparison, self.value) = (comparison, value)
@@ -202,15 +189,12 @@ public extension Predicate {
 public struct AudienceListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let list = AudienceListType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

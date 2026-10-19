@@ -3,53 +3,35 @@
 
 import Foundation
 
-/// TaggedModelsDataConnectors domain models
-public extension DataConnectorExecutionResult {
-    init(from decoder: Decoder) throws {
+// TaggedModelsDataConnectors domain models
+extension DataConnectorExecutionResult {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        dataConnectorId = try container.sdkDecodeIfPresent(.dataConnectorId)
-        success = try container.sdkDecodeIfPresent(.success)
-        httpStatus = try container.sdkDecodeIfPresent(.httpStatus)
-        httpMethod = try container.sdkDecodeIfPresent(.httpMethod)
-        errorType = try container.sdkDecodeIfPresent(.errorType)
-        errorMessage = try container.sdkDecodeIfPresent(.errorMessage)
-        executionTimeMs = try container.sdkDecodeIfPresent(.executionTimeMs)
-        sourceType = try container.sdkDecodeIfPresent(.sourceType)
-        sourceId = try container.sdkDecodeIfPresent(.sourceId)
-        conversationId = try container.sdkDecodeIfPresent(.conversationId)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        requestUrl = try container.sdkDecodeIfPresent(.requestUrl)
-        requestBody = try container.sdkDecodeIfPresent(.requestBody)
-        responseBody = try container.sdkDecodeIfPresent(.responseBody)
-        rawResponseBody = try container.sdkDecodeIfPresent(.rawResponseBody)
-        if let value = createdAt {
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.dataConnectorId = try container.sdkDecodeIfPresent(.dataConnectorId)
+        self.success = try container.sdkDecodeIfPresent(.success)
+        self.httpStatus = try container.sdkDecodeIfPresent(.httpStatus)
+        self.httpMethod = try container.sdkDecodeIfPresent(.httpMethod)
+        self.errorType = try container.sdkDecodeIfPresent(.errorType)
+        self.errorMessage = try container.sdkDecodeIfPresent(.errorMessage)
+        self.executionTimeMs = try container.sdkDecodeIfPresent(.executionTimeMs)
+        self.sourceType = try container.sdkDecodeIfPresent(.sourceType)
+        self.sourceId = try container.sdkDecodeIfPresent(.sourceId)
+        self.conversationId = try container.sdkDecodeIfPresent(.conversationId)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.requestUrl = try container.sdkDecodeIfPresent(.requestUrl)
+        self.requestBody = try container.sdkDecodeIfPresent(.requestBody)
+        self.responseBody = try container.sdkDecodeIfPresent(.responseBody)
+        self.rawResponseBody = try container.sdkDecodeIfPresent(.rawResponseBody)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-public extension DataConnectorExecutionResult {
-    init(
-        type: DataConnectorExecutionResultType? = nil,
-        id: String? = nil,
-        dataConnectorId: String? = nil,
-        success: Bool? = nil,
-        httpStatus: Int? = nil,
-        httpMethod: DataConnectorExecutionResultHttpMethod? = nil,
-        errorType: DataConnectorExecutionResultErrorType? = nil,
-        errorMessage: String? = nil,
-        executionTimeMs: Int? = nil,
-        sourceType: DataConnectorExecutionResultSourceType? = nil,
-        sourceId: String? = nil,
-        conversationId: String? = nil,
-        createdAt: Date? = nil,
-        requestUrl: String? = nil,
-        requestBody: String? = nil,
-        responseBody: String? = nil,
-        rawResponseBody: String? = nil
-    ) throws {
+extension DataConnectorExecutionResult {
+    public init(type: DataConnectorExecutionResultType? = nil, id: String? = nil, dataConnectorId: String? = nil, success: Bool? = nil, httpStatus: Int? = nil, httpMethod: DataConnectorExecutionResultHttpMethod? = nil, errorType: DataConnectorExecutionResultErrorType? = nil, errorMessage: String? = nil, executionTimeMs: Int? = nil, sourceType: DataConnectorExecutionResultSourceType? = nil, sourceId: String? = nil, conversationId: String? = nil, createdAt: Date? = nil, requestUrl: String? = nil, requestBody: String? = nil, responseBody: String? = nil, rawResponseBody: String? = nil) throws {
         self.init()
         (self.type, self.id) = (type, id)
         (self.dataConnectorId, self.success) = (dataConnectorId, success)
@@ -101,37 +83,29 @@ public struct DataConnectorVersion: Codable {
     }
 
     init() {
-        (type, status, note, author, createdAt) = (nil, nil, nil, nil, nil)
-        (entityVersionId, definition) = (nil, nil)
+        (self.type, self.status, self.note, self.author, self.createdAt) = (nil, nil, nil, nil, nil)
+        (self.entityVersionId, self.definition) = (nil, nil)
     }
 }
 
-public extension DataConnectorVersion {
-    init(from decoder: Decoder) throws {
+extension DataConnectorVersion {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        status = try container.sdkDecodeIfPresent(.status)
-        note = try container.sdkDecodeIfPresent(.note)
-        author = try container.sdkDecodeIfPresent(.author)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        entityVersionId = try container.sdkDecodeIfPresent(.entityVersionId)
-        definition = try container.sdkDecodeIfPresent(.definition)
-        if let value = createdAt {
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.note = try container.sdkDecodeIfPresent(.note)
+        self.author = try container.sdkDecodeIfPresent(.author)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.entityVersionId = try container.sdkDecodeIfPresent(.entityVersionId)
+        self.definition = try container.sdkDecodeIfPresent(.definition)
+        if let value = self.createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
     }
 }
 
-public extension DataConnectorVersion {
-    init(
-        type: DataConnectorVersionType? = nil,
-        status: DataConnectorVersionStatus? = nil,
-        note: String? = nil,
-        author: DataConnectorVersionAuthor? = nil,
-        createdAt: Date? = nil,
-        entityVersionId: Int? = nil,
-        definition: DataConnectorVersionDefinition? = nil
-    ) throws {
+extension DataConnectorVersion {
+    public init(type: DataConnectorVersionType? = nil, status: DataConnectorVersionStatus? = nil, note: String? = nil, author: DataConnectorVersionAuthor? = nil, createdAt: Date? = nil, entityVersionId: Int? = nil, definition: DataConnectorVersionDefinition? = nil) throws {
         self.init()
         (self.type, self.status) = (type, status)
         (self.note, self.author) = (note, author)
@@ -147,10 +121,7 @@ public extension DataConnectorVersion {
 public struct DataConnectorHttpMethod: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let get = DataConnectorHttpMethod(rawValue: "get")
     public static let post = DataConnectorHttpMethod(rawValue: "post")
     public static let put = DataConnectorHttpMethod(rawValue: "put")
@@ -159,7 +130,7 @@ public struct DataConnectorHttpMethod: RawRepresentable, Hashable, Codable, Send
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -169,14 +140,10 @@ public struct DataConnectorHttpMethod: RawRepresentable, Hashable, Codable, Send
 }
 
 /// The data type of the response field.
-public struct DataConnectorDetailResponseFieldsItemType: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct DataConnectorDetailResponseFieldsItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let unknown = DataConnectorDetailResponseFieldsItemType(rawValue: "unknown")
     public static let string = DataConnectorDetailResponseFieldsItemType(rawValue: "string")
     public static let integer = DataConnectorDetailResponseFieldsItemType(rawValue: "integer")
@@ -186,7 +153,7 @@ public struct DataConnectorDetailResponseFieldsItemType: RawRepresentable, Hasha
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -196,21 +163,16 @@ public struct DataConnectorDetailResponseFieldsItemType: RawRepresentable, Hasha
 }
 
 /// Optional enumerated value serialized in the `intercom_object_type` wire field.
-public struct DataConnectorDetailObjectMappingsItemReferenceMappingsItemIntX0d45ccbc22: RawRepresentable, Hashable,
-    Codable, Sendable, SdkWireConvertible {
+public struct DataConnectorDetailObjectMappingsItemReferenceMappingsItemIntX0d45ccbc22: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static let conversation =
-        DataConnectorDetailObjectMappingsItemReferenceMappingsItemIntX0d45ccbc22(rawValue: "conversation")
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let conversation = DataConnectorDetailObjectMappingsItemReferenceMappingsItemIntX0d45ccbc22(rawValue: "conversation")
     public static let user = DataConnectorDetailObjectMappingsItemReferenceMappingsItemIntX0d45ccbc22(rawValue: "user")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -220,22 +182,17 @@ public struct DataConnectorDetailObjectMappingsItemReferenceMappingsItemIntX0d45
 }
 
 /// The type of data transformation applied to the response.
-public struct DataConnectorDetailDataTransformationType: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct DataConnectorDetailDataTransformationType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let fullAccess = DataConnectorDetailDataTransformationType(rawValue: "full_access")
     public static let redactedAccess = DataConnectorDetailDataTransformationType(rawValue: "redacted_access")
-    public static let codeBlockTransformation =
-        DataConnectorDetailDataTransformationType(rawValue: "code_block_transformation")
+    public static let codeBlockTransformation = DataConnectorDetailDataTransformationType(rawValue: "code_block_transformation")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -248,15 +205,12 @@ public struct DataConnectorDetailDataTransformationType: RawRepresentable, Hasha
 public struct DataConnectorExecutionResultType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let dataConnectorExecution = DataConnectorExecutionResultType(rawValue: "data_connector.execution")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -269,17 +223,14 @@ public struct DataConnectorExecutionResultType: RawRepresentable, Hashable, Coda
 public struct DataConnectorDetailAudiencesItem: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let users = DataConnectorDetailAudiencesItem(rawValue: "users")
     public static let leads = DataConnectorDetailAudiencesItem(rawValue: "leads")
     public static let visitors = DataConnectorDetailAudiencesItem(rawValue: "visitors")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -292,15 +243,12 @@ public struct DataConnectorDetailAudiencesItem: RawRepresentable, Hashable, Coda
 public struct DataConnectorVersionType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let dataConnectorVersion = DataConnectorVersionType(rawValue: "data_connector_version")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -313,15 +261,12 @@ public struct DataConnectorVersionType: RawRepresentable, Hashable, Codable, Sen
 public struct DataConnectorDetailType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let dataConnector = DataConnectorDetailType(rawValue: "data_connector")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -334,16 +279,13 @@ public struct DataConnectorDetailType: RawRepresentable, Hashable, Codable, Send
 public struct DataConnectorDetailExecutionType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let serverSide = DataConnectorDetailExecutionType(rawValue: "server_side")
     public static let clientSide = DataConnectorDetailExecutionType(rawValue: "client_side")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -356,15 +298,12 @@ public struct DataConnectorDetailExecutionType: RawRepresentable, Hashable, Coda
 public struct DataConnectorType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let dataConnector = DataConnectorType(rawValue: "data_connector")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -377,16 +316,13 @@ public struct DataConnectorType: RawRepresentable, Hashable, Codable, Sendable, 
 public struct DataConnectorDetailState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let draft = DataConnectorDetailState(rawValue: "draft")
     public static let live = DataConnectorDetailState(rawValue: "live")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -399,10 +335,7 @@ public struct DataConnectorDetailState: RawRepresentable, Hashable, Codable, Sen
 public struct DataConnectorVersionStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let live = DataConnectorVersionStatus(rawValue: "live")
     public static let paused = DataConnectorVersionStatus(rawValue: "paused")
     public static let draft = DataConnectorVersionStatus(rawValue: "draft")
@@ -410,7 +343,7 @@ public struct DataConnectorVersionStatus: RawRepresentable, Hashable, Codable, S
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -423,32 +356,22 @@ public struct DataConnectorVersionStatus: RawRepresentable, Hashable, Codable, S
 public struct DataConnectorExecutionResultErrorType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static let requestConfigurationError =
-        DataConnectorExecutionResultErrorType(rawValue: "request_configuration_error")
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let requestConfigurationError = DataConnectorExecutionResultErrorType(rawValue: "request_configuration_error")
     public static let faradayError = DataConnectorExecutionResultErrorType(rawValue: "faraday_error")
     public static let value3rdPartyError = DataConnectorExecutionResultErrorType(rawValue: "3rd_party_error")
     public static let responseMappingError = DataConnectorExecutionResultErrorType(rawValue: "response_mapping_error")
     public static let tokenRefreshError = DataConnectorExecutionResultErrorType(rawValue: "token_refresh_error")
-    public static let finActionResponseFormattingError =
-        DataConnectorExecutionResultErrorType(rawValue: "fin_action_response_formatting_error")
-    public static let finActionIdentityVerificationError =
-        DataConnectorExecutionResultErrorType(rawValue: "fin_action_identity_verification_error")
-    public static let emailVerificationError =
-        DataConnectorExecutionResultErrorType(rawValue: "email_verification_error")
-    public static let nonFinStandaloneActionIdentityVerificationError =
-        DataConnectorExecutionResultErrorType(rawValue: "non_fin_standalone_action_identity_verification_error")
-    public static let requestValidationError =
-        DataConnectorExecutionResultErrorType(rawValue: "request_validation_error")
-    public static let clientSideActionError =
-        DataConnectorExecutionResultErrorType(rawValue: "client_side_action_error")
+    public static let finActionResponseFormattingError = DataConnectorExecutionResultErrorType(rawValue: "fin_action_response_formatting_error")
+    public static let finActionIdentityVerificationError = DataConnectorExecutionResultErrorType(rawValue: "fin_action_identity_verification_error")
+    public static let emailVerificationError = DataConnectorExecutionResultErrorType(rawValue: "email_verification_error")
+    public static let nonFinStandaloneActionIdentityVerificationError = DataConnectorExecutionResultErrorType(rawValue: "non_fin_standalone_action_identity_verification_error")
+    public static let requestValidationError = DataConnectorExecutionResultErrorType(rawValue: "request_validation_error")
+    public static let clientSideActionError = DataConnectorExecutionResultErrorType(rawValue: "client_side_action_error")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -461,16 +384,13 @@ public struct DataConnectorExecutionResultErrorType: RawRepresentable, Hashable,
 public struct DataConnectorState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let draft = DataConnectorState(rawValue: "draft")
     public static let live = DataConnectorState(rawValue: "live")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -480,14 +400,10 @@ public struct DataConnectorState: RawRepresentable, Hashable, Codable, Sendable,
 }
 
 /// The type of source that triggered this execution.
-public struct DataConnectorExecutionResultSourceType: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct DataConnectorExecutionResultSourceType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let customBot = DataConnectorExecutionResultSourceType(rawValue: "custom_bot")
     public static let inboundCustomBot = DataConnectorExecutionResultSourceType(rawValue: "inbound_custom_bot")
     public static let buttonCustomBot = DataConnectorExecutionResultSourceType(rawValue: "button_custom_bot")
@@ -500,7 +416,7 @@ public struct DataConnectorExecutionResultSourceType: RawRepresentable, Hashable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -510,20 +426,16 @@ public struct DataConnectorExecutionResultSourceType: RawRepresentable, Hashable
 }
 
 /// Optional enumerated value serialized in the `intercom_object_type` wire field.
-public struct DataConnectorDetailObjectMappingsItemIntercomObjectType: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct DataConnectorDetailObjectMappingsItemIntercomObjectType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let conversation = DataConnectorDetailObjectMappingsItemIntercomObjectType(rawValue: "conversation")
     public static let user = DataConnectorDetailObjectMappingsItemIntercomObjectType(rawValue: "user")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -533,14 +445,10 @@ public struct DataConnectorDetailObjectMappingsItemIntercomObjectType: RawRepres
 }
 
 /// The HTTP method used for the request.
-public struct DataConnectorExecutionResultHttpMethod: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct DataConnectorExecutionResultHttpMethod: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let get = DataConnectorExecutionResultHttpMethod(rawValue: "get")
     public static let post = DataConnectorExecutionResultHttpMethod(rawValue: "post")
     public static let put = DataConnectorExecutionResultHttpMethod(rawValue: "put")
@@ -549,7 +457,7 @@ public struct DataConnectorExecutionResultHttpMethod: RawRepresentable, Hashable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -562,10 +470,7 @@ public struct DataConnectorExecutionResultHttpMethod: RawRepresentable, Hashable
 public struct DataConnectorDetailDataInputsItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let string = DataConnectorDetailDataInputsItemType(rawValue: "string")
     public static let integer = DataConnectorDetailDataInputsItemType(rawValue: "integer")
     public static let decimal = DataConnectorDetailDataInputsItemType(rawValue: "decimal")
@@ -573,7 +478,7 @@ public struct DataConnectorDetailDataInputsItemType: RawRepresentable, Hashable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -586,10 +491,7 @@ public struct DataConnectorDetailDataInputsItemType: RawRepresentable, Hashable,
 public struct DataConnectorDetailHttpMethod: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let get = DataConnectorDetailHttpMethod(rawValue: "get")
     public static let post = DataConnectorDetailHttpMethod(rawValue: "post")
     public static let put = DataConnectorDetailHttpMethod(rawValue: "put")
@@ -598,7 +500,7 @@ public struct DataConnectorDetailHttpMethod: RawRepresentable, Hashable, Codable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

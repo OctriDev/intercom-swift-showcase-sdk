@@ -6,46 +6,21 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DataAttributesMethods {
-    /// Updates a data attribute's archived status, description, Messenger write access, or list options. You cannot
-    /// change the attribute's data type through this API; use the UI to change it.
+extension DataAttributesMethods {
+    /// Updates a data attribute's archived status, description, Messenger write access, or list options. You cannot change the attribute's data type through this API; use the UI to change it.
     ///
-    /// You can update a data attribute. > 🚧 Updating the data type is not possible > > It is currently a dangerous
-    /// action to execute changing a data attribute's type via the API. You will need to update the type via the UI
-    /// instead.
+    /// You can update a data attribute. > 🚧 Updating the data type is not possible > > It is currently a dangerous action to execute changing a data attribute's type via the API. You will need to update the type via the UI instead.
     ///
     /// - Parameters:
     /// - dataAttributeId: The data attribute id
     /// - archived: Whether the attribute is to be archived or not.
     /// - description: The readable description you see in the UI for the attribute.
     /// - messengerWritable: Can this attribute be updated by the Messenger
-    static func updateDataAttribute(
-        config: ClientConfig,
-        dataAttributeId: Int,
-        intercomVersion: IntercomVersion? = nil,
-        archived: Bool? = nil,
-        description: String? = nil,
-        messengerWritable: Bool? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DataAttribute {
-        let requestBody = UpdateDataAttributeRequestBody(
-            archived: archived,
-            description: description,
-            messengerWritable: messengerWritable
-        )
+    public static func updateDataAttribute(config: ClientConfig, dataAttributeId: Int, intercomVersion: IntercomVersion? = nil, archived: Bool? = nil, description: String? = nil, messengerWritable: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> DataAttribute {
+        let requestBody = UpdateDataAttributeRequestBody(archived: archived, description: description, messengerWritable: messengerWritable)
 
-        return try await (sdkRequest(
-            "PUT",
-            ["/data_attributes/", sdkEncodePathSegment(sdkWireString(dataAttributeId))].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "updateDataAttribute",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "422": Error2.self]
-        )).data
+        return try (await sdkRequest("PUT", ["/data_attributes/", sdkEncodePathSegment(sdkWireString(dataAttributeId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "updateDataAttribute", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "422": Error2.self])).data
     }
 }

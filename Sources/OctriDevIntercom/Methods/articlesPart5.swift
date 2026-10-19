@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ArticlesMethods {
-    struct UpdateArticleOptions: Codable {
+extension ArticlesMethods {
+    public struct UpdateArticleOptions: Codable {
         public var articleId: Int
         public var intercomVersion: IntercomVersion?
         public var title: String?
@@ -32,13 +32,9 @@ public extension ArticlesMethods {
         }
     }
 
-    /// Updates an existing article's content and settings. Use the `article_id` path parameter to identify the article
-    /// and provide only the fields you want to change; `body` and `body_markdown` cannot be supplied together. Article
-    /// tags are read-only through the Articles API and must be managed through the Tags API or the Intercom UI.
+    /// Updates an existing article's content and settings. Use the `article_id` path parameter to identify the article and provide only the fields you want to change; `body` and `body_markdown` cannot be supplied together. Article tags are read-only through the Articles API and must be managed through the Tags API or the Intercom UI.
     ///
-    /// You can update the details of a single article by making a PUT request to
-    /// `https://api.intercom.io/articles/<id>`. > 📘 Tags cannot be managed via the Articles API > > Article tags are
-    /// read-only in responses. To create, update, or delete tags, use the Intercom UI or the Tags API endpoints.
+    /// You can update the details of a single article by making a PUT request to `https://api.intercom.io/articles/<id>`. > 📘 Tags cannot be managed via the Articles API > > Article tags are read-only in responses. To create, update, or delete tags, use the Intercom UI or the Tags API endpoints.
     ///
     /// - Parameters:
     /// - articleId: The unique identifier for the article which is given by
@@ -105,11 +101,7 @@ public extension ArticlesMethods {
     ///   published. Sending in the same request as `scheduled_publish_at` returns 400
     ///   — only one pending schedule per article. Empty string returns 400
     ///   `parameter_invalid`.
-    static func updateArticle(
-        config: ClientConfig,
-        options: UpdateArticleOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Article {
+    public static func updateArticle(config: ClientConfig, options: UpdateArticleOptions, requestOptions: RequestOptions? = nil) async throws -> Article {
         if let scheduledPublishAt = options.scheduledPublishAt?.valueOrNil {
             try sdkValidateDateTime("scheduled_publish_at", scheduledPublishAt)
         }
@@ -120,18 +112,8 @@ public extension ArticlesMethods {
 
         let requestBody = UpdateArticleRequestBody(options: options)
 
-        return try await (sdkRequest(
-            "PUT",
-            ["/articles/", sdkEncodePathSegment(sdkWireString(options.articleId))].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "updateArticle",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "404": Error2.self]
-        )).data
+        return try (await sdkRequest("PUT", ["/articles/", sdkEncodePathSegment(sdkWireString(options.articleId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "updateArticle", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
     }
 }

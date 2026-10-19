@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// UpdateOfficeHours domain models
+// UpdateOfficeHours domain models
 /// The request payload for updating an office hours schedule. Only the provided fields are updated.
 public struct UpdateOfficeHoursScheduleRequest: Codable {
     /// The name of the office hours schedule.
@@ -22,21 +22,21 @@ public struct UpdateOfficeHoursScheduleRequest: Codable {
     }
 
     init() {
-        (name, timeZoneName, timeIntervals) = (nil, nil, nil)
+        (self.name, self.timeZoneName, self.timeIntervals) = (nil, nil, nil)
     }
 }
 
-public extension UpdateOfficeHoursScheduleRequest {
-    init(from decoder: Decoder) throws {
+extension UpdateOfficeHoursScheduleRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        timeZoneName = try container.sdkDecodeIfPresent(.timeZoneName)
-        timeIntervals = try container.sdkDecodeIfPresent(.timeIntervals)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.timeZoneName = try container.sdkDecodeIfPresent(.timeZoneName)
+        self.timeIntervals = try container.sdkDecodeIfPresent(.timeIntervals)
     }
 }
 
-public extension UpdateOfficeHoursScheduleRequest {
-    init(name: String? = nil, timeZoneName: String? = nil, timeIntervals: [OfficeHoursTimeInterval]? = nil) {
+extension UpdateOfficeHoursScheduleRequest {
+    public init(name: String? = nil, timeZoneName: String? = nil, timeIntervals: [OfficeHoursTimeInterval]? = nil) {
         self.init()
         (self.name, self.timeZoneName) = (name, timeZoneName)
         self.timeIntervals = timeIntervals
@@ -69,32 +69,26 @@ public struct UpdateOfficeHoursExceptionRequest: Codable {
     }
 
     init() {
-        (exceptionDate, exceptionType, name, timeIntervals, recurringAnnually) = (nil, nil, nil, nil, nil)
+        (self.exceptionDate, self.exceptionType, self.name, self.timeIntervals, self.recurringAnnually) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension UpdateOfficeHoursExceptionRequest {
-    init(from decoder: Decoder) throws {
+extension UpdateOfficeHoursExceptionRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        exceptionDate = try container.sdkDecodeIfPresent(.exceptionDate)
-        exceptionType = try container.sdkDecodeIfPresent(.exceptionType)
-        name = try container.sdkDecodeIfPresent(.name)
-        timeIntervals = try container.sdkDecodeIfPresent(.timeIntervals)
-        recurringAnnually = try container.sdkDecodeIfPresent(.recurringAnnually)
-        if let value = exceptionDate {
+        self.exceptionDate = try container.sdkDecodeIfPresent(.exceptionDate)
+        self.exceptionType = try container.sdkDecodeIfPresent(.exceptionType)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.timeIntervals = try container.sdkDecodeIfPresent(.timeIntervals)
+        self.recurringAnnually = try container.sdkDecodeIfPresent(.recurringAnnually)
+        if let value = self.exceptionDate {
             try sdkValidateDate("exception_date", value)
         }
     }
 }
 
-public extension UpdateOfficeHoursExceptionRequest {
-    init(
-        exceptionDate: String? = nil,
-        exceptionType: UpdateOfficeHoursExceptionRequestExceptionType? = nil,
-        name: String? = nil,
-        timeIntervals: [OfficeHoursTimeInterval]? = nil,
-        recurringAnnually: Bool? = nil
-    ) throws {
+extension UpdateOfficeHoursExceptionRequest {
+    public init(exceptionDate: String? = nil, exceptionType: UpdateOfficeHoursExceptionRequestExceptionType? = nil, name: String? = nil, timeIntervals: [OfficeHoursTimeInterval]? = nil, recurringAnnually: Bool? = nil) throws {
         self.init()
         (self.exceptionDate, self.exceptionType) = (exceptionDate, exceptionType)
         (self.name, self.timeIntervals) = (name, timeIntervals)
@@ -106,20 +100,16 @@ public extension UpdateOfficeHoursExceptionRequest {
 }
 
 /// The type of exception.
-public struct UpdateOfficeHoursExceptionRequestExceptionType: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct UpdateOfficeHoursExceptionRequestExceptionType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let closed = UpdateOfficeHoursExceptionRequestExceptionType(rawValue: "closed")
     public static let customHours = UpdateOfficeHoursExceptionRequestExceptionType(rawValue: "custom_hours")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

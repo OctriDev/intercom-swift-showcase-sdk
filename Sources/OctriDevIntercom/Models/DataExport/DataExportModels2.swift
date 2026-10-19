@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// TaggedModelsDataExport domain models
+// TaggedModelsDataExport domain models
 /// The data export API is used to export message delivery and engagement statistics for outbound content (Emails,
 /// Posts, Custom Bots, Surveys, Tours, Series, and more) sent in a given timeframe. The exported data includes who
 /// received each message, when they received it, and how they engaged with it (opens, clicks, replies, completions,
@@ -30,27 +30,22 @@ public struct DataExport: Codable {
     }
 
     init() {
-        (jobIdentifier, status, downloadExpiresAt, downloadUrl) = (nil, nil, nil, nil)
+        (self.jobIdentifier, self.status, self.downloadExpiresAt, self.downloadUrl) = (nil, nil, nil, nil)
     }
 }
 
-public extension DataExport {
-    init(from decoder: Decoder) throws {
+extension DataExport {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        jobIdentifier = try container.sdkDecodeIfPresent(.jobIdentifier)
-        status = try container.sdkDecodeIfPresent(.status)
-        downloadExpiresAt = try container.sdkDecodeIfPresent(.downloadExpiresAt)
-        downloadUrl = try container.sdkDecodeIfPresent(.downloadUrl)
+        self.jobIdentifier = try container.sdkDecodeIfPresent(.jobIdentifier)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.downloadExpiresAt = try container.sdkDecodeIfPresent(.downloadExpiresAt)
+        self.downloadUrl = try container.sdkDecodeIfPresent(.downloadUrl)
     }
 }
 
-public extension DataExport {
-    init(
-        jobIdentifier: String? = nil,
-        status: DataExportStatus? = nil,
-        downloadExpiresAt: String? = nil,
-        downloadUrl: String? = nil
-    ) {
+extension DataExport {
+    public init(jobIdentifier: String? = nil, status: DataExportStatus? = nil, downloadExpiresAt: String? = nil, downloadUrl: String? = nil) {
         self.init()
         (self.jobIdentifier, self.status) = (jobIdentifier, status)
         (self.downloadExpiresAt, self.downloadUrl) = (downloadExpiresAt, downloadUrl)
@@ -61,10 +56,7 @@ public extension DataExport {
 public struct DataExportStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let pending = DataExportStatus(rawValue: "pending")
     public static let inProgress = DataExportStatus(rawValue: "in_progress")
     public static let failed = DataExportStatus(rawValue: "failed")
@@ -74,7 +66,7 @@ public struct DataExportStatus: RawRepresentable, Hashable, Codable, Sendable, S
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

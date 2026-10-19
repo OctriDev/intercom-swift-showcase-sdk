@@ -6,9 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AiContentMethods {
-    /// Replaces the settings for a content import source in your Fin Content Library. Provide `sync_behavior` and
-    /// `url`; you can also change its status, update its audiences, and apply an audience to existing external pages.
+extension AiContentMethods {
+    /// Replaces the settings for a content import source in your Fin Content Library. Provide `sync_behavior` and `url`; you can also change its status, update its audiences, and apply an audience to existing external pages.
     ///
     /// You can update an existing content import source.
     ///
@@ -26,37 +25,11 @@ public extension AiContentMethods {
     ///   Set to null or an empty array to remove all audiences.
     /// - applyAudienceToExistingContent: When true, the audience will be applied to
     ///   all existing external pages belonging to this content import source.
-    static func updateContentImportSource(
-        config: ClientConfig,
-        sourceId: String,
-        syncBehavior: UpdateContentImportSourceRequestSyncBehavior,
-        url: String,
-        intercomVersion: IntercomVersion? = nil,
-        status: UpdateContentImportSourceRequestStatus? = nil,
-        audienceIds: SdkOptional<UpdateContentImportSourceRequestAudienceIds>? = nil,
-        applyAudienceToExistingContent: Bool? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ContentImportSource {
-        let requestBody = UpdateContentImportSourceRequestBody(
-            syncBehavior: syncBehavior,
-            url: url,
-            status: status,
-            audienceIds: audienceIds,
-            applyAudienceToExistingContent: applyAudienceToExistingContent
-        )
+    public static func updateContentImportSource(config: ClientConfig, sourceId: String, syncBehavior: UpdateContentImportSourceRequestSyncBehavior, url: String, intercomVersion: IntercomVersion? = nil, status: UpdateContentImportSourceRequestStatus? = nil, audienceIds: SdkOptional<UpdateContentImportSourceRequestAudienceIds>? = nil, applyAudienceToExistingContent: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> ContentImportSource {
+        let requestBody = UpdateContentImportSourceRequestBody(syncBehavior: syncBehavior, url: url, status: status, audienceIds: audienceIds, applyAudienceToExistingContent: applyAudienceToExistingContent)
 
-        return try await (sdkRequest(
-            "PUT",
-            ["/ai/content_import_sources/", sdkEncodePathSegment(sdkWireString(sourceId))].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "updateContentImportSource",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self]
-        )).data
+        return try (await sdkRequest("PUT", ["/ai/content_import_sources/", sdkEncodePathSegment(sdkWireString(sourceId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "updateContentImportSource", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self])).data
     }
 }
