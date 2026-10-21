@@ -47,10 +47,6 @@ extension LinkedObjectList {
     }
 }
 
-
-
-
-
 /// A linked conversation or ticket.
 public struct LinkedObject: Codable {
     /// ticket or conversation

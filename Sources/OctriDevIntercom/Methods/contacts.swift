@@ -7,3 +7,37 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum ContactsMethods {}
+
+extension ContactsMethods {
+    /// Replaces the supplied fields on an existing contact, including a user or lead, and can update custom object associations. Send only the fields you want to change; when setting `email_verified`, include `email` in the same request. Use `include_merge_history` to request merge history for contacts with a `user` role.
+    ///
+    /// You can update an existing contact (ie. user or lead). {% admonition type="info" %} This endpoint handles both **contact updates** and **custom object associations**. See _`update a contact with an association to a custom object instance`_ in the request/response examples to see the custom object association format. {% /admonition %}
+    ///
+    /// - Parameters:
+    /// - contactId: id
+    /// - includeMergeHistory: Pass `true` to include the contact's merge history in
+    ///   the response. Only returned for contacts with a `user` role.
+    public static func updateContact(config: ClientConfig, contactId: String, includeMergeHistory: Bool? = nil, intercomVersion: IntercomVersion? = nil, body: UpdateContactRequestBody? = nil, requestOptions: RequestOptions? = nil) async throws -> UpdateContactResponse {
+        return try (await sdkRequest("PUT", ["/contacts/", sdkEncodePathSegment(sdkWireString(contactId))].joined(), config: config, query: [
+            SdkQueryParameter("include_merge_history", value: includeMergeHistory),
+        ], rawBody: (try body.map { try sdkEncodeBody($0, contentType: "application/json") }), decoder: .json, operationId: "UpdateContact", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self])).data
+    }
+
+    /// Retrieves a contact by its unique contact ID. Use `include_merge_history` to request merge history for contacts with a `user` role; merged contacts return a canonical-contact link instead of the original record.
+    ///
+    /// You can fetch the details of a single contact. {% admonition type="info" name="Merged contacts return 410 Gone" %} If a contact has been merged into another contact via the Merge endpoint (`POST /contacts/merge`), requesting it by its original ID will return **HTTP 410 Gone** with a `Link` header pointing to the canonical (merged-into) contact. **Response headers:** ``` Link: </contacts/{canonical_id}>; rel="canonical" ``` **Response body:** ```json { "type": "error.list", "errors": [{ "code": "contact_merged", "message": "This contact has been merged. See the 'Link' header for the canonical contact." }] } ``` The `Link` header contains the path to the final merge target, resolving multi-hop merge chains (up to 3 hops). {% /admonition %}
+    ///
+    /// - Parameters:
+    /// - contactId: contact_id
+    /// - includeMergeHistory: Pass `true` to include the contact's merge history in
+    ///   the response. Only returned for contacts with a `user` role.
+    public static func showContact(config: ClientConfig, contactId: String, includeMergeHistory: Bool? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ShowContactResponse {
+        return try (await sdkRequest("GET", ["/contacts/", sdkEncodePathSegment(sdkWireString(contactId))].joined(), config: config, query: [
+            SdkQueryParameter("include_merge_history", value: includeMergeHistory),
+        ], decoder: .json, operationId: "ShowContact", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "410": Error2.self])).data
+    }
+}

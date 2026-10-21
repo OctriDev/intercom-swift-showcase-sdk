@@ -226,10 +226,6 @@ extension HelpCenterList {
     }
 }
 
-
-
-
-
 /// A redirect maps a source URL (`from_url`) to an article or collection within a help center, so that links to old
 /// or external URLs resolve to live content.
 public struct HelpCenterRedirect: Codable {

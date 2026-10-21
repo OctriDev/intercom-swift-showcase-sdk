@@ -91,10 +91,6 @@ extension ContactReplyBaseRequestReplyOptionsItem {
     }
 }
 
-
-
-
-
 /// Typed representation of the `ContactReplyBaseRequest` API schema.
 public struct ContactReplyBaseRequest: Codable {
     /// Required enumerated value serialized in the `message_type` wire field.

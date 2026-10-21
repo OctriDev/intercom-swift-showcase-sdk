@@ -99,10 +99,6 @@ extension Newsfeed {
     }
 }
 
-
-
-
-
 /// A News Item is a content type in Intercom enabling you to announce product updates, company news, promotions,
 /// events and more with your customers.
 public struct NewsItem: Codable {

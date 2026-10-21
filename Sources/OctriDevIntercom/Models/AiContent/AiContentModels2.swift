@@ -50,10 +50,6 @@ extension ExternalPagesList {
     }
 }
 
-
-
-
-
 /// External pages that you have added to your Fin Content Library.
 public struct ExternalPage: Codable {
     /// Always external_page
@@ -212,12 +208,6 @@ extension ContentImportSourcesList {
         (self.totalCount, self.data) = (totalCount, data)
     }
 }
-
-
-
-
-
-
 
 /// An external source for External Pages that you add to your Fin Content Library.
 public struct ContentImportSource: Codable {

@@ -27,7 +27,7 @@ public class TicketsNamespace {
     ///
     /// Unlink a conversation (or converted customer ticket) from a tracker ticket it is currently linked to. The ticket in the path must be a tracker ticket. This returns the conversation that was unlinked. Requires the `write_tickets` OAuth scope.
     public func unlinkConversation(ticketId: String, id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Conversation {
-        return try await TicketsMethods.unlinkTicketsConversation(config: config, ticketId: ticketId, id: id, intercomVersion: intercomVersion, requestOptions: requestOptions)
+        return try await TicketsMethods.unlinkTicketConversation(config: config, ticketId: ticketId, id: id, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
 /// Creates a ticket using a ticket type and one or more affected contacts. Supply `ticket_type_id` and `contacts`; you can also provide ticket attributes, assignment details, or a conversation to link. A 200 response returns the created ticket and its current state.

@@ -42,12 +42,6 @@ extension MacroList {
     }
 }
 
-
-
-
-
-
-
 /// A macro is a pre-defined response template (saved reply) that can be used to quickly reply to conversations.
 public struct Macro: Codable {
     /// String representing the object's type. Always has the value `macro`.

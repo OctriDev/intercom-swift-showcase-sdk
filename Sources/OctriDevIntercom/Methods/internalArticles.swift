@@ -7,3 +7,14 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum InternalArticlesMethods {}
+
+extension InternalArticlesMethods {
+    /// Lists internal articles available to the authenticated user. Use the `pages` metadata to navigate the cursor-based results and `total_count` to see the number of articles.
+    ///
+    /// You can fetch a list of all internal articles by making a GET request to `https://api.intercom.io/internal_articles`.
+    public static func listInternalArticles(config: ClientConfig, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> InternalArticleList {
+        return try (await sdkRequest("GET", "/internal_articles", config: config, decoder: .json, operationId: "listInternalArticles", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self])).data
+    }
+}

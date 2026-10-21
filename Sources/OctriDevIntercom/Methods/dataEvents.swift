@@ -7,3 +7,29 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum DataEventsMethods {}
+
+extension DataEventsMethods {
+    /// Submits an event associated with a user, lead, or visitor for tracking. Include `event_name`, `created_at`, and one contact identifier: `id`, `user_id`, or `email`; event metadata supports up to 10 flat keys. Use an access token with write permissions and send the request as JSON.
+    ///
+    /// You will need an Access Token that has write permissions to send Events. Once you have a key you can submit events via POST to the Events resource, which is located at https://api.intercom.io/events, or you can send events using one of the client libraries. When working with the HTTP API directly a client should send the event with a `Content-Type` of `application/json`. When using the JavaScript API, [adding the code to your app](http://docs.intercom.io/configuring-Intercom/tracking-user-events-in-your-app) makes the Events API available. Once added, you can submit an event using the `trackEvent` method. This will associate the event with the Lead or currently logged-in user or logged-out visitor/lead and send it to Intercom. The final parameter is a map that can be used to send optional metadata about the event. With the Ruby client you pass a hash describing the event to `Intercom::Event.create`, or call the `track_user` method directly on the current user object (e.g. `user.track_event`). **NB: For the JSON object types, please note that we do not currently support nested JSON structure.** | Type | Description | Example | | :-------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------- | | String | The value is a JSON String | `"source":"desktop"` | | Number | The value is a JSON Number | `"load": 3.67` | | Date | The key ends with the String `_date` and the value is a [Unix timestamp](http://en.wikipedia.org/wiki/Unix_time), assumed to be in the [UTC](http://en.wikipedia.org/wiki/Coordinated_Universal_Time) timezone. | `"contact_date": 1392036272` | | Link | The value is a HTTP or HTTPS URI. | `"article": "https://example.org/ab1de.html"` | | Rich Link | The value is a JSON object that contains `url` and `value` keys.…
+    ///
+    /// - Parameters:
+    /// - eventName: The name of the event that occurred. This is presented to your
+    ///   App's admins when filtering and creating segments - a good event name is
+    ///   typically a past tense 'verb-noun' combination, to improve readability, for
+    ///   example `updated-plan`.
+    /// - createdAt: The time the event occurred as a UTC Unix timestamp
+    /// - userId: Your identifier for the user.
+    /// - id: The unique identifier for the contact (lead or user) which is given by
+    ///   Intercom.
+    /// - email: An email address for your user. An email should only be used where
+    ///   your application uses email to uniquely identify users.
+    /// - metadata: Optional metadata about the event.
+    public static func createDataEvent(config: ClientConfig, intercomVersion: IntercomVersion? = nil, eventName: String? = nil, createdAt: Int? = nil, userId: String? = nil, id: String? = nil, email: String? = nil, metadata: [String: String]? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        let requestBody = CreateDataEventRequestBody(eventName: eventName, createdAt: createdAt, userId: userId, id: id, email: email, metadata: metadata)
+
+        return try (await sdkRequest("POST", "/events", config: config, body: requestBody, decoder: .empty, operationId: "createDataEvent", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self])).data
+    }
+}
