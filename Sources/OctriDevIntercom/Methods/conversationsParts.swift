@@ -6,37 +6,16 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ConversationsMethods {
-    /// Changes a conversation's state or assignment by closing, snoozing, opening, or assigning it to an admin or team.
-    /// Choose the request variant for the action and provide its required fields, such as `snoozed_until` when
-    /// snoozing. Use the reply operation to send a comment, note, or quick reply instead.
+extension ConversationsMethods {
+    /// Changes a conversation's state or assignment by closing, snoozing, opening, or assigning it to an admin or team. Choose the request variant for the action and provide its required fields, such as `snoozed_until` when snoozing. Use the reply operation to send a comment, note, or quick reply instead.
     ///
-    /// For managing conversations you can: - Close a conversation - Snooze a conversation to reopen on a future date -
-    /// Open a conversation which is `snoozed` or `closed` - Assign a conversation to an admin and/or team. {%
-    /// admonition type="info" name="Sending messages" %} To send a comment, note or quick reply, use Reply to a
-    /// conversation. {% /admonition %}
+    /// For managing conversations you can: - Close a conversation - Snooze a conversation to reopen on a future date - Open a conversation which is `snoozed` or `closed` - Assign a conversation to an admin and/or team. {% admonition type="info" name="Sending messages" %} To send a comment, note or quick reply, use Reply to a conversation. {% /admonition %}
     ///
     /// - Parameters:
     /// - conversationId: The identifier for the conversation as given by Intercom.
-    static func manageConversation(
-        config: ClientConfig,
-        conversationId: String,
-        intercomVersion: IntercomVersion? = nil,
-        body: ManageConversationRequestBody? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Conversation {
-        try await (sdkRequest(
-            "POST",
-            ["/conversations/", sdkEncodePathSegment(sdkWireString(conversationId)), "/parts"].joined(),
-            config: config,
-            rawBody: (body.map { try sdkEncodeBody($0, contentType: "application/json") }),
-            decoder: .json,
-            operationId: "manageConversation",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self]
-        )).data
+    public static func manageConversation(config: ClientConfig, conversationId: String, intercomVersion: IntercomVersion? = nil, body: ManageConversationRequestBody? = nil, requestOptions: RequestOptions? = nil) async throws -> Conversation {
+        return try (await sdkRequest("POST", ["/conversations/", sdkEncodePathSegment(sdkWireString(conversationId)), "/parts"].joined(), config: config, rawBody: (try body.map { try sdkEncodeBody($0, contentType: "application/json") }), decoder: .json, operationId: "manageConversation", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self])).data
     }
 }

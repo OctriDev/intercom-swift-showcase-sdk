@@ -3,33 +3,25 @@
 
 import Foundation
 
-/// Contacts domain models
+// Contacts domain models
 public indirect enum MergePreviewResponse {
     case mergePreviewAllowed(MergePreviewAllowed)
     case mergePreviewBlocked(MergePreviewBlocked)
 }
 
 extension MergePreviewResponse: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) {
-                self = value; return
-            }
+            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
         }
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for MergePreviewResponse"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for MergePreviewResponse")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
@@ -47,12 +39,8 @@ extension MergePreviewResponse {
 
 extension MergePreviewResponse {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(MergePreviewAllowed.self) {
-            return .mergePreviewAllowed(value)
-        }
-        if let value = try? container.decode(MergePreviewBlocked.self) {
-            return .mergePreviewBlocked(value)
-        }
+        if let value = try? container.decode(MergePreviewAllowed.self) { return .mergePreviewAllowed(value) }
+        if let value = try? container.decode(MergePreviewBlocked.self) { return .mergePreviewBlocked(value) }
         return nil
     }
 }
@@ -80,20 +68,20 @@ public struct MergePreviewBlocked: Codable {
     }
 
     init() {
-        (allowed, reasons) = (nil, nil)
+        (self.allowed, self.reasons) = (nil, nil)
     }
 }
 
-public extension MergePreviewBlocked {
-    init(from decoder: Decoder) throws {
+extension MergePreviewBlocked {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        allowed = try container.sdkDecodeIfPresent(.allowed)
-        reasons = try container.sdkDecodeIfPresent(.reasons)
+        self.allowed = try container.sdkDecodeIfPresent(.allowed)
+        self.reasons = try container.sdkDecodeIfPresent(.reasons)
     }
 }
 
-public extension MergePreviewBlocked {
-    init(allowed: Bool? = nil, reasons: [MergePreviewReason]? = nil) {
+extension MergePreviewBlocked {
+    public init(allowed: Bool? = nil, reasons: [MergePreviewReason]? = nil) {
         self.init()
         (self.allowed, self.reasons) = (allowed, reasons)
     }
@@ -125,29 +113,23 @@ public struct MergePreviewReassignments: Codable {
     }
 
     init() {
-        (conversations, tickets, phoneCalls, tags, notes) = (nil, nil, nil, nil, nil)
+        (self.conversations, self.tickets, self.phoneCalls, self.tags, self.notes) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension MergePreviewReassignments {
-    init(from decoder: Decoder) throws {
+extension MergePreviewReassignments {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        conversations = try container.sdkDecodeIfPresent(.conversations)
-        tickets = try container.sdkDecodeIfPresent(.tickets)
-        phoneCalls = try container.sdkDecodeIfPresent(.phoneCalls)
-        tags = try container.sdkDecodeIfPresent(.tags)
-        notes = try container.sdkDecodeIfPresent(.notes)
+        self.conversations = try container.sdkDecodeIfPresent(.conversations)
+        self.tickets = try container.sdkDecodeIfPresent(.tickets)
+        self.phoneCalls = try container.sdkDecodeIfPresent(.phoneCalls)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
+        self.notes = try container.sdkDecodeIfPresent(.notes)
     }
 }
 
-public extension MergePreviewReassignments {
-    init(
-        conversations: MergePreviewReassignmentsConversations? = nil,
-        tickets: MergePreviewReassignmentsTickets? = nil,
-        phoneCalls: MergePreviewReassignmentsPhoneCalls? = nil,
-        tags: MergePreviewReassignmentsTags? = nil,
-        notes: MergePreviewReassignmentsNotes? = nil
-    ) {
+extension MergePreviewReassignments {
+    public init(conversations: MergePreviewReassignmentsConversations? = nil, tickets: MergePreviewReassignmentsTickets? = nil, phoneCalls: MergePreviewReassignmentsPhoneCalls? = nil, tags: MergePreviewReassignmentsTags? = nil, notes: MergePreviewReassignmentsNotes? = nil) {
         self.init()
         (self.conversations, self.tickets) = (conversations, tickets)
         (self.phoneCalls, self.tags) = (phoneCalls, tags)
@@ -168,20 +150,20 @@ public struct MergePreviewReason: Codable {
     }
 
     init() {
-        (code, message) = (nil, nil)
+        (self.code, self.message) = (nil, nil)
     }
 }
 
-public extension MergePreviewReason {
-    init(from decoder: Decoder) throws {
+extension MergePreviewReason {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        code = try container.sdkDecodeIfPresent(.code)
-        message = try container.sdkDecodeIfPresent(.message)
+        self.code = try container.sdkDecodeIfPresent(.code)
+        self.message = try container.sdkDecodeIfPresent(.message)
     }
 }
 
-public extension MergePreviewReason {
-    init(code: MergePreviewReasonCode? = nil, message: String? = nil) {
+extension MergePreviewReason {
+    public init(code: MergePreviewReasonCode? = nil, message: String? = nil) {
         self.init()
         (self.code, self.message) = (code, message)
     }
@@ -200,20 +182,20 @@ public struct MergePreviewAllowed: Codable {
     }
 
     init() {
-        (allowed, summary) = (nil, nil)
+        (self.allowed, self.summary) = (nil, nil)
     }
 }
 
-public extension MergePreviewAllowed {
-    init(from decoder: Decoder) throws {
+extension MergePreviewAllowed {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        allowed = try container.sdkDecodeIfPresent(.allowed)
-        summary = try container.sdkDecodeIfPresent(.summary)
+        self.allowed = try container.sdkDecodeIfPresent(.allowed)
+        self.summary = try container.sdkDecodeIfPresent(.summary)
     }
 }
 
-public extension MergePreviewAllowed {
-    init(allowed: Bool? = nil, summary: MergePreviewSummary? = nil) {
+extension MergePreviewAllowed {
+    public init(allowed: Bool? = nil, summary: MergePreviewSummary? = nil) {
         self.init()
         (self.allowed, self.summary) = (allowed, summary)
     }
@@ -244,29 +226,23 @@ public struct MergePreviewAttributeChange: Codable {
     }
 
     init() {
-        (field, outcome, fromValue, intoValue, newIntoValue) = (nil, nil, nil, nil, nil)
+        (self.field, self.outcome, self.fromValue, self.intoValue, self.newIntoValue) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension MergePreviewAttributeChange {
-    init(from decoder: Decoder) throws {
+extension MergePreviewAttributeChange {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        field = try container.sdkDecodeIfPresent(.field)
-        outcome = try container.sdkDecodeIfPresent(.outcome)
-        fromValue = try container.sdkDecodeIfPresent(.fromValue)
-        intoValue = try container.sdkDecodeIfPresent(.intoValue)
-        newIntoValue = try container.sdkDecodeIfPresent(.newIntoValue)
+        self.field = try container.sdkDecodeIfPresent(.field)
+        self.outcome = try container.sdkDecodeIfPresent(.outcome)
+        self.fromValue = try container.sdkDecodeIfPresent(.fromValue)
+        self.intoValue = try container.sdkDecodeIfPresent(.intoValue)
+        self.newIntoValue = try container.sdkDecodeIfPresent(.newIntoValue)
     }
 }
 
-public extension MergePreviewAttributeChange {
-    init(
-        field: String? = nil,
-        outcome: MergePreviewAttributeChangeOutcome? = nil,
-        fromValue: JSONValue? = nil,
-        intoValue: JSONValue? = nil,
-        newIntoValue: JSONValue? = nil
-    ) {
+extension MergePreviewAttributeChange {
+    public init(field: String? = nil, outcome: MergePreviewAttributeChangeOutcome? = nil, fromValue: JSONValue? = nil, intoValue: JSONValue? = nil, newIntoValue: JSONValue? = nil) {
         self.init()
         (self.field, self.outcome) = (field, outcome)
         (self.fromValue, self.intoValue) = (fromValue, intoValue)
@@ -287,35 +263,25 @@ public struct MergePreviewReassignmentsPhoneCalls: Codable {
         case into
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension MergePreviewReassignmentsPhoneCalls {
-    init(from decoder: Decoder) throws {
+extension MergePreviewReassignmentsPhoneCalls {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.from) else {
-            throw SdkValidationError(
-                field: "from",
-                code: "required",
-                message: "Validation failed for 'from': value is required"
-            )
+            throw SdkValidationError(field: "from", code: "required", message: "Validation failed for 'from': value is required")
         }
         guard container.contains(.into) else {
-            throw SdkValidationError(
-                field: "into",
-                code: "required",
-                message: "Validation failed for 'into': value is required"
-            )
+            throw SdkValidationError(field: "into", code: "required", message: "Validation failed for 'into': value is required")
         }
-        from = try container.sdkDecodeRequired(.from)
-        into = try container.sdkDecodeRequired(.into)
+        self.from = try container.sdkDecodeRequired(.from)
+        self.into = try container.sdkDecodeRequired(.into)
     }
 }
 
-public extension MergePreviewReassignmentsPhoneCalls {
-    init(from: Int, into: Int) {
+extension MergePreviewReassignmentsPhoneCalls {
+    public init(from: Int, into: Int) {
         (self.from, self.into) = (from, into)
     }
 }
@@ -334,35 +300,25 @@ public struct MergePreviewReassignmentsTags: Codable {
         case into
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension MergePreviewReassignmentsTags {
-    init(from decoder: Decoder) throws {
+extension MergePreviewReassignmentsTags {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.from) else {
-            throw SdkValidationError(
-                field: "from",
-                code: "required",
-                message: "Validation failed for 'from': value is required"
-            )
+            throw SdkValidationError(field: "from", code: "required", message: "Validation failed for 'from': value is required")
         }
         guard container.contains(.into) else {
-            throw SdkValidationError(
-                field: "into",
-                code: "required",
-                message: "Validation failed for 'into': value is required"
-            )
+            throw SdkValidationError(field: "into", code: "required", message: "Validation failed for 'into': value is required")
         }
-        from = try container.sdkDecodeRequired(.from)
-        into = try container.sdkDecodeRequired(.into)
+        self.from = try container.sdkDecodeRequired(.from)
+        self.into = try container.sdkDecodeRequired(.into)
     }
 }
 
-public extension MergePreviewReassignmentsTags {
-    init(from: Int, into: Int) {
+extension MergePreviewReassignmentsTags {
+    public init(from: Int, into: Int) {
         (self.from, self.into) = (from, into)
     }
 }
@@ -381,35 +337,25 @@ public struct MergePreviewReassignmentsNotes: Codable {
         case into
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension MergePreviewReassignmentsNotes {
-    init(from decoder: Decoder) throws {
+extension MergePreviewReassignmentsNotes {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.from) else {
-            throw SdkValidationError(
-                field: "from",
-                code: "required",
-                message: "Validation failed for 'from': value is required"
-            )
+            throw SdkValidationError(field: "from", code: "required", message: "Validation failed for 'from': value is required")
         }
         guard container.contains(.into) else {
-            throw SdkValidationError(
-                field: "into",
-                code: "required",
-                message: "Validation failed for 'into': value is required"
-            )
+            throw SdkValidationError(field: "into", code: "required", message: "Validation failed for 'into': value is required")
         }
-        from = try container.sdkDecodeRequired(.from)
-        into = try container.sdkDecodeRequired(.into)
+        self.from = try container.sdkDecodeRequired(.from)
+        self.into = try container.sdkDecodeRequired(.into)
     }
 }
 
-public extension MergePreviewReassignmentsNotes {
-    init(from: Int, into: Int) {
+extension MergePreviewReassignmentsNotes {
+    public init(from: Int, into: Int) {
         (self.from, self.into) = (from, into)
     }
 }
@@ -435,37 +381,27 @@ public struct MergePreviewRequest: Codable {
         case customAttributeNames = "custom_attribute_names"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension MergePreviewRequest {
-    init(from decoder: Decoder) throws {
+extension MergePreviewRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.from) else {
-            throw SdkValidationError(
-                field: "from",
-                code: "required",
-                message: "Validation failed for 'from': value is required"
-            )
+            throw SdkValidationError(field: "from", code: "required", message: "Validation failed for 'from': value is required")
         }
         guard container.contains(.into) else {
-            throw SdkValidationError(
-                field: "into",
-                code: "required",
-                message: "Validation failed for 'into': value is required"
-            )
+            throw SdkValidationError(field: "into", code: "required", message: "Validation failed for 'into': value is required")
         }
-        from = try container.sdkDecodeRequired(.from)
-        into = try container.sdkDecodeRequired(.into)
-        skipDuplicateValidation = try container.sdkDecodeIfPresent(.skipDuplicateValidation)
-        customAttributeNames = try container.sdkDecodeIfPresent(.customAttributeNames)
+        self.from = try container.sdkDecodeRequired(.from)
+        self.into = try container.sdkDecodeRequired(.into)
+        self.skipDuplicateValidation = try container.sdkDecodeIfPresent(.skipDuplicateValidation)
+        self.customAttributeNames = try container.sdkDecodeIfPresent(.customAttributeNames)
     }
 }
 
-public extension MergePreviewRequest {
-    init(from: String, into: String, skipDuplicateValidation: Bool? = nil, customAttributeNames: [String]? = nil) {
+extension MergePreviewRequest {
+    public init(from: String, into: String, skipDuplicateValidation: Bool? = nil, customAttributeNames: [String]? = nil) {
         (self.from, self.into) = (from, into)
         self.skipDuplicateValidation = skipDuplicateValidation
         self.customAttributeNames = customAttributeNames
@@ -487,35 +423,25 @@ public struct MergePreviewReassignmentsConversations: Codable {
         case into
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension MergePreviewReassignmentsConversations {
-    init(from decoder: Decoder) throws {
+extension MergePreviewReassignmentsConversations {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.from) else {
-            throw SdkValidationError(
-                field: "from",
-                code: "required",
-                message: "Validation failed for 'from': value is required"
-            )
+            throw SdkValidationError(field: "from", code: "required", message: "Validation failed for 'from': value is required")
         }
         guard container.contains(.into) else {
-            throw SdkValidationError(
-                field: "into",
-                code: "required",
-                message: "Validation failed for 'into': value is required"
-            )
+            throw SdkValidationError(field: "into", code: "required", message: "Validation failed for 'into': value is required")
         }
-        from = try container.sdkDecodeRequired(.from)
-        into = try container.sdkDecodeRequired(.into)
+        self.from = try container.sdkDecodeRequired(.from)
+        self.into = try container.sdkDecodeRequired(.into)
     }
 }
 
-public extension MergePreviewReassignmentsConversations {
-    init(from: Int, into: Int) {
+extension MergePreviewReassignmentsConversations {
+    public init(from: Int, into: Int) {
         (self.from, self.into) = (from, into)
     }
 }
@@ -534,20 +460,20 @@ public struct MergePreviewAttributeChanges: Codable {
     }
 
     init() {
-        (attributes, totalCount) = (nil, nil)
+        (self.attributes, self.totalCount) = (nil, nil)
     }
 }
 
-public extension MergePreviewAttributeChanges {
-    init(from decoder: Decoder) throws {
+extension MergePreviewAttributeChanges {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        attributes = try container.sdkDecodeIfPresent(.attributes)
-        totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        self.attributes = try container.sdkDecodeIfPresent(.attributes)
+        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
     }
 }
 
-public extension MergePreviewAttributeChanges {
-    init(attributes: [MergePreviewAttributeChange]? = nil, totalCount: Int? = nil) {
+extension MergePreviewAttributeChanges {
+    public init(attributes: [MergePreviewAttributeChange]? = nil, totalCount: Int? = nil) {
         self.init()
         (self.attributes, self.totalCount) = (attributes, totalCount)
     }
@@ -568,35 +494,25 @@ public struct MergePreviewReassignmentsTickets: Codable {
         case into
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension MergePreviewReassignmentsTickets {
-    init(from decoder: Decoder) throws {
+extension MergePreviewReassignmentsTickets {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.from) else {
-            throw SdkValidationError(
-                field: "from",
-                code: "required",
-                message: "Validation failed for 'from': value is required"
-            )
+            throw SdkValidationError(field: "from", code: "required", message: "Validation failed for 'from': value is required")
         }
         guard container.contains(.into) else {
-            throw SdkValidationError(
-                field: "into",
-                code: "required",
-                message: "Validation failed for 'into': value is required"
-            )
+            throw SdkValidationError(field: "into", code: "required", message: "Validation failed for 'into': value is required")
         }
-        from = try container.sdkDecodeRequired(.from)
-        into = try container.sdkDecodeRequired(.into)
+        self.from = try container.sdkDecodeRequired(.from)
+        self.into = try container.sdkDecodeRequired(.into)
     }
 }
 
-public extension MergePreviewReassignmentsTickets {
-    init(from: Int, into: Int) {
+extension MergePreviewReassignmentsTickets {
+    public init(from: Int, into: Int) {
         (self.from, self.into) = (from, into)
     }
 }
@@ -616,14 +532,14 @@ public struct MergePreviewSummary: Codable {
     }
 
     init() {
-        (attributeChanges, reassignments) = (nil, nil)
+        (self.attributeChanges, self.reassignments) = (nil, nil)
     }
 }
 
-public extension MergePreviewSummary {
-    init(from decoder: Decoder) throws {
+extension MergePreviewSummary {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        attributeChanges = try container.sdkDecodeIfPresent(.attributeChanges)
-        reassignments = try container.sdkDecodeIfPresent(.reassignments)
+        self.attributeChanges = try container.sdkDecodeIfPresent(.attributeChanges)
+        self.reassignments = try container.sdkDecodeIfPresent(.reassignments)
     }
 }

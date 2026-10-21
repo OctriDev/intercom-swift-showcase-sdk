@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Articles domain models
+// Articles domain models
 /// This will return a list of articles for the App.
 public struct ArticleList: Codable {
     /// The type of the object - `list`.
@@ -27,27 +27,22 @@ public struct ArticleList: Codable {
     }
 
     init() {
-        (type, pages, totalCount, data) = (nil, nil, nil, nil)
+        (self.type, self.pages, self.totalCount, self.data) = (nil, nil, nil, nil)
     }
 }
 
-public extension ArticleList {
-    init(from decoder: Decoder) throws {
+extension ArticleList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        pages = try container.sdkDecodeIfPresent(.pages)
-        totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.pages = try container.sdkDecodeIfPresent(.pages)
+        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension ArticleList {
-    init(
-        type: ArticleListType? = nil,
-        pages: CursorPages? = nil,
-        totalCount: Int? = nil,
-        data: [ArticleListItem]? = nil
-    ) {
+extension ArticleList {
+    public init(type: ArticleListType? = nil, pages: CursorPages? = nil, totalCount: Int? = nil, data: [ArticleListItem]? = nil) {
         self.init()
         (self.type, self.pages) = (type, pages)
         (self.totalCount, self.data) = (totalCount, data)
@@ -58,15 +53,12 @@ public extension ArticleList {
 public struct ArticleListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let list = ArticleListType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Conversations domain models
+// Conversations domain models
 /// deleted conversation object
 public struct ConversationDeleted: Codable {
     /// The unique identifier for the conversation.
@@ -23,21 +23,21 @@ public struct ConversationDeleted: Codable {
     }
 
     init() {
-        (id, object, deleted) = (nil, nil, nil)
+        (self.id, self.object, self.deleted) = (nil, nil, nil)
     }
 }
 
-public extension ConversationDeleted {
-    init(from decoder: Decoder) throws {
+extension ConversationDeleted {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        object = try container.sdkDecodeIfPresent(.object)
-        deleted = try container.sdkDecodeIfPresent(.deleted)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-public extension ConversationDeleted {
-    init(id: String? = nil, object: ConversationDeletedObject? = nil, deleted: Bool? = nil) {
+extension ConversationDeleted {
+    public init(id: String? = nil, object: ConversationDeletedObject? = nil, deleted: Bool? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
         self.deleted = deleted
@@ -48,15 +48,12 @@ public extension ConversationDeleted {
 public struct ConversationDeletedObject: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let conversation = ConversationDeletedObject(rawValue: "conversation")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

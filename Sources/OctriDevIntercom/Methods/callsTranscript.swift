@@ -6,31 +6,16 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension CallsMethods {
-    /// Retrieves the transcript for a call as a downloadable text file. Use `call_id` to identify the call whose
-    /// transcript you need.
+extension CallsMethods {
+    /// Retrieves the transcript for a call as a downloadable text file. Use `call_id` to identify the call whose transcript you need.
     ///
     /// Returns the transcript for the specified call as a downloadable text file.
     ///
     /// - Parameters:
     /// - callId: The id of the call
-    static func showCallTranscript(
-        config: ClientConfig,
-        callId: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> String {
-        try await (sdkRequest(
-            "GET",
-            ["/calls/", sdkEncodePathSegment(sdkWireString(callId)), "/transcript"].joined(),
-            config: config,
-            decoder: .text,
-            operationId: "showCallTranscript",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["404": Error2.self]
-        )).data
+    public static func showCallTranscript(config: ClientConfig, callId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> String {
+        return try (await sdkRequest("GET", ["/calls/", sdkEncodePathSegment(sdkWireString(callId)), "/transcript"].joined(), config: config, decoder: .text, operationId: "showCallTranscript", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["404": Error2.self])).data
     }
 }

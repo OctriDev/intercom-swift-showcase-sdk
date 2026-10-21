@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Admins domain models
+// Admins domain models
 /// Details about the team whose assignment limit was changed.
 public struct ActivityLogMetadataTeam: Codable {
     /// The ID of the team.
@@ -19,20 +19,20 @@ public struct ActivityLogMetadataTeam: Codable {
     }
 
     init() {
-        (id, name) = (nil, nil)
+        (self.id, self.name) = (nil, nil)
     }
 }
 
-public extension ActivityLogMetadataTeam {
-    init(from decoder: Decoder) throws {
+extension ActivityLogMetadataTeam {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-public extension ActivityLogMetadataTeam {
-    init(id: Int? = nil, name: String? = nil) {
+extension ActivityLogMetadataTeam {
+    public init(id: Int? = nil, name: String? = nil) {
         self.init()
         (self.id, self.name) = (id, name)
     }
@@ -61,22 +61,22 @@ public struct ActivityLogPerformedBy: Codable {
     }
 
     init() {
-        (type, id, email, ip) = (nil, nil, nil, nil)
+        (self.type, self.id, self.email, self.ip) = (nil, nil, nil, nil)
     }
 }
 
-public extension ActivityLogPerformedBy {
-    init(from decoder: Decoder) throws {
+extension ActivityLogPerformedBy {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        email = try container.sdkDecodeIfPresent(.email)
-        ip = try container.sdkDecodeIfPresent(.ip)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.email = try container.sdkDecodeIfPresent(.email)
+        self.ip = try container.sdkDecodeIfPresent(.ip)
     }
 }
 
-public extension ActivityLogPerformedBy {
-    init(type: String? = nil, id: String? = nil, email: String? = nil, ip: String? = nil) {
+extension ActivityLogPerformedBy {
+    public init(type: String? = nil, id: String? = nil, email: String? = nil, ip: String? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.email, self.ip) = (email, ip)
@@ -95,20 +95,20 @@ public struct ActivityLogMetadataChangesValue: Codable {
     }
 
     init() {
-        (before, after) = (nil, nil)
+        (self.before, self.after) = (nil, nil)
     }
 }
 
-public extension ActivityLogMetadataChangesValue {
-    init(from decoder: Decoder) throws {
+extension ActivityLogMetadataChangesValue {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        before = try container.sdkDecodeIfPresent(.before)
-        after = try container.sdkDecodeIfPresent(.after)
+        self.before = try container.sdkDecodeIfPresent(.before)
+        self.after = try container.sdkDecodeIfPresent(.after)
     }
 }
 
-public extension ActivityLogMetadataChangesValue {
-    init(before: JSONValue? = nil, after: JSONValue? = nil) {
+extension ActivityLogMetadataChangesValue {
+    public init(before: JSONValue? = nil, after: JSONValue? = nil) {
         self.init()
         (self.before, self.after) = (before, after)
     }
@@ -143,32 +143,25 @@ public struct ActivityLog: Codable {
     }
 
     init() {
-        (id, performedBy, metadata, createdAt, activityType) = (nil, nil, nil, nil, nil)
-        activityDescription = nil
+        (self.id, self.performedBy, self.metadata, self.createdAt, self.activityType) = (nil, nil, nil, nil, nil)
+        self.activityDescription = nil
     }
 }
 
-public extension ActivityLog {
-    init(from decoder: Decoder) throws {
+extension ActivityLog {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        performedBy = try container.sdkDecodeIfPresent(.performedBy)
-        metadata = try container.sdkDecodeIfPresent(.metadata)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        activityType = try container.sdkDecodeIfPresent(.activityType)
-        activityDescription = try container.sdkDecodeIfPresent(.activityDescription)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.performedBy = try container.sdkDecodeIfPresent(.performedBy)
+        self.metadata = try container.sdkDecodeIfPresent(.metadata)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.activityType = try container.sdkDecodeIfPresent(.activityType)
+        self.activityDescription = try container.sdkDecodeIfPresent(.activityDescription)
     }
 }
 
-public extension ActivityLog {
-    init(
-        id: String? = nil,
-        performedBy: ActivityLogPerformedBy? = nil,
-        metadata: ActivityLogMetadata? = nil,
-        createdAt: Int? = nil,
-        activityType: ActivityLogActivityType? = nil,
-        activityDescription: String? = nil
-    ) {
+extension ActivityLog {
+    public init(id: String? = nil, performedBy: ActivityLogPerformedBy? = nil, metadata: ActivityLogMetadata? = nil, createdAt: Int? = nil, activityType: ActivityLogActivityType? = nil, activityDescription: String? = nil) {
         self.init()
         (self.id, self.performedBy) = (id, performedBy)
         (self.metadata, self.createdAt) = (metadata, createdAt)
@@ -195,21 +188,21 @@ public struct ActivityLogList: Codable {
     }
 
     init() {
-        (type, pages, activityLogs) = (nil, nil, nil)
+        (self.type, self.pages, self.activityLogs) = (nil, nil, nil)
     }
 }
 
-public extension ActivityLogList {
-    init(from decoder: Decoder) throws {
+extension ActivityLogList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        pages = try container.sdkDecodeIfPresent(.pages)
-        activityLogs = try container.sdkDecodeIfPresent(.activityLogs)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.pages = try container.sdkDecodeIfPresent(.pages)
+        self.activityLogs = try container.sdkDecodeIfPresent(.activityLogs)
     }
 }
 
-public extension ActivityLogList {
-    init(type: String? = nil, pages: CursorPages? = nil, activityLogs: [ActivityLog?]? = nil) {
+extension ActivityLogList {
+    public init(type: String? = nil, pages: CursorPages? = nil, activityLogs: [ActivityLog?]? = nil) {
         self.init()
         (self.type, self.pages) = (type, pages)
         self.activityLogs = activityLogs
@@ -326,85 +319,52 @@ public struct ActivityLogMetadata: Codable {
     }
 
     init() {
-        (signInMethod, externalId, awayMode, awayStatusReason, reassignConversations) = (nil, nil, nil, nil, nil)
-        (source, autoChanged, updateBy, updateByName, previousState) = (nil, nil, nil, nil, nil)
-        (newState, thresholdMinutes, lastActivityAt, auto, settingType) = (nil, nil, nil, nil, nil)
-        (changes, conversationAssignmentLimit, ticketAssignmentLimit, team, teamAssignmentLimit) = (
-            nil,
-            nil,
-            nil,
-            nil,
-            nil
-        )
-        (enabled, mode, consentId, expiredAt, before) = (nil, nil, nil, nil, nil)
-        after = nil
+        (self.signInMethod, self.externalId, self.awayMode, self.awayStatusReason, self.reassignConversations) = (nil, nil, nil, nil, nil)
+        (self.source, self.autoChanged, self.updateBy, self.updateByName, self.previousState) = (nil, nil, nil, nil, nil)
+        (self.newState, self.thresholdMinutes, self.lastActivityAt, self.auto, self.settingType) = (nil, nil, nil, nil, nil)
+        (self.changes, self.conversationAssignmentLimit, self.ticketAssignmentLimit, self.team, self.teamAssignmentLimit) = (nil, nil, nil, nil, nil)
+        (self.enabled, self.mode, self.consentId, self.expiredAt, self.before) = (nil, nil, nil, nil, nil)
+        self.after = nil
     }
 }
 
-public extension ActivityLogMetadata {
-    init(from decoder: Decoder) throws {
+extension ActivityLogMetadata {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        signInMethod = try container.sdkDecodeIfPresent(.signInMethod)
-        externalId = try container.sdkDecodeIfPresent(.externalId)
-        awayMode = try container.sdkDecodeIfPresent(.awayMode)
-        awayStatusReason = try container.sdkDecodeIfPresent(.awayStatusReason)
-        reassignConversations = try container.sdkDecodeIfPresent(.reassignConversations)
-        source = try container.sdkDecodeIfPresent(.source)
-        autoChanged = try container.sdkDecodeIfPresent(.autoChanged)
-        updateBy = try container.sdkDecodeIfPresent(.updateBy)
-        updateByName = try container.sdkDecodeIfPresent(.updateByName)
-        previousState = try container.sdkDecodeIfPresent(.previousState)
-        newState = try container.sdkDecodeIfPresent(.newState)
-        thresholdMinutes = try container.sdkDecodeIfPresent(.thresholdMinutes)
-        lastActivityAt = try container.sdkDecodeIfPresent(.lastActivityAt)
-        auto = try container.sdkDecodeIfPresent(.auto)
-        settingType = try container.sdkDecodeIfPresent(.settingType)
-        changes = try container.sdkDecodeIfPresent(.changes)
-        conversationAssignmentLimit = try container.sdkDecodeIfPresent(.conversationAssignmentLimit)
-        ticketAssignmentLimit = try container.sdkDecodeIfPresent(.ticketAssignmentLimit)
-        team = try container.sdkDecodeIfPresent(.team)
-        teamAssignmentLimit = try container.sdkDecodeIfPresent(.teamAssignmentLimit)
-        enabled = try container.sdkDecodeIfPresent(.enabled)
-        mode = try container.sdkDecodeIfPresent(.mode)
-        consentId = try container.sdkDecodeIfPresent(.consentId)
-        expiredAt = try container.sdkDecodeIfPresent(.expiredAt)
-        before = try container.sdkDecodeIfPresent(.before)
-        after = try container.sdkDecodeIfPresent(.after)
-        if let value = expiredAt {
+        self.signInMethod = try container.sdkDecodeIfPresent(.signInMethod)
+        self.externalId = try container.sdkDecodeIfPresent(.externalId)
+        self.awayMode = try container.sdkDecodeIfPresent(.awayMode)
+        self.awayStatusReason = try container.sdkDecodeIfPresent(.awayStatusReason)
+        self.reassignConversations = try container.sdkDecodeIfPresent(.reassignConversations)
+        self.source = try container.sdkDecodeIfPresent(.source)
+        self.autoChanged = try container.sdkDecodeIfPresent(.autoChanged)
+        self.updateBy = try container.sdkDecodeIfPresent(.updateBy)
+        self.updateByName = try container.sdkDecodeIfPresent(.updateByName)
+        self.previousState = try container.sdkDecodeIfPresent(.previousState)
+        self.newState = try container.sdkDecodeIfPresent(.newState)
+        self.thresholdMinutes = try container.sdkDecodeIfPresent(.thresholdMinutes)
+        self.lastActivityAt = try container.sdkDecodeIfPresent(.lastActivityAt)
+        self.auto = try container.sdkDecodeIfPresent(.auto)
+        self.settingType = try container.sdkDecodeIfPresent(.settingType)
+        self.changes = try container.sdkDecodeIfPresent(.changes)
+        self.conversationAssignmentLimit = try container.sdkDecodeIfPresent(.conversationAssignmentLimit)
+        self.ticketAssignmentLimit = try container.sdkDecodeIfPresent(.ticketAssignmentLimit)
+        self.team = try container.sdkDecodeIfPresent(.team)
+        self.teamAssignmentLimit = try container.sdkDecodeIfPresent(.teamAssignmentLimit)
+        self.enabled = try container.sdkDecodeIfPresent(.enabled)
+        self.mode = try container.sdkDecodeIfPresent(.mode)
+        self.consentId = try container.sdkDecodeIfPresent(.consentId)
+        self.expiredAt = try container.sdkDecodeIfPresent(.expiredAt)
+        self.before = try container.sdkDecodeIfPresent(.before)
+        self.after = try container.sdkDecodeIfPresent(.after)
+        if let value = self.expiredAt {
             try sdkValidateDateTime("expired_at", sdkWireString(value))
         }
     }
 }
 
-public extension ActivityLogMetadata {
-    init(
-        signInMethod: String? = nil,
-        externalId: String? = nil,
-        awayMode: Bool? = nil,
-        awayStatusReason: String? = nil,
-        reassignConversations: Bool? = nil,
-        source: String? = nil,
-        autoChanged: String? = nil,
-        updateBy: Int? = nil,
-        updateByName: String? = nil,
-        previousState: String? = nil,
-        newState: String? = nil,
-        thresholdMinutes: Int? = nil,
-        lastActivityAt: Int? = nil,
-        auto: Bool? = nil,
-        settingType: String? = nil,
-        changes: [String: ActivityLogMetadataChangesValue]? = nil,
-        conversationAssignmentLimit: Int? = nil,
-        ticketAssignmentLimit: Int? = nil,
-        team: ActivityLogMetadataTeam? = nil,
-        teamAssignmentLimit: Int? = nil,
-        enabled: Bool? = nil,
-        mode: String? = nil,
-        consentId: Int? = nil,
-        expiredAt: Date? = nil,
-        before: [String: JSONValue]? = nil,
-        after: [String: JSONValue]? = nil
-    ) throws {
+extension ActivityLogMetadata {
+    public init(signInMethod: String? = nil, externalId: String? = nil, awayMode: Bool? = nil, awayStatusReason: String? = nil, reassignConversations: Bool? = nil, source: String? = nil, autoChanged: String? = nil, updateBy: Int? = nil, updateByName: String? = nil, previousState: String? = nil, newState: String? = nil, thresholdMinutes: Int? = nil, lastActivityAt: Int? = nil, auto: Bool? = nil, settingType: String? = nil, changes: [String: ActivityLogMetadataChangesValue]? = nil, conversationAssignmentLimit: Int? = nil, ticketAssignmentLimit: Int? = nil, team: ActivityLogMetadataTeam? = nil, teamAssignmentLimit: Int? = nil, enabled: Bool? = nil, mode: String? = nil, consentId: Int? = nil, expiredAt: Date? = nil, before: [String: JSONValue]? = nil, after: [String: JSONValue]? = nil) throws {
         self.init()
         (self.signInMethod, self.externalId) = (signInMethod, externalId)
         (self.awayMode, self.awayStatusReason) = (awayMode, awayStatusReason)

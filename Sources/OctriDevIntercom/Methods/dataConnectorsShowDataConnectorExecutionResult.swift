@@ -6,40 +6,17 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DataConnectorsMethods {
-    /// Retrieves the details of a specific execution result for a data connector. The response always includes request
-    /// and response bodies, as well as a sanitized request URL. Use the result to inspect the external API call and its
-    /// outcome.
+extension DataConnectorsMethods {
+    /// Retrieves the details of a specific execution result for a data connector. The response always includes request and response bodies, as well as a sanitized request URL. Use the result to inspect the external API call and its outcome.
     ///
-    /// Retrieve details for a specific data connector execution result. Always includes request/response bodies and the
-    /// sanitised request URL.
+    /// Retrieve details for a specific data connector execution result. Always includes request/response bodies and the sanitised request URL.
     ///
     /// - Parameters:
     /// - dataConnectorId: The unique identifier for the data connector.
     /// - id: The unique identifier for the execution result.
-    static func showDataConnectorExecutionResult(
-        config: ClientConfig,
-        dataConnectorId: String,
-        id: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DataConnectorExecutionResult {
-        try await (sdkRequest(
-            "GET",
-            [
-                "/data_connectors/",
-                sdkEncodePathSegment(sdkWireString(dataConnectorId)),
-                "/execution_results/",
-                sdkEncodePathSegment(sdkWireString(id)),
-            ].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "showDataConnectorExecutionResult",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "404": Error2.self]
-        )).data
+    public static func showDataConnectorExecutionResult(config: ClientConfig, dataConnectorId: String, id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DataConnectorExecutionResult {
+        return try (await sdkRequest("GET", ["/data_connectors/", sdkEncodePathSegment(sdkWireString(dataConnectorId)), "/execution_results/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "showDataConnectorExecutionResult", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Conversations domain models
+// Conversations domain models
 /// Conversations are how you can communicate with users in Intercom. They are created when a contact replies to an
 /// outbound message, or when one admin directly sends a message to a single contact.
 public struct CreateConversationRequest: Codable {
@@ -34,49 +34,32 @@ public struct CreateConversationRequest: Codable {
         case brandId = "brand_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateConversationRequest {
-    init(from decoder: Decoder) throws {
+extension CreateConversationRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.from) else {
-            throw SdkValidationError(
-                field: "from",
-                code: "required",
-                message: "Validation failed for 'from': value is required"
-            )
+            throw SdkValidationError(field: "from", code: "required", message: "Validation failed for 'from': value is required")
         }
         guard container.contains(.body) else {
-            throw SdkValidationError(
-                field: "body",
-                code: "required",
-                message: "Validation failed for 'body': value is required"
-            )
+            throw SdkValidationError(field: "body", code: "required", message: "Validation failed for 'body': value is required")
         }
-        from = try container.sdkDecodeRequired(.from)
-        body = try container.sdkDecodeRequired(.body)
-        subject = try container.sdkDecodeIfPresent(.subject)
-        attachmentUrls = try container.sdkDecodeIfPresent(.attachmentUrls)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        brandId = try container.sdkDecodeIfPresent(.brandId)
-        if let value = attachmentUrls {
+        self.from = try container.sdkDecodeRequired(.from)
+        self.body = try container.sdkDecodeRequired(.body)
+        self.subject = try container.sdkDecodeIfPresent(.subject)
+        self.attachmentUrls = try container.sdkDecodeIfPresent(.attachmentUrls)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.brandId = try container.sdkDecodeIfPresent(.brandId)
+        if let value = self.attachmentUrls {
             try validateItems("attachment_urls", value, min: nil, max: 10)
         }
     }
 }
 
-public extension CreateConversationRequest {
-    init(
-        from: CreateConversationRequestFrom,
-        body: String,
-        subject: String? = nil,
-        attachmentUrls: [String]? = nil,
-        createdAt: Int? = nil,
-        brandId: String? = nil
-    ) throws {
+extension CreateConversationRequest {
+    public init(from: CreateConversationRequestFrom, body: String, subject: String? = nil, attachmentUrls: [String]? = nil, createdAt: Int? = nil, brandId: String? = nil) throws {
         (self.from, self.body) = (from, body)
         (self.subject, self.attachmentUrls) = (subject, attachmentUrls)
         (self.createdAt, self.brandId) = (createdAt, brandId)
@@ -100,38 +83,28 @@ public struct CreateConversationRequestFrom: Codable {
         case id
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateConversationRequestFrom {
-    init(from decoder: Decoder) throws {
+extension CreateConversationRequestFrom {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        id = try container.sdkDecodeRequired(.id)
-        try validateLength("id", id, min: 24, max: 24)
+        self.type = try container.sdkDecodeRequired(.type)
+        self.id = try container.sdkDecodeRequired(.id)
+            try validateLength("id", self.id, min: 24, max: 24)
     }
 }
 
-public extension CreateConversationRequestFrom {
-    init(type: CreateConversationRequestFromType, id: String) throws {
+extension CreateConversationRequestFrom {
+    public init(type: CreateConversationRequestFromType, id: String) throws {
         (self.type, self.id) = (type, id)
-        try validateLength("id", self.id, min: 24, max: 24)
+            try validateLength("id", self.id, min: 24, max: 24)
     }
 }
 
@@ -139,17 +112,14 @@ public extension CreateConversationRequestFrom {
 public struct CreateConversationRequestFromType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let lead = CreateConversationRequestFromType(rawValue: "lead")
     public static let user = CreateConversationRequestFromType(rawValue: "user")
     public static let contact = CreateConversationRequestFromType(rawValue: "contact")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

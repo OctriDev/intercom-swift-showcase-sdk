@@ -6,33 +6,16 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ConversationsMethods {
-    /// Lists pause and resume handling events for a conversation, including the teammate and timestamp for each event.
-    /// Use this operation when you need to review when teammates paused or resumed handling. Access requires the
-    /// `read_conversations` OAuth scope.
+extension ConversationsMethods {
+    /// Lists pause and resume handling events for a conversation, including the teammate and timestamp for each event. Use this operation when you need to review when teammates paused or resumed handling. Access requires the `read_conversations` OAuth scope.
     ///
-    /// List all pause/resume events for a conversation. These events track when teammates paused or resumed handling a
-    /// conversation. Requires the `read_conversations` OAuth scope.
+    /// List all pause/resume events for a conversation. These events track when teammates paused or resumed handling a conversation. Requires the `read_conversations` OAuth scope.
     ///
     /// - Parameters:
     /// - id: The identifier for the conversation as given by Intercom.
-    static func listHandlingEvents(
-        config: ClientConfig,
-        id: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> HandlingEventList {
-        try await (sdkRequest(
-            "GET",
-            ["/conversations/", sdkEncodePathSegment(sdkWireString(id)), "/handling_events"].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "listHandlingEvents",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "404": Error2.self]
-        )).data
+    public static func listHandlingEvents(config: ClientConfig, id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> HandlingEventList {
+        return try (await sdkRequest("GET", ["/conversations/", sdkEncodePathSegment(sdkWireString(id)), "/handling_events"].joined(), config: config, decoder: .json, operationId: "listHandlingEvents", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
     }
 }

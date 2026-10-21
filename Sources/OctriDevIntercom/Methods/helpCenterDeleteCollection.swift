@@ -6,32 +6,17 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension HelpCenterMethods {
-    /// Deletes a collection from the help center. Provide the collection identifier to specify which collection to
-    /// remove. Use this operation when you no longer need the collection.
+extension HelpCenterMethods {
+    /// Deletes a collection from the help center. Provide the collection identifier to specify which collection to remove. Use this operation when you no longer need the collection.
     ///
     /// You can delete a single collection by making a DELETE request to `https://api.intercom.io/collections/<id>`.
     ///
     /// - Parameters:
     /// - collectionId: The unique identifier for the collection which is given by
     ///   Intercom.
-    static func deleteCollection(
-        config: ClientConfig,
-        collectionId: Int,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DeletedCollectionObject {
-        try await (sdkRequest(
-            "DELETE",
-            ["/help_center/collections/", sdkEncodePathSegment(sdkWireString(collectionId))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "deleteCollection",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "404": Error2.self]
-        )).data
+    public static func deleteCollection(config: ClientConfig, collectionId: Int, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DeletedCollectionObject {
+        return try (await sdkRequest("DELETE", ["/help_center/collections/", sdkEncodePathSegment(sdkWireString(collectionId))].joined(), config: config, decoder: .json, operationId: "deleteCollection", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
     }
 }

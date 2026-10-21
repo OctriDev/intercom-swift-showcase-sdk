@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Messages domain models
+// Messages domain models
 /// Information for fetching next page (null if no more pages)
 public struct WhatsappMessageStatusListPagesNext: Codable {
     /// Cursor for the next page
@@ -14,19 +14,19 @@ public struct WhatsappMessageStatusListPagesNext: Codable {
     }
 
     init() {
-        startingAfter = nil
+        self.startingAfter = nil
     }
 }
 
-public extension WhatsappMessageStatusListPagesNext {
-    init(from decoder: Decoder) throws {
+extension WhatsappMessageStatusListPagesNext {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        startingAfter = try container.sdkDecodeIfPresent(.startingAfter)
+        self.startingAfter = try container.sdkDecodeIfPresent(.startingAfter)
     }
 }
 
-public extension WhatsappMessageStatusListPagesNext {
-    init(startingAfter: String? = nil) {
+extension WhatsappMessageStatusListPagesNext {
+    public init(startingAfter: String? = nil) {
         self.init()
         self.startingAfter = startingAfter
     }
@@ -62,85 +62,46 @@ public struct WhatsappMessageStatusListEventsItem: Codable {
         case templateName = "template_name"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension WhatsappMessageStatusListEventsItem {
-    init(from decoder: Decoder) throws {
+extension WhatsappMessageStatusListEventsItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
         guard container.contains(.conversationId) else {
-            throw SdkValidationError(
-                field: "conversation_id",
-                code: "required",
-                message: "Validation failed for 'conversation_id': value is required"
-            )
+            throw SdkValidationError(field: "conversation_id", code: "required", message: "Validation failed for 'conversation_id': value is required")
         }
         guard container.contains(.status) else {
-            throw SdkValidationError(
-                field: "status",
-                code: "required",
-                message: "Validation failed for 'status': value is required"
-            )
+            throw SdkValidationError(field: "status", code: "required", message: "Validation failed for 'status': value is required")
         }
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
         guard container.contains(.updatedAt) else {
-            throw SdkValidationError(
-                field: "updated_at",
-                code: "required",
-                message: "Validation failed for 'updated_at': value is required"
-            )
+            throw SdkValidationError(field: "updated_at", code: "required", message: "Validation failed for 'updated_at': value is required")
         }
         guard container.contains(.whatsappMessageId) else {
-            throw SdkValidationError(
-                field: "whatsapp_message_id",
-                code: "required",
-                message: "Validation failed for 'whatsapp_message_id': value is required"
-            )
+            throw SdkValidationError(field: "whatsapp_message_id", code: "required", message: "Validation failed for 'whatsapp_message_id': value is required")
         }
-        id = try container.sdkDecodeRequired(.id)
-        conversationId = try container.sdkDecodeRequired(.conversationId)
-        status = try container.sdkDecodeRequired(.status)
-        type = try container.sdkDecodeRequired(.type)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        updatedAt = try container.sdkDecodeRequired(.updatedAt)
-        whatsappMessageId = try container.sdkDecodeRequired(.whatsappMessageId)
-        templateName = try container.sdkDecodeIfPresent(.templateName)
+        self.id = try container.sdkDecodeRequired(.id)
+        self.conversationId = try container.sdkDecodeRequired(.conversationId)
+        self.status = try container.sdkDecodeRequired(.status)
+        self.type = try container.sdkDecodeRequired(.type)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.updatedAt = try container.sdkDecodeRequired(.updatedAt)
+        self.whatsappMessageId = try container.sdkDecodeRequired(.whatsappMessageId)
+        self.templateName = try container.sdkDecodeIfPresent(.templateName)
     }
 }
 
-public extension WhatsappMessageStatusListEventsItem {
-    init(
-        id: String,
-        conversationId: String,
-        status: WhatsappMessageStatusListEventsItemStatus,
-        type: WhatsappMessageStatusListEventsItemType,
-        createdAt: Int,
-        updatedAt: Int,
-        whatsappMessageId: String,
-        templateName: String? = nil
-    ) {
+extension WhatsappMessageStatusListEventsItem {
+    public init(id: String, conversationId: String, status: WhatsappMessageStatusListEventsItemStatus, type: WhatsappMessageStatusListEventsItemType, createdAt: Int, updatedAt: Int, whatsappMessageId: String, templateName: String? = nil) {
         (self.id, self.conversationId) = (id, conversationId)
         (self.status, self.type) = (status, type)
         (self.createdAt, self.updatedAt) = (createdAt, updatedAt)
@@ -169,65 +130,37 @@ public struct WhatsappMessageStatusList: Codable {
         case events
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension WhatsappMessageStatusList {
-    init(from decoder: Decoder) throws {
+extension WhatsappMessageStatusList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.rulesetId) else {
-            throw SdkValidationError(
-                field: "ruleset_id",
-                code: "required",
-                message: "Validation failed for 'ruleset_id': value is required"
-            )
+            throw SdkValidationError(field: "ruleset_id", code: "required", message: "Validation failed for 'ruleset_id': value is required")
         }
         guard container.contains(.pages) else {
-            throw SdkValidationError(
-                field: "pages",
-                code: "required",
-                message: "Validation failed for 'pages': value is required"
-            )
+            throw SdkValidationError(field: "pages", code: "required", message: "Validation failed for 'pages': value is required")
         }
         guard container.contains(.totalCount) else {
-            throw SdkValidationError(
-                field: "total_count",
-                code: "required",
-                message: "Validation failed for 'total_count': value is required"
-            )
+            throw SdkValidationError(field: "total_count", code: "required", message: "Validation failed for 'total_count': value is required")
         }
         guard container.contains(.events) else {
-            throw SdkValidationError(
-                field: "events",
-                code: "required",
-                message: "Validation failed for 'events': value is required"
-            )
+            throw SdkValidationError(field: "events", code: "required", message: "Validation failed for 'events': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        rulesetId = try container.sdkDecodeRequired(.rulesetId)
-        pages = try container.sdkDecodeRequired(.pages)
-        totalCount = try container.sdkDecodeRequired(.totalCount)
-        events = try container.sdkDecodeRequired(.events)
+        self.type = try container.sdkDecodeRequired(.type)
+        self.rulesetId = try container.sdkDecodeRequired(.rulesetId)
+        self.pages = try container.sdkDecodeRequired(.pages)
+        self.totalCount = try container.sdkDecodeRequired(.totalCount)
+        self.events = try container.sdkDecodeRequired(.events)
     }
 }
 
-public extension WhatsappMessageStatusList {
-    init(
-        type: WhatsappMessageStatusListType,
-        rulesetId: String,
-        pages: WhatsappMessageStatusListPages,
-        totalCount: Int,
-        events: [WhatsappMessageStatusListEventsItem]
-    ) {
+extension WhatsappMessageStatusList {
+    public init(type: WhatsappMessageStatusListType, rulesetId: String, pages: WhatsappMessageStatusListPages, totalCount: Int, events: [WhatsappMessageStatusListEventsItem]) {
         (self.type, self.rulesetId) = (type, rulesetId)
         (self.pages, self.totalCount) = (pages, totalCount)
         self.events = events
@@ -252,49 +185,30 @@ public struct WhatsappMessageStatusListPages: Codable {
         case next
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension WhatsappMessageStatusListPages {
-    init(from decoder: Decoder) throws {
+extension WhatsappMessageStatusListPages {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.perPage) else {
-            throw SdkValidationError(
-                field: "per_page",
-                code: "required",
-                message: "Validation failed for 'per_page': value is required"
-            )
+            throw SdkValidationError(field: "per_page", code: "required", message: "Validation failed for 'per_page': value is required")
         }
         guard container.contains(.totalPages) else {
-            throw SdkValidationError(
-                field: "total_pages",
-                code: "required",
-                message: "Validation failed for 'total_pages': value is required"
-            )
+            throw SdkValidationError(field: "total_pages", code: "required", message: "Validation failed for 'total_pages': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        perPage = try container.sdkDecodeRequired(.perPage)
-        totalPages = try container.sdkDecodeRequired(.totalPages)
-        next = try container.sdkDecodeIfPresent(.next)
+        self.type = try container.sdkDecodeRequired(.type)
+        self.perPage = try container.sdkDecodeRequired(.perPage)
+        self.totalPages = try container.sdkDecodeRequired(.totalPages)
+        self.next = try container.sdkDecodeIfPresent(.next)
     }
 }
 
-public extension WhatsappMessageStatusListPages {
-    init(
-        type: WhatsappMessageStatusListPagesType,
-        perPage: Int,
-        totalPages: Int,
-        next: WhatsappMessageStatusListPagesNext? = nil
-    ) {
+extension WhatsappMessageStatusListPages {
+    public init(type: WhatsappMessageStatusListPagesType, perPage: Int, totalPages: Int, next: WhatsappMessageStatusListPagesNext? = nil) {
         (self.type, self.perPage) = (type, perPage)
         (self.totalPages, self.next) = (totalPages, next)
     }
@@ -304,15 +218,12 @@ public extension WhatsappMessageStatusListPages {
 public struct WhatsappMessageStatusListPagesType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let pages = WhatsappMessageStatusListPagesType(rawValue: "pages")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -322,19 +233,15 @@ public struct WhatsappMessageStatusListPagesType: RawRepresentable, Hashable, Co
 }
 
 /// Event type
-public struct WhatsappMessageStatusListEventsItemType: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct WhatsappMessageStatusListEventsItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let broadcastOutbound = WhatsappMessageStatusListEventsItemType(rawValue: "broadcast_outbound")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -347,15 +254,12 @@ public struct WhatsappMessageStatusListEventsItemType: RawRepresentable, Hashabl
 public struct WhatsappMessageStatusListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let list = WhatsappMessageStatusListType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -365,14 +269,10 @@ public struct WhatsappMessageStatusListType: RawRepresentable, Hashable, Codable
 }
 
 /// Current status of the message
-public struct WhatsappMessageStatusListEventsItemStatus: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct WhatsappMessageStatusListEventsItemStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let sent = WhatsappMessageStatusListEventsItemStatus(rawValue: "sent")
     public static let delivered = WhatsappMessageStatusListEventsItemStatus(rawValue: "delivered")
     public static let read = WhatsappMessageStatusListEventsItemStatus(rawValue: "read")
@@ -380,7 +280,7 @@ public struct WhatsappMessageStatusListEventsItemStatus: RawRepresentable, Hasha
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

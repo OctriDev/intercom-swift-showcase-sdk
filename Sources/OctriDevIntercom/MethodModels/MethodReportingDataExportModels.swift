@@ -7,7 +7,7 @@ import Foundation
     import FoundationNetworking
 #endif
 
-/// Canonical reportingDataExport operation model declarations
+// Canonical reportingDataExport operation model declarations
 public struct ListGetDatasetsResponseDataItemAttributesItem: Codable {
     /// The simple attribute identifier. Note that this may be ambiguous if the same name exists across different
     /// attribute types. Use qualified_id when calling the enqueue endpoint.
@@ -27,21 +27,21 @@ public struct ListGetDatasetsResponseDataItemAttributesItem: Codable {
     }
 
     init() {
-        (id, qualifiedId, name) = (nil, nil, nil)
+        (self.id, self.qualifiedId, self.name) = (nil, nil, nil)
     }
 }
 
-public extension ListGetDatasetsResponseDataItemAttributesItem {
-    init(from decoder: Decoder) throws {
+extension ListGetDatasetsResponseDataItemAttributesItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        qualifiedId = try container.sdkDecodeIfPresent(.qualifiedId)
-        name = try container.sdkDecodeIfPresent(.name)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.qualifiedId = try container.sdkDecodeIfPresent(.qualifiedId)
+        self.name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-public extension ListGetDatasetsResponseDataItemAttributesItem {
-    init(id: String? = nil, qualifiedId: String? = nil, name: String? = nil) {
+extension ListGetDatasetsResponseDataItemAttributesItem {
+    public init(id: String? = nil, qualifiedId: String? = nil, name: String? = nil) {
         self.init()
         (self.id, self.qualifiedId) = (id, qualifiedId)
         self.name = name
@@ -64,27 +64,22 @@ public struct CreateEnqueueResponse: Codable {
     }
 
     init() {
-        (jobIdentifier, status, downloadUrl, downloadExpiresAt) = (nil, nil, nil, nil)
+        (self.jobIdentifier, self.status, self.downloadUrl, self.downloadExpiresAt) = (nil, nil, nil, nil)
     }
 }
 
-public extension CreateEnqueueResponse {
-    init(from decoder: Decoder) throws {
+extension CreateEnqueueResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        jobIdentifier = try container.sdkDecodeIfPresent(.jobIdentifier)
-        status = try container.sdkDecodeIfPresent(.status)
-        downloadUrl = try container.sdkDecodeIfPresent(.downloadUrl)
-        downloadExpiresAt = try container.sdkDecodeIfPresent(.downloadExpiresAt)
+        self.jobIdentifier = try container.sdkDecodeIfPresent(.jobIdentifier)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.downloadUrl = try container.sdkDecodeIfPresent(.downloadUrl)
+        self.downloadExpiresAt = try container.sdkDecodeIfPresent(.downloadExpiresAt)
     }
 }
 
-public extension CreateEnqueueResponse {
-    init(
-        jobIdentifier: String? = nil,
-        status: String? = nil,
-        downloadUrl: String? = nil,
-        downloadExpiresAt: String? = nil
-    ) {
+extension CreateEnqueueResponse {
+    public init(jobIdentifier: String? = nil, status: String? = nil, downloadUrl: String? = nil, downloadExpiresAt: String? = nil) {
         self.init()
         (self.jobIdentifier, self.status) = (jobIdentifier, status)
         (self.downloadUrl, self.downloadExpiresAt) = (downloadUrl, downloadExpiresAt)
@@ -105,27 +100,22 @@ public struct GetReportingDataResponse: Codable {
     }
 
     init() {
-        (jobIdentifier, status, downloadUrl, downloadExpiresAt) = (nil, nil, nil, nil)
+        (self.jobIdentifier, self.status, self.downloadUrl, self.downloadExpiresAt) = (nil, nil, nil, nil)
     }
 }
 
-public extension GetReportingDataResponse {
-    init(from decoder: Decoder) throws {
+extension GetReportingDataResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        jobIdentifier = try container.sdkDecodeIfPresent(.jobIdentifier)
-        status = try container.sdkDecodeIfPresent(.status)
-        downloadUrl = try container.sdkDecodeIfPresent(.downloadUrl)
-        downloadExpiresAt = try container.sdkDecodeIfPresent(.downloadExpiresAt)
+        self.jobIdentifier = try container.sdkDecodeIfPresent(.jobIdentifier)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.downloadUrl = try container.sdkDecodeIfPresent(.downloadUrl)
+        self.downloadExpiresAt = try container.sdkDecodeIfPresent(.downloadExpiresAt)
     }
 }
 
-public extension GetReportingDataResponse {
-    init(
-        jobIdentifier: String? = nil,
-        status: String? = nil,
-        downloadUrl: String? = nil,
-        downloadExpiresAt: String? = nil
-    ) {
+extension GetReportingDataResponse {
+    public init(jobIdentifier: String? = nil, status: String? = nil, downloadUrl: String? = nil, downloadExpiresAt: String? = nil) {
         self.init()
         (self.jobIdentifier, self.status) = (jobIdentifier, status)
         (self.downloadUrl, self.downloadExpiresAt) = (downloadUrl, downloadExpiresAt)
@@ -143,20 +133,20 @@ public struct ListGetDatasetsResponse: Codable {
     }
 
     init() {
-        (type, data) = (nil, nil)
+        (self.type, self.data) = (nil, nil)
     }
 }
 
-public extension ListGetDatasetsResponse {
-    init(from decoder: Decoder) throws {
+extension ListGetDatasetsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension ListGetDatasetsResponse {
-    init(type: String? = nil, data: [ListGetDatasetsResponseDataItem]? = nil) {
+extension ListGetDatasetsResponse {
+    public init(type: String? = nil, data: [ListGetDatasetsResponseDataItem]? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
     }
@@ -182,29 +172,23 @@ public struct ListGetDatasetsResponseDataItem: Codable {
     }
 
     init() {
-        (id, name, description, defaultTimeAttributeId, attributes) = (nil, nil, nil, nil, nil)
+        (self.id, self.name, self.description, self.defaultTimeAttributeId, self.attributes) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ListGetDatasetsResponseDataItem {
-    init(from decoder: Decoder) throws {
+extension ListGetDatasetsResponseDataItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        defaultTimeAttributeId = try container.sdkDecodeIfPresent(.defaultTimeAttributeId)
-        attributes = try container.sdkDecodeIfPresent(.attributes)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.defaultTimeAttributeId = try container.sdkDecodeIfPresent(.defaultTimeAttributeId)
+        self.attributes = try container.sdkDecodeIfPresent(.attributes)
     }
 }
 
-public extension ListGetDatasetsResponseDataItem {
-    init(
-        id: String? = nil,
-        name: String? = nil,
-        description: String? = nil,
-        defaultTimeAttributeId: String? = nil,
-        attributes: [ListGetDatasetsResponseDataItemAttributesItem]? = nil
-    ) {
+extension ListGetDatasetsResponseDataItem {
+    public init(id: String? = nil, name: String? = nil, description: String? = nil, defaultTimeAttributeId: String? = nil, attributes: [ListGetDatasetsResponseDataItemAttributesItem]? = nil) {
         self.init()
         (self.id, self.name) = (id, name)
         (self.description, self.defaultTimeAttributeId) = (description, defaultTimeAttributeId)

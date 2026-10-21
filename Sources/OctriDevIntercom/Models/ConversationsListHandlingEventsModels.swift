@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Conversations domain models
+// Conversations domain models
 /// A pause or resume event for a conversation
 public struct HandlingEvent: Codable {
     /// A reference to a teammate
@@ -25,48 +25,34 @@ public struct HandlingEvent: Codable {
         case reason
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension HandlingEvent {
-    init(from decoder: Decoder) throws {
+extension HandlingEvent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.teammate) else {
-            throw SdkValidationError(
-                field: "teammate",
-                code: "required",
-                message: "Validation failed for 'teammate': value is required"
-            )
+            throw SdkValidationError(field: "teammate", code: "required", message: "Validation failed for 'teammate': value is required")
         }
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.timestamp) else {
-            throw SdkValidationError(
-                field: "timestamp",
-                code: "required",
-                message: "Validation failed for 'timestamp': value is required"
-            )
+            throw SdkValidationError(field: "timestamp", code: "required", message: "Validation failed for 'timestamp': value is required")
         }
-        teammate = try container.sdkDecodeRequired(.teammate)
-        type = try container.sdkDecodeRequired(.type)
-        timestamp = try container.sdkDecodeRequired(.timestamp)
-        reason = try container.sdkDecodeIfPresent(.reason)
-        try sdkValidateDateTime("timestamp", sdkWireString(timestamp))
+        self.teammate = try container.sdkDecodeRequired(.teammate)
+        self.type = try container.sdkDecodeRequired(.type)
+        self.timestamp = try container.sdkDecodeRequired(.timestamp)
+        self.reason = try container.sdkDecodeIfPresent(.reason)
+            try sdkValidateDateTime("timestamp", sdkWireString(self.timestamp))
     }
 }
 
-public extension HandlingEvent {
-    init(teammate: TeammateReference, type: HandlingEventType, timestamp: Date, reason: String? = nil) throws {
+extension HandlingEvent {
+    public init(teammate: TeammateReference, type: HandlingEventType, timestamp: Date, reason: String? = nil) throws {
         (self.teammate, self.type) = (teammate, type)
         (self.timestamp, self.reason) = (timestamp, reason)
-        try sdkValidateDateTime("timestamp", sdkWireString(self.timestamp))
+            try sdkValidateDateTime("timestamp", sdkWireString(self.timestamp))
     }
 }
 
@@ -92,47 +78,33 @@ public struct TeammateReference: Codable {
         case email
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension TeammateReference {
-    init(from decoder: Decoder) throws {
+extension TeammateReference {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        id = try container.sdkDecodeRequired(.id)
-        name = try container.sdkDecodeRequired(.name)
-        email = try container.sdkDecodeIfPresent(.email)
-        if let value = email {
+        self.type = try container.sdkDecodeRequired(.type)
+        self.id = try container.sdkDecodeRequired(.id)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.email = try container.sdkDecodeIfPresent(.email)
+        if let value = self.email {
             try sdkValidateEmail("email", value)
         }
     }
 }
 
-public extension TeammateReference {
-    init(type: TeammateReferenceType, id: Int, name: String, email: String? = nil) throws {
+extension TeammateReference {
+    public init(type: TeammateReferenceType, id: Int, name: String, email: String? = nil) throws {
         (self.type, self.id) = (type, id)
         (self.name, self.email) = (name, email)
         if let value = self.email {
@@ -151,19 +123,19 @@ public struct HandlingEventList: Codable {
     }
 
     init() {
-        handlingEvents = nil
+        self.handlingEvents = nil
     }
 }
 
-public extension HandlingEventList {
-    init(from decoder: Decoder) throws {
+extension HandlingEventList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        handlingEvents = try container.sdkDecodeIfPresent(.handlingEvents)
+        self.handlingEvents = try container.sdkDecodeIfPresent(.handlingEvents)
     }
 }
 
-public extension HandlingEventList {
-    init(handlingEvents: [HandlingEvent]? = nil) {
+extension HandlingEventList {
+    public init(handlingEvents: [HandlingEvent]? = nil) {
         self.init()
         self.handlingEvents = handlingEvents
     }
@@ -173,16 +145,13 @@ public extension HandlingEventList {
 public struct HandlingEventType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let paused = HandlingEventType(rawValue: "paused")
     public static let resumed = HandlingEventType(rawValue: "resumed")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -195,17 +164,14 @@ public struct HandlingEventType: RawRepresentable, Hashable, Codable, Sendable, 
 public struct TeammateReferenceType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let admin = TeammateReferenceType(rawValue: "admin")
     public static let team = TeammateReferenceType(rawValue: "team")
     public static let bot = TeammateReferenceType(rawValue: "bot")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

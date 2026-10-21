@@ -6,79 +6,34 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ContentSnippetsMethods {
-    /// Applies an existing tag to a content snippet and returns the applied tag. The tag must already exist, and the
-    /// authenticated user must have the `manage_knowledge_base_content` permission. The request requires the
-    /// `read_write_content_snippets` OAuth scope.
+extension ContentSnippetsMethods {
+    /// Applies an existing tag to a content snippet and returns the applied tag. The tag must already exist, and the authenticated user must have the `manage_knowledge_base_content` permission. The request requires the `read_write_content_snippets` OAuth scope.
     ///
-    /// Apply an existing tag to a content snippet. Returns the tag that was applied. The tag must already exist in the
-    /// workspace (create tags with the Tags API), and the authenticating teammate must have the
-    /// `manage_knowledge_base_content` permission. Requires the `read_write_content_snippets` OAuth scope.
+    /// Apply an existing tag to a content snippet. Returns the tag that was applied. The tag must already exist in the workspace (create tags with the Tags API), and the authenticating teammate must have the `manage_knowledge_base_content` permission. Requires the `read_write_content_snippets` OAuth scope.
     ///
     /// - Parameters:
     /// - contentSnippetId: The unique identifier for the content snippet.
     /// - id: The unique identifier of the tag to apply, as given by Intercom.
     /// - adminId: Optional id of the teammate to attribute the tagging to. Defaults
     ///   to the authenticating teammate. Does not affect authorization.
-    static func attachContentSnippetsTag(
-        config: ClientConfig,
-        contentSnippetId: String,
-        id: String,
-        intercomVersion: IntercomVersion? = nil,
-        adminId: SdkOptional<String>? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Tag {
+    public static func attachContentSnippetsTag(config: ClientConfig, contentSnippetId: String, id: String, intercomVersion: IntercomVersion? = nil, adminId: SdkOptional<String>? = nil, requestOptions: RequestOptions? = nil) async throws -> Tag {
         let requestBody = AttachContentSnippetsTagRequestBody(id: id, adminId: adminId)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/content_snippets/", sdkEncodePathSegment(sdkWireString(contentSnippetId)), "/tags"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "attachContentSnippetsTag",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self]
-        )).data
+        return try (await sdkRequest("POST", ["/content_snippets/", sdkEncodePathSegment(sdkWireString(contentSnippetId)), "/tags"].joined(), config: config, body: requestBody, decoder: .json, operationId: "attachContentSnippetsTag", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self])).data
     }
 
-    /// Removes a tag from a content snippet and returns the removed tag. The authenticated user must have the
-    /// `manage_knowledge_base_content` permission, and the request requires the `read_write_content_snippets` OAuth
-    /// scope.
+    /// Removes a tag from a content snippet and returns the removed tag. The authenticated user must have the `manage_knowledge_base_content` permission, and the request requires the `read_write_content_snippets` OAuth scope.
     ///
-    /// Remove a tag from a content snippet. Returns the tag that was removed, with null `applied_at` and `applied_by`.
-    /// The authenticating teammate must have the `manage_knowledge_base_content` permission. Requires the
-    /// `read_write_content_snippets` OAuth scope.
+    /// Remove a tag from a content snippet. Returns the tag that was removed, with null `applied_at` and `applied_by`. The authenticating teammate must have the `manage_knowledge_base_content` permission. Requires the `read_write_content_snippets` OAuth scope.
     ///
     /// - Parameters:
     /// - contentSnippetId: The unique identifier for the content snippet.
     /// - id: The unique identifier of the tag to remove, as given by Intercom.
-    static func detachContentSnippetsTag(
-        config: ClientConfig,
-        contentSnippetId: String,
-        id: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Tag {
-        try await (sdkRequest(
-            "DELETE",
-            [
-                "/content_snippets/",
-                sdkEncodePathSegment(sdkWireString(contentSnippetId)),
-                "/tags/",
-                sdkEncodePathSegment(sdkWireString(id)),
-            ].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "detachContentSnippetsTag",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self]
-        )).data
+    public static func detachContentSnippetsTag(config: ClientConfig, contentSnippetId: String, id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Tag {
+        return try (await sdkRequest("DELETE", ["/content_snippets/", sdkEncodePathSegment(sdkWireString(contentSnippetId)), "/tags/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "detachContentSnippetsTag", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self])).data
     }
 }

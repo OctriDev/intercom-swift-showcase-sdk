@@ -6,24 +6,11 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ReportingDataExportMethods {
-    /// Lists the datasets and attributes available for reporting data exports. Use the returned dataset identifiers and
-    /// attribute details to determine which data you can include in an export.
-    static func listGetDatasets(
-        config: ClientConfig,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ListGetDatasetsResponse {
-        try await (sdkRequest(
-            "GET",
-            "/export/reporting_data/get_datasets",
-            config: config,
-            decoder: .json,
-            operationId: "listGetDatasets",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions
-        )).data
+extension ReportingDataExportMethods {
+    /// Lists the datasets and attributes available for reporting data exports. Use the returned dataset identifiers and attribute details to determine which data you can include in an export.
+    public static func listGetDatasets(config: ClientConfig, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ListGetDatasetsResponse {
+        return try (await sdkRequest("GET", "/export/reporting_data/get_datasets", config: config, decoder: .json, operationId: "listGetDatasets", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions)).data
     }
 }

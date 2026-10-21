@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Visitors domain models
+// Visitors domain models
 /// Update an existing visitor.
 public struct UpdateVisitorRequest: Codable {
     /// A unique identified for the visitor which is given by Intercom.
@@ -27,22 +27,22 @@ public struct UpdateVisitorRequest: Codable {
     }
 
     init() {
-        (id, userId, name, customAttributes) = (nil, nil, nil, nil)
+        (self.id, self.userId, self.name, self.customAttributes) = (nil, nil, nil, nil)
     }
 }
 
-public extension UpdateVisitorRequest {
-    init(from decoder: Decoder) throws {
+extension UpdateVisitorRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        userId = try container.sdkDecodeIfPresent(.userId)
-        name = try container.sdkDecodeIfPresent(.name)
-        customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.userId = try container.sdkDecodeIfPresent(.userId)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
     }
 }
 
-public extension UpdateVisitorRequest {
-    init(id: String? = nil, userId: String? = nil, name: String? = nil, customAttributes: [String: String]? = nil) {
+extension UpdateVisitorRequest {
+    public init(id: String? = nil, userId: String? = nil, name: String? = nil, customAttributes: [String: String]? = nil) {
         self.init()
         (self.id, self.userId) = (id, userId)
         (self.name, self.customAttributes) = (name, customAttributes)

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DataConnectors domain models
+// DataConnectors domain models
 /// Required object value serialized in the `data_inputs[]` wire field.
 public struct UpdateDataConnectorRequestDataInputsItem: Codable {
     /// The name of the input parameter.
@@ -30,29 +30,23 @@ public struct UpdateDataConnectorRequestDataInputsItem: Codable {
     }
 
     init() {
-        (name, type, description, required, defaultValue) = (nil, nil, nil, nil, nil)
+        (self.name, self.type, self.description, self.required, self.defaultValue) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension UpdateDataConnectorRequestDataInputsItem {
-    init(from decoder: Decoder) throws {
+extension UpdateDataConnectorRequestDataInputsItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        type = try container.sdkDecodeIfPresent(.type)
-        description = try container.sdkDecodeIfPresent(.description)
-        required = try container.sdkDecodeIfPresent(.required)
-        defaultValue = try container.sdkDecodeIfPresent(.defaultValue)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.required = try container.sdkDecodeIfPresent(.required)
+        self.defaultValue = try container.sdkDecodeIfPresent(.defaultValue)
     }
 }
 
-public extension UpdateDataConnectorRequestDataInputsItem {
-    init(
-        name: String? = nil,
-        type: UpdateDataConnectorRequestDataInputsItemType? = nil,
-        description: String? = nil,
-        required: Bool? = nil,
-        defaultValue: String? = nil
-    ) {
+extension UpdateDataConnectorRequestDataInputsItem {
+    public init(name: String? = nil, type: UpdateDataConnectorRequestDataInputsItemType? = nil, description: String? = nil, required: Bool? = nil, defaultValue: String? = nil) {
         self.init()
         (self.name, self.type) = (name, type)
         (self.description, self.required) = (description, required)
@@ -75,20 +69,20 @@ public struct UpdateDataConnectorRequestHeadersItem: Codable {
     }
 
     init() {
-        (name, value) = (nil, nil)
+        (self.name, self.value) = (nil, nil)
     }
 }
 
-public extension UpdateDataConnectorRequestHeadersItem {
-    init(from decoder: Decoder) throws {
+extension UpdateDataConnectorRequestHeadersItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        value = try container.sdkDecodeIfPresent(.value)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.value = try container.sdkDecodeIfPresent(.value)
     }
 }
 
-public extension UpdateDataConnectorRequestHeadersItem {
-    init(name: String? = nil, value: String? = nil) {
+extension UpdateDataConnectorRequestHeadersItem {
+    public init(name: String? = nil, value: String? = nil) {
         self.init()
         (self.name, self.value) = (name, value)
     }
@@ -156,57 +150,35 @@ public struct UpdateDataConnectorRequest: Codable {
     }
 
     init() {
-        (name, description, state, httpMethod, url) = (nil, nil, nil, nil, nil)
-        (body, directFinUsage, audiences, headers, dataInputs) = (nil, nil, nil, nil, nil)
-        (customerAuthentication, bypassAuthentication, validateMissingAttributes, mockResponse, tokenIds) = (
-            nil,
-            nil,
-            nil,
-            nil,
-            nil
-        )
+        (self.name, self.description, self.state, self.httpMethod, self.url) = (nil, nil, nil, nil, nil)
+        (self.body, self.directFinUsage, self.audiences, self.headers, self.dataInputs) = (nil, nil, nil, nil, nil)
+        (self.customerAuthentication, self.bypassAuthentication, self.validateMissingAttributes, self.mockResponse, self.tokenIds) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension UpdateDataConnectorRequest {
-    init(from decoder: Decoder) throws {
+extension UpdateDataConnectorRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        state = try container.sdkDecodeIfPresent(.state)
-        httpMethod = try container.sdkDecodeIfPresent(.httpMethod)
-        url = try container.sdkDecodeIfPresent(.url)
-        body = try container.sdkDecodeIfPresent(.body)
-        directFinUsage = try container.sdkDecodeIfPresent(.directFinUsage)
-        audiences = try container.sdkDecodeIfPresent(.audiences)
-        headers = try container.sdkDecodeIfPresent(.headers)
-        dataInputs = try container.sdkDecodeIfPresent(.dataInputs)
-        customerAuthentication = try container.sdkDecodeIfPresent(.customerAuthentication)
-        bypassAuthentication = try container.sdkDecodeIfPresent(.bypassAuthentication)
-        validateMissingAttributes = try container.sdkDecodeIfPresent(.validateMissingAttributes)
-        mockResponse = try container.sdkDecodeIfPresent(.mockResponse)
-        tokenIds = try container.sdkDecodeIfPresent(.tokenIds)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.state = try container.sdkDecodeIfPresent(.state)
+        self.httpMethod = try container.sdkDecodeIfPresent(.httpMethod)
+        self.url = try container.sdkDecodeIfPresent(.url)
+        self.body = try container.sdkDecodeIfPresent(.body)
+        self.directFinUsage = try container.sdkDecodeIfPresent(.directFinUsage)
+        self.audiences = try container.sdkDecodeIfPresent(.audiences)
+        self.headers = try container.sdkDecodeIfPresent(.headers)
+        self.dataInputs = try container.sdkDecodeIfPresent(.dataInputs)
+        self.customerAuthentication = try container.sdkDecodeIfPresent(.customerAuthentication)
+        self.bypassAuthentication = try container.sdkDecodeIfPresent(.bypassAuthentication)
+        self.validateMissingAttributes = try container.sdkDecodeIfPresent(.validateMissingAttributes)
+        self.mockResponse = try container.sdkDecodeIfPresent(.mockResponse)
+        self.tokenIds = try container.sdkDecodeIfPresent(.tokenIds)
     }
 }
 
-public extension UpdateDataConnectorRequest {
-    init(
-        name: String? = nil,
-        description: String? = nil,
-        state: UpdateDataConnectorRequestState? = nil,
-        httpMethod: UpdateDataConnectorRequestHttpMethod? = nil,
-        url: String? = nil,
-        body: String? = nil,
-        directFinUsage: Bool? = nil,
-        audiences: [UpdateDataConnectorRequestAudiencesItem]? = nil,
-        headers: [UpdateDataConnectorRequestHeadersItem]? = nil,
-        dataInputs: [UpdateDataConnectorRequestDataInputsItem]? = nil,
-        customerAuthentication: Bool? = nil,
-        bypassAuthentication: Bool? = nil,
-        validateMissingAttributes: Bool? = nil,
-        mockResponse: [String: JSONValue]? = nil,
-        tokenIds: [String]? = nil
-    ) {
+extension UpdateDataConnectorRequest {
+    public init(name: String? = nil, description: String? = nil, state: UpdateDataConnectorRequestState? = nil, httpMethod: UpdateDataConnectorRequestHttpMethod? = nil, url: String? = nil, body: String? = nil, directFinUsage: Bool? = nil, audiences: [UpdateDataConnectorRequestAudiencesItem]? = nil, headers: [UpdateDataConnectorRequestHeadersItem]? = nil, dataInputs: [UpdateDataConnectorRequestDataInputsItem]? = nil, customerAuthentication: Bool? = nil, bypassAuthentication: Bool? = nil, validateMissingAttributes: Bool? = nil, mockResponse: [String: JSONValue]? = nil, tokenIds: [String]? = nil) {
         self.init()
         (self.name, self.description) = (name, description)
         (self.state, self.httpMethod) = (state, httpMethod)
@@ -224,16 +196,13 @@ public extension UpdateDataConnectorRequest {
 public struct UpdateDataConnectorRequestState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let draft = UpdateDataConnectorRequestState(rawValue: "draft")
     public static let live = UpdateDataConnectorRequestState(rawValue: "live")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -243,21 +212,17 @@ public struct UpdateDataConnectorRequestState: RawRepresentable, Hashable, Codab
 }
 
 /// Required enumerated value serialized in the `audiences[]` wire field.
-public struct UpdateDataConnectorRequestAudiencesItem: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct UpdateDataConnectorRequestAudiencesItem: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let leads = UpdateDataConnectorRequestAudiencesItem(rawValue: "leads")
     public static let users = UpdateDataConnectorRequestAudiencesItem(rawValue: "users")
     public static let visitors = UpdateDataConnectorRequestAudiencesItem(rawValue: "visitors")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -270,10 +235,7 @@ public struct UpdateDataConnectorRequestAudiencesItem: RawRepresentable, Hashabl
 public struct UpdateDataConnectorRequestHttpMethod: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let get = UpdateDataConnectorRequestHttpMethod(rawValue: "get")
     public static let post = UpdateDataConnectorRequestHttpMethod(rawValue: "post")
     public static let put = UpdateDataConnectorRequestHttpMethod(rawValue: "put")
@@ -282,7 +244,7 @@ public struct UpdateDataConnectorRequestHttpMethod: RawRepresentable, Hashable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -292,14 +254,10 @@ public struct UpdateDataConnectorRequestHttpMethod: RawRepresentable, Hashable, 
 }
 
 /// The data type of the input.
-public struct UpdateDataConnectorRequestDataInputsItemType: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct UpdateDataConnectorRequestDataInputsItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let string = UpdateDataConnectorRequestDataInputsItemType(rawValue: "string")
     public static let integer = UpdateDataConnectorRequestDataInputsItemType(rawValue: "integer")
     public static let decimal = UpdateDataConnectorRequestDataInputsItemType(rawValue: "decimal")
@@ -307,7 +265,7 @@ public struct UpdateDataConnectorRequestDataInputsItemType: RawRepresentable, Ha
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

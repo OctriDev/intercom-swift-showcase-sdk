@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Segments domain models
+// Segments domain models
 /// This will return a list of Segment Objects. The result may also have a pages object if the response is
 /// paginated.
 public struct SegmentList: Codable {
@@ -22,21 +22,21 @@ public struct SegmentList: Codable {
     }
 
     init() {
-        (type, segments, pages) = (nil, nil, nil)
+        (self.type, self.segments, self.pages) = (nil, nil, nil)
     }
 }
 
-public extension SegmentList {
-    init(from decoder: Decoder) throws {
+extension SegmentList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        segments = try container.sdkDecodeIfPresent(.segments)
-        pages = try container.sdkDecodeIfPresent(.pages)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.segments = try container.sdkDecodeIfPresent(.segments)
+        self.pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-public extension SegmentList {
-    init(type: SegmentListType? = nil, segments: [Segment]? = nil, pages: [String: JSONValue]? = nil) {
+extension SegmentList {
+    public init(type: SegmentListType? = nil, segments: [Segment]? = nil, pages: [String: JSONValue]? = nil) {
         self.init()
         (self.type, self.segments) = (type, segments)
         self.pages = pages
@@ -47,15 +47,12 @@ public extension SegmentList {
 public struct SegmentListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let segmentList = SegmentListType(rawValue: "segment.list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

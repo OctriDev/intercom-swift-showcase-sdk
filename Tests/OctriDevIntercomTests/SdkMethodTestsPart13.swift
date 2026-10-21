@@ -36,9 +36,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.contacts.listSegments(
-                contactId: decoded("\"63a07ddf05a32042dffac965\""),
-                intercomVersion: decoded("\"2.17\"")
-            )
+            contactId: decoded("\"63a07ddf05a32042dffac965\""),
+            intercomVersion: decoded("\"2.17\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -84,9 +84,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.contacts.listSubscriptions(
-                contactId: decoded("\"63a07ddf05a32042dffac965\""),
-                intercomVersion: decoded("\"2.17\"")
-            )
+            contactId: decoded("\"63a07ddf05a32042dffac965\""),
+            intercomVersion: decoded("\"2.17\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -132,9 +132,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.contacts.listTags(
-                contactId: decoded("\"63a07ddf05a32042dffac965\""),
-                intercomVersion: decoded("\"2.17\"")
-            )
+            contactId: decoded("\"63a07ddf05a32042dffac965\""),
+            intercomVersion: decoded("\"2.17\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -179,8 +179,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.aiContent.listContentImportSources(
-                intercomVersion: decoded("\"2.17\"")
-            )
+            intercomVersion: decoded("\"2.17\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -246,9 +246,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.conversationsAttributes.list(
-                includeArchived: decoded("false"),
-                intercomVersion: decoded("\"2.17\"")
-            )
+            includeArchived: decoded("false"),
+            intercomVersion: decoded("\"2.17\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -297,12 +297,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.conversations.list(
-                perPage: decoded("20"),
-                startingAfter: decoded("\"starting_after\""),
-                includeMonitors: decoded("true"),
-                includeScorecards: decoded("true"),
-                intercomVersion: decoded("\"2.17\"")
-            )
+            perPage: decoded("20"),
+            startingAfter: decoded("\"starting_after\""),
+            includeMonitors: decoded("true"),
+            includeScorecards: decoded("true"),
+            intercomVersion: decoded("\"2.17\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -353,14 +353,14 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.customObjectInstances.list(
-                customObjectTypeIdentifier: decoded("\"Order\""),
-                referencesContactId: decoded("\"references_contact-1\""),
-                referencesConversationId: decoded("\"references_conversation-1\""),
-                externalId: decoded("\"external-1\""),
-                page: decoded("30"),
-                perPage: decoded("30"),
-                intercomVersion: decoded("\"2.17\"")
-            )
+            customObjectTypeIdentifier: decoded("\"Order\""),
+            referencesContactId: decoded("\"references_contact-1\""),
+            referencesConversationId: decoded("\"references_conversation-1\""),
+            externalId: decoded("\"external-1\""),
+            page: decoded("30"),
+            perPage: decoded("30"),
+            intercomVersion: decoded("\"2.17\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -407,10 +407,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.dataAttributes.list(
-                model: decoded("\"company\""),
-                includeArchived: decoded("false"),
-                intercomVersion: decoded("\"2.17\"")
-            )
+            model: decoded("\"company\""),
+            includeArchived: decoded("false"),
+            intercomVersion: decoded("\"2.17\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -426,14 +426,12 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testListDataConnectorExecutionResultsListDataConnectorExecutionResultsReachesMockAndDecodesResponse(
-    ) async throws {
+    func testListDataConnectorExecutionResultsListDataConnectorExecutionResultsReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
         _ = client
-        var options = try DataConnectorsMethods
-            .ListDataConnectorExecutionResultsOptions(dataConnectorId: decoded("\"12345\""))
+        var options = try DataConnectorsMethods.ListDataConnectorExecutionResultsOptions(dataConnectorId: decoded("\"12345\""))
         options.perPage = try decoded("10")
         options.startingAfter = try decoded("\"starting_after\"")
         options.success = try decoded("\"true\"")
@@ -455,14 +453,12 @@ extension SdkMethodTests {
         )
     }
 
-    func testListDataConnectorExecutionResultsListDataConnectorExecutionResults400ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testListDataConnectorExecutionResultsListDataConnectorExecutionResults400ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/400") else {
             return
         }
         _ = client
-        var options = try DataConnectorsMethods
-            .ListDataConnectorExecutionResultsOptions(dataConnectorId: decoded("\"12345\""))
+        var options = try DataConnectorsMethods.ListDataConnectorExecutionResultsOptions(dataConnectorId: decoded("\"12345\""))
         options.perPage = try decoded("10")
         options.startingAfter = try decoded("\"starting_after\"")
         options.success = try decoded("\"true\"")
@@ -477,8 +473,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.dataConnectors.listExecutionResults(
-                options: options
-            )
+            options: options
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -525,10 +521,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.dataConnectors.list(
-                perPage: decoded("20"),
-                startingAfter: decoded("\"starting_after\""),
-                intercomVersion: decoded("\"2.17\"")
-            )
+            perPage: decoded("20"),
+            startingAfter: decoded("\"starting_after\""),
+            intercomVersion: decoded("\"2.17\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)

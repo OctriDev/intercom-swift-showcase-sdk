@@ -6,10 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ArticlesMethods {
-    /// Searches articles by phrase and can filter results by article state and Help Center. Use `highlight` to request
-    /// highlighted matching content; results include article data, optional highlights, and cursor-based page
-    /// information.
+extension ArticlesMethods {
+    /// Searches articles by phrase and can filter results by article state and Help Center. Use `highlight` to request highlighted matching content; results include article data, optional highlights, and cursor-based page information.
     ///
     /// You can search for articles by making a GET request to `https://api.intercom.io/articles/search`.
     ///
@@ -20,16 +18,8 @@ public extension ArticlesMethods {
     /// - helpCenterId: The ID of the Help Center to search in.
     /// - highlight: Return a highlighted version of the matching content within
     ///   your articles. Refer to the response schema for more details.
-    static func searchArticles(
-        config: ClientConfig,
-        phrase: String? = nil,
-        state: String? = nil,
-        helpCenterId: Int? = nil,
-        highlight: Bool? = nil,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ArticleSearchResponse {
-        try await (sdkRequest("GET", "/articles/search", config: config, query: [
+    public static func searchArticles(config: ClientConfig, phrase: String? = nil, state: String? = nil, helpCenterId: Int? = nil, highlight: Bool? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ArticleSearchResponse {
+        return try (await sdkRequest("GET", "/articles/search", config: config, query: [
             SdkQueryParameter("phrase", value: phrase),
             SdkQueryParameter("state", value: state),
             SdkQueryParameter("help_center_id", value: helpCenterId),

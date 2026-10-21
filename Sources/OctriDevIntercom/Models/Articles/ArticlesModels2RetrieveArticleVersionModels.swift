@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// TaggedModelsArticles domain models
+// TaggedModelsArticles domain models
 /// A historical version of an article, including its content.
 public struct ArticleVersion: Codable {
     /// String representing the object's type. Always has the value `article_version`.
@@ -67,49 +67,34 @@ public struct ArticleVersion: Codable {
     }
 
     init() {
-        (type, id, articleId, title, description) = (nil, nil, nil, nil, nil)
-        (body, bodyMarkdown, authorId, createdById, createdVia) = (nil, nil, nil, nil, nil)
-        (fromVersionId, state, createdAt, updatedAt) = (nil, nil, nil, nil)
+        (self.type, self.id, self.articleId, self.title, self.description) = (nil, nil, nil, nil, nil)
+        (self.body, self.bodyMarkdown, self.authorId, self.createdById, self.createdVia) = (nil, nil, nil, nil, nil)
+        (self.fromVersionId, self.state, self.createdAt, self.updatedAt) = (nil, nil, nil, nil)
     }
 }
 
-public extension ArticleVersion {
-    init(from decoder: Decoder) throws {
+extension ArticleVersion {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        articleId = try container.sdkDecodeIfPresent(.articleId)
-        title = try container.sdkDecodeIfPresent(.title)
-        description = try container.sdkDecodeIfPresent(.description)
-        body = try container.sdkDecodeIfPresent(.body)
-        bodyMarkdown = try container.sdkDecodeIfPresent(.bodyMarkdown)
-        authorId = try container.sdkDecodeIfPresent(.authorId)
-        createdById = try container.sdkDecodeIfPresent(.createdById)
-        createdVia = try container.sdkDecodeIfPresent(.createdVia)
-        fromVersionId = try container.sdkDecodeIfPresent(.fromVersionId)
-        state = try container.sdkDecodeIfPresent(.state)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.articleId = try container.sdkDecodeIfPresent(.articleId)
+        self.title = try container.sdkDecodeIfPresent(.title)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.body = try container.sdkDecodeIfPresent(.body)
+        self.bodyMarkdown = try container.sdkDecodeIfPresent(.bodyMarkdown)
+        self.authorId = try container.sdkDecodeIfPresent(.authorId)
+        self.createdById = try container.sdkDecodeIfPresent(.createdById)
+        self.createdVia = try container.sdkDecodeIfPresent(.createdVia)
+        self.fromVersionId = try container.sdkDecodeIfPresent(.fromVersionId)
+        self.state = try container.sdkDecodeIfPresent(.state)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
     }
 }
 
-public extension ArticleVersion {
-    init(
-        type: ArticleVersionType? = nil,
-        id: String? = nil,
-        articleId: String? = nil,
-        title: String? = nil,
-        description: String? = nil,
-        body: String? = nil,
-        bodyMarkdown: String? = nil,
-        authorId: String? = nil,
-        createdById: String? = nil,
-        createdVia: String? = nil,
-        fromVersionId: String? = nil,
-        state: ArticleVersionState? = nil,
-        createdAt: Int? = nil,
-        updatedAt: Int? = nil
-    ) {
+extension ArticleVersion {
+    public init(type: ArticleVersionType? = nil, id: String? = nil, articleId: String? = nil, title: String? = nil, description: String? = nil, body: String? = nil, bodyMarkdown: String? = nil, authorId: String? = nil, createdById: String? = nil, createdVia: String? = nil, fromVersionId: String? = nil, state: ArticleVersionState? = nil, createdAt: Int? = nil, updatedAt: Int? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.articleId, self.title) = (articleId, title)
@@ -125,15 +110,12 @@ public extension ArticleVersion {
 public struct ArticleVersionType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let articleVersion = ArticleVersionType(rawValue: "article_version")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -147,16 +129,13 @@ public struct ArticleVersionType: RawRepresentable, Hashable, Codable, Sendable,
 public struct ArticleVersionState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let published = ArticleVersionState(rawValue: "published")
     public static let draft = ArticleVersionState(rawValue: "draft")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

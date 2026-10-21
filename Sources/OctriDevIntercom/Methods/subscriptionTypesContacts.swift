@@ -6,80 +6,36 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension SubscriptionTypesMethods {
-    /// Adds a subscription type to a contact and applies its opt-in or opt-out preference. Supply the subscription `id`
-    /// and `consent_type` to specify which subscription to attach and how the contact has consented.
+extension SubscriptionTypesMethods {
+    /// Adds a subscription type to a contact and applies its opt-in or opt-out preference. Supply the subscription `id` and `consent_type` to specify which subscription to attach and how the contact has consented.
     ///
-    /// You can add a specific subscription to a contact. In Intercom, we have two different subscription types based on
-    /// user consent - opt-out and opt-in: 1.Attaching a contact to an opt-out subscription type will opt that user out
-    /// from receiving messages related to that subscription type. 2.Attaching a contact to an opt-in subscription type
-    /// will opt that user in to receiving messages related to that subscription type. This will return a subscription
-    /// type model for the subscription type that was added to the contact.
+    /// You can add a specific subscription to a contact. In Intercom, we have two different subscription types based on user consent - opt-out and opt-in: 1.Attaching a contact to an opt-out subscription type will opt that user out from receiving messages related to that subscription type. 2.Attaching a contact to an opt-in subscription type will opt that user in to receiving messages related to that subscription type. This will return a subscription type model for the subscription type that was added to the contact.
     ///
     /// - Parameters:
     /// - contactId: The unique identifier for the contact which is given by
     ///   Intercom
     /// - id: The unique identifier for the subscription which is given by Intercom
     /// - consentType: The consent_type of a subscription, opt_out or opt_in.
-    static func attachSubscriptionTypeToContact(
-        config: ClientConfig,
-        contactId: String,
-        id: String,
-        consentType: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SubscriptionType {
+    public static func attachSubscriptionTypeToContact(config: ClientConfig, contactId: String, id: String, consentType: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> SubscriptionType {
         let requestBody = AttachSubscriptionTypeToContactRequestBody(id: id, consentType: consentType)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/contacts/", sdkEncodePathSegment(sdkWireString(contactId)), "/subscriptions"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "attachSubscriptionTypeToContact",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "404": Error2.self]
-        )).data
+        return try (await sdkRequest("POST", ["/contacts/", sdkEncodePathSegment(sdkWireString(contactId)), "/subscriptions"].joined(), config: config, body: requestBody, decoder: .json, operationId: "attachSubscriptionTypeToContact", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
     }
 
-    /// Removes a subscription type from a contact. Identify both the contact and subscription type with their
-    /// respective path parameters; the response returns the removed subscription type.
+    /// Removes a subscription type from a contact. Identify both the contact and subscription type with their respective path parameters; the response returns the removed subscription type.
     ///
-    /// You can remove a specific subscription from a contact. This will return a subscription type model for the
-    /// subscription type that was removed from the contact.
+    /// You can remove a specific subscription from a contact. This will return a subscription type model for the subscription type that was removed from the contact.
     ///
     /// - Parameters:
     /// - contactId: The unique identifier for the contact which is given by
     ///   Intercom
     /// - subscriptionId: The unique identifier for the subscription type which is
     ///   given by Intercom
-    static func detachSubscriptionTypeToContact(
-        config: ClientConfig,
-        contactId: String,
-        subscriptionId: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SubscriptionType {
-        try await (sdkRequest(
-            "DELETE",
-            [
-                "/contacts/",
-                sdkEncodePathSegment(sdkWireString(contactId)),
-                "/subscriptions/",
-                sdkEncodePathSegment(sdkWireString(subscriptionId)),
-            ].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "detachSubscriptionTypeToContact",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "404": Error2.self]
-        )).data
+    public static func detachSubscriptionTypeToContact(config: ClientConfig, contactId: String, subscriptionId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> SubscriptionType {
+        return try (await sdkRequest("DELETE", ["/contacts/", sdkEncodePathSegment(sdkWireString(contactId)), "/subscriptions/", sdkEncodePathSegment(sdkWireString(subscriptionId))].joined(), config: config, decoder: .json, operationId: "detachSubscriptionTypeToContact", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
     }
 }

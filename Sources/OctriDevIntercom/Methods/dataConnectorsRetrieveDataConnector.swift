@@ -6,66 +6,32 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DataConnectorsMethods {
-    /// Retrieves the full details of a data connector by its identifier. Use `state_version` to choose whether to
-    /// retrieve its draft or live configuration; it defaults to the live version when omitted.
+extension DataConnectorsMethods {
+    /// Retrieves the full details of a data connector by its identifier. Use `state_version` to choose whether to retrieve its draft or live configuration; it defaults to the live version when omitted.
     ///
-    /// You can retrieve the full detail of a single data connector by its ID. The response includes configuration, data
-    /// inputs, response fields, and object mappings.
+    /// You can retrieve the full detail of a single data connector by its ID. The response includes configuration, data inputs, response fields, and object mappings.
     ///
     /// - Parameters:
     /// - id: The unique identifier of the data connector.
     /// - stateVersion: Which version of the data connector to return. Defaults to
     ///   live.
-    static func retrieveDataConnector(
-        config: ClientConfig,
-        id: String,
-        stateVersion: RetrieveDataConnectorParameter? = nil,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DataConnectorDetail {
-        try await (sdkRequest(
-            "GET",
-            ["/data_connectors/", sdkEncodePathSegment(sdkWireString(id))].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("state_version", value: stateVersion),
-            ],
-            decoder: .json,
-            operationId: "RetrieveDataConnector",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self]
-        )).data
+    public static func retrieveDataConnector(config: ClientConfig, id: String, stateVersion: RetrieveDataConnectorParameter? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DataConnectorDetail {
+        return try (await sdkRequest("GET", ["/data_connectors/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, query: [
+            SdkQueryParameter("state_version", value: stateVersion),
+        ], decoder: .json, operationId: "RetrieveDataConnector", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self])).data
     }
 
-    /// Deletes an existing data connector. Use this operation only when the connector is in `draft` state and is not
-    /// used by any workflows or AI agents. A successful response confirms whether the connector was deleted.
+    /// Deletes an existing data connector. Use this operation only when the connector is in `draft` state and is not used by any workflows or AI agents. A successful response confirms whether the connector was deleted.
     ///
-    /// Delete an existing data connector. The connector must be in `draft` state and must not be in use by any
-    /// workflows or AI agents.
+    /// Delete an existing data connector. The connector must be in `draft` state and must not be in use by any workflows or AI agents.
     ///
     /// - Parameters:
     /// - id: The unique identifier of the data connector
-    static func deleteDataConnector(
-        config: ClientConfig,
-        id: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DeletedDataConnectorObject {
-        try await (sdkRequest(
-            "DELETE",
-            ["/data_connectors/", sdkEncodePathSegment(sdkWireString(id))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "deleteDataConnector",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "404": Error2.self, "409": Error2.self]
-        )).data
+    public static func deleteDataConnector(config: ClientConfig, id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DeletedDataConnectorObject {
+        return try (await sdkRequest("DELETE", ["/data_connectors/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "deleteDataConnector", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "409": Error2.self])).data
     }
 }

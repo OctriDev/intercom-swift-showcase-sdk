@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DataConnectorsMethods {
-    struct ListDataConnectorExecutionResultsOptions: Codable {
+extension DataConnectorsMethods {
+    public struct ListDataConnectorExecutionResultsOptions: Codable {
         public var dataConnectorId: String
         public var perPage: Int?
         public var startingAfter: String?
@@ -23,13 +23,9 @@ public extension DataConnectorsMethods {
         }
     }
 
-    /// Lists paginated execution results for a specific data connector. Results cover the last hour by default; use
-    /// `start_ts` and `end_ts` to change the time range and the filters to narrow the results. Request and response
-    /// bodies are excluded unless you set `include_bodies` to `true`.
+    /// Lists paginated execution results for a specific data connector. Results cover the last hour by default; use `start_ts` and `end_ts` to change the time range and the filters to narrow the results. Request and response bodies are excluded unless you set `include_bodies` to `true`.
     ///
-    /// Retrieve paginated execution logs for a specific data connector. Results from the last hour are returned by
-    /// default. Use `start_ts` and `end_ts` to customize the time range. Request/response bodies are excluded by
-    /// default. Use `include_bodies=true` to include them.
+    /// Retrieve paginated execution logs for a specific data connector. Results from the last hour are returned by default. Use `start_ts` and `end_ts` to customize the time range. Request/response bodies are excluded by default. Use `include_bodies=true` to include them.
     ///
     /// - Parameters:
     /// - dataConnectorId: The unique identifier for the data connector.
@@ -42,36 +38,21 @@ public extension DataConnectorsMethods {
     /// - endTs: Unix timestamp for end of time range (default now).
     /// - includeBodies: Include request/response bodies in the response (default
     ///   false).
-    static func listDataConnectorExecutionResults(
-        config: ClientConfig,
-        options: ListDataConnectorExecutionResultsOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DataConnectorExecutionResultList {
+    public static func listDataConnectorExecutionResults(config: ClientConfig, options: ListDataConnectorExecutionResultsOptions, requestOptions: RequestOptions? = nil) async throws -> DataConnectorExecutionResultList {
         if let perPage = options.perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 30)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            ["/data_connectors/", sdkEncodePathSegment(sdkWireString(options.dataConnectorId)), "/execution_results"]
-                .joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("per_page", value: options.perPage),
-                SdkQueryParameter("starting_after", value: options.startingAfter),
-                SdkQueryParameter("success", value: options.success),
-                SdkQueryParameter("error_type", value: options.errorType),
-                SdkQueryParameter("start_ts", value: options.startTs),
-                SdkQueryParameter("end_ts", value: options.endTs),
-                SdkQueryParameter("include_bodies", value: options.includeBodies),
-            ],
-            decoder: .json,
-            operationId: "listDataConnectorExecutionResults",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self]
-        )).data
+        return try (await sdkRequest("GET", ["/data_connectors/", sdkEncodePathSegment(sdkWireString(options.dataConnectorId)), "/execution_results"].joined(), config: config, query: [
+            SdkQueryParameter("per_page", value: options.perPage),
+            SdkQueryParameter("starting_after", value: options.startingAfter),
+            SdkQueryParameter("success", value: options.success),
+            SdkQueryParameter("error_type", value: options.errorType),
+            SdkQueryParameter("start_ts", value: options.startTs),
+            SdkQueryParameter("end_ts", value: options.endTs),
+            SdkQueryParameter("include_bodies", value: options.includeBodies),
+        ], decoder: .json, operationId: "listDataConnectorExecutionResults", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
+        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self])).data
     }
 }

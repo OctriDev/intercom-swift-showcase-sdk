@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Companies domain models
+// Companies domain models
 /// A list of Contact Objects
 public struct CompanyAttachedContacts: Codable {
     /// The type of object - `list`
@@ -27,27 +27,22 @@ public struct CompanyAttachedContacts: Codable {
     }
 
     init() {
-        (type, data, totalCount, pages) = (nil, nil, nil, nil)
+        (self.type, self.data, self.totalCount, self.pages) = (nil, nil, nil, nil)
     }
 }
 
-public extension CompanyAttachedContacts {
-    init(from decoder: Decoder) throws {
+extension CompanyAttachedContacts {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        data = try container.sdkDecodeIfPresent(.data)
-        totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        pages = try container.sdkDecodeIfPresent(.pages)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.data = try container.sdkDecodeIfPresent(.data)
+        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        self.pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-public extension CompanyAttachedContacts {
-    init(
-        type: CompanyAttachedContactsType? = nil,
-        data: [Contact]? = nil,
-        totalCount: Int? = nil,
-        pages: CursorPages? = nil
-    ) {
+extension CompanyAttachedContacts {
+    public init(type: CompanyAttachedContactsType? = nil, data: [Contact]? = nil, totalCount: Int? = nil, pages: CursorPages? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
         (self.totalCount, self.pages) = (totalCount, pages)
@@ -58,15 +53,12 @@ public extension CompanyAttachedContacts {
 public struct CompanyAttachedContactsType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let list = CompanyAttachedContactsType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

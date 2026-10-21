@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension TicketTypeAttributesMethods {
-    struct UpdateTicketTypeAttributeOptions: Codable {
+extension TicketTypeAttributesMethods {
+    public struct UpdateTicketTypeAttributeOptions: Codable {
         public var ticketTypeId: String
         public var attributeId: String
         public var intercomVersion: IntercomVersion?
@@ -28,8 +28,7 @@ public extension TicketTypeAttributesMethods {
         }
     }
 
-    /// Updates the configuration of an existing ticket type attribute. Use the `ticket_type_id` and `attribute_id` path
-    /// parameters to identify the attribute; provide only the fields you want to change.
+    /// Updates the configuration of an existing ticket type attribute. Use the `ticket_type_id` and `attribute_id` path parameters to identify the attribute; provide only the fields you want to change.
     ///
     /// You can update an existing attribute for a ticket type.
     ///
@@ -58,30 +57,11 @@ public extension TicketTypeAttributesMethods {
     /// - archived: Whether the attribute should be archived and not shown during
     ///   creation of the ticket (it will still be present on previously created
     ///   tickets)
-    static func updateTicketTypeAttribute(
-        config: ClientConfig,
-        options: UpdateTicketTypeAttributeOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> TicketTypeAttribute {
+    public static func updateTicketTypeAttribute(config: ClientConfig, options: UpdateTicketTypeAttributeOptions, requestOptions: RequestOptions? = nil) async throws -> TicketTypeAttribute {
         let requestBody = UpdateTicketTypeAttributeRequestBody(options: options)
 
-        return try await (sdkRequest(
-            "PUT",
-            [
-                "/ticket_types/",
-                sdkEncodePathSegment(sdkWireString(options.ticketTypeId)),
-                "/attributes/",
-                sdkEncodePathSegment(sdkWireString(options.attributeId)),
-            ].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "updateTicketTypeAttribute",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self]
-        )).data
+        return try (await sdkRequest("PUT", ["/ticket_types/", sdkEncodePathSegment(sdkWireString(options.ticketTypeId)), "/attributes/", sdkEncodePathSegment(sdkWireString(options.attributeId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "updateTicketTypeAttribute", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self])).data
     }
 }

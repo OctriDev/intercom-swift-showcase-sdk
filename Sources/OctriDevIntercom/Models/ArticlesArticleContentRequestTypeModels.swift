@@ -3,20 +3,17 @@
 
 import Foundation
 
-/// Articles domain models
+// Articles domain models
 /// The type of object - `article_content` .
 public struct ArticleContentRequestType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let articleContent = ArticleContentRequestType(rawValue: "article_content")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -29,15 +26,12 @@ public struct ArticleContentRequestType: RawRepresentable, Hashable, Codable, Se
 public struct ArticleContentType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let articleContent = ArticleContentType(rawValue: "article_content")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -50,16 +44,13 @@ public struct ArticleContentType: RawRepresentable, Hashable, Codable, Sendable,
 public struct ArticleContentRequestState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let published = ArticleContentRequestState(rawValue: "published")
     public static let draft = ArticleContentRequestState(rawValue: "draft")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -72,15 +63,12 @@ public struct ArticleContentRequestState: RawRepresentable, Hashable, Codable, S
 public struct ArticleTranslatedContentType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let articleTranslatedContent = ArticleTranslatedContentType(rawValue: "article_translated_content")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -93,16 +81,12 @@ public struct ArticleTranslatedContentType: RawRepresentable, Hashable, Codable,
 public struct ArticleTranslatedContentRequestType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public static let articleTranslatedContent =
-        ArticleTranslatedContentRequestType(rawValue: "article_translated_content")
+    public init(rawValue: String) { self.rawValue = rawValue }
+    public static let articleTranslatedContent = ArticleTranslatedContentRequestType(rawValue: "article_translated_content")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -115,15 +99,12 @@ public struct ArticleTranslatedContentRequestType: RawRepresentable, Hashable, C
 public struct ArticleStatisticsType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let articleStatistics = ArticleStatisticsType(rawValue: "article_statistics")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

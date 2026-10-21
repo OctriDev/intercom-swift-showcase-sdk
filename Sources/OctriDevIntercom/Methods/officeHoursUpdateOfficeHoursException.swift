@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension OfficeHoursMethods {
-    struct UpdateOfficeHoursExceptionOptions: Codable {
+extension OfficeHoursMethods {
+    public struct UpdateOfficeHoursExceptionOptions: Codable {
         public var officeHoursScheduleId: String
         public var id: String
         public var intercomVersion: IntercomVersion?
@@ -23,10 +23,7 @@ public extension OfficeHoursMethods {
         }
     }
 
-    /// Updates an existing office hours exception, changing only the fields included in the request. Set
-    /// `exception_type` to `closed` or `custom_hours`; custom hours require `time_intervals`, while closed exceptions
-    /// omit them. Set `exception_date` in `YYYY-MM-DD` format and use `recurring_annually` to indicate whether the
-    /// exception repeats each year.
+    /// Updates an existing office hours exception, changing only the fields included in the request. Set `exception_type` to `closed` or `custom_hours`; custom hours require `time_intervals`, while closed exceptions omit them. Set `exception_date` in `YYYY-MM-DD` format and use `recurring_annually` to indicate whether the exception repeats each year.
     ///
     /// You can update an existing office hours exception.
     ///
@@ -41,34 +38,15 @@ public extension OfficeHoursMethods {
     ///   `custom_hours`; omit for `closed`.
     /// - recurringAnnually: Whether the exception repeats every year on the same
     ///   date.
-    static func updateOfficeHoursException(
-        config: ClientConfig,
-        options: UpdateOfficeHoursExceptionOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> OfficeHoursException {
+    public static func updateOfficeHoursException(config: ClientConfig, options: UpdateOfficeHoursExceptionOptions, requestOptions: RequestOptions? = nil) async throws -> OfficeHoursException {
         if let exceptionDate = options.exceptionDate {
             try sdkValidateDate("exception_date", exceptionDate)
         }
 
         let requestBody = UpdateOfficeHoursExceptionRequestBody(options: options)
 
-        return try await (sdkRequest(
-            "PUT",
-            [
-                "/office_hours_schedules/",
-                sdkEncodePathSegment(sdkWireString(options.officeHoursScheduleId)),
-                "/office_hours_exceptions/",
-                sdkEncodePathSegment(sdkWireString(options.id)),
-            ].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "updateOfficeHoursException",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "404": Error2.self, "422": Error2.self]
-        )).data
+        return try (await sdkRequest("PUT", ["/office_hours_schedules/", sdkEncodePathSegment(sdkWireString(options.officeHoursScheduleId)), "/office_hours_exceptions/", sdkEncodePathSegment(sdkWireString(options.id))].joined(), config: config, body: requestBody, decoder: .json, operationId: "updateOfficeHoursException", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "422": Error2.self])).data
     }
 }

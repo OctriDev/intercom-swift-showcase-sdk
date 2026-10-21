@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// HelpCenter domain models
+// HelpCenter domain models
 /// You can update a collection
 public struct UpdateCollectionRequest: Codable {
     /// The name of the collection. For multilingual collections, this will be the name of the default language's
@@ -29,27 +29,22 @@ public struct UpdateCollectionRequest: Codable {
     }
 
     init() {
-        (name, description, translatedContent, parentId) = (nil, nil, nil, nil)
+        (self.name, self.description, self.translatedContent, self.parentId) = (nil, nil, nil, nil)
     }
 }
 
-public extension UpdateCollectionRequest {
-    init(from decoder: Decoder) throws {
+extension UpdateCollectionRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        translatedContent = try container.sdkDecodeIfPresent(.translatedContent)
-        parentId = try container.sdkDecodeIfPresent(.parentId)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.translatedContent = try container.sdkDecodeIfPresent(.translatedContent)
+        self.parentId = try container.sdkDecodeIfPresent(.parentId)
     }
 }
 
-public extension UpdateCollectionRequest {
-    init(
-        name: String? = nil,
-        description: String? = nil,
-        translatedContent: GroupTranslatedContent? = nil,
-        parentId: String? = nil
-    ) {
+extension UpdateCollectionRequest {
+    public init(name: String? = nil, description: String? = nil, translatedContent: GroupTranslatedContent? = nil, parentId: String? = nil) {
         self.init()
         (self.name, self.description) = (name, description)
         (self.translatedContent, self.parentId) = (translatedContent, parentId)

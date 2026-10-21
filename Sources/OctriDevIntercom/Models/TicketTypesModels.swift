@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// TicketTypes domain models
+// TicketTypes domain models
 /// The request payload for creating a ticket type. You can copy the `icon` property for your ticket type from
 /// Twemoji Cheatsheet
 public struct CreateTicketTypeRequest: Codable {
@@ -31,37 +31,25 @@ public struct CreateTicketTypeRequest: Codable {
         case isInternal = "is_internal"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateTicketTypeRequest {
-    init(from decoder: Decoder) throws {
+extension CreateTicketTypeRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        category = try container.sdkDecodeIfPresent(.category)
-        icon = try container.sdkDecodeIfPresent(.icon)
-        isInternal = try container.sdkDecodeIfPresent(.isInternal)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.category = try container.sdkDecodeIfPresent(.category)
+        self.icon = try container.sdkDecodeIfPresent(.icon)
+        self.isInternal = try container.sdkDecodeIfPresent(.isInternal)
     }
 }
 
-public extension CreateTicketTypeRequest {
-    init(
-        name: String,
-        description: String? = nil,
-        category: CreateTicketTypeRequestCategory? = nil,
-        icon: String? = nil,
-        isInternal: Bool? = nil
-    ) {
+extension CreateTicketTypeRequest {
+    public init(name: String, description: String? = nil, category: CreateTicketTypeRequestCategory? = nil, icon: String? = nil, isInternal: Bool? = nil) {
         (self.name, self.description) = (name, description)
         (self.category, self.icon) = (category, icon)
         self.isInternal = isInternal
@@ -82,20 +70,20 @@ public struct TicketTypeList: Codable {
     }
 
     init() {
-        (type, data) = (nil, nil)
+        (self.type, self.data) = (nil, nil)
     }
 }
 
-public extension TicketTypeList {
-    init(from decoder: Decoder) throws {
+extension TicketTypeList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension TicketTypeList {
-    init(type: String? = nil, data: [TicketType?]? = nil) {
+extension TicketTypeList {
+    public init(type: String? = nil, data: [TicketType?]? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
     }
@@ -132,32 +120,25 @@ public struct UpdateTicketTypeRequest: Codable {
     }
 
     init() {
-        (name, description, category, icon, archived) = (nil, nil, nil, nil, nil)
-        isInternal = nil
+        (self.name, self.description, self.category, self.icon, self.archived) = (nil, nil, nil, nil, nil)
+        self.isInternal = nil
     }
 }
 
-public extension UpdateTicketTypeRequest {
-    init(from decoder: Decoder) throws {
+extension UpdateTicketTypeRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        category = try container.sdkDecodeIfPresent(.category)
-        icon = try container.sdkDecodeIfPresent(.icon)
-        archived = try container.sdkDecodeIfPresent(.archived)
-        isInternal = try container.sdkDecodeIfPresent(.isInternal)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.category = try container.sdkDecodeIfPresent(.category)
+        self.icon = try container.sdkDecodeIfPresent(.icon)
+        self.archived = try container.sdkDecodeIfPresent(.archived)
+        self.isInternal = try container.sdkDecodeIfPresent(.isInternal)
     }
 }
 
-public extension UpdateTicketTypeRequest {
-    init(
-        name: String? = nil,
-        description: String? = nil,
-        category: UpdateTicketTypeRequestCategory? = nil,
-        icon: String? = nil,
-        archived: Bool? = nil,
-        isInternal: Bool? = nil
-    ) {
+extension UpdateTicketTypeRequest {
+    public init(name: String? = nil, description: String? = nil, category: UpdateTicketTypeRequestCategory? = nil, icon: String? = nil, archived: Bool? = nil, isInternal: Bool? = nil) {
         self.init()
         (self.name, self.description) = (name, description)
         (self.category, self.icon) = (category, icon)
@@ -169,17 +150,14 @@ public extension UpdateTicketTypeRequest {
 public struct CreateTicketTypeRequestCategory: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let customer = CreateTicketTypeRequestCategory(rawValue: "Customer")
     public static let backOffice = CreateTicketTypeRequestCategory(rawValue: "Back-office")
     public static let tracker = CreateTicketTypeRequestCategory(rawValue: "Tracker")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -192,17 +170,14 @@ public struct CreateTicketTypeRequestCategory: RawRepresentable, Hashable, Codab
 public struct UpdateTicketTypeRequestCategory: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let customer = UpdateTicketTypeRequestCategory(rawValue: "Customer")
     public static let backOffice = UpdateTicketTypeRequestCategory(rawValue: "Back-office")
     public static let tracker = UpdateTicketTypeRequestCategory(rawValue: "Tracker")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

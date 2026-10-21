@@ -5,50 +5,50 @@ import Foundation
 
 public class Intercom {
     var config: ClientConfig
-    public internal(set) lazy var admins: AdminsNamespace = .init(config: config)
-    public internal(set) lazy var macros: MacrosNamespace = .init(config: config)
-    public internal(set) lazy var officeHours: OfficeHoursNamespace = .init(config: config)
-    public internal(set) lazy var aiContent: AiContentNamespace = .init(config: config)
-    public internal(set) lazy var articles: ArticlesNamespace = .init(config: config)
-    public internal(set) lazy var awayStatusReasons: AwayStatusReasonsNamespace = .init(config: config)
-    public internal(set) lazy var audiences: AudiencesNamespace = .init(config: config)
-    public internal(set) lazy var reportingDataExport: ReportingDataExportNamespace = .init(config: config)
-    public internal(set) lazy var finAgent: FinAgentNamespace = .init(config: config)
-    public internal(set) lazy var helpCenter: HelpCenterNamespace = .init(config: config)
-    public internal(set) lazy var internalArticles: InternalArticlesNamespace = .init(config: config)
-    public internal(set) lazy var folders: FoldersNamespace = .init(config: config)
-    public internal(set) lazy var ipAllowlist: IpAllowlistNamespace = .init(config: config)
-    public internal(set) lazy var companies: CompaniesNamespace = .init(config: config)
-    public internal(set) lazy var notes: NotesNamespace = .init(config: config)
-    public internal(set) lazy var contacts: ContactsNamespace = .init(config: config)
-    public internal(set) lazy var subscriptionTypes: SubscriptionTypesNamespace = .init(config: config)
-    public internal(set) lazy var tags: TagsNamespace = .init(config: config)
-    public internal(set) lazy var banners: BannersNamespace = .init(config: config)
-    public internal(set) lazy var content: ContentNamespace = .init(config: config)
-    public internal(set) lazy var contentSnippets: ContentSnippetsNamespace = .init(config: config)
-    public internal(set) lazy var dynamicContent: DynamicContentNamespace = .init(config: config)
-    public internal(set) lazy var conversations: ConversationsNamespace = .init(config: config)
-    public internal(set) lazy var conversationsAttributes: ConversationsAttributesNamespace = .init(config: config)
-    public internal(set) lazy var customObjectInstances: CustomObjectInstancesNamespace = .init(config: config)
-    public internal(set) lazy var dataAttributes: DataAttributesNamespace = .init(config: config)
-    public internal(set) lazy var dataConnectors: DataConnectorsNamespace = .init(config: config)
-    public internal(set) lazy var dataEvents: DataEventsNamespace = .init(config: config)
-    public internal(set) lazy var dataExport: DataExportNamespace = .init(config: config)
-    public internal(set) lazy var jobs: JobsNamespace = .init(config: config)
-    public internal(set) lazy var messages: MessagesNamespace = .init(config: config)
-    public internal(set) lazy var news: NewsNamespace = .init(config: config)
-    public internal(set) lazy var segments: SegmentsNamespace = .init(config: config)
-    public internal(set) lazy var `switch`: SwitchNamespace = .init(config: config)
-    public internal(set) lazy var calls: CallsNamespace = .init(config: config)
-    public internal(set) lazy var teams: TeamsNamespace = .init(config: config)
-    public internal(set) lazy var ticketStates: TicketStatesNamespace = .init(config: config)
-    public internal(set) lazy var ticketTypeAttributes: TicketTypeAttributesNamespace = .init(config: config)
-    public internal(set) lazy var ticketTypes: TicketTypesNamespace = .init(config: config)
-    public internal(set) lazy var tickets: TicketsNamespace = .init(config: config)
-    public internal(set) lazy var visitors: VisitorsNamespace = .init(config: config)
-    public internal(set) lazy var brands: BrandsNamespace = .init(config: config)
-    public internal(set) lazy var emails: EmailsNamespace = .init(config: config)
-    public internal(set) lazy var workflows: WorkflowsNamespace = .init(config: config)
+    public internal(set) lazy var admins: AdminsNamespace = AdminsNamespace(config: config)
+    public internal(set) lazy var macros: MacrosNamespace = MacrosNamespace(config: config)
+    public internal(set) lazy var officeHours: OfficeHoursNamespace = OfficeHoursNamespace(config: config)
+    public internal(set) lazy var aiContent: AiContentNamespace = AiContentNamespace(config: config)
+    public internal(set) lazy var articles: ArticlesNamespace = ArticlesNamespace(config: config)
+    public internal(set) lazy var awayStatusReasons: AwayStatusReasonsNamespace = AwayStatusReasonsNamespace(config: config)
+    public internal(set) lazy var audiences: AudiencesNamespace = AudiencesNamespace(config: config)
+    public internal(set) lazy var reportingDataExport: ReportingDataExportNamespace = ReportingDataExportNamespace(config: config)
+    public internal(set) lazy var finAgent: FinAgentNamespace = FinAgentNamespace(config: config)
+    public internal(set) lazy var helpCenter: HelpCenterNamespace = HelpCenterNamespace(config: config)
+    public internal(set) lazy var internalArticles: InternalArticlesNamespace = InternalArticlesNamespace(config: config)
+    public internal(set) lazy var folders: FoldersNamespace = FoldersNamespace(config: config)
+    public internal(set) lazy var ipAllowlist: IpAllowlistNamespace = IpAllowlistNamespace(config: config)
+    public internal(set) lazy var companies: CompaniesNamespace = CompaniesNamespace(config: config)
+    public internal(set) lazy var notes: NotesNamespace = NotesNamespace(config: config)
+    public internal(set) lazy var contacts: ContactsNamespace = ContactsNamespace(config: config)
+    public internal(set) lazy var subscriptionTypes: SubscriptionTypesNamespace = SubscriptionTypesNamespace(config: config)
+    public internal(set) lazy var tags: TagsNamespace = TagsNamespace(config: config)
+    public internal(set) lazy var banners: BannersNamespace = BannersNamespace(config: config)
+    public internal(set) lazy var content: ContentNamespace = ContentNamespace(config: config)
+    public internal(set) lazy var contentSnippets: ContentSnippetsNamespace = ContentSnippetsNamespace(config: config)
+    public internal(set) lazy var dynamicContent: DynamicContentNamespace = DynamicContentNamespace(config: config)
+    public internal(set) lazy var conversations: ConversationsNamespace = ConversationsNamespace(config: config)
+    public internal(set) lazy var conversationsAttributes: ConversationsAttributesNamespace = ConversationsAttributesNamespace(config: config)
+    public internal(set) lazy var customObjectInstances: CustomObjectInstancesNamespace = CustomObjectInstancesNamespace(config: config)
+    public internal(set) lazy var dataAttributes: DataAttributesNamespace = DataAttributesNamespace(config: config)
+    public internal(set) lazy var dataConnectors: DataConnectorsNamespace = DataConnectorsNamespace(config: config)
+    public internal(set) lazy var dataEvents: DataEventsNamespace = DataEventsNamespace(config: config)
+    public internal(set) lazy var dataExport: DataExportNamespace = DataExportNamespace(config: config)
+    public internal(set) lazy var jobs: JobsNamespace = JobsNamespace(config: config)
+    public internal(set) lazy var messages: MessagesNamespace = MessagesNamespace(config: config)
+    public internal(set) lazy var news: NewsNamespace = NewsNamespace(config: config)
+    public internal(set) lazy var segments: SegmentsNamespace = SegmentsNamespace(config: config)
+    public internal(set) lazy var `switch`: SwitchNamespace = SwitchNamespace(config: config)
+    public internal(set) lazy var calls: CallsNamespace = CallsNamespace(config: config)
+    public internal(set) lazy var teams: TeamsNamespace = TeamsNamespace(config: config)
+    public internal(set) lazy var ticketStates: TicketStatesNamespace = TicketStatesNamespace(config: config)
+    public internal(set) lazy var ticketTypeAttributes: TicketTypeAttributesNamespace = TicketTypeAttributesNamespace(config: config)
+    public internal(set) lazy var ticketTypes: TicketTypesNamespace = TicketTypesNamespace(config: config)
+    public internal(set) lazy var tickets: TicketsNamespace = TicketsNamespace(config: config)
+    public internal(set) lazy var visitors: VisitorsNamespace = VisitorsNamespace(config: config)
+    public internal(set) lazy var brands: BrandsNamespace = BrandsNamespace(config: config)
+    public internal(set) lazy var emails: EmailsNamespace = EmailsNamespace(config: config)
+    public internal(set) lazy var workflows: WorkflowsNamespace = WorkflowsNamespace(config: config)
     public init(config: ClientConfig) {
         self.config = config
         sdkRebuildNamespaces()
@@ -63,24 +63,12 @@ public class Intercom {
     public func setLoggingConfig(_ logging: LoggingConfig? = nil) -> LoggingConfig {
         var current = config.logging ?? LoggingConfig()
         if let overrides = logging {
-            if let endpoint = overrides.endpoint {
-                current.endpoint = endpoint
-            }
-            if let apiKey = overrides.apiKey {
-                current.apiKey = apiKey
-            }
-            if let environment = overrides.environment {
-                current.environment = environment
-            }
-            if let release = overrides.release {
-                current.release = release
-            }
-            if let user = overrides.user {
-                current.user = user
-            }
-            if let tags = overrides.tags {
-                current.tags = tags
-            }
+            if let endpoint = overrides.endpoint { current.endpoint = endpoint }
+            if let apiKey = overrides.apiKey { current.apiKey = apiKey }
+            if let environment = overrides.environment { current.environment = environment }
+            if let release = overrides.release { current.release = release }
+            if let user = overrides.user { current.user = user }
+            if let tags = overrides.tags { current.tags = tags }
             current.filterPii = overrides.filterPii
         }
         // Opting in IS the point of this call, so enabled flips to true unless the
@@ -99,54 +87,54 @@ public class Intercom {
 
 extension Intercom {
     func sdkRebuildNamespacesPart1() {
-        admins = AdminsNamespace(config: config)
-        macros = MacrosNamespace(config: config)
-        officeHours = OfficeHoursNamespace(config: config)
-        aiContent = AiContentNamespace(config: config)
-        articles = ArticlesNamespace(config: config)
-        awayStatusReasons = AwayStatusReasonsNamespace(config: config)
-        audiences = AudiencesNamespace(config: config)
-        reportingDataExport = ReportingDataExportNamespace(config: config)
-        finAgent = FinAgentNamespace(config: config)
-        helpCenter = HelpCenterNamespace(config: config)
-        internalArticles = InternalArticlesNamespace(config: config)
-        folders = FoldersNamespace(config: config)
-        ipAllowlist = IpAllowlistNamespace(config: config)
-        companies = CompaniesNamespace(config: config)
-        notes = NotesNamespace(config: config)
-        contacts = ContactsNamespace(config: config)
-        subscriptionTypes = SubscriptionTypesNamespace(config: config)
-        tags = TagsNamespace(config: config)
-        banners = BannersNamespace(config: config)
-        content = ContentNamespace(config: config)
-        contentSnippets = ContentSnippetsNamespace(config: config)
-        dynamicContent = DynamicContentNamespace(config: config)
-        conversations = ConversationsNamespace(config: config)
-        conversationsAttributes = ConversationsAttributesNamespace(config: config)
-        customObjectInstances = CustomObjectInstancesNamespace(config: config)
-        dataAttributes = DataAttributesNamespace(config: config)
-        dataConnectors = DataConnectorsNamespace(config: config)
-        dataEvents = DataEventsNamespace(config: config)
-        dataExport = DataExportNamespace(config: config)
-        jobs = JobsNamespace(config: config)
-        messages = MessagesNamespace(config: config)
-        news = NewsNamespace(config: config)
+        self.admins = AdminsNamespace(config: self.config)
+        self.macros = MacrosNamespace(config: self.config)
+        self.officeHours = OfficeHoursNamespace(config: self.config)
+        self.aiContent = AiContentNamespace(config: self.config)
+        self.articles = ArticlesNamespace(config: self.config)
+        self.awayStatusReasons = AwayStatusReasonsNamespace(config: self.config)
+        self.audiences = AudiencesNamespace(config: self.config)
+        self.reportingDataExport = ReportingDataExportNamespace(config: self.config)
+        self.finAgent = FinAgentNamespace(config: self.config)
+        self.helpCenter = HelpCenterNamespace(config: self.config)
+        self.internalArticles = InternalArticlesNamespace(config: self.config)
+        self.folders = FoldersNamespace(config: self.config)
+        self.ipAllowlist = IpAllowlistNamespace(config: self.config)
+        self.companies = CompaniesNamespace(config: self.config)
+        self.notes = NotesNamespace(config: self.config)
+        self.contacts = ContactsNamespace(config: self.config)
+        self.subscriptionTypes = SubscriptionTypesNamespace(config: self.config)
+        self.tags = TagsNamespace(config: self.config)
+        self.banners = BannersNamespace(config: self.config)
+        self.content = ContentNamespace(config: self.config)
+        self.contentSnippets = ContentSnippetsNamespace(config: self.config)
+        self.dynamicContent = DynamicContentNamespace(config: self.config)
+        self.conversations = ConversationsNamespace(config: self.config)
+        self.conversationsAttributes = ConversationsAttributesNamespace(config: self.config)
+        self.customObjectInstances = CustomObjectInstancesNamespace(config: self.config)
+        self.dataAttributes = DataAttributesNamespace(config: self.config)
+        self.dataConnectors = DataConnectorsNamespace(config: self.config)
+        self.dataEvents = DataEventsNamespace(config: self.config)
+        self.dataExport = DataExportNamespace(config: self.config)
+        self.jobs = JobsNamespace(config: self.config)
+        self.messages = MessagesNamespace(config: self.config)
+        self.news = NewsNamespace(config: self.config)
     }
 }
 
 extension Intercom {
     func sdkRebuildNamespacesPart2() {
-        segments = SegmentsNamespace(config: config)
-        self.switch = SwitchNamespace(config: config)
-        calls = CallsNamespace(config: config)
-        teams = TeamsNamespace(config: config)
-        ticketStates = TicketStatesNamespace(config: config)
-        ticketTypeAttributes = TicketTypeAttributesNamespace(config: config)
-        ticketTypes = TicketTypesNamespace(config: config)
-        tickets = TicketsNamespace(config: config)
-        visitors = VisitorsNamespace(config: config)
-        brands = BrandsNamespace(config: config)
-        emails = EmailsNamespace(config: config)
-        workflows = WorkflowsNamespace(config: config)
+        self.segments = SegmentsNamespace(config: self.config)
+        self.`switch` = SwitchNamespace(config: self.config)
+        self.calls = CallsNamespace(config: self.config)
+        self.teams = TeamsNamespace(config: self.config)
+        self.ticketStates = TicketStatesNamespace(config: self.config)
+        self.ticketTypeAttributes = TicketTypeAttributesNamespace(config: self.config)
+        self.ticketTypes = TicketTypesNamespace(config: self.config)
+        self.tickets = TicketsNamespace(config: self.config)
+        self.visitors = VisitorsNamespace(config: self.config)
+        self.brands = BrandsNamespace(config: self.config)
+        self.emails = EmailsNamespace(config: self.config)
+        self.workflows = WorkflowsNamespace(config: self.config)
     }
 }

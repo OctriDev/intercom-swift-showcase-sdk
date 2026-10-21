@@ -8,9 +8,8 @@ import Foundation
 #endif
 public enum AudiencesMethods {}
 
-public extension AudiencesMethods {
-    /// Lists audiences configured for the workspace, with pagination metadata. Use `page` and `per_page` to paginate
-    /// the results, and note that `per_page` is capped at 50.
+extension AudiencesMethods {
+    /// Lists audiences configured for the workspace, with pagination metadata. Use `page` and `per_page` to paginate the results, and note that `per_page` is capped at 50.
     ///
     /// You can fetch a list of all audiences for the workspace.
     ///
@@ -18,18 +17,12 @@ public extension AudiencesMethods {
     /// - page: The page of results to fetch. Defaults to first page.
     /// - perPage: The number of results to return per page. Defaults to 50. Maximum
     ///   is 50.
-    static func listAudiences(
-        config: ClientConfig,
-        page: Int? = nil,
-        perPage: Int? = nil,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AudienceList {
-        if let perPage {
+    public static func listAudiences(config: ClientConfig, page: Int? = nil, perPage: Int? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> AudienceList {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), max: 50)
         }
 
-        return try await (sdkRequest("GET", "/audiences", config: config, query: [
+        return try (await sdkRequest("GET", "/audiences", config: config, query: [
             SdkQueryParameter("page", value: page),
             SdkQueryParameter("per_page", value: perPage),
         ], decoder: .json, operationId: "listAudiences", extraHeaders: sdkHeaders([
@@ -37,8 +30,7 @@ public extension AudiencesMethods {
         ]), options: requestOptions, errors: ["401": Error2.self])).data
     }
 
-    /// Lists audiences configured for the workspace, with pagination metadata. Use `page` and `per_page` to paginate
-    /// the results, and note that `per_page` is capped at 50.
+    /// Lists audiences configured for the workspace, with pagination metadata. Use `page` and `per_page` to paginate the results, and note that `per_page` is capped at 50.
     ///
     /// You can fetch a list of all audiences for the workspace.
     ///
@@ -46,38 +38,17 @@ public extension AudiencesMethods {
     /// - page: The page of results to fetch. Defaults to first page.
     /// - perPage: The number of results to return per page. Defaults to 50. Maximum
     ///   is 50.
-    static func listAudiencesPaginated(
-        config: ClientConfig,
-        page: Int? = nil,
-        perPage: Int? = nil,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) -> AsyncThrowingStream<Audience, Swift.Error> {
-        AsyncThrowingStream<Audience, Swift.Error> { (continuation: AsyncThrowingStream<
-            Audience,
-            Swift.Error
-        >.Continuation) in
+    public static func listAudiencesPaginated(config: ClientConfig, page: Int? = nil, perPage: Int? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<Audience, Swift.Error> {
+        return AsyncThrowingStream<Audience, Swift.Error> { (continuation: AsyncThrowingStream<Audience, Swift.Error>.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageNumber: Int = page ?? 1
                     while true {
-                        let pageResponse = try await listAudiences(
-                            config: config,
-                            page: pageNumber,
-                            perPage: perPage,
-                            intercomVersion: intercomVersion,
-                            requestOptions: requestOptions
-                        )
+                        let pageResponse = try await listAudiences(config: config, page: pageNumber, perPage: perPage, intercomVersion: intercomVersion, requestOptions: requestOptions)
                         let pageItems = (pageResponse.data ?? [])
-                        if pageItems.isEmpty {
-                            break
-                        }
-                        for item in pageItems {
-                            continuation.yield(item)
-                        }
-                        if let totalPages = pageResponse.totalPages, pageNumber >= totalPages {
-                            break
-                        }
+                        if pageItems.isEmpty { break }
+                        for item in pageItems { continuation.yield(item) }
+                        if let totalPages = pageResponse.totalPages, pageNumber >= totalPages { break }
                         pageNumber += 1
                     }
                 } catch {
@@ -90,48 +61,24 @@ public extension AudiencesMethods {
         }
     }
 
-    struct ListAudiencesPage {
+    public struct ListAudiencesPage {
         public let data: AudienceList
         public let items: [Audience]
         public let hasMore: Bool
     }
 
-    static func listAudiencesPages(
-        config: ClientConfig,
-        page: Int? = nil,
-        perPage: Int? = nil,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) -> AsyncThrowingStream<ListAudiencesPage, Swift.Error> {
-        AsyncThrowingStream<ListAudiencesPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<
-            ListAudiencesPage,
-            Swift.Error
-        >.Continuation) in
+    public static func listAudiencesPages(config: ClientConfig, page: Int? = nil, perPage: Int? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<ListAudiencesPage, Swift.Error> {
+        return AsyncThrowingStream<ListAudiencesPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<ListAudiencesPage, Swift.Error>.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageNumber: Int = page ?? 1
                     while true {
-                        let pageResponse = try await listAudiences(
-                            config: config,
-                            page: pageNumber,
-                            perPage: perPage,
-                            intercomVersion: intercomVersion,
-                            requestOptions: requestOptions
-                        )
+                        let pageResponse = try await listAudiences(config: config, page: pageNumber, perPage: perPage, intercomVersion: intercomVersion, requestOptions: requestOptions)
                         let pageItems = (pageResponse.data ?? [])
-                        if pageItems.isEmpty {
-                            break
-                        }
-                        let hasMore = true && pageNumber + 1 != pageNumber &&
-                            (pageResponse.totalPages == nil || pageNumber + 1 <= pageResponse.totalPages!)
-                        pageContinuation.yield(ListAudiencesPage(
-                            data: pageResponse,
-                            items: pageItems,
-                            hasMore: hasMore
-                        ))
-                        if !hasMore {
-                            break
-                        }
+                        if pageItems.isEmpty { break }
+                        let hasMore = true && pageNumber + 1 != pageNumber && (pageResponse.totalPages == nil || pageNumber + 1 <= pageResponse.totalPages!)
+                        pageContinuation.yield(ListAudiencesPage(data: pageResponse, items: pageItems, hasMore: hasMore))
+                        if !hasMore { break }
                         pageNumber += 1
                     }
                 } catch {

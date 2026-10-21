@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Contacts domain models
+// Contacts domain models
 /// You can update a contact
 public struct UpdateContactRequest: Codable {
     /// The role of the contact.
@@ -60,45 +60,32 @@ public struct UpdateContactRequest: Codable {
     }
 
     init() {
-        (role, externalId, email, emailVerified, phone) = (nil, nil, nil, nil, nil)
-        (name, avatar, signedUpAt, lastSeenAt, ownerId) = (nil, nil, nil, nil, nil)
-        (unsubscribedFromEmails, customAttributes) = (nil, nil)
+        (self.role, self.externalId, self.email, self.emailVerified, self.phone) = (nil, nil, nil, nil, nil)
+        (self.name, self.avatar, self.signedUpAt, self.lastSeenAt, self.ownerId) = (nil, nil, nil, nil, nil)
+        (self.unsubscribedFromEmails, self.customAttributes) = (nil, nil)
     }
 }
 
-public extension UpdateContactRequest {
-    init(from decoder: Decoder) throws {
+extension UpdateContactRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        role = try container.sdkDecodeIfPresent(.role)
-        externalId = try container.sdkDecodeIfPresent(.externalId)
-        email = try container.sdkDecodeIfPresent(.email)
-        emailVerified = try container.sdkDecodeIfPresent(.emailVerified)
-        phone = try container.sdkDecodeIfPresent(.phone)
-        name = try container.sdkDecodeIfPresent(.name)
-        avatar = try container.sdkDecodeIfPresent(.avatar)
-        signedUpAt = try container.sdkDecodeIfPresent(.signedUpAt)
-        lastSeenAt = try container.sdkDecodeIfPresent(.lastSeenAt)
-        ownerId = try container.sdkDecodeIfPresent(.ownerId)
-        unsubscribedFromEmails = try container.sdkDecodeIfPresent(.unsubscribedFromEmails)
-        customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
+        self.role = try container.sdkDecodeIfPresent(.role)
+        self.externalId = try container.sdkDecodeIfPresent(.externalId)
+        self.email = try container.sdkDecodeIfPresent(.email)
+        self.emailVerified = try container.sdkDecodeIfPresent(.emailVerified)
+        self.phone = try container.sdkDecodeIfPresent(.phone)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.avatar = try container.sdkDecodeIfPresent(.avatar)
+        self.signedUpAt = try container.sdkDecodeIfPresent(.signedUpAt)
+        self.lastSeenAt = try container.sdkDecodeIfPresent(.lastSeenAt)
+        self.ownerId = try container.sdkDecodeIfPresent(.ownerId)
+        self.unsubscribedFromEmails = try container.sdkDecodeIfPresent(.unsubscribedFromEmails)
+        self.customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
     }
 }
 
-public extension UpdateContactRequest {
-    init(
-        role: String? = nil,
-        externalId: String? = nil,
-        email: String? = nil,
-        emailVerified: Bool? = nil,
-        phone: String? = nil,
-        name: String? = nil,
-        avatar: String? = nil,
-        signedUpAt: Int? = nil,
-        lastSeenAt: Int? = nil,
-        ownerId: String? = nil,
-        unsubscribedFromEmails: Bool? = nil,
-        customAttributes: [String: JSONValue]? = nil
-    ) {
+extension UpdateContactRequest {
+    public init(role: String? = nil, externalId: String? = nil, email: String? = nil, emailVerified: Bool? = nil, phone: String? = nil, name: String? = nil, avatar: String? = nil, signedUpAt: Int? = nil, lastSeenAt: Int? = nil, ownerId: String? = nil, unsubscribedFromEmails: Bool? = nil, customAttributes: [String: JSONValue]? = nil) {
         self.init()
         (self.role, self.externalId) = (role, externalId)
         (self.email, self.emailVerified) = (email, emailVerified)

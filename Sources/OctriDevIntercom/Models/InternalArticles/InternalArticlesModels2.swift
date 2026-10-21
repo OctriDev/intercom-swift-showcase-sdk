@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// TaggedModelsInternalArticles domain models
+// TaggedModelsInternalArticles domain models
 /// The data returned about your internal articles when you list them.
 public struct InternalArticleListItem: Codable {
     /// The type of object - `internal_article`.
@@ -70,57 +70,35 @@ public struct InternalArticleListItem: Codable {
     }
 
     init() {
-        (type, id, title, body, bodyMarkdown) = (nil, nil, nil, nil, nil)
-        (ownerId, authorId, createdAt, updatedAt, locale) = (nil, nil, nil, nil, nil)
-        (folderId, audienceIds, aiChatbotAvailability, aiCopilotAvailability, aiSalesAgentAvailability) = (
-            nil,
-            nil,
-            nil,
-            nil,
-            nil
-        )
+        (self.type, self.id, self.title, self.body, self.bodyMarkdown) = (nil, nil, nil, nil, nil)
+        (self.ownerId, self.authorId, self.createdAt, self.updatedAt, self.locale) = (nil, nil, nil, nil, nil)
+        (self.folderId, self.audienceIds, self.aiChatbotAvailability, self.aiCopilotAvailability, self.aiSalesAgentAvailability) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension InternalArticleListItem {
-    init(from decoder: Decoder) throws {
+extension InternalArticleListItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        title = try container.sdkDecodeIfPresent(.title)
-        body = try container.sdkDecodeIfPresent(.body)
-        bodyMarkdown = try container.sdkDecodeIfPresent(.bodyMarkdown)
-        ownerId = try container.sdkDecodeIfPresent(.ownerId)
-        authorId = try container.sdkDecodeIfPresent(.authorId)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        locale = try container.sdkDecodeIfPresent(.locale)
-        folderId = try container.sdkDecodeIfPresent(.folderId)
-        audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
-        aiChatbotAvailability = try container.sdkDecodeIfPresent(.aiChatbotAvailability)
-        aiCopilotAvailability = try container.sdkDecodeIfPresent(.aiCopilotAvailability)
-        aiSalesAgentAvailability = try container.sdkDecodeIfPresent(.aiSalesAgentAvailability)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.title = try container.sdkDecodeIfPresent(.title)
+        self.body = try container.sdkDecodeIfPresent(.body)
+        self.bodyMarkdown = try container.sdkDecodeIfPresent(.bodyMarkdown)
+        self.ownerId = try container.sdkDecodeIfPresent(.ownerId)
+        self.authorId = try container.sdkDecodeIfPresent(.authorId)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.locale = try container.sdkDecodeIfPresent(.locale)
+        self.folderId = try container.sdkDecodeIfPresent(.folderId)
+        self.audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
+        self.aiChatbotAvailability = try container.sdkDecodeIfPresent(.aiChatbotAvailability)
+        self.aiCopilotAvailability = try container.sdkDecodeIfPresent(.aiCopilotAvailability)
+        self.aiSalesAgentAvailability = try container.sdkDecodeIfPresent(.aiSalesAgentAvailability)
     }
 }
 
-public extension InternalArticleListItem {
-    init(
-        type: InternalArticleListItemType? = nil,
-        id: String? = nil,
-        title: String? = nil,
-        body: String? = nil,
-        bodyMarkdown: String? = nil,
-        ownerId: Int? = nil,
-        authorId: Int? = nil,
-        createdAt: Int? = nil,
-        updatedAt: Int? = nil,
-        locale: String? = nil,
-        folderId: Int? = nil,
-        audienceIds: [Int]? = nil,
-        aiChatbotAvailability: Bool? = nil,
-        aiCopilotAvailability: Bool? = nil,
-        aiSalesAgentAvailability: Bool? = nil
-    ) {
+extension InternalArticleListItem {
+    public init(type: InternalArticleListItemType? = nil, id: String? = nil, title: String? = nil, body: String? = nil, bodyMarkdown: String? = nil, ownerId: Int? = nil, authorId: Int? = nil, createdAt: Int? = nil, updatedAt: Int? = nil, locale: String? = nil, folderId: Int? = nil, audienceIds: [Int]? = nil, aiChatbotAvailability: Bool? = nil, aiCopilotAvailability: Bool? = nil, aiSalesAgentAvailability: Bool? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.title, self.body) = (title, body)
@@ -157,27 +135,22 @@ public struct InternalArticleSearchResponse: Codable {
     }
 
     init() {
-        (type, totalCount, data, pages) = (nil, nil, nil, nil)
+        (self.type, self.totalCount, self.data, self.pages) = (nil, nil, nil, nil)
     }
 }
 
-public extension InternalArticleSearchResponse {
-    init(from decoder: Decoder) throws {
+extension InternalArticleSearchResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        data = try container.sdkDecodeIfPresent(.data)
-        pages = try container.sdkDecodeIfPresent(.pages)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        self.data = try container.sdkDecodeIfPresent(.data)
+        self.pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-public extension InternalArticleSearchResponse {
-    init(
-        type: InternalArticleSearchResponseType? = nil,
-        totalCount: Int? = nil,
-        data: InternalArticleSearchResponseData? = nil,
-        pages: CursorPages? = nil
-    ) {
+extension InternalArticleSearchResponse {
+    public init(type: InternalArticleSearchResponseType? = nil, totalCount: Int? = nil, data: InternalArticleSearchResponseData? = nil, pages: CursorPages? = nil) {
         self.init()
         (self.type, self.totalCount) = (type, totalCount)
         (self.data, self.pages) = (data, pages)
@@ -194,19 +167,19 @@ public struct InternalArticleSearchResponseData: Codable {
     }
 
     init() {
-        internalArticles = nil
+        self.internalArticles = nil
     }
 }
 
-public extension InternalArticleSearchResponseData {
-    init(from decoder: Decoder) throws {
+extension InternalArticleSearchResponseData {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        internalArticles = try container.sdkDecodeIfPresent(.internalArticles)
+        self.internalArticles = try container.sdkDecodeIfPresent(.internalArticles)
     }
 }
 
-public extension InternalArticleSearchResponseData {
-    init(internalArticles: [InternalArticle]? = nil) {
+extension InternalArticleSearchResponseData {
+    public init(internalArticles: [InternalArticle]? = nil) {
         self.init()
         self.internalArticles = internalArticles
     }
@@ -216,15 +189,12 @@ public extension InternalArticleSearchResponseData {
 public struct InternalArticleListItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let internalArticle = InternalArticleListItemType(rawValue: "internal_article")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -237,15 +207,12 @@ public struct InternalArticleListItemType: RawRepresentable, Hashable, Codable, 
 public struct InternalArticleSearchResponseType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let list = InternalArticleSearchResponseType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AiContentMethods {
-    struct UpdateExternalPageOptions: Codable {
+extension AiContentMethods {
+    public struct UpdateExternalPageOptions: Codable {
         public var pageId: String
         public var title: String
         public var html: String
@@ -19,14 +19,7 @@ public extension AiContentMethods {
         public var externalId: String?
         public var audienceIds: SdkOptional<[Int]>?
 
-        public init(
-            pageId: String,
-            title: String,
-            html: String,
-            url: String,
-            locale: UpdateExternalPageRequestLocale,
-            sourceId: Int
-        ) {
+        public init(pageId: String, title: String, html: String, url: String, locale: UpdateExternalPageRequestLocale, sourceId: Int) {
             self.pageId = pageId
             self.title = title
             self.html = html
@@ -36,9 +29,7 @@ public extension AiContentMethods {
         }
     }
 
-    /// Replaces the specified external page's details in your Fin Content Library; this operation applies to pages
-    /// created through the API. Provide `title`, `html`, `url`, `locale`, and `source_id`, and include `audience_ids`
-    /// to replace the existing audience memberships.
+    /// Replaces the specified external page's details in your Fin Content Library; this operation applies to pages created through the API. Provide `title`, `html`, `url`, `locale`, and `source_id`, and include `audience_ids` to replace the existing audience memberships.
     ///
     /// You can update an existing external page (if it was created via the API).
     ///
@@ -64,25 +55,11 @@ public extension AiContentMethods {
     ///   Fin AI Agent. Replaces all existing audience memberships. Omitting the field
     ///   leaves existing audience memberships unchanged. Pass `[]` to clear all
     ///   audience memberships. Unknown audience IDs return a `404` error.
-    static func updateExternalPage(
-        config: ClientConfig,
-        options: UpdateExternalPageOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ExternalPage {
+    public static func updateExternalPage(config: ClientConfig, options: UpdateExternalPageOptions, requestOptions: RequestOptions? = nil) async throws -> ExternalPage {
         let requestBody = UpdateExternalPageRequestBody(options: options)
 
-        return try await (sdkRequest(
-            "PUT",
-            ["/ai/external_pages/", sdkEncodePathSegment(sdkWireString(options.pageId))].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "updateExternalPage",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self]
-        )).data
+        return try (await sdkRequest("PUT", ["/ai/external_pages/", sdkEncodePathSegment(sdkWireString(options.pageId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "updateExternalPage", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self])).data
     }
 }

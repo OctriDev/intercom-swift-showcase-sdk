@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Companies domain models
+// Companies domain models
 /// Response returned when an object is deleted
 public struct DeletedCompanyObject: Codable {
     /// The unique identifier for the company which is given by Intercom.
@@ -23,21 +23,21 @@ public struct DeletedCompanyObject: Codable {
     }
 
     init() {
-        (id, object, deleted) = (nil, nil, nil)
+        (self.id, self.object, self.deleted) = (nil, nil, nil)
     }
 }
 
-public extension DeletedCompanyObject {
-    init(from decoder: Decoder) throws {
+extension DeletedCompanyObject {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        object = try container.sdkDecodeIfPresent(.object)
-        deleted = try container.sdkDecodeIfPresent(.deleted)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-public extension DeletedCompanyObject {
-    init(id: String? = nil, object: DeletedCompanyObjectObject? = nil, deleted: Bool? = nil) {
+extension DeletedCompanyObject {
+    public init(id: String? = nil, object: DeletedCompanyObjectObject? = nil, deleted: Bool? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
         self.deleted = deleted
@@ -48,15 +48,12 @@ public extension DeletedCompanyObject {
 public struct DeletedCompanyObjectObject: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let company = DeletedCompanyObjectObject(rawValue: "company")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

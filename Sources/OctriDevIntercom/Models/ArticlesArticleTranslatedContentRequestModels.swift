@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Articles domain models
+// Articles domain models
 /// The Translated Content of an Article. The keys are the locale codes and the values are the translated content of
 /// the article.
 public struct ArticleTranslatedContentRequest: Codable {
@@ -127,102 +127,63 @@ public struct ArticleTranslatedContentRequest: Codable {
     }
 
     init() {
-        (type, ar, bg, bs, ca) = (nil, nil, nil, nil, nil)
-        (cs, da, de, el, en) = (nil, nil, nil, nil, nil)
-        (es, et, fi, fr, he) = (nil, nil, nil, nil, nil)
-        (hr, hu, id, it, ja) = (nil, nil, nil, nil, nil)
-        (ko, lt, lv, mn, nb) = (nil, nil, nil, nil, nil)
-        (nl, pl, pt, ro, ru) = (nil, nil, nil, nil, nil)
-        (sl, sr, sv, tr, vi) = (nil, nil, nil, nil, nil)
-        (ptBr, zhCn, zhTw) = (nil, nil, nil)
+        (self.type, self.ar, self.bg, self.bs, self.ca) = (nil, nil, nil, nil, nil)
+        (self.cs, self.da, self.de, self.el, self.en) = (nil, nil, nil, nil, nil)
+        (self.es, self.et, self.fi, self.fr, self.he) = (nil, nil, nil, nil, nil)
+        (self.hr, self.hu, self.id, self.it, self.ja) = (nil, nil, nil, nil, nil)
+        (self.ko, self.lt, self.lv, self.mn, self.nb) = (nil, nil, nil, nil, nil)
+        (self.nl, self.pl, self.pt, self.ro, self.ru) = (nil, nil, nil, nil, nil)
+        (self.sl, self.sr, self.sv, self.tr, self.vi) = (nil, nil, nil, nil, nil)
+        (self.ptBr, self.zhCn, self.zhTw) = (nil, nil, nil)
     }
 }
 
-public extension ArticleTranslatedContentRequest {
-    init(from decoder: Decoder) throws {
+extension ArticleTranslatedContentRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        ar = try container.sdkDecodeIfPresent(.ar)
-        bg = try container.sdkDecodeIfPresent(.bg)
-        bs = try container.sdkDecodeIfPresent(.bs)
-        ca = try container.sdkDecodeIfPresent(.ca)
-        cs = try container.sdkDecodeIfPresent(.cs)
-        da = try container.sdkDecodeIfPresent(.da)
-        de = try container.sdkDecodeIfPresent(.de)
-        el = try container.sdkDecodeIfPresent(.el)
-        en = try container.sdkDecodeIfPresent(.en)
-        es = try container.sdkDecodeIfPresent(.es)
-        et = try container.sdkDecodeIfPresent(.et)
-        fi = try container.sdkDecodeIfPresent(.fi)
-        fr = try container.sdkDecodeIfPresent(.fr)
-        he = try container.sdkDecodeIfPresent(.he)
-        hr = try container.sdkDecodeIfPresent(.hr)
-        hu = try container.sdkDecodeIfPresent(.hu)
-        id = try container.sdkDecodeIfPresent(.id)
-        it = try container.sdkDecodeIfPresent(.it)
-        ja = try container.sdkDecodeIfPresent(.ja)
-        ko = try container.sdkDecodeIfPresent(.ko)
-        lt = try container.sdkDecodeIfPresent(.lt)
-        lv = try container.sdkDecodeIfPresent(.lv)
-        mn = try container.sdkDecodeIfPresent(.mn)
-        nb = try container.sdkDecodeIfPresent(.nb)
-        nl = try container.sdkDecodeIfPresent(.nl)
-        pl = try container.sdkDecodeIfPresent(.pl)
-        pt = try container.sdkDecodeIfPresent(.pt)
-        ro = try container.sdkDecodeIfPresent(.ro)
-        ru = try container.sdkDecodeIfPresent(.ru)
-        sl = try container.sdkDecodeIfPresent(.sl)
-        sr = try container.sdkDecodeIfPresent(.sr)
-        sv = try container.sdkDecodeIfPresent(.sv)
-        tr = try container.sdkDecodeIfPresent(.tr)
-        vi = try container.sdkDecodeIfPresent(.vi)
-        ptBr = try container.sdkDecodeIfPresent(.ptBr)
-        zhCn = try container.sdkDecodeIfPresent(.zhCn)
-        zhTw = try container.sdkDecodeIfPresent(.zhTw)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.ar = try container.sdkDecodeIfPresent(.ar)
+        self.bg = try container.sdkDecodeIfPresent(.bg)
+        self.bs = try container.sdkDecodeIfPresent(.bs)
+        self.ca = try container.sdkDecodeIfPresent(.ca)
+        self.cs = try container.sdkDecodeIfPresent(.cs)
+        self.da = try container.sdkDecodeIfPresent(.da)
+        self.de = try container.sdkDecodeIfPresent(.de)
+        self.el = try container.sdkDecodeIfPresent(.el)
+        self.en = try container.sdkDecodeIfPresent(.en)
+        self.es = try container.sdkDecodeIfPresent(.es)
+        self.et = try container.sdkDecodeIfPresent(.et)
+        self.fi = try container.sdkDecodeIfPresent(.fi)
+        self.fr = try container.sdkDecodeIfPresent(.fr)
+        self.he = try container.sdkDecodeIfPresent(.he)
+        self.hr = try container.sdkDecodeIfPresent(.hr)
+        self.hu = try container.sdkDecodeIfPresent(.hu)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.it = try container.sdkDecodeIfPresent(.it)
+        self.ja = try container.sdkDecodeIfPresent(.ja)
+        self.ko = try container.sdkDecodeIfPresent(.ko)
+        self.lt = try container.sdkDecodeIfPresent(.lt)
+        self.lv = try container.sdkDecodeIfPresent(.lv)
+        self.mn = try container.sdkDecodeIfPresent(.mn)
+        self.nb = try container.sdkDecodeIfPresent(.nb)
+        self.nl = try container.sdkDecodeIfPresent(.nl)
+        self.pl = try container.sdkDecodeIfPresent(.pl)
+        self.pt = try container.sdkDecodeIfPresent(.pt)
+        self.ro = try container.sdkDecodeIfPresent(.ro)
+        self.ru = try container.sdkDecodeIfPresent(.ru)
+        self.sl = try container.sdkDecodeIfPresent(.sl)
+        self.sr = try container.sdkDecodeIfPresent(.sr)
+        self.sv = try container.sdkDecodeIfPresent(.sv)
+        self.tr = try container.sdkDecodeIfPresent(.tr)
+        self.vi = try container.sdkDecodeIfPresent(.vi)
+        self.ptBr = try container.sdkDecodeIfPresent(.ptBr)
+        self.zhCn = try container.sdkDecodeIfPresent(.zhCn)
+        self.zhTw = try container.sdkDecodeIfPresent(.zhTw)
     }
 }
 
-public extension ArticleTranslatedContentRequest {
-    init(
-        type: ArticleTranslatedContentRequestType? = nil,
-        ar: ArticleContentRequest? = nil,
-        bg: ArticleContent? = nil,
-        bs: ArticleContent? = nil,
-        ca: ArticleContent? = nil,
-        cs: ArticleContent? = nil,
-        da: ArticleContent? = nil,
-        de: ArticleContent? = nil,
-        el: ArticleContent? = nil,
-        en: ArticleContent? = nil,
-        es: ArticleContent? = nil,
-        et: ArticleContent? = nil,
-        fi: ArticleContent? = nil,
-        fr: ArticleContent? = nil,
-        he: ArticleContent? = nil,
-        hr: ArticleContent? = nil,
-        hu: ArticleContent? = nil,
-        id: ArticleContent? = nil,
-        it: ArticleContent? = nil,
-        ja: ArticleContent? = nil,
-        ko: ArticleContent? = nil,
-        lt: ArticleContent? = nil,
-        lv: ArticleContent? = nil,
-        mn: ArticleContent? = nil,
-        nb: ArticleContent? = nil,
-        nl: ArticleContent? = nil,
-        pl: ArticleContent? = nil,
-        pt: ArticleContent? = nil,
-        ro: ArticleContent? = nil,
-        ru: ArticleContent? = nil,
-        sl: ArticleContent? = nil,
-        sr: ArticleContent? = nil,
-        sv: ArticleContent? = nil,
-        tr: ArticleContent? = nil,
-        vi: ArticleContent? = nil,
-        ptBr: ArticleContent? = nil,
-        zhCn: ArticleContent? = nil,
-        zhTw: ArticleContent? = nil
-    ) {
+extension ArticleTranslatedContentRequest {
+    public init(type: ArticleTranslatedContentRequestType? = nil, ar: ArticleContentRequest? = nil, bg: ArticleContent? = nil, bs: ArticleContent? = nil, ca: ArticleContent? = nil, cs: ArticleContent? = nil, da: ArticleContent? = nil, de: ArticleContent? = nil, el: ArticleContent? = nil, en: ArticleContent? = nil, es: ArticleContent? = nil, et: ArticleContent? = nil, fi: ArticleContent? = nil, fr: ArticleContent? = nil, he: ArticleContent? = nil, hr: ArticleContent? = nil, hu: ArticleContent? = nil, id: ArticleContent? = nil, it: ArticleContent? = nil, ja: ArticleContent? = nil, ko: ArticleContent? = nil, lt: ArticleContent? = nil, lv: ArticleContent? = nil, mn: ArticleContent? = nil, nb: ArticleContent? = nil, nl: ArticleContent? = nil, pl: ArticleContent? = nil, pt: ArticleContent? = nil, ro: ArticleContent? = nil, ru: ArticleContent? = nil, sl: ArticleContent? = nil, sr: ArticleContent? = nil, sv: ArticleContent? = nil, tr: ArticleContent? = nil, vi: ArticleContent? = nil, ptBr: ArticleContent? = nil, zhCn: ArticleContent? = nil, zhTw: ArticleContent? = nil) {
         self.init()
         (self.type, self.ar) = (type, ar)
         (self.bg, self.bs) = (bg, bs)
@@ -319,54 +280,37 @@ public struct ArticleContentRequest: Codable {
     }
 
     init() {
-        (type, title, description, body, bodyMarkdown) = (nil, nil, nil, nil, nil)
-        (authorId, state, createdAt, updatedAt, hasUnpublishedChanges) = (nil, nil, nil, nil, nil)
-        (draftUpdatedAt, url, audienceIds, aiChatbotAvailability, aiCopilotAvailability) = (nil, nil, nil, nil, nil)
-        aiSalesAgentAvailability = nil
+        (self.type, self.title, self.description, self.body, self.bodyMarkdown) = (nil, nil, nil, nil, nil)
+        (self.authorId, self.state, self.createdAt, self.updatedAt, self.hasUnpublishedChanges) = (nil, nil, nil, nil, nil)
+        (self.draftUpdatedAt, self.url, self.audienceIds, self.aiChatbotAvailability, self.aiCopilotAvailability) = (nil, nil, nil, nil, nil)
+        self.aiSalesAgentAvailability = nil
     }
 }
 
-public extension ArticleContentRequest {
-    init(from decoder: Decoder) throws {
+extension ArticleContentRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        title = try container.sdkDecodeIfPresent(.title)
-        description = try container.sdkDecodeIfPresent(.description)
-        body = try container.sdkDecodeIfPresent(.body)
-        bodyMarkdown = try container.sdkDecodeIfPresent(.bodyMarkdown)
-        authorId = try container.sdkDecodeIfPresent(.authorId)
-        state = try container.sdkDecodeIfPresent(.state)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        hasUnpublishedChanges = try container.sdkDecodeIfPresent(.hasUnpublishedChanges)
-        draftUpdatedAt = try container.sdkDecodeIfPresent(.draftUpdatedAt)
-        url = try container.sdkDecodeIfPresent(.url)
-        audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
-        aiChatbotAvailability = try container.sdkDecodeIfPresent(.aiChatbotAvailability)
-        aiCopilotAvailability = try container.sdkDecodeIfPresent(.aiCopilotAvailability)
-        aiSalesAgentAvailability = try container.sdkDecodeIfPresent(.aiSalesAgentAvailability)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.title = try container.sdkDecodeIfPresent(.title)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.body = try container.sdkDecodeIfPresent(.body)
+        self.bodyMarkdown = try container.sdkDecodeIfPresent(.bodyMarkdown)
+        self.authorId = try container.sdkDecodeIfPresent(.authorId)
+        self.state = try container.sdkDecodeIfPresent(.state)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.hasUnpublishedChanges = try container.sdkDecodeIfPresent(.hasUnpublishedChanges)
+        self.draftUpdatedAt = try container.sdkDecodeIfPresent(.draftUpdatedAt)
+        self.url = try container.sdkDecodeIfPresent(.url)
+        self.audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
+        self.aiChatbotAvailability = try container.sdkDecodeIfPresent(.aiChatbotAvailability)
+        self.aiCopilotAvailability = try container.sdkDecodeIfPresent(.aiCopilotAvailability)
+        self.aiSalesAgentAvailability = try container.sdkDecodeIfPresent(.aiSalesAgentAvailability)
     }
 }
 
-public extension ArticleContentRequest {
-    init(
-        type: ArticleContentRequestType? = nil,
-        title: String? = nil,
-        description: String? = nil,
-        body: String? = nil,
-        bodyMarkdown: String? = nil,
-        authorId: Int? = nil,
-        state: ArticleContentRequestState? = nil,
-        createdAt: Int? = nil,
-        updatedAt: Int? = nil,
-        hasUnpublishedChanges: Bool? = nil,
-        draftUpdatedAt: Int? = nil,
-        url: String? = nil,
-        audienceIds: [Int]? = nil,
-        aiChatbotAvailability: Bool? = nil,
-        aiCopilotAvailability: Bool? = nil,
-        aiSalesAgentAvailability: Bool? = nil
-    ) {
+extension ArticleContentRequest {
+    public init(type: ArticleContentRequestType? = nil, title: String? = nil, description: String? = nil, body: String? = nil, bodyMarkdown: String? = nil, authorId: Int? = nil, state: ArticleContentRequestState? = nil, createdAt: Int? = nil, updatedAt: Int? = nil, hasUnpublishedChanges: Bool? = nil, draftUpdatedAt: Int? = nil, url: String? = nil, audienceIds: [Int]? = nil, aiChatbotAvailability: Bool? = nil, aiCopilotAvailability: Bool? = nil, aiSalesAgentAvailability: Bool? = nil) {
         self.init()
         (self.type, self.title) = (type, title)
         (self.description, self.body) = (description, body)
@@ -461,58 +405,39 @@ public struct ArticleContent: Codable {
     }
 
     init() {
-        (type, title, description, body, bodyMarkdown) = (nil, nil, nil, nil, nil)
-        (authorId, state, createdAt, updatedAt, hasUnpublishedChanges) = (nil, nil, nil, nil, nil)
-        (draftUpdatedAt, url, audienceIds, aiChatbotAvailability, aiCopilotAvailability) = (nil, nil, nil, nil, nil)
-        (aiSalesAgentAvailability, createdById, updatedById) = (nil, nil, nil)
+        (self.type, self.title, self.description, self.body, self.bodyMarkdown) = (nil, nil, nil, nil, nil)
+        (self.authorId, self.state, self.createdAt, self.updatedAt, self.hasUnpublishedChanges) = (nil, nil, nil, nil, nil)
+        (self.draftUpdatedAt, self.url, self.audienceIds, self.aiChatbotAvailability, self.aiCopilotAvailability) = (nil, nil, nil, nil, nil)
+        (self.aiSalesAgentAvailability, self.createdById, self.updatedById) = (nil, nil, nil)
     }
 }
 
-public extension ArticleContent {
-    init(from decoder: Decoder) throws {
+extension ArticleContent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        title = try container.sdkDecodeIfPresent(.title)
-        description = try container.sdkDecodeIfPresent(.description)
-        body = try container.sdkDecodeIfPresent(.body)
-        bodyMarkdown = try container.sdkDecodeIfPresent(.bodyMarkdown)
-        authorId = try container.sdkDecodeIfPresent(.authorId)
-        state = try container.sdkDecodeIfPresent(.state)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        hasUnpublishedChanges = try container.sdkDecodeIfPresent(.hasUnpublishedChanges)
-        draftUpdatedAt = try container.sdkDecodeIfPresent(.draftUpdatedAt)
-        url = try container.sdkDecodeIfPresent(.url)
-        audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
-        aiChatbotAvailability = try container.sdkDecodeIfPresent(.aiChatbotAvailability)
-        aiCopilotAvailability = try container.sdkDecodeIfPresent(.aiCopilotAvailability)
-        aiSalesAgentAvailability = try container.sdkDecodeIfPresent(.aiSalesAgentAvailability)
-        createdById = try container.sdkDecodeIfPresent(.createdById)
-        updatedById = try container.sdkDecodeIfPresent(.updatedById)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.title = try container.sdkDecodeIfPresent(.title)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.body = try container.sdkDecodeIfPresent(.body)
+        self.bodyMarkdown = try container.sdkDecodeIfPresent(.bodyMarkdown)
+        self.authorId = try container.sdkDecodeIfPresent(.authorId)
+        self.state = try container.sdkDecodeIfPresent(.state)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.hasUnpublishedChanges = try container.sdkDecodeIfPresent(.hasUnpublishedChanges)
+        self.draftUpdatedAt = try container.sdkDecodeIfPresent(.draftUpdatedAt)
+        self.url = try container.sdkDecodeIfPresent(.url)
+        self.audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
+        self.aiChatbotAvailability = try container.sdkDecodeIfPresent(.aiChatbotAvailability)
+        self.aiCopilotAvailability = try container.sdkDecodeIfPresent(.aiCopilotAvailability)
+        self.aiSalesAgentAvailability = try container.sdkDecodeIfPresent(.aiSalesAgentAvailability)
+        self.createdById = try container.sdkDecodeIfPresent(.createdById)
+        self.updatedById = try container.sdkDecodeIfPresent(.updatedById)
     }
 }
 
-public extension ArticleContent {
-    init(
-        type: ArticleContentType? = nil,
-        title: String? = nil,
-        description: String? = nil,
-        body: String? = nil,
-        bodyMarkdown: String? = nil,
-        authorId: Int? = nil,
-        state: ArticleContentState? = nil,
-        createdAt: Int? = nil,
-        updatedAt: Int? = nil,
-        hasUnpublishedChanges: Bool? = nil,
-        draftUpdatedAt: Int? = nil,
-        url: String? = nil,
-        audienceIds: [Int]? = nil,
-        aiChatbotAvailability: Bool? = nil,
-        aiCopilotAvailability: Bool? = nil,
-        aiSalesAgentAvailability: Bool? = nil,
-        createdById: Int? = nil,
-        updatedById: Int? = nil
-    ) {
+extension ArticleContent {
+    public init(type: ArticleContentType? = nil, title: String? = nil, description: String? = nil, body: String? = nil, bodyMarkdown: String? = nil, authorId: Int? = nil, state: ArticleContentState? = nil, createdAt: Int? = nil, updatedAt: Int? = nil, hasUnpublishedChanges: Bool? = nil, draftUpdatedAt: Int? = nil, url: String? = nil, audienceIds: [Int]? = nil, aiChatbotAvailability: Bool? = nil, aiCopilotAvailability: Bool? = nil, aiSalesAgentAvailability: Bool? = nil, createdById: Int? = nil, updatedById: Int? = nil) {
         self.init()
         (self.type, self.title) = (type, title)
         (self.description, self.body) = (description, body)
@@ -535,16 +460,13 @@ public extension ArticleContent {
 public struct UpdateArticleRequestRequestState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let published = UpdateArticleRequestRequestState(rawValue: "published")
     public static let draft = UpdateArticleRequestRequestState(rawValue: "draft")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -557,16 +479,13 @@ public struct UpdateArticleRequestRequestState: RawRepresentable, Hashable, Coda
 public struct ArticleContentState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let published = ArticleContentState(rawValue: "published")
     public static let draft = ArticleContentState(rawValue: "draft")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

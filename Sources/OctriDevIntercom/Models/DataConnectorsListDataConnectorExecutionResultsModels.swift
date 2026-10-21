@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DataConnectors domain models
+// DataConnectors domain models
 /// Cursor for the next page of results.
 public struct DataConnectorExecutionResultListPagesNext: Codable {
     /// The cursor value to use for the next page.
@@ -15,19 +15,19 @@ public struct DataConnectorExecutionResultListPagesNext: Codable {
     }
 
     init() {
-        startingAfter = nil
+        self.startingAfter = nil
     }
 }
 
-public extension DataConnectorExecutionResultListPagesNext {
-    init(from decoder: Decoder) throws {
+extension DataConnectorExecutionResultListPagesNext {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        startingAfter = try container.sdkDecodeIfPresent(.startingAfter)
+        self.startingAfter = try container.sdkDecodeIfPresent(.startingAfter)
     }
 }
 
-public extension DataConnectorExecutionResultListPagesNext {
-    init(startingAfter: String? = nil) {
+extension DataConnectorExecutionResultListPagesNext {
+    public init(startingAfter: String? = nil) {
         self.init()
         self.startingAfter = startingAfter
     }
@@ -50,25 +50,21 @@ public struct DataConnectorExecutionResultList: Codable {
     }
 
     init() {
-        (type, data, pages) = (nil, nil, nil)
+        (self.type, self.data, self.pages) = (nil, nil, nil)
     }
 }
 
-public extension DataConnectorExecutionResultList {
-    init(from decoder: Decoder) throws {
+extension DataConnectorExecutionResultList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        data = try container.sdkDecodeIfPresent(.data)
-        pages = try container.sdkDecodeIfPresent(.pages)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.data = try container.sdkDecodeIfPresent(.data)
+        self.pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-public extension DataConnectorExecutionResultList {
-    init(
-        type: DataConnectorExecutionResultListType? = nil,
-        data: [DataConnectorExecutionResult]? = nil,
-        pages: DataConnectorExecutionResultListPages? = nil
-    ) {
+extension DataConnectorExecutionResultList {
+    public init(type: DataConnectorExecutionResultListType? = nil, data: [DataConnectorExecutionResult]? = nil, pages: DataConnectorExecutionResultListPages? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
         self.pages = pages
@@ -93,25 +89,21 @@ public struct DataConnectorExecutionResultListPages: Codable {
     }
 
     init() {
-        (type, perPage, next) = (nil, nil, nil)
+        (self.type, self.perPage, self.next) = (nil, nil, nil)
     }
 }
 
-public extension DataConnectorExecutionResultListPages {
-    init(from decoder: Decoder) throws {
+extension DataConnectorExecutionResultListPages {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        perPage = try container.sdkDecodeIfPresent(.perPage)
-        next = try container.sdkDecodeIfPresent(.next)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.perPage = try container.sdkDecodeIfPresent(.perPage)
+        self.next = try container.sdkDecodeIfPresent(.next)
     }
 }
 
-public extension DataConnectorExecutionResultListPages {
-    init(
-        type: DataConnectorExecutionResultListPagesType? = nil,
-        perPage: Int? = nil,
-        next: DataConnectorExecutionResultListPagesNext? = nil
-    ) {
+extension DataConnectorExecutionResultListPages {
+    public init(type: DataConnectorExecutionResultListPagesType? = nil, perPage: Int? = nil, next: DataConnectorExecutionResultListPagesNext? = nil) {
         self.init()
         (self.type, self.perPage) = (type, perPage)
         self.next = next
@@ -119,19 +111,15 @@ public extension DataConnectorExecutionResultListPages {
 }
 
 /// Optional enumerated value serialized in the `type` wire field.
-public struct DataConnectorExecutionResultListPagesType: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct DataConnectorExecutionResultListPagesType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let pages = DataConnectorExecutionResultListPagesType(rawValue: "pages")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -144,15 +132,12 @@ public struct DataConnectorExecutionResultListPagesType: RawRepresentable, Hasha
 public struct DataConnectorExecutionResultListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let list = DataConnectorExecutionResultListType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

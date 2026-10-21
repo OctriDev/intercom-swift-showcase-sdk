@@ -6,10 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AudiencesMethods {
-    /// Creates an audience that groups contacts for targeting by Fin. Supply a `name` and optionally define membership
-    /// with `predicates` and role-based filters with `role_predicates`. A 201 response returns the created audience and
-    /// its generated identifier.
+extension AudiencesMethods {
+    /// Creates an audience that groups contacts for targeting by Fin. Supply a `name` and optionally define membership with `predicates` and role-based filters with `role_predicates`. A 201 response returns the created audience and its generated identifier.
     ///
     /// You can create a new audience by making a POST request to `https://api.intercom.io/audiences`.
     ///
@@ -19,56 +17,23 @@ public extension AudiencesMethods {
     ///   audience.
     /// - rolePredicates: Role-based predicates that further filter audience
     ///   membership by contact role.
-    static func createAudience(
-        config: ClientConfig,
-        name: String,
-        intercomVersion: IntercomVersion? = nil,
-        predicates: [Predicate]? = nil,
-        rolePredicates: [Predicate]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Audience {
+    public static func createAudience(config: ClientConfig, name: String, intercomVersion: IntercomVersion? = nil, predicates: [Predicate]? = nil, rolePredicates: [Predicate]? = nil, requestOptions: RequestOptions? = nil) async throws -> Audience {
         let requestBody = CreateAudienceRequestBody(name: name, predicates: predicates, rolePredicates: rolePredicates)
 
-        return try await (sdkRequest(
-            "POST",
-            "/audiences",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "createAudience",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "422": Error2.self]
-        )).data
+        return try (await sdkRequest("POST", "/audiences", config: config, body: requestBody, decoder: .json, operationId: "createAudience", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "422": Error2.self])).data
     }
 
-    /// Retrieves an audience configured for the workspace, including its contact and role-based membership predicates.
-    /// Use the audience `id` to retrieve the audience details.
+    /// Retrieves an audience configured for the workspace, including its contact and role-based membership predicates. Use the audience `id` to retrieve the audience details.
     ///
-    /// You can fetch the details of a single audience by making a GET request to
-    /// `https://api.intercom.io/audiences/{id}`.
+    /// You can fetch the details of a single audience by making a GET request to `https://api.intercom.io/audiences/{id}`.
     ///
     /// - Parameters:
     /// - id: The unique identifier for the audience.
-    static func retrieveAudience(
-        config: ClientConfig,
-        id: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Audience {
-        try await (sdkRequest(
-            "GET",
-            ["/audiences/", sdkEncodePathSegment(sdkWireString(id))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "retrieveAudience",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "404": Error2.self]
-        )).data
+    public static func retrieveAudience(config: ClientConfig, id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Audience {
+        return try (await sdkRequest("GET", ["/audiences/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "retrieveAudience", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Conversations domain models
+// Conversations domain models
 /// Payload of the request to update a conversation
 public struct UpdateConversationRequest: Codable {
     /// Mark a conversation as read within Intercom.
@@ -32,27 +32,22 @@ public struct UpdateConversationRequest: Codable {
     }
 
     init() {
-        (read, title, customAttributes, companyId) = (nil, nil, nil, nil)
+        (self.read, self.title, self.customAttributes, self.companyId) = (nil, nil, nil, nil)
     }
 }
 
-public extension UpdateConversationRequest {
-    init(from decoder: Decoder) throws {
+extension UpdateConversationRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        read = try container.sdkDecodeIfPresent(.read)
-        title = try container.sdkDecodeIfPresent(.title)
-        customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
-        companyId = try container.sdkDecodeIfPresent(.companyId)
+        self.read = try container.sdkDecodeIfPresent(.read)
+        self.title = try container.sdkDecodeIfPresent(.title)
+        self.customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
+        self.companyId = try container.sdkDecodeIfPresent(.companyId)
     }
 }
 
-public extension UpdateConversationRequest {
-    init(
-        read: Bool? = nil,
-        title: String? = nil,
-        customAttributes: CustomAttributesRequest? = nil,
-        companyId: String? = nil
-    ) {
+extension UpdateConversationRequest {
+    public init(read: Bool? = nil, title: String? = nil, customAttributes: CustomAttributesRequest? = nil, companyId: String? = nil) {
         self.init()
         (self.read, self.title) = (read, title)
         (self.customAttributes, self.companyId) = (customAttributes, companyId)

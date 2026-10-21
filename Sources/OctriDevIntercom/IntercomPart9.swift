@@ -9,130 +9,46 @@ public class DynamicContentNamespace {
         self.config = config
     }
 
-    /// Lists dynamic content for a workspace, ordered from most recently updated to least recently updated. Use `page`
-    /// and `per_page` to paginate the results; access requires the `read_dynamic_content` scope.
+/// Lists dynamic content for a workspace, ordered from most recently updated to least recently updated. Use `page` and `per_page` to paginate the results; access requires the `read_dynamic_content` scope.
     ///
-    /// You can fetch a list of all dynamic content for a workspace, most recently updated first. Requires the
-    /// `read_dynamic_content` scope.
-    public func list(
-        page: Int? = nil,
-        perPage: Int? = nil,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DynamicContentList {
-        try await DynamicContentMethods.listDynamicContents(
-            config: config,
-            page: page,
-            perPage: perPage,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    /// You can fetch a list of all dynamic content for a workspace, most recently updated first. Requires the `read_dynamic_content` scope.
+    public func list(page: Int? = nil, perPage: Int? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DynamicContentList {
+        return try await DynamicContentMethods.listDynamicContents(config: config, page: page, perPage: perPage, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Lists dynamic content for a workspace, ordered from most recently updated to least recently updated. Use `page`
-    /// and `per_page` to paginate the results; access requires the `read_dynamic_content` scope.
+/// Lists dynamic content for a workspace, ordered from most recently updated to least recently updated. Use `page` and `per_page` to paginate the results; access requires the `read_dynamic_content` scope.
     ///
-    /// You can fetch a list of all dynamic content for a workspace, most recently updated first. Requires the
-    /// `read_dynamic_content` scope.
-    public func listPaginated(
-        page: Int? = nil,
-        perPage: Int? = nil,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) -> AsyncThrowingStream<DynamicContent, Swift.Error> {
-        DynamicContentMethods.listDynamicContentsPaginated(
-            config: config,
-            page: page,
-            perPage: perPage,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    /// You can fetch a list of all dynamic content for a workspace, most recently updated first. Requires the `read_dynamic_content` scope.
+    public func listPaginated(page: Int? = nil, perPage: Int? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<DynamicContent, Swift.Error> {
+        return DynamicContentMethods.listDynamicContentsPaginated(config: config, page: page, perPage: perPage, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Creates reusable dynamic content that you can insert into Help Center articles. Provide a unique `name`, choose
-    /// `inline` or `block` for `content_type`, and include at least one variation with a default-locale variation that
-    /// applies to all brands. The authenticated user needs the `read_write_dynamic_content` scope.
+/// Creates reusable dynamic content that you can insert into Help Center articles. Provide a unique `name`, choose `inline` or `block` for `content_type`, and include at least one variation with a default-locale variation that applies to all brands. The authenticated user needs the `read_write_dynamic_content` scope.
     ///
     /// You can create dynamic content. Requires the `read_write_dynamic_content` scope.
-    public func create(
-        name: String,
-        contentType: DynamicContentCreateRequestContentType,
-        defaultLocale: String,
-        variations: [DynamicContentVariationRequest],
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DynamicContent {
-        try await DynamicContentMethods.createDynamicContent(
-            config: config,
-            name: name,
-            contentType: contentType,
-            defaultLocale: defaultLocale,
-            variations: variations,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    public func create(name: String, contentType: DynamicContentCreateRequestContentType, defaultLocale: String, variations: [DynamicContentVariationRequest], intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DynamicContent {
+        return try await DynamicContentMethods.createDynamicContent(config: config, name: name, contentType: contentType, defaultLocale: defaultLocale, variations: variations, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Retrieves a single reusable dynamic content item by its unique identifier. Use the `id` path parameter to select
-    /// the item and the `Intercom-Version` header to choose an API version. The authenticated user needs the
-    /// `read_dynamic_content` scope.
+/// Retrieves a single reusable dynamic content item by its unique identifier. Use the `id` path parameter to select the item and the `Intercom-Version` header to choose an API version. The authenticated user needs the `read_dynamic_content` scope.
     ///
     /// You can fetch a single dynamic content by its id. Requires the `read_dynamic_content` scope.
-    public func get(
-        id: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DynamicContent {
-        try await DynamicContentMethods.getDynamicContent(
-            config: config,
-            id: id,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    public func get(id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DynamicContent {
+        return try await DynamicContentMethods.getDynamicContent(config: config, id: id, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Updates an existing reusable dynamic content item. Provide only the fields you want to change; if you send
-    /// `variations`, that array replaces the full set and any omitted existing variations are deleted. The
-    /// authenticated user needs the `read_write_dynamic_content` scope.
+/// Updates an existing reusable dynamic content item. Provide only the fields you want to change; if you send `variations`, that array replaces the full set and any omitted existing variations are deleted. The authenticated user needs the `read_write_dynamic_content` scope.
     ///
-    /// You can update existing dynamic content. Only the fields you provide are changed. Requires the
-    /// `read_write_dynamic_content` scope.
-    public func update(
-        id: String,
-        intercomVersion: IntercomVersion? = nil,
-        name: String? = nil,
-        defaultLocale: String? = nil,
-        variations: [DynamicContentVariationRequest]? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DynamicContent {
-        try await DynamicContentMethods.updateDynamicContent(
-            config: config,
-            id: id,
-            intercomVersion: intercomVersion,
-            name: name,
-            defaultLocale: defaultLocale,
-            variations: variations,
-            requestOptions: requestOptions
-        )
+    /// You can update existing dynamic content. Only the fields you provide are changed. Requires the `read_write_dynamic_content` scope.
+    public func update(id: String, intercomVersion: IntercomVersion? = nil, name: String? = nil, defaultLocale: String? = nil, variations: [DynamicContentVariationRequest]? = nil, requestOptions: RequestOptions? = nil) async throws -> DynamicContent {
+        return try await DynamicContentMethods.updateDynamicContent(config: config, id: id, intercomVersion: intercomVersion, name: name, defaultLocale: defaultLocale, variations: variations, requestOptions: requestOptions)
     }
 
-    /// Deletes a reusable dynamic content item by its unique identifier. You cannot delete dynamic content that is
-    /// still used in an article, so remove its article references before attempting deletion. The authenticated user
-    /// needs the `read_write_dynamic_content` scope.
+/// Deletes a reusable dynamic content item by its unique identifier. You cannot delete dynamic content that is still used in an article, so remove its article references before attempting deletion. The authenticated user needs the `read_write_dynamic_content` scope.
     ///
-    /// You can delete a single dynamic content by its id. Dynamic content that is still used in an article can't be
-    /// deleted. Requires the `read_write_dynamic_content` scope.
-    public func delete(
-        id: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await DynamicContentMethods.deleteDynamicContent(
-            config: config,
-            id: id,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    /// You can delete a single dynamic content by its id. Dynamic content that is still used in an article can't be deleted. Requires the `read_write_dynamic_content` scope.
+    public func delete(id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try await DynamicContentMethods.deleteDynamicContent(config: config, id: id, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 }
 
@@ -142,447 +58,117 @@ public class ConversationsNamespace {
         self.config = config
     }
 
-    /// Lists conversations and returns cursor-based pagination details with the results. Use `per_page` to set the page
-    /// size and `starting_after` to continue from a cursor; the default page size is 20 and the maximum is 150. Set
-    /// `include_monitors` or `include_scorecards` to include the corresponding QA results on each conversation.
+/// Lists conversations and returns cursor-based pagination details with the results. Use `per_page` to set the page size and `starting_after` to continue from a cursor; the default page size is 20 and the maximum is 150. Set `include_monitors` or `include_scorecards` to include the corresponding QA results on each conversation.
     ///
-    /// You can fetch a list of all conversations. You can optionally request the result page size and the cursor to
-    /// start after to fetch the result. {% admonition type="warning" name="Pagination" %} You can use pagination to
-    /// limit the number of results returned. The default is `20` results per page. See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#pagination-for-list-apis)
-    /// for more details on how to use the `starting_after` param. {% /admonition %}
-    public func list(
-        perPage: Int? = nil,
-        startingAfter: String? = nil,
-        includeMonitors: Bool? = nil,
-        includeScorecards: Bool? = nil,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ConversationList {
-        try await ConversationsMethods.listConversations(
-            config: config,
-            perPage: perPage,
-            startingAfter: startingAfter,
-            includeMonitors: includeMonitors,
-            includeScorecards: includeScorecards,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    /// You can fetch a list of all conversations. You can optionally request the result page size and the cursor to start after to fetch the result. {% admonition type="warning" name="Pagination" %} You can use pagination to limit the number of results returned. The default is `20` results per page. See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#pagination-for-list-apis) for more details on how to use the `starting_after` param. {% /admonition %}
+    public func list(perPage: Int? = nil, startingAfter: String? = nil, includeMonitors: Bool? = nil, includeScorecards: Bool? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ConversationList {
+        return try await ConversationsMethods.listConversations(config: config, perPage: perPage, startingAfter: startingAfter, includeMonitors: includeMonitors, includeScorecards: includeScorecards, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Creates a conversation initiated by a contact and returns the created message. The conversation can be an in-app
-    /// message only; include the contact in `from` and the message text in `body`. When you identify a visitor in
-    /// `from`, the visitor is converted to a contact with a lead role.
+/// Creates a conversation initiated by a contact and returns the created message. The conversation can be an in-app message only; include the contact in `from` and the message text in `body`. When you identify a visitor in `from`, the visitor is converted to a contact with a lead role.
     ///
-    /// You can create a conversation that has been initiated by a contact (ie. user or lead). The conversation can be
-    /// an in-app message only. {% admonition type="info" name="Sending for visitors" %} You can also send a message
-    /// from a visitor by specifying their `user_id` or `id` value in the `from` field, along with a `type` field value
-    /// of `contact`. This visitor will be automatically converted to a contact with a lead role once the conversation
-    /// is created. {% /admonition %} This will return the Message model that has been created.
-    public func create(
-        from: CreateConversationRequestFrom,
-        body: String,
-        intercomVersion: IntercomVersion? = nil,
-        subject: String? = nil,
-        attachmentUrls: [String]? = nil,
-        createdAt: Int? = nil,
-        brandId: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> CreateConversationResponse {
-        try await ConversationsMethods.createConversation(
-            config: config,
-            from: from,
-            body: body,
-            intercomVersion: intercomVersion,
-            subject: subject,
-            attachmentUrls: attachmentUrls,
-            createdAt: createdAt,
-            brandId: brandId,
-            requestOptions: requestOptions
-        )
+    /// You can create a conversation that has been initiated by a contact (ie. user or lead). The conversation can be an in-app message only. {% admonition type="info" name="Sending for visitors" %} You can also send a message from a visitor by specifying their `user_id` or `id` value in the `from` field, along with a `type` field value of `contact`. This visitor will be automatically converted to a contact with a lead role once the conversation is created. {% /admonition %} This will return the Message model that has been created.
+    public func create(from: CreateConversationRequestFrom, body: String, intercomVersion: IntercomVersion? = nil, subject: String? = nil, attachmentUrls: [String]? = nil, createdAt: Int? = nil, brandId: String? = nil, requestOptions: RequestOptions? = nil) async throws -> CreateConversationResponse {
+        return try await ConversationsMethods.createConversation(config: config, from: from, body: body, intercomVersion: intercomVersion, subject: subject, attachmentUrls: attachmentUrls, createdAt: createdAt, brandId: brandId, requestOptions: requestOptions)
     }
 
-    /// Retrieves a single conversation with its conversation parts. Use `display_as` to request plain-text messages,
-    /// `include_translations` to request translated parts, or the QA parameters to include monitor and scorecard
-    /// results. The response includes at most the 500 most recent conversation parts.
+/// Retrieves a single conversation with its conversation parts. Use `display_as` to request plain-text messages, `include_translations` to request translated parts, or the QA parameters to include monitor and scorecard results. The response includes at most the 500 most recent conversation parts.
     ///
-    /// You can fetch the details of a single conversation. This will return a single Conversation model with all its
-    /// conversation parts. {% admonition type="warning" name="Hard limit of 500 parts" %} The maximum number of
-    /// conversation parts that can be returned via the API is 500. If you have more than that we will return the 500
-    /// most recent conversation parts. {% /admonition %} For AI agent conversation metadata, please note that you need
-    /// to have the agent enabled in your workspace, which is a [paid
-    /// feature](https://www.intercom.com/help/en/articles/8205718-fin-resolutions#h_97f8c2e671).
-    public func retrieve(
-        conversationId: Int,
-        displayAs: String? = nil,
-        includeTranslations: Bool? = nil,
-        includeMonitors: Bool? = nil,
-        includeScorecards: Bool? = nil,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Conversation {
-        try await ConversationsMethods.retrieveConversation(
-            config: config,
-            conversationId: conversationId,
-            displayAs: displayAs,
-            includeTranslations: includeTranslations,
-            includeMonitors: includeMonitors,
-            includeScorecards: includeScorecards,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    /// You can fetch the details of a single conversation. This will return a single Conversation model with all its conversation parts. {% admonition type="warning" name="Hard limit of 500 parts" %} The maximum number of conversation parts that can be returned via the API is 500. If you have more than that we will return the 500 most recent conversation parts. {% /admonition %} For AI agent conversation metadata, please note that you need to have the agent enabled in your workspace, which is a [paid feature](https://www.intercom.com/help/en/articles/8205718-fin-resolutions#h_97f8c2e671).
+    public func retrieve(conversationId: Int, displayAs: String? = nil, includeTranslations: Bool? = nil, includeMonitors: Bool? = nil, includeScorecards: Bool? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Conversation {
+        return try await ConversationsMethods.retrieveConversation(config: config, conversationId: conversationId, displayAs: displayAs, includeTranslations: includeTranslations, includeMonitors: includeMonitors, includeScorecards: includeScorecards, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Updates a conversation's read state, title, custom attributes, or associated company. Supply only the fields you
-    /// want to change; use the reply or manage endpoints for replies and actions such as assignment, opening, closing,
-    /// or snoozing. The response returns the updated conversation.
+/// Updates a conversation's read state, title, custom attributes, or associated company. Supply only the fields you want to change; use the reply or manage endpoints for replies and actions such as assignment, opening, closing, or snoozing. The response returns the updated conversation.
     ///
-    /// You can update an existing conversation. {% admonition type="info" name="Replying and other actions" %} If you
-    /// want to reply to a coveration or take an action such as assign, unassign, open, close or snooze, take a look at
-    /// the reply and manage endpoints. {% /admonition %} {% admonition type="info" %} This endpoint handles both
-    /// **conversation updates** and **custom object associations**. See _`update a conversation with an association to
-    /// a custom object instance`_ in the request/response examples to see the custom object association format. {%
-    /// /admonition %} {% admonition type="danger" name="Breaking change: duplicate custom attribute names" %} The `PUT
-    /// /conversations/{id}` endpoint now returns a `400 INVALID_PARAMETER` error when the request includes
-    /// `custom_attributes` and your workspace contains multiple non-archived conversation custom attributes with the
-    /// same name. Previously, the update would silently apply to a non-deterministic attribute. To resolve, rename or
-    /// archive the duplicate attribute in your workspace settings, then retry the request. {% /admonition %}
-    public func update(
-        conversationId: Int,
-        displayAs: String? = nil,
-        intercomVersion: IntercomVersion? = nil,
-        read: Bool? = nil,
-        title: String? = nil,
-        customAttributes: CustomAttributesRequest? = nil,
-        companyId: String? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Conversation {
-        try await ConversationsMethods.updateConversation(
-            config: config,
-            conversationId: conversationId,
-            displayAs: displayAs,
-            intercomVersion: intercomVersion,
-            read: read,
-            title: title,
-            customAttributes: customAttributes,
-            companyId: companyId,
-            requestOptions: requestOptions
-        )
+    /// You can update an existing conversation. {% admonition type="info" name="Replying and other actions" %} If you want to reply to a coveration or take an action such as assign, unassign, open, close or snooze, take a look at the reply and manage endpoints. {% /admonition %} {% admonition type="info" %} This endpoint handles both **conversation updates** and **custom object associations**. See _`update a conversation with an association to a custom object instance`_ in the request/response examples to see the custom object association format. {% /admonition %} {% admonition type="danger" name="Breaking change: duplicate custom attribute names" %} The `PUT /conversations/{id}` endpoint now returns a `400 INVALID_PARAMETER` error when the request includes `custom_attributes` and your workspace contains multiple non-archived conversation custom attributes with the same name. Previously, the update would silently apply to a non-deterministic attribute. To resolve, rename or archive the duplicate attribute in your workspace settings, then retry the request. {% /admonition %}
+    public func update(conversationId: Int, displayAs: String? = nil, intercomVersion: IntercomVersion? = nil, read: Bool? = nil, title: String? = nil, customAttributes: CustomAttributesRequest? = nil, companyId: String? = nil, requestOptions: RequestOptions? = nil) async throws -> Conversation {
+        return try await ConversationsMethods.updateConversation(config: config, conversationId: conversationId, displayAs: displayAs, intercomVersion: intercomVersion, read: read, title: title, customAttributes: customAttributes, companyId: companyId, requestOptions: requestOptions)
     }
 
-    /// Deletes a conversation, with reporting-data retention controlled by `retain_metrics`. The default retains
-    /// reporting data; set `retain_metrics` to false to remove the conversation's associated reporting data as well,
-    /// which requires the `delete_conversations_and_metrics` OAuth scope. <Callout type="warning">Deleting a
-    /// conversation is permanent and cannot be reversed.</Callout>
+/// Deletes a conversation, with reporting-data retention controlled by `retain_metrics`. The default retains reporting data; set `retain_metrics` to false to remove the conversation's associated reporting data as well, which requires the `delete_conversations_and_metrics` OAuth scope. <Callout type="warning">Deleting a conversation is permanent and cannot be reversed.</Callout>
     ///
-    /// {% admonition type="warning" name="Irreversible operation" %} Deleting a conversation is permanent and cannot be
-    /// reversed. {% /admonition %} You can delete a single conversation. The behavior depends on the `retain_metrics`
-    /// parameter: - **With `retain_metrics=true` (default)**: Deletes the conversation while retaining reporting data.
-    /// The conversation will still appear in reporting, though some data may be incomplete due to the deletion. -
-    /// **With `retain_metrics=false`**: Deletes the conversation and all associated reporting data. The conversation
-    /// will be completely removed from both the inbox and all reporting. {% admonition type="info" name="Required scope
-    /// for retain_metrics=false" %} Using `retain_metrics=false` requires the `delete_conversations_and_metrics` OAuth
-    /// scope. {% /admonition %} For more info, see [this help center
-    /// article](https://www.intercom.com/help/en/articles/13885146-deleting-a-conversation).
-    public func delete(
-        conversationId: Int,
-        retainMetrics: Bool? = nil,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ConversationDeleted {
-        try await ConversationsMethods.deleteConversation(
-            config: config,
-            conversationId: conversationId,
-            retainMetrics: retainMetrics,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    /// {% admonition type="warning" name="Irreversible operation" %} Deleting a conversation is permanent and cannot be reversed. {% /admonition %} You can delete a single conversation. The behavior depends on the `retain_metrics` parameter: - **With `retain_metrics=true` (default)**: Deletes the conversation while retaining reporting data. The conversation will still appear in reporting, though some data may be incomplete due to the deletion. - **With `retain_metrics=false`**: Deletes the conversation and all associated reporting data. The conversation will be completely removed from both the inbox and all reporting. {% admonition type="info" name="Required scope for retain_metrics=false" %} Using `retain_metrics=false` requires the `delete_conversations_and_metrics` OAuth scope. {% /admonition %} For more info, see [this help center article](https://www.intercom.com/help/en/articles/13885146-deleting-a-conversation).
+    public func delete(conversationId: Int, retainMetrics: Bool? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ConversationDeleted {
+        return try await ConversationsMethods.deleteConversation(config: config, conversationId: conversationId, retainMetrics: retainMetrics, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Searches conversations using filters on searchable conversation attributes. Provide a `query` filter expression
-    /// and use pagination to control result size; pages default to 20 results and can contain up to 150. Use the
-    /// `starting_after` cursor from the response to fetch subsequent pages.
+/// Searches conversations using filters on searchable conversation attributes. Provide a `query` filter expression and use pagination to control result size; pages default to 20 results and can contain up to 150. Use the `starting_after` cursor from the response to fetch subsequent pages.
     ///
-    /// You can search for multiple conversations by the value of their attributes in order to fetch exactly which ones
-    /// you want. To search for conversations, you need to send a `POST` request to
-    /// `https://api.intercom.io/conversations/search`. This will accept a query object in the body which will define
-    /// your filters in order to search for conversations. {% admonition type="warning" name="Optimizing search queries"
-    /// %} Search queries can be complex, so optimizing them can help the performance of your search. Use the `AND` and
-    /// `OR` operators to combine multiple filters to get the exact results you need and utilize pagination to limit the
-    /// number of results returned. The default is `20` results per page and maximum is `150`. See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#example-search-conversations-request)
-    /// for more details on how to use the `starting_after` param. {% /admonition %} ### Nesting & Limitations You can
-    /// nest these filters in order to get even more granular insights that pinpoint exactly what you need. Example: (1
-    /// OR 2) AND (3 OR 4). There are some limitations to the amount of multiple's there can be: - There's a limit of
-    /// max 2 nested filters - There's a limit of max 15 filters for each AND or OR group ### Accepted Fields Most keys
-    /// listed in the conversation model are searchable, whether writeable or not. The value you search for has to match
-    /// the accepted type, otherwise the query will fail (ie. as `created_at` accepts a date, the `value` cannot be a
-    /// string such as `"foorbar"`). The `source.body` field is unique as the search will not be performed against the
-    /// entire value, but instead against every element of the value separately. For example, when searching for a
-    /// conversation with a `"I need support"` body - the query should contain a `=` operator with the value `"support"`
-    /// for such conversation to be returned. A query with a `=` operator and a `"need support"` value will not yield a
-    /// result.…
-    public func search(
-        query: SearchRequestQuery,
-        includeMonitors: Bool? = nil,
-        includeScorecards: Bool? = nil,
-        intercomVersion: IntercomVersion? = nil,
-        pagination: SdkOptional<StartingAfterPaging>? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ConversationList {
-        try await ConversationsMethods.searchConversations(
-            config: config,
-            query: query,
-            includeMonitors: includeMonitors,
-            includeScorecards: includeScorecards,
-            intercomVersion: intercomVersion,
-            pagination: pagination,
-            requestOptions: requestOptions
-        )
+    /// You can search for multiple conversations by the value of their attributes in order to fetch exactly which ones you want. To search for conversations, you need to send a `POST` request to `https://api.intercom.io/conversations/search`. This will accept a query object in the body which will define your filters in order to search for conversations. {% admonition type="warning" name="Optimizing search queries" %} Search queries can be complex, so optimizing them can help the performance of your search. Use the `AND` and `OR` operators to combine multiple filters to get the exact results you need and utilize pagination to limit the number of results returned. The default is `20` results per page and maximum is `150`. See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#example-search-conversations-request) for more details on how to use the `starting_after` param. {% /admonition %} ### Nesting & Limitations You can nest these filters in order to get even more granular insights that pinpoint exactly what you need. Example: (1 OR 2) AND (3 OR 4). There are some limitations to the amount of multiple's there can be: - There's a limit of max 2 nested filters - There's a limit of max 15 filters for each AND or OR group ### Accepted Fields Most keys listed in the conversation model are searchable, whether writeable or not. The value you search for has to match the accepted type, otherwise the query will fail (ie. as `created_at` accepts a date, the `value` cannot be a string such as `"foorbar"`). The `source.body` field is unique as the search will not be performed against the entire value, but instead against every element of the value separately. For example, when searching for a conversation with a `"I need support"` body - the query should contain a `=` operator with the value `"support"` for such conversation to be returned. A query with a `=` operator and a `"need support"` value will not yield a result.…
+    public func search(query: SearchRequestQuery, includeMonitors: Bool? = nil, includeScorecards: Bool? = nil, intercomVersion: IntercomVersion? = nil, pagination: SdkOptional<StartingAfterPaging>? = nil, requestOptions: RequestOptions? = nil) async throws -> ConversationList {
+        return try await ConversationsMethods.searchConversations(config: config, query: query, includeMonitors: includeMonitors, includeScorecards: includeScorecards, intercomVersion: intercomVersion, pagination: pagination, requestOptions: requestOptions)
     }
 
-    /// Replies to a conversation with a message from an admin or on behalf of a contact, or adds an admin note. Choose
-    /// the appropriate reply payload and supply its required fields; for admin replies, `message_type` selects a
-    /// comment, note, or quick reply. Bot replies to inbound email conversations are not delivered as outbound email by
-    /// default.
+/// Replies to a conversation with a message from an admin or on behalf of a contact, or adds an admin note. Choose the appropriate reply payload and supply its required fields; for admin replies, `message_type` selects a comment, note, or quick reply. Bot replies to inbound email conversations are not delivered as outbound email by default.
     ///
-    /// You can reply to a conversation with a message from an admin or on behalf of a contact, or with a note for
-    /// admins. {% admonition type="warning" name="Bot replies to inbound email" %} By default, bot or Operator replies
-    /// to an inbound email conversation aren't sent to your customer. The reply is stored as an unnotifiable bot
-    /// comment, and no `seen` receipt is generated until an email is actually delivered. To send these replies as
-    /// outbound emails, reach out to your accounts team to enable the email-reply feature flag for your workspace. {%
-    /// /admonition %} {% admonition type="info" name="Managing a conversation" %} To close, open, snooze or assign a
-    /// conversation, use Manage a conversation. {% /admonition %}
-    public func reply(
-        conversationId: String,
-        intercomVersion: IntercomVersion? = nil,
-        body: ReplyConversationRequest? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Conversation {
-        try await ConversationsMethods.replyConversation(
-            config: config,
-            conversationId: conversationId,
-            intercomVersion: intercomVersion,
-            body: body,
-            requestOptions: requestOptions
-        )
+    /// You can reply to a conversation with a message from an admin or on behalf of a contact, or with a note for admins. {% admonition type="warning" name="Bot replies to inbound email" %} By default, bot or Operator replies to an inbound email conversation aren't sent to your customer. The reply is stored as an unnotifiable bot comment, and no `seen` receipt is generated until an email is actually delivered. To send these replies as outbound emails, reach out to your accounts team to enable the email-reply feature flag for your workspace. {% /admonition %} {% admonition type="info" name="Managing a conversation" %} To close, open, snooze or assign a conversation, use Manage a conversation. {% /admonition %}
+    public func reply(conversationId: String, intercomVersion: IntercomVersion? = nil, body: ReplyConversationRequest? = nil, requestOptions: RequestOptions? = nil) async throws -> Conversation {
+        return try await ConversationsMethods.replyConversation(config: config, conversationId: conversationId, intercomVersion: intercomVersion, body: body, requestOptions: requestOptions)
     }
 
-    /// Changes a conversation's state or assignment by closing, snoozing, opening, or assigning it to an admin or team.
-    /// Choose the request variant for the action and provide its required fields, such as `snoozed_until` when
-    /// snoozing. Use the reply operation to send a comment, note, or quick reply instead.
+/// Changes a conversation's state or assignment by closing, snoozing, opening, or assigning it to an admin or team. Choose the request variant for the action and provide its required fields, such as `snoozed_until` when snoozing. Use the reply operation to send a comment, note, or quick reply instead.
     ///
-    /// For managing conversations you can: - Close a conversation - Snooze a conversation to reopen on a future date -
-    /// Open a conversation which is `snoozed` or `closed` - Assign a conversation to an admin and/or team. {%
-    /// admonition type="info" name="Sending messages" %} To send a comment, note or quick reply, use Reply to a
-    /// conversation. {% /admonition %}
-    public func manage(
-        conversationId: String,
-        intercomVersion: IntercomVersion? = nil,
-        body: ManageConversationRequestBody? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Conversation {
-        try await ConversationsMethods.manageConversation(
-            config: config,
-            conversationId: conversationId,
-            intercomVersion: intercomVersion,
-            body: body,
-            requestOptions: requestOptions
-        )
+    /// For managing conversations you can: - Close a conversation - Snooze a conversation to reopen on a future date - Open a conversation which is `snoozed` or `closed` - Assign a conversation to an admin and/or team. {% admonition type="info" name="Sending messages" %} To send a comment, note or quick reply, use Reply to a conversation. {% /admonition %}
+    public func manage(conversationId: String, intercomVersion: IntercomVersion? = nil, body: ManageConversationRequestBody? = nil, requestOptions: RequestOptions? = nil) async throws -> Conversation {
+        return try await ConversationsMethods.manageConversation(config: config, conversationId: conversationId, intercomVersion: intercomVersion, body: body, requestOptions: requestOptions)
     }
 }
 
-public extension ConversationsNamespace {
-    /// Adds a contact as a participant in a conversation on behalf of an admin or another contact. Identify the contact
-    /// using an Intercom user ID, a user ID, or an email address in `customer`. If no contact exists for a supplied
-    /// email address, the API creates a contact with the `lead` role.
+extension ConversationsNamespace {
+/// Adds a contact as a participant in a conversation on behalf of an admin or another contact. Identify the contact using an Intercom user ID, a user ID, or an email address in `customer`. If no contact exists for a supplied email address, the API creates a contact with the `lead` role.
     ///
-    /// You can add participants who are contacts to a conversation, on behalf of either another contact or an admin. {%
-    /// admonition type="warning" name="Contacts without an email" %} If you add a contact via the email parameter and
-    /// there is no user/lead found on that workspace with he given email, then we will create a new contact with `role`
-    /// set to `lead`. {% /admonition %}
-    func attachContact(
-        conversationId: String,
-        intercomVersion: IntercomVersion? = nil,
-        adminId: String? = nil,
-        customer: AttachContactToConversationRequestCustomer? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ConversationParticipantsResponse {
-        try await ConversationsMethods.attachConversationsContact(
-            config: config,
-            conversationId: conversationId,
-            intercomVersion: intercomVersion,
-            adminId: adminId,
-            customer: customer,
-            requestOptions: requestOptions
-        )
+    /// You can add participants who are contacts to a conversation, on behalf of either another contact or an admin. {% admonition type="warning" name="Contacts without an email" %} If you add a contact via the email parameter and there is no user/lead found on that workspace with he given email, then we will create a new contact with `role` set to `lead`. {% /admonition %}
+    public func attachContact(conversationId: String, intercomVersion: IntercomVersion? = nil, adminId: String? = nil, customer: AttachContactToConversationRequestCustomer? = nil, requestOptions: RequestOptions? = nil) async throws -> ConversationParticipantsResponse {
+        return try await ConversationsMethods.attachConversationsContact(config: config, conversationId: conversationId, intercomVersion: intercomVersion, adminId: adminId, customer: customer, requestOptions: requestOptions)
     }
 
-    /// Removes a contact from a group conversation on behalf of an admin. Supply the conversation and contact
-    /// identifiers and the performing admin's ID. You cannot remove the last remaining contact from a conversation.
+/// Removes a contact from a group conversation on behalf of an admin. Supply the conversation and contact identifiers and the performing admin's ID. You cannot remove the last remaining contact from a conversation.
     ///
-    /// You can remove participants who are contacts from a group conversation, on behalf of an admin. {% admonition
-    /// type="warning" name="Removing the last participant" %} You cannot remove the last remaining contact from a
-    /// conversation. {% /admonition %}
-    func detachContact(
-        conversationId: String,
-        contactId: String,
-        adminId: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ConversationParticipantsResponse {
-        try await ConversationsMethods.detachConversationsContact(
-            config: config,
-            conversationId: conversationId,
-            contactId: contactId,
-            adminId: adminId,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    /// You can remove participants who are contacts from a group conversation, on behalf of an admin. {% admonition type="warning" name="Removing the last participant" %} You cannot remove the last remaining contact from a conversation. {% /admonition %}
+    public func detachContact(conversationId: String, contactId: String, adminId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ConversationParticipantsResponse {
+        return try await ConversationsMethods.detachConversationsContact(config: config, conversationId: conversationId, contactId: contactId, adminId: adminId, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Lists pause and resume handling events for a conversation, including the teammate and timestamp for each event.
-    /// Use this operation when you need to review when teammates paused or resumed handling. Access requires the
-    /// `read_conversations` OAuth scope.
+/// Lists pause and resume handling events for a conversation, including the teammate and timestamp for each event. Use this operation when you need to review when teammates paused or resumed handling. Access requires the `read_conversations` OAuth scope.
     ///
-    /// List all pause/resume events for a conversation. These events track when teammates paused or resumed handling a
-    /// conversation. Requires the `read_conversations` OAuth scope.
-    func listHandlingEvents(
-        id: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> HandlingEventList {
-        try await ConversationsMethods.listHandlingEvents(
-            config: config,
-            id: id,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    /// List all pause/resume events for a conversation. These events track when teammates paused or resumed handling a conversation. Requires the `read_conversations` OAuth scope.
+    public func listHandlingEvents(id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> HandlingEventList {
+        return try await ConversationsMethods.listHandlingEvents(config: config, id: id, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Lists human-in-the-loop events from Fin consultations on a conversation, ordered from oldest to newest. Use the
-    /// events to review consultation steps and their associated data; a consultation appears only after it has ended.
-    /// Access requires the `read_conversations` OAuth scope and permission to access the conversation.
+/// Lists human-in-the-loop events from Fin consultations on a conversation, ordered from oldest to newest. Use the events to review consultation steps and their associated data; a consultation appears only after it has ended. Access requires the `read_conversations` OAuth scope and permission to access the conversation.
     ///
-    /// List the human-in-the-loop (HITL) events for a conversation. When Fin is unsure of an answer it can consult a
-    /// teammate before replying, proposing a draft that the teammate approves, steers with free-text feedback, or takes
-    /// over. Each consultation is returned as a series of events, oldest first, across every consultation on the
-    /// conversation. Requires the `read_conversations` OAuth scope, and the caller must be able to access the
-    /// conversation. Events are only recorded once a consultation has ended, so a consultation still awaiting a
-    /// teammate does not appear. Which fields appear in `data` depends on `event_type`: | `event_type` | `data` fields
-    /// | |---|---| | `fin_consultation_started` | `channel`, `rule_threshold_percent`, `confidence_percent`,
-    /// `sharp_ask`, `ask_rationale`, `issue_summary`, `customer_question` | | `fin_draft_proposed` | `draft` | |
-    /// `fin_teammate_input_received` | `round_index`, `teammate_input`, `reviewer_admin_id`, `regeneration_outcome` | |
-    /// `fin_draft_revised` | `round_index`, `revised_draft`, `regeneration_outcome` | | `fin_consultation_finished` |
-    /// `outcome`, `approved_draft_type`, `final_draft`, `sent_text`, `reviewer_admin_id`, `duration_seconds`,
-    /// `rounds_count`, `payload_truncated` | A consultation always produces a `fin_consultation_started` and a
-    /// `fin_consultation_finished` event. `fin_draft_proposed` appears when Fin proposed a draft.
-    /// `fin_teammate_input_received` appears once per round of teammate feedback, and `fin_draft_revised` once per
-    /// round where Fin produced a revised draft in response. Notes on interpreting the response: - `hitl_cycle_id`
-    /// identifies the consultation, so it is the same on every event of one consultation. It is not unique per event. A
-    /// conversation can hold several consultations — a consultation that replaces an outstanding one finishes with an
-    /// `outcome` of `superseded`. - `conversation_part_id` links an event to a conversation part where one exists. It
-    /// is `null` in ordinary cases: teammate feedback given through the…
-    func listHitlEvents(
-        id: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> HitlEventList {
-        try await ConversationsMethods.listHitlEvents(
-            config: config,
-            id: id,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    /// List the human-in-the-loop (HITL) events for a conversation. When Fin is unsure of an answer it can consult a teammate before replying, proposing a draft that the teammate approves, steers with free-text feedback, or takes over. Each consultation is returned as a series of events, oldest first, across every consultation on the conversation. Requires the `read_conversations` OAuth scope, and the caller must be able to access the conversation. Events are only recorded once a consultation has ended, so a consultation still awaiting a teammate does not appear. Which fields appear in `data` depends on `event_type`: | `event_type` | `data` fields | |---|---| | `fin_consultation_started` | `channel`, `rule_threshold_percent`, `confidence_percent`, `sharp_ask`, `ask_rationale`, `issue_summary`, `customer_question` | | `fin_draft_proposed` | `draft` | | `fin_teammate_input_received` | `round_index`, `teammate_input`, `reviewer_admin_id`, `regeneration_outcome` | | `fin_draft_revised` | `round_index`, `revised_draft`, `regeneration_outcome` | | `fin_consultation_finished` | `outcome`, `approved_draft_type`, `final_draft`, `sent_text`, `reviewer_admin_id`, `duration_seconds`, `rounds_count`, `payload_truncated` | A consultation always produces a `fin_consultation_started` and a `fin_consultation_finished` event. `fin_draft_proposed` appears when Fin proposed a draft. `fin_teammate_input_received` appears once per round of teammate feedback, and `fin_draft_revised` once per round where Fin produced a revised draft in response. Notes on interpreting the response: - `hitl_cycle_id` identifies the consultation, so it is the same on every event of one consultation. It is not unique per event. A conversation can hold several consultations — a consultation that replaces an outstanding one finishes with an `outcome` of `superseded`. - `conversation_part_id` links an event to a conversation part where one exists. It is `null` in ordinary cases: teammate feedback given through the…
+    public func listHitlEvents(id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> HitlEventList {
+        return try await ConversationsMethods.listHitlEvents(config: config, id: id, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Lists internal side conversations and their conversation parts for a given conversation. Use `page` and
-    /// `per_page` to paginate the results. Access requires the `read_conversations` OAuth scope.
+/// Lists internal side conversations and their conversation parts for a given conversation. Use `page` and `per_page` to paginate the results. Access requires the `read_conversations` OAuth scope.
     ///
-    /// List side conversations for a given conversation. Side conversations are internal threads created by teammates
-    /// from within a conversation. Each side conversation includes its conversation parts (messages). Results are
-    /// paginated. Requires the `read_conversations` OAuth scope.
-    func listSide(
-        id: String,
-        page: Int? = nil,
-        perPage: Int? = nil,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SideConversationList {
-        try await ConversationsMethods.listSideConversations(
-            config: config,
-            id: id,
-            page: page,
-            perPage: perPage,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    /// List side conversations for a given conversation. Side conversations are internal threads created by teammates from within a conversation. Each side conversation includes its conversation parts (messages). Results are paginated. Requires the `read_conversations` OAuth scope.
+    public func listSide(id: String, page: Int? = nil, perPage: Int? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> SideConversationList {
+        return try await ConversationsMethods.listSideConversations(config: config, id: id, page: page, perPage: perPage, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Redacts a conversation part or the source message of a conversation. Choose the resource type and provide its
-    /// identifiers; a conversation part must have a body, and a source message must have been created by a contact.
-    /// Redacting a conversation also removes the associated HITL event data.
+/// Redacts a conversation part or the source message of a conversation. Choose the resource type and provide its identifiers; a conversation part must have a body, and a source message must have been created by a contact. Redacting a conversation also removes the associated HITL event data.
     ///
-    /// You can redact a conversation part or the source message of a conversation (as seen in the source object). {%
-    /// admonition type="info" name="Redacting parts and messages" %} If you are redacting a conversation part, it must
-    /// have a `body`. If you are redacting a source message, it must have been created by a contact. We will return a
-    /// `conversation_part_not_redactable` error if these criteria are not met. {% /admonition %}
-    func redact(
-        intercomVersion: IntercomVersion? = nil,
-        body: RedactConversationRequest? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Conversation {
-        try await ConversationsMethods.redactConversation(
-            config: config,
-            intercomVersion: intercomVersion,
-            body: body,
-            requestOptions: requestOptions
-        )
+    /// You can redact a conversation part or the source message of a conversation (as seen in the source object). {% admonition type="info" name="Redacting parts and messages" %} If you are redacting a conversation part, it must have a `body`. If you are redacting a source message, it must have been created by a contact. We will return a `conversation_part_not_redactable` error if these criteria are not met. {% /admonition %}
+    public func redact(intercomVersion: IntercomVersion? = nil, body: RedactConversationRequest? = nil, requestOptions: RequestOptions? = nil) async throws -> Conversation {
+        return try await ConversationsMethods.redactConversation(config: config, intercomVersion: intercomVersion, body: body, requestOptions: requestOptions)
     }
 
-    /// Merges a secondary conversation into a primary conversation, closing the secondary and linking it to the
-    /// surviving primary thread. Supply the secondary conversation ID in the path and the primary conversation ID in
-    /// `merge_into_conversation_id`; the merge requires `write_conversations`, and also `write_tickets` when the
-    /// secondary conversation is a ticket. The response contains the primary conversation.
+/// Merges a secondary conversation into a primary conversation, closing the secondary and linking it to the surviving primary thread. Supply the secondary conversation ID in the path and the primary conversation ID in `merge_into_conversation_id`; the merge requires `write_conversations`, and also `write_tickets` when the secondary conversation is a ticket. The response contains the primary conversation.
     ///
-    /// Merge a secondary (source) conversation into a primary (target) conversation. The secondary conversation is
-    /// closed and linked to the primary, which becomes the surviving thread. Returns the primary conversation on
-    /// success. Requires `write_conversations` OAuth scope. When the secondary is a ticket, `write_tickets` scope is
-    /// also required.
-    func merge(
-        id: String,
-        mergeIntoConversationId: Int,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Conversation {
-        try await ConversationsMethods.mergeConversation(
-            config: config,
-            id: id,
-            mergeIntoConversationId: mergeIntoConversationId,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    /// Merge a secondary (source) conversation into a primary (target) conversation. The secondary conversation is closed and linked to the primary, which becomes the surviving thread. Returns the primary conversation on success. Requires `write_conversations` OAuth scope. When the secondary is a ticket, `write_tickets` scope is also required.
+    public func merge(id: String, mergeIntoConversationId: Int, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Conversation {
+        return try await ConversationsMethods.mergeConversation(config: config, id: id, mergeIntoConversationId: mergeIntoConversationId, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-    /// Converts an existing conversation into a ticket. Supply `ticket_type_id` to select the ticket type, and
-    /// optionally provide `ticket_state_id` and `attributes` to set the ticket state and ticket attributes. The
-    /// response contains the created ticket.
+/// Converts an existing conversation into a ticket. Supply `ticket_type_id` to select the ticket type, and optionally provide `ticket_state_id` and `attributes` to set the ticket state and ticket attributes. The response contains the created ticket.
     ///
     /// You can convert a conversation to a ticket.
-    func convertToTicket(
-        conversationId: Int,
-        ticketTypeId: String,
-        intercomVersion: IntercomVersion? = nil,
-        ticketStateId: String? = nil,
-        attributes: TicketRequestCustomAttributes? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Ticket {
-        try await ConversationsMethods.convertConversationToTicket(
-            config: config,
-            conversationId: conversationId,
-            ticketTypeId: ticketTypeId,
-            intercomVersion: intercomVersion,
-            ticketStateId: ticketStateId,
-            attributes: attributes,
-            requestOptions: requestOptions
-        )
+    public func convertToTicket(conversationId: Int, ticketTypeId: String, intercomVersion: IntercomVersion? = nil, ticketStateId: String? = nil, attributes: TicketRequestCustomAttributes? = nil, requestOptions: RequestOptions? = nil) async throws -> Ticket {
+        return try await ConversationsMethods.convertConversationToTicket(config: config, conversationId: conversationId, ticketTypeId: ticketTypeId, intercomVersion: intercomVersion, ticketStateId: ticketStateId, attributes: attributes, requestOptions: requestOptions)
     }
 }

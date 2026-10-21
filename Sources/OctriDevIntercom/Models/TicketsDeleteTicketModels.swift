@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Tickets domain models
+// Tickets domain models
 /// deleted ticket object
 public struct TicketDeleted: Codable {
     /// The unique identifier for the ticket.
@@ -23,21 +23,21 @@ public struct TicketDeleted: Codable {
     }
 
     init() {
-        (id, object, deleted) = (nil, nil, nil)
+        (self.id, self.object, self.deleted) = (nil, nil, nil)
     }
 }
 
-public extension TicketDeleted {
-    init(from decoder: Decoder) throws {
+extension TicketDeleted {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        object = try container.sdkDecodeIfPresent(.object)
-        deleted = try container.sdkDecodeIfPresent(.deleted)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-public extension TicketDeleted {
-    init(id: String? = nil, object: TicketDeletedObject? = nil, deleted: Bool? = nil) {
+extension TicketDeleted {
+    public init(id: String? = nil, object: TicketDeletedObject? = nil, deleted: Bool? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
         self.deleted = deleted
@@ -48,15 +48,12 @@ public extension TicketDeleted {
 public struct TicketDeletedObject: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let ticket = TicketDeletedObject(rawValue: "ticket")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

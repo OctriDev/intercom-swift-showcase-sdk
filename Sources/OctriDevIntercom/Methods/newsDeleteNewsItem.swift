@@ -6,32 +6,17 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension NewsMethods {
-    /// Deletes a single news item. Use `news_item_id` to identify the item to remove. The response confirms whether the
-    /// item was deleted and identifies the deleted object.
+extension NewsMethods {
+    /// Deletes a single news item. Use `news_item_id` to identify the item to remove. The response confirms whether the item was deleted and identifies the deleted object.
     ///
     /// You can delete a single news item.
     ///
     /// - Parameters:
     /// - newsItemId: The unique identifier for the news item which is given by
     ///   Intercom.
-    static func deleteNewsItem(
-        config: ClientConfig,
-        newsItemId: Int,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DeletedObject {
-        try await (sdkRequest(
-            "DELETE",
-            ["/news/news_items/", sdkEncodePathSegment(sdkWireString(newsItemId))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "deleteNewsItem",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "404": Error2.self]
-        )).data
+    public static func deleteNewsItem(config: ClientConfig, newsItemId: Int, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DeletedObject {
+        return try (await sdkRequest("DELETE", ["/news/news_items/", sdkEncodePathSegment(sdkWireString(newsItemId))].joined(), config: config, decoder: .json, operationId: "deleteNewsItem", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
     }
 }

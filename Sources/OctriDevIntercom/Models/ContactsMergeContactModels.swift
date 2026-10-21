@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Contacts domain models
+// Contacts domain models
 /// Merge contact data.
 public struct MergeContactsRequest: Codable {
     /// The unique identifier for the contact to merge away from. Must be a lead.
@@ -22,36 +22,26 @@ public struct MergeContactsRequest: Codable {
         case skipDuplicateValidation = "skip_duplicate_validation"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension MergeContactsRequest {
-    init(from decoder: Decoder) throws {
+extension MergeContactsRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.from) else {
-            throw SdkValidationError(
-                field: "from",
-                code: "required",
-                message: "Validation failed for 'from': value is required"
-            )
+            throw SdkValidationError(field: "from", code: "required", message: "Validation failed for 'from': value is required")
         }
         guard container.contains(.into) else {
-            throw SdkValidationError(
-                field: "into",
-                code: "required",
-                message: "Validation failed for 'into': value is required"
-            )
+            throw SdkValidationError(field: "into", code: "required", message: "Validation failed for 'into': value is required")
         }
-        from = try container.sdkDecodeRequired(.from)
-        into = try container.sdkDecodeRequired(.into)
-        skipDuplicateValidation = try container.sdkDecodeIfPresent(.skipDuplicateValidation)
+        self.from = try container.sdkDecodeRequired(.from)
+        self.into = try container.sdkDecodeRequired(.into)
+        self.skipDuplicateValidation = try container.sdkDecodeIfPresent(.skipDuplicateValidation)
     }
 }
 
-public extension MergeContactsRequest {
-    init(from: String, into: String, skipDuplicateValidation: Bool? = nil) {
+extension MergeContactsRequest {
+    public init(from: String, into: String, skipDuplicateValidation: Bool? = nil) {
         (self.from, self.into) = (from, into)
         self.skipDuplicateValidation = skipDuplicateValidation
     }

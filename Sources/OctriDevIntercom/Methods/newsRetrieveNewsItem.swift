@@ -6,32 +6,17 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension NewsMethods {
-    /// Retrieves the details of a single news item. Use its unique `news_item_id` to identify the item. The response
-    /// includes the item's content, state, newsfeed assignments, and timestamps.
+extension NewsMethods {
+    /// Retrieves the details of a single news item. Use its unique `news_item_id` to identify the item. The response includes the item's content, state, newsfeed assignments, and timestamps.
     ///
     /// You can fetch the details of a single news item.
     ///
     /// - Parameters:
     /// - newsItemId: The unique identifier for the news item which is given by
     ///   Intercom.
-    static func retrieveNewsItem(
-        config: ClientConfig,
-        newsItemId: Int,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> NewsItem {
-        try await (sdkRequest(
-            "GET",
-            ["/news/news_items/", sdkEncodePathSegment(sdkWireString(newsItemId))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "retrieveNewsItem",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "404": Error2.self]
-        )).data
+    public static func retrieveNewsItem(config: ClientConfig, newsItemId: Int, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> NewsItem {
+        return try (await sdkRequest("GET", ["/news/news_items/", sdkEncodePathSegment(sdkWireString(newsItemId))].joined(), config: config, decoder: .json, operationId: "retrieveNewsItem", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
     }
 }

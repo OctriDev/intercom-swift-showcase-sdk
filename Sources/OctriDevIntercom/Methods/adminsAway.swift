@@ -6,10 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AdminsMethods {
-    /// Sets an admin's away status for the Inbox and controls whether new conversation replies are reassigned. Supply
-    /// `away_mode_enabled` and `away_mode_reassign` in the request body; their defaults are `true` and `false`,
-    /// respectively. You can also provide an away status reason identifier.
+extension AdminsMethods {
+    /// Sets an admin's away status for the Inbox and controls whether new conversation replies are reassigned. Supply `away_mode_enabled` and `away_mode_reassign` in the request body; their defaults are `true` and `false`, respectively. You can also provide an away status reason identifier.
     ///
     /// You can set an Admin as away for the Inbox.
     ///
@@ -19,33 +17,11 @@ public extension AdminsMethods {
     /// - awayModeReassign: Set to "true" to assign any new conversation replies to
     ///   your default inbox.
     /// - awayStatusReasonId: The unique identifier of the away status reason
-    static func setAwayAdmin(
-        config: ClientConfig,
-        adminId: Int,
-        awayModeEnabled: Bool,
-        awayModeReassign: Bool,
-        intercomVersion: IntercomVersion? = nil,
-        awayStatusReasonId: Int? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Admin {
-        let requestBody = SetAwayAdminRequestBody(
-            awayModeEnabled: awayModeEnabled,
-            awayModeReassign: awayModeReassign,
-            awayStatusReasonId: awayStatusReasonId
-        )
+    public static func setAwayAdmin(config: ClientConfig, adminId: Int, awayModeEnabled: Bool, awayModeReassign: Bool, intercomVersion: IntercomVersion? = nil, awayStatusReasonId: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> Admin {
+        let requestBody = SetAwayAdminRequestBody(awayModeEnabled: awayModeEnabled, awayModeReassign: awayModeReassign, awayStatusReasonId: awayStatusReasonId)
 
-        return try await (sdkRequest(
-            "PUT",
-            ["/admins/", sdkEncodePathSegment(sdkWireString(adminId)), "/away"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "setAwayAdmin",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "404": Error2.self]
-        )).data
+        return try (await sdkRequest("PUT", ["/admins/", sdkEncodePathSegment(sdkWireString(adminId)), "/away"].joined(), config: config, body: requestBody, decoder: .json, operationId: "setAwayAdmin", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
     }
 }

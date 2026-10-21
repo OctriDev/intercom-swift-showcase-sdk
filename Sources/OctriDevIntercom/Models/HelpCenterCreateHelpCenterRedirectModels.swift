@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// HelpCenter domain models
+// HelpCenter domain models
 /// You can create a help center redirect.
 public struct CreateHelpCenterRedirectRequest: Codable {
     /// The source URL to redirect. Must be an absolute URL within the help center's URL space.
@@ -27,71 +27,49 @@ public struct CreateHelpCenterRedirectRequest: Codable {
         case targetId = "target_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateHelpCenterRedirectRequest {
-    init(from decoder: Decoder) throws {
+extension CreateHelpCenterRedirectRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.fromUrl) else {
-            throw SdkValidationError(
-                field: "from_url",
-                code: "required",
-                message: "Validation failed for 'from_url': value is required"
-            )
+            throw SdkValidationError(field: "from_url", code: "required", message: "Validation failed for 'from_url': value is required")
         }
         guard container.contains(.locale) else {
-            throw SdkValidationError(
-                field: "locale",
-                code: "required",
-                message: "Validation failed for 'locale': value is required"
-            )
+            throw SdkValidationError(field: "locale", code: "required", message: "Validation failed for 'locale': value is required")
         }
         guard container.contains(.targetType) else {
-            throw SdkValidationError(
-                field: "target_type",
-                code: "required",
-                message: "Validation failed for 'target_type': value is required"
-            )
+            throw SdkValidationError(field: "target_type", code: "required", message: "Validation failed for 'target_type': value is required")
         }
         guard container.contains(.targetId) else {
-            throw SdkValidationError(
-                field: "target_id",
-                code: "required",
-                message: "Validation failed for 'target_id': value is required"
-            )
+            throw SdkValidationError(field: "target_id", code: "required", message: "Validation failed for 'target_id': value is required")
         }
-        fromUrl = try container.sdkDecodeRequired(.fromUrl)
-        locale = try container.sdkDecodeRequired(.locale)
-        targetType = try container.sdkDecodeRequired(.targetType)
-        targetId = try container.sdkDecodeRequired(.targetId)
+        self.fromUrl = try container.sdkDecodeRequired(.fromUrl)
+        self.locale = try container.sdkDecodeRequired(.locale)
+        self.targetType = try container.sdkDecodeRequired(.targetType)
+        self.targetId = try container.sdkDecodeRequired(.targetId)
     }
 }
 
-public extension CreateHelpCenterRedirectRequest {
-    init(fromUrl: String, locale: String, targetType: CreateHelpCenterRedirectRequestTargetType, targetId: String) {
+extension CreateHelpCenterRedirectRequest {
+    public init(fromUrl: String, locale: String, targetType: CreateHelpCenterRedirectRequestTargetType, targetId: String) {
         (self.fromUrl, self.locale) = (fromUrl, locale)
         (self.targetType, self.targetId) = (targetType, targetId)
     }
 }
 
 /// The type of the redirect target.
-public struct CreateHelpCenterRedirectRequestTargetType: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct CreateHelpCenterRedirectRequestTargetType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let article = CreateHelpCenterRedirectRequestTargetType(rawValue: "article")
     public static let collection = CreateHelpCenterRedirectRequestTargetType(rawValue: "collection")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

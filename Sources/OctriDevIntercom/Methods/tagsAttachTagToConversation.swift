@@ -6,79 +6,36 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension TagsMethods {
-    /// Adds a tag to a specific conversation. Provide the tag identifier and the admin identifier in the request body
-    /// to apply the tag. The response includes the tag that was added.
+extension TagsMethods {
+    /// Adds a tag to a specific conversation. Provide the tag identifier and the admin identifier in the request body to apply the tag. The response includes the tag that was added.
     ///
-    /// You can tag a specific conversation. This will return a tag object for the tag that was added to the
-    /// conversation.
+    /// You can tag a specific conversation. This will return a tag object for the tag that was added to the conversation.
     ///
     /// - Parameters:
     /// - conversationId: conversation_id
     /// - id: The unique identifier for the tag which is given by Intercom
     /// - adminId: The unique identifier for the admin which is given by Intercom.
-    static func attachTagToConversation(
-        config: ClientConfig,
-        conversationId: String,
-        id: String,
-        adminId: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Tag {
+    public static func attachTagToConversation(config: ClientConfig, conversationId: String, id: String, adminId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Tag {
         let requestBody = AttachTagToConversationRequestBody(id: id, adminId: adminId)
 
-        return try await (sdkRequest(
-            "POST",
-            ["/conversations/", sdkEncodePathSegment(sdkWireString(conversationId)), "/tags"].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "attachTagToConversation",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "404": Error2.self]
-        )).data
+        return try (await sdkRequest("POST", ["/conversations/", sdkEncodePathSegment(sdkWireString(conversationId)), "/tags"].joined(), config: config, body: requestBody, decoder: .json, operationId: "attachTagToConversation", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
     }
 
-    /// Removes a tag from a specific conversation. Identify the conversation and tag in the path, and provide the admin
-    /// identifier in the request body. The response includes the tag that was removed.
+    /// Removes a tag from a specific conversation. Identify the conversation and tag in the path, and provide the admin identifier in the request body. The response includes the tag that was removed.
     ///
-    /// You can remove tag from a specific conversation. This will return a tag object for the tag that was removed from
-    /// the conversation.
+    /// You can remove tag from a specific conversation. This will return a tag object for the tag that was removed from the conversation.
     ///
     /// - Parameters:
     /// - conversationId: conversation_id
     /// - tagId: tag_id
     /// - adminId: The unique identifier for the admin which is given by Intercom.
-    static func detachTagFromConversation(
-        config: ClientConfig,
-        conversationId: String,
-        tagId: String,
-        adminId: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Tag {
+    public static func detachTagFromConversation(config: ClientConfig, conversationId: String, tagId: String, adminId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Tag {
         let requestBody = DetachTagFromConversationRequestBody(adminId: adminId)
 
-        return try await (sdkRequest(
-            "DELETE",
-            [
-                "/conversations/",
-                sdkEncodePathSegment(sdkWireString(conversationId)),
-                "/tags/",
-                sdkEncodePathSegment(sdkWireString(tagId)),
-            ].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "detachTagFromConversation",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "404": Error2.self]
-        )).data
+        return try (await sdkRequest("DELETE", ["/conversations/", sdkEncodePathSegment(sdkWireString(conversationId)), "/tags/", sdkEncodePathSegment(sdkWireString(tagId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "detachTagFromConversation", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
     }
 }

@@ -6,32 +6,17 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ContactsMethods {
-    /// Lists the tags attached to a contact. Use the `contact_id` path parameter to retrieve the contact's tag
-    /// associations.
+extension ContactsMethods {
+    /// Lists the tags attached to a contact. Use the `contact_id` path parameter to retrieve the contact's tag associations.
     ///
     /// You can fetch a list of all tags that are attached to a specific contact.
     ///
     /// - Parameters:
     /// - contactId: The unique identifier for the contact which is given by
     ///   Intercom
-    static func listContactsTags(
-        config: ClientConfig,
-        contactId: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> TagList {
-        try await (sdkRequest(
-            "GET",
-            ["/contacts/", sdkEncodePathSegment(sdkWireString(contactId)), "/tags"].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "listContactsTags",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "404": Error2.self]
-        )).data
+    public static func listContactsTags(config: ClientConfig, contactId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> TagList {
+        return try (await sdkRequest("GET", ["/contacts/", sdkEncodePathSegment(sdkWireString(contactId)), "/tags"].joined(), config: config, decoder: .json, operationId: "listContactsTags", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
     }
 }

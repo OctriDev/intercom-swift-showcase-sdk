@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Shared domain models
+// Shared domain models
 public typealias CxScoreReasonList = [CxScoreReasonListItem]
 
 public indirect enum Datetime {
@@ -12,29 +12,22 @@ public indirect enum Datetime {
 }
 
 extension Datetime: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for Datetime")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
 extension Datetime {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(Date.self) {
-            return .date(value)
-        }
-        if let value = try? container.decode(Int.self) {
-            return .intValue(value)
-        }
+        if let value = try? container.decode(Date.self) { return .date(value) }
+        if let value = try? container.decode(Int.self) { return .intValue(value) }
         return nil
     }
 }
@@ -70,42 +63,30 @@ public indirect enum EventDetails {
 }
 
 extension EventDetails: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) {
-                self = value; return
-            }
+            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
         }
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for EventDetails")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
 extension EventDetails {
     static func decodeLossless1(from container: SingleValueDecodingContainer, _ raw: JSONValue) -> Self? {
-        if let value = try? container.decode(ConversationAttributeUpdatedByWorkflow.self), sdkKeepsEveryKey(
-            value,
-            of: raw
-        ) {
+        if let value = try? container.decode(ConversationAttributeUpdatedByWorkflow.self), sdkKeepsEveryKey(value, of: raw) {
             return .conversationAttributeUpdatedByWorkflow(value)
         }
-        if let value = try? container.decode(ConversationAttributeUpdatedByAdmin.self), sdkKeepsEveryKey(
-            value,
-            of: raw
-        ) {
+        if let value = try? container.decode(ConversationAttributeUpdatedByAdmin.self), sdkKeepsEveryKey(value, of: raw) {
             return .conversationAttributeUpdatedByAdmin(value)
         }
-        if let value = try? container.decode(ConversationAttributeUpdatedByUser.self),
-           sdkKeepsEveryKey(value, of: raw) {
+        if let value = try? container.decode(ConversationAttributeUpdatedByUser.self), sdkKeepsEveryKey(value, of: raw) {
             return .conversationAttributeUpdatedByUser(value)
         }
         if let value = try? container.decode(CustomActionStarted.self), sdkKeepsEveryKey(value, of: raw) {
@@ -120,10 +101,7 @@ extension EventDetails {
         if let value = try? container.decode(CallSummary.self), sdkKeepsEveryKey(value, of: raw) {
             return .callSummary(value)
         }
-        if let value = try? container.decode(AiAgentEventOtpEmailVerificationFailed.self), sdkKeepsEveryKey(
-            value,
-            of: raw
-        ) {
+        if let value = try? container.decode(AiAgentEventOtpEmailVerificationFailed.self), sdkKeepsEveryKey(value, of: raw) {
             return .aiAgentEventOtpEmailVerificationFailed(value)
         }
         return nil
@@ -135,33 +113,22 @@ extension EventDetails {
         if let value = try? container.decode(
             ConversationAttributeUpdatedByWorkflow.self
         ) {
-            return .conversationAttributeUpdatedByWorkflow(value)
+            return             .conversationAttributeUpdatedByWorkflow(value)
         }
         if let value = try? container.decode(
             ConversationAttributeUpdatedByAdmin.self
         ) {
-            return .conversationAttributeUpdatedByAdmin(value)
+            return             .conversationAttributeUpdatedByAdmin(value)
         }
-        if let value = try? container
-            .decode(ConversationAttributeUpdatedByUser.self) {
-            return .conversationAttributeUpdatedByUser(value)
-        }
-        if let value = try? container.decode(CustomActionStarted.self) {
-            return .customActionStarted(value)
-        }
-        if let value = try? container.decode(CustomActionFinished.self) {
-            return .customActionFinished(value)
-        }
-        if let value = try? container.decode(OperatorWorkflowEvent.self) {
-            return .operatorWorkflowEvent(value)
-        }
-        if let value = try? container.decode(CallSummary.self) {
-            return .callSummary(value)
-        }
+        if let value = try? container.decode(ConversationAttributeUpdatedByUser.self) { return .conversationAttributeUpdatedByUser(value) }
+        if let value = try? container.decode(CustomActionStarted.self) { return .customActionStarted(value) }
+        if let value = try? container.decode(CustomActionFinished.self) { return .customActionFinished(value) }
+        if let value = try? container.decode(OperatorWorkflowEvent.self) { return .operatorWorkflowEvent(value) }
+        if let value = try? container.decode(CallSummary.self) { return .callSummary(value) }
         if let value = try? container.decode(
             AiAgentEventOtpEmailVerificationFailed.self
         ) {
-            return .aiAgentEventOtpEmailVerificationFailed(value)
+            return             .aiAgentEventOtpEmailVerificationFailed(value)
         }
         return nil
     }
@@ -206,27 +173,23 @@ public struct SingleFilterSearchRequest: Codable {
     }
 
     init() {
-        (field, self.operator, value) = (nil, nil, nil)
+        (self.field, self.`operator`, self.value) = (nil, nil, nil)
     }
 }
 
-public extension SingleFilterSearchRequest {
-    init(from decoder: Decoder) throws {
+extension SingleFilterSearchRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        field = try container.sdkDecodeIfPresent(.field)
-        self.operator = try container.sdkDecodeIfPresent(.operator)
-        value = try container.sdkDecodeIfPresent(.value)
+        self.field = try container.sdkDecodeIfPresent(.field)
+        self.`operator` = try container.sdkDecodeIfPresent(.`operator`)
+        self.value = try container.sdkDecodeIfPresent(.value)
     }
 }
 
-public extension SingleFilterSearchRequest {
-    init(
-        field: String? = nil,
-        operator: SingleFilterSearchRequestOperator? = nil,
-        value: SingleFilterSearchRequestValue? = nil
-    ) {
+extension SingleFilterSearchRequest {
+    public init(field: String? = nil, `operator`: SingleFilterSearchRequestOperator? = nil, value: SingleFilterSearchRequestValue? = nil) {
         self.init()
-        (self.field, self.operator) = (field, `operator`)
+        (self.field, self.`operator`) = (field, `operator`)
         self.value = value
     }
 }
@@ -246,20 +209,20 @@ public struct StartingAfterPaging: Codable {
     }
 
     init() {
-        (perPage, startingAfter) = (nil, nil)
+        (self.perPage, self.startingAfter) = (nil, nil)
     }
 }
 
-public extension StartingAfterPaging {
-    init(from decoder: Decoder) throws {
+extension StartingAfterPaging {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        perPage = try container.sdkDecodeIfPresent(.perPage)
-        startingAfter = try container.sdkDecodeIfPresent(.startingAfter)
+        self.perPage = try container.sdkDecodeIfPresent(.perPage)
+        self.startingAfter = try container.sdkDecodeIfPresent(.startingAfter)
     }
 }
 
-public extension StartingAfterPaging {
-    init(perPage: Int? = nil, startingAfter: String? = nil) {
+extension StartingAfterPaging {
+    public init(perPage: Int? = nil, startingAfter: String? = nil) {
         self.init()
         (self.perPage, self.startingAfter) = (perPage, startingAfter)
     }
@@ -284,24 +247,24 @@ public struct CompanyData: Codable {
     }
 
     init() {
-        (id, type, url) = (nil, nil, nil)
+        (self.id, self.type, self.url) = (nil, nil, nil)
     }
 }
 
-public extension CompanyData {
-    init(from decoder: Decoder) throws {
+extension CompanyData {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        type = try container.sdkDecodeIfPresent(.type)
-        url = try container.sdkDecodeIfPresent(.url)
-        if let value = url {
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.url = try container.sdkDecodeIfPresent(.url)
+        if let value = self.url {
             try sdkValidateUri("url", value)
         }
     }
 }
 
-public extension CompanyData {
-    init(id: String? = nil, type: CompanyDataType? = nil, url: String? = nil) throws {
+extension CompanyData {
+    public init(id: String? = nil, type: CompanyDataType? = nil, url: String? = nil) throws {
         self.init()
         (self.id, self.type) = (id, type)
         self.url = url
@@ -334,27 +297,22 @@ public struct MergeHistoryItem: Codable {
     }
 
     init() {
-        (type, sourceContactId, sourceContactRole, mergedAt) = (nil, nil, nil, nil)
+        (self.type, self.sourceContactId, self.sourceContactRole, self.mergedAt) = (nil, nil, nil, nil)
     }
 }
 
-public extension MergeHistoryItem {
-    init(from decoder: Decoder) throws {
+extension MergeHistoryItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        sourceContactId = try container.sdkDecodeIfPresent(.sourceContactId)
-        sourceContactRole = try container.sdkDecodeIfPresent(.sourceContactRole)
-        mergedAt = try container.sdkDecodeIfPresent(.mergedAt)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.sourceContactId = try container.sdkDecodeIfPresent(.sourceContactId)
+        self.sourceContactRole = try container.sdkDecodeIfPresent(.sourceContactRole)
+        self.mergedAt = try container.sdkDecodeIfPresent(.mergedAt)
     }
 }
 
-public extension MergeHistoryItem {
-    init(
-        type: String? = nil,
-        sourceContactId: String? = nil,
-        sourceContactRole: MergeHistoryItemSourceContactRole? = nil,
-        mergedAt: Int? = nil
-    ) {
+extension MergeHistoryItem {
+    public init(type: String? = nil, sourceContactId: String? = nil, sourceContactRole: MergeHistoryItemSourceContactRole? = nil, mergedAt: Int? = nil) {
         self.init()
         (self.type, self.sourceContactId) = (type, sourceContactId)
         (self.sourceContactRole, self.mergedAt) = (sourceContactRole, mergedAt)
@@ -391,32 +349,26 @@ public struct PagesLink: Codable {
     }
 
     init() {
-        (type, page, next, perPage, totalPages) = (nil, nil, nil, nil, nil)
+        (self.type, self.page, self.next, self.perPage, self.totalPages) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension PagesLink {
-    init(from decoder: Decoder) throws {
+extension PagesLink {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        page = try container.sdkDecodeIfPresent(.page)
-        next = try container.sdkDecodeIfPresent(.next)
-        perPage = try container.sdkDecodeIfPresent(.perPage)
-        totalPages = try container.sdkDecodeIfPresent(.totalPages)
-        if let value = next {
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.page = try container.sdkDecodeIfPresent(.page)
+        self.next = try container.sdkDecodeIfPresent(.next)
+        self.perPage = try container.sdkDecodeIfPresent(.perPage)
+        self.totalPages = try container.sdkDecodeIfPresent(.totalPages)
+        if let value = self.next {
             try sdkValidateUri("next", value)
         }
     }
 }
 
-public extension PagesLink {
-    init(
-        type: PagesLinkType? = nil,
-        page: Int? = nil,
-        next: String? = nil,
-        perPage: Int? = nil,
-        totalPages: Int? = nil
-    ) throws {
+extension PagesLink {
+    public init(type: PagesLinkType? = nil, page: Int? = nil, next: String? = nil, perPage: Int? = nil, totalPages: Int? = nil) throws {
         self.init()
         (self.type, self.page) = (type, page)
         (self.next, self.perPage) = (next, perPage)
@@ -441,20 +393,20 @@ public struct SubscriptionTypeList: Codable {
     }
 
     init() {
-        (type, data) = (nil, nil)
+        (self.type, self.data) = (nil, nil)
     }
 }
 
-public extension SubscriptionTypeList {
-    init(from decoder: Decoder) throws {
+extension SubscriptionTypeList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension SubscriptionTypeList {
-    init(type: SubscriptionTypeListType? = nil, data: [SubscriptionType]? = nil) {
+extension SubscriptionTypeList {
+    public init(type: SubscriptionTypeListType? = nil, data: [SubscriptionType]? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
     }
@@ -482,27 +434,22 @@ public struct SourceEmailMessageMetadata: Codable {
     }
 
     init() {
-        (messageId, subject, emailAddressHeaders, history) = (nil, nil, nil, nil)
+        (self.messageId, self.subject, self.emailAddressHeaders, self.history) = (nil, nil, nil, nil)
     }
 }
 
-public extension SourceEmailMessageMetadata {
-    init(from decoder: Decoder) throws {
+extension SourceEmailMessageMetadata {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        messageId = try container.sdkDecodeIfPresent(.messageId)
-        subject = try container.sdkDecodeIfPresent(.subject)
-        emailAddressHeaders = try container.sdkDecodeIfPresent(.emailAddressHeaders)
-        history = try container.sdkDecodeIfPresent(.history)
+        self.messageId = try container.sdkDecodeIfPresent(.messageId)
+        self.subject = try container.sdkDecodeIfPresent(.subject)
+        self.emailAddressHeaders = try container.sdkDecodeIfPresent(.emailAddressHeaders)
+        self.history = try container.sdkDecodeIfPresent(.history)
     }
 }
 
-public extension SourceEmailMessageMetadata {
-    init(
-        messageId: String? = nil,
-        subject: String? = nil,
-        emailAddressHeaders: [EmailAddressHeader]? = nil,
-        history: String? = nil
-    ) {
+extension SourceEmailMessageMetadata {
+    public init(messageId: String? = nil, subject: String? = nil, emailAddressHeaders: [EmailAddressHeader]? = nil, history: String? = nil) {
         self.init()
         (self.messageId, self.subject) = (messageId, subject)
         (self.emailAddressHeaders, self.history) = (emailAddressHeaders, history)
@@ -524,20 +471,20 @@ public struct OperatorWorkflowEventEvent: Codable {
     }
 
     init() {
-        (type, result) = (nil, nil)
+        (self.type, self.result) = (nil, nil)
     }
 }
 
-public extension OperatorWorkflowEventEvent {
-    init(from decoder: Decoder) throws {
+extension OperatorWorkflowEventEvent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        result = try container.sdkDecodeIfPresent(.result)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.result = try container.sdkDecodeIfPresent(.result)
     }
 }
 
-public extension OperatorWorkflowEventEvent {
-    init(type: String? = nil, result: String? = nil) {
+extension OperatorWorkflowEventEvent {
+    public init(type: String? = nil, result: String? = nil) {
         self.init()
         (self.type, self.result) = (type, result)
     }
@@ -578,34 +525,26 @@ public struct FileAttribute: Codable {
     }
 
     init() {
-        (type, name, url, contentType, filesize) = (nil, nil, nil, nil, nil)
-        (width, height) = (nil, nil)
+        (self.type, self.name, self.url, self.contentType, self.filesize) = (nil, nil, nil, nil, nil)
+        (self.width, self.height) = (nil, nil)
     }
 }
 
-public extension FileAttribute {
-    init(from decoder: Decoder) throws {
+extension FileAttribute {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        name = try container.sdkDecodeIfPresent(.name)
-        url = try container.sdkDecodeIfPresent(.url)
-        contentType = try container.sdkDecodeIfPresent(.contentType)
-        filesize = try container.sdkDecodeIfPresent(.filesize)
-        width = try container.sdkDecodeIfPresent(.width)
-        height = try container.sdkDecodeIfPresent(.height)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.url = try container.sdkDecodeIfPresent(.url)
+        self.contentType = try container.sdkDecodeIfPresent(.contentType)
+        self.filesize = try container.sdkDecodeIfPresent(.filesize)
+        self.width = try container.sdkDecodeIfPresent(.width)
+        self.height = try container.sdkDecodeIfPresent(.height)
     }
 }
 
-public extension FileAttribute {
-    init(
-        type: String? = nil,
-        name: String? = nil,
-        url: String? = nil,
-        contentType: String? = nil,
-        filesize: Int? = nil,
-        width: Int? = nil,
-        height: Int? = nil
-    ) {
+extension FileAttribute {
+    public init(type: String? = nil, name: String? = nil, url: String? = nil, contentType: String? = nil, filesize: Int? = nil, width: Int? = nil, height: Int? = nil) {
         self.init()
         (self.type, self.name) = (type, name)
         (self.url, self.contentType) = (url, contentType)

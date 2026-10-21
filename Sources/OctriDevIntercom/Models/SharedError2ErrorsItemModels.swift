@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Shared domain models
+// Shared domain models
 /// Required object value serialized in the `errors[]` wire field.
 public struct Error2ErrorsItem: Codable {
     /// A string indicating the kind of error, used to further qualify the HTTP response code
@@ -22,29 +22,23 @@ public struct Error2ErrorsItem: Codable {
         case field
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension Error2ErrorsItem {
-    init(from decoder: Decoder) throws {
+extension Error2ErrorsItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.code) else {
-            throw SdkValidationError(
-                field: "code",
-                code: "required",
-                message: "Validation failed for 'code': value is required"
-            )
+            throw SdkValidationError(field: "code", code: "required", message: "Validation failed for 'code': value is required")
         }
-        code = try container.sdkDecodeRequired(.code)
-        message = try container.sdkDecodeIfPresent(.message)
-        field = try container.sdkDecodeIfPresent(.field)
+        self.code = try container.sdkDecodeRequired(.code)
+        self.message = try container.sdkDecodeIfPresent(.message)
+        self.field = try container.sdkDecodeIfPresent(.field)
     }
 }
 
-public extension Error2ErrorsItem {
-    init(code: String, message: String? = nil, field: String? = nil) {
+extension Error2ErrorsItem {
+    public init(code: String, message: String? = nil, field: String? = nil) {
         (self.code, self.message) = (code, message)
         self.field = field
     }
@@ -61,19 +55,19 @@ public struct OperatorWorkflowEventWorkflow: Codable {
     }
 
     init() {
-        name = nil
+        self.name = nil
     }
 }
 
-public extension OperatorWorkflowEventWorkflow {
-    init(from decoder: Decoder) throws {
+extension OperatorWorkflowEventWorkflow {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
+        self.name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-public extension OperatorWorkflowEventWorkflow {
-    init(name: String? = nil) {
+extension OperatorWorkflowEventWorkflow {
+    public init(name: String? = nil) {
         self.init()
         self.name = name
     }
@@ -114,34 +108,26 @@ public struct PartAttachment: Codable {
     }
 
     init() {
-        (type, name, url, contentType, filesize) = (nil, nil, nil, nil, nil)
-        (width, height) = (nil, nil)
+        (self.type, self.name, self.url, self.contentType, self.filesize) = (nil, nil, nil, nil, nil)
+        (self.width, self.height) = (nil, nil)
     }
 }
 
-public extension PartAttachment {
-    init(from decoder: Decoder) throws {
+extension PartAttachment {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        name = try container.sdkDecodeIfPresent(.name)
-        url = try container.sdkDecodeIfPresent(.url)
-        contentType = try container.sdkDecodeIfPresent(.contentType)
-        filesize = try container.sdkDecodeIfPresent(.filesize)
-        width = try container.sdkDecodeIfPresent(.width)
-        height = try container.sdkDecodeIfPresent(.height)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.url = try container.sdkDecodeIfPresent(.url)
+        self.contentType = try container.sdkDecodeIfPresent(.contentType)
+        self.filesize = try container.sdkDecodeIfPresent(.filesize)
+        self.width = try container.sdkDecodeIfPresent(.width)
+        self.height = try container.sdkDecodeIfPresent(.height)
     }
 }
 
-public extension PartAttachment {
-    init(
-        type: String? = nil,
-        name: String? = nil,
-        url: String? = nil,
-        contentType: String? = nil,
-        filesize: Int? = nil,
-        width: Int? = nil,
-        height: Int? = nil
-    ) {
+extension PartAttachment {
+    public init(type: String? = nil, name: String? = nil, url: String? = nil, contentType: String? = nil, filesize: Int? = nil, width: Int? = nil, height: Int? = nil) {
         self.init()
         (self.type, self.name) = (type, name)
         (self.url, self.contentType) = (url, contentType)
@@ -156,34 +142,22 @@ public indirect enum MultipleFilterSearchRequestValue {
 }
 
 extension MultipleFilterSearchRequestValue: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for MultipleFilterSearchRequestValue"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for MultipleFilterSearchRequestValue")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
 extension MultipleFilterSearchRequestValue {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container
-            .decode([MultipleFilterSearchRequest].self) {
-            return .multipleFilterSearchRequestList(value)
-        }
-        if let value = try? container
-            .decode([SingleFilterSearchRequest].self) {
-            return .singleFilterSearchRequestList(value)
-        }
+        if let value = try? container.decode([MultipleFilterSearchRequest].self) { return .multipleFilterSearchRequestList(value) }
+        if let value = try? container.decode([SingleFilterSearchRequest].self) { return .singleFilterSearchRequestList(value) }
         return nil
     }
 }
@@ -226,29 +200,23 @@ public struct CursorPages: Codable {
     }
 
     init() {
-        (type, page, next, perPage, totalPages) = (nil, nil, nil, nil, nil)
+        (self.type, self.page, self.next, self.perPage, self.totalPages) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension CursorPages {
-    init(from decoder: Decoder) throws {
+extension CursorPages {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        page = try container.sdkDecodeIfPresent(.page)
-        next = try container.sdkDecodeIfPresent(.next)
-        perPage = try container.sdkDecodeIfPresent(.perPage)
-        totalPages = try container.sdkDecodeIfPresent(.totalPages)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.page = try container.sdkDecodeIfPresent(.page)
+        self.next = try container.sdkDecodeIfPresent(.next)
+        self.perPage = try container.sdkDecodeIfPresent(.perPage)
+        self.totalPages = try container.sdkDecodeIfPresent(.totalPages)
     }
 }
 
-public extension CursorPages {
-    init(
-        type: CursorPagesType? = nil,
-        page: Int? = nil,
-        next: StartingAfterPaging? = nil,
-        perPage: Int? = nil,
-        totalPages: Int? = nil
-    ) {
+extension CursorPages {
+    public init(type: CursorPagesType? = nil, page: Int? = nil, next: StartingAfterPaging? = nil, perPage: Int? = nil, totalPages: Int? = nil) {
         self.init()
         (self.type, self.page) = (type, page)
         (self.next, self.perPage) = (next, perPage)
@@ -274,21 +242,21 @@ public struct ContentSourcesList: Codable {
     }
 
     init() {
-        (type, totalCount, contentSources) = (nil, nil, nil)
+        (self.type, self.totalCount, self.contentSources) = (nil, nil, nil)
     }
 }
 
-public extension ContentSourcesList {
-    init(from decoder: Decoder) throws {
+extension ContentSourcesList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        contentSources = try container.sdkDecodeIfPresent(.contentSources)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        self.contentSources = try container.sdkDecodeIfPresent(.contentSources)
     }
 }
 
-public extension ContentSourcesList {
-    init(type: ContentSourcesListType? = nil, totalCount: Int? = nil, contentSources: [ContentSource]? = nil) {
+extension ContentSourcesList {
+    public init(type: ContentSourcesListType? = nil, totalCount: Int? = nil, contentSources: [ContentSource]? = nil) {
         self.init()
         (self.type, self.totalCount) = (type, totalCount)
         self.contentSources = contentSources
@@ -309,20 +277,20 @@ public struct Tags: Codable {
     }
 
     init() {
-        (type, tags) = (nil, nil)
+        (self.type, self.tags) = (nil, nil)
     }
 }
 
-public extension Tags {
-    init(from decoder: Decoder) throws {
+extension Tags {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        tags = try container.sdkDecodeIfPresent(.tags)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.tags = try container.sdkDecodeIfPresent(.tags)
     }
 }
 
-public extension Tags {
-    init(type: TagsType? = nil, tags: [Tag]? = nil) {
+extension Tags {
+    public init(type: TagsType? = nil, tags: [Tag]? = nil) {
         self.init()
         (self.type, self.tags) = (type, tags)
     }
@@ -334,32 +302,22 @@ public indirect enum SingleFilterSearchRequestValueVariant3Item {
 }
 
 extension SingleFilterSearchRequestValueVariant3Item: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for SingleFilterSearchRequestValueVariant3Item"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for SingleFilterSearchRequestValueVariant3Item")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
 extension SingleFilterSearchRequestValueVariant3Item {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) {
-            return .stringValue(value)
-        }
-        if let value = try? container.decode(Int.self) {
-            return .intValue(value)
-        }
+        if let value = try? container.decode(String.self) { return .stringValue(value) }
+        if let value = try? container.decode(Int.self) { return .intValue(value) }
         return nil
     }
 }
@@ -397,19 +355,19 @@ public struct CallSummary: Codable {
     }
 
     init() {
-        callId = nil
+        self.callId = nil
     }
 }
 
-public extension CallSummary {
-    init(from decoder: Decoder) throws {
+extension CallSummary {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        callId = try container.sdkDecodeIfPresent(.callId)
+        self.callId = try container.sdkDecodeIfPresent(.callId)
     }
 }
 
-public extension CallSummary {
-    init(callId: String? = nil) {
+extension CallSummary {
+    public init(callId: String? = nil) {
         self.init()
         self.callId = callId
     }
@@ -430,20 +388,20 @@ public struct Reference: Codable {
     }
 
     init() {
-        (type, id) = (nil, nil)
+        (self.type, self.id) = (nil, nil)
     }
 }
 
-public extension Reference {
-    init(from decoder: Decoder) throws {
+extension Reference {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        id = try container.sdkDecodeIfPresent(.id)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-public extension Reference {
-    init(type: String? = nil, id: String? = nil) {
+extension Reference {
+    public init(type: String? = nil, id: String? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
     }
@@ -463,20 +421,20 @@ public struct CxScoreReasonListItem: Codable {
     }
 
     init() {
-        (name, value) = (nil, nil)
+        (self.name, self.value) = (nil, nil)
     }
 }
 
-public extension CxScoreReasonListItem {
-    init(from decoder: Decoder) throws {
+extension CxScoreReasonListItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        value = try container.sdkDecodeIfPresent(.value)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.value = try container.sdkDecodeIfPresent(.value)
     }
 }
 
-public extension CxScoreReasonListItem {
-    init(name: String? = nil, value: String? = nil) {
+extension CxScoreReasonListItem {
+    public init(name: String? = nil, value: String? = nil) {
         self.init()
         (self.name, self.value) = (name, value)
     }
@@ -496,22 +454,22 @@ public struct MultipleFilterSearchRequest: Codable {
     }
 
     init() {
-        (self.operator, value) = (nil, nil)
+        (self.`operator`, self.value) = (nil, nil)
     }
 }
 
-public extension MultipleFilterSearchRequest {
-    init(from decoder: Decoder) throws {
+extension MultipleFilterSearchRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.operator = try container.sdkDecodeIfPresent(.operator)
-        value = try container.sdkDecodeIfPresent(.value)
+        self.`operator` = try container.sdkDecodeIfPresent(.`operator`)
+        self.value = try container.sdkDecodeIfPresent(.value)
     }
 }
 
-public extension MultipleFilterSearchRequest {
-    init(operator: MultipleFilterSearchRequestOperator? = nil, value: MultipleFilterSearchRequestValue? = nil) {
+extension MultipleFilterSearchRequest {
+    public init(`operator`: MultipleFilterSearchRequestOperator? = nil, value: MultipleFilterSearchRequestValue? = nil) {
         self.init()
-        (self.operator, self.value) = (`operator`, value)
+        (self.`operator`, self.value) = (`operator`, value)
     }
 }
 
@@ -528,20 +486,20 @@ public struct OperatorWorkflowEvent: Codable {
     }
 
     init() {
-        (workflow, event) = (nil, nil)
+        (self.workflow, self.event) = (nil, nil)
     }
 }
 
-public extension OperatorWorkflowEvent {
-    init(from decoder: Decoder) throws {
+extension OperatorWorkflowEvent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        workflow = try container.sdkDecodeIfPresent(.workflow)
-        event = try container.sdkDecodeIfPresent(.event)
+        self.workflow = try container.sdkDecodeIfPresent(.workflow)
+        self.event = try container.sdkDecodeIfPresent(.event)
     }
 }
 
-public extension OperatorWorkflowEvent {
-    init(workflow: OperatorWorkflowEventWorkflow? = nil, event: OperatorWorkflowEventEvent? = nil) {
+extension OperatorWorkflowEvent {
+    public init(workflow: OperatorWorkflowEventWorkflow? = nil, event: OperatorWorkflowEventEvent? = nil) {
         self.init()
         (self.workflow, self.event) = (workflow, event)
     }
@@ -567,24 +525,24 @@ public struct SocialProfile: Codable {
     }
 
     init() {
-        (type, name, url) = (nil, nil, nil)
+        (self.type, self.name, self.url) = (nil, nil, nil)
     }
 }
 
-public extension SocialProfile {
-    init(from decoder: Decoder) throws {
+extension SocialProfile {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        name = try container.sdkDecodeIfPresent(.name)
-        url = try container.sdkDecodeIfPresent(.url)
-        if let value = url {
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.url = try container.sdkDecodeIfPresent(.url)
+        if let value = self.url {
             try sdkValidateUri("url", value)
         }
     }
 }
 
-public extension SocialProfile {
-    init(type: String? = nil, name: String? = nil, url: String? = nil) throws {
+extension SocialProfile {
+    public init(type: String? = nil, name: String? = nil, url: String? = nil) throws {
         self.init()
         (self.type, self.name) = (type, name)
         self.url = url
@@ -608,6 +566,6 @@ public struct TagList: Codable {
     }
 
     init() {
-        (type, data) = (nil, nil)
+        (self.type, self.data) = (nil, nil)
     }
 }

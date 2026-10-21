@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// HelpCenter domain models
+// HelpCenter domain models
 /// The Content of a Group.
 public struct GroupContent: Codable {
     /// The type of object - `group_content` .
@@ -23,21 +23,21 @@ public struct GroupContent: Codable {
     }
 
     init() {
-        (type, name, description) = (nil, nil, nil)
+        (self.type, self.name, self.description) = (nil, nil, nil)
     }
 }
 
-public extension GroupContent {
-    init(from decoder: Decoder) throws {
+extension GroupContent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
     }
 }
 
-public extension GroupContent {
-    init(type: GroupContentType? = nil, name: String? = nil, description: String? = nil) {
+extension GroupContent {
+    public init(type: GroupContentType? = nil, name: String? = nil, description: String? = nil) {
         self.init()
         (self.type, self.name) = (type, name)
         self.description = description
@@ -167,102 +167,63 @@ public struct GroupTranslatedContent: Codable {
     }
 
     init() {
-        (type, ar, bg, bs, ca) = (nil, nil, nil, nil, nil)
-        (cs, da, de, el, en) = (nil, nil, nil, nil, nil)
-        (es, et, fi, fr, he) = (nil, nil, nil, nil, nil)
-        (hr, hu, id, it, ja) = (nil, nil, nil, nil, nil)
-        (ko, lt, lv, mn, nb) = (nil, nil, nil, nil, nil)
-        (nl, pl, pt, ro, ru) = (nil, nil, nil, nil, nil)
-        (sl, sr, sv, tr, vi) = (nil, nil, nil, nil, nil)
-        (ptBr, zhCn, zhTw) = (nil, nil, nil)
+        (self.type, self.ar, self.bg, self.bs, self.ca) = (nil, nil, nil, nil, nil)
+        (self.cs, self.da, self.de, self.el, self.en) = (nil, nil, nil, nil, nil)
+        (self.es, self.et, self.fi, self.fr, self.he) = (nil, nil, nil, nil, nil)
+        (self.hr, self.hu, self.id, self.it, self.ja) = (nil, nil, nil, nil, nil)
+        (self.ko, self.lt, self.lv, self.mn, self.nb) = (nil, nil, nil, nil, nil)
+        (self.nl, self.pl, self.pt, self.ro, self.ru) = (nil, nil, nil, nil, nil)
+        (self.sl, self.sr, self.sv, self.tr, self.vi) = (nil, nil, nil, nil, nil)
+        (self.ptBr, self.zhCn, self.zhTw) = (nil, nil, nil)
     }
 }
 
-public extension GroupTranslatedContent {
-    init(from decoder: Decoder) throws {
+extension GroupTranslatedContent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        ar = try container.sdkDecodeIfPresent(.ar)
-        bg = try container.sdkDecodeIfPresent(.bg)
-        bs = try container.sdkDecodeIfPresent(.bs)
-        ca = try container.sdkDecodeIfPresent(.ca)
-        cs = try container.sdkDecodeIfPresent(.cs)
-        da = try container.sdkDecodeIfPresent(.da)
-        de = try container.sdkDecodeIfPresent(.de)
-        el = try container.sdkDecodeIfPresent(.el)
-        en = try container.sdkDecodeIfPresent(.en)
-        es = try container.sdkDecodeIfPresent(.es)
-        et = try container.sdkDecodeIfPresent(.et)
-        fi = try container.sdkDecodeIfPresent(.fi)
-        fr = try container.sdkDecodeIfPresent(.fr)
-        he = try container.sdkDecodeIfPresent(.he)
-        hr = try container.sdkDecodeIfPresent(.hr)
-        hu = try container.sdkDecodeIfPresent(.hu)
-        id = try container.sdkDecodeIfPresent(.id)
-        it = try container.sdkDecodeIfPresent(.it)
-        ja = try container.sdkDecodeIfPresent(.ja)
-        ko = try container.sdkDecodeIfPresent(.ko)
-        lt = try container.sdkDecodeIfPresent(.lt)
-        lv = try container.sdkDecodeIfPresent(.lv)
-        mn = try container.sdkDecodeIfPresent(.mn)
-        nb = try container.sdkDecodeIfPresent(.nb)
-        nl = try container.sdkDecodeIfPresent(.nl)
-        pl = try container.sdkDecodeIfPresent(.pl)
-        pt = try container.sdkDecodeIfPresent(.pt)
-        ro = try container.sdkDecodeIfPresent(.ro)
-        ru = try container.sdkDecodeIfPresent(.ru)
-        sl = try container.sdkDecodeIfPresent(.sl)
-        sr = try container.sdkDecodeIfPresent(.sr)
-        sv = try container.sdkDecodeIfPresent(.sv)
-        tr = try container.sdkDecodeIfPresent(.tr)
-        vi = try container.sdkDecodeIfPresent(.vi)
-        ptBr = try container.sdkDecodeIfPresent(.ptBr)
-        zhCn = try container.sdkDecodeIfPresent(.zhCn)
-        zhTw = try container.sdkDecodeIfPresent(.zhTw)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.ar = try container.sdkDecodeIfPresent(.ar)
+        self.bg = try container.sdkDecodeIfPresent(.bg)
+        self.bs = try container.sdkDecodeIfPresent(.bs)
+        self.ca = try container.sdkDecodeIfPresent(.ca)
+        self.cs = try container.sdkDecodeIfPresent(.cs)
+        self.da = try container.sdkDecodeIfPresent(.da)
+        self.de = try container.sdkDecodeIfPresent(.de)
+        self.el = try container.sdkDecodeIfPresent(.el)
+        self.en = try container.sdkDecodeIfPresent(.en)
+        self.es = try container.sdkDecodeIfPresent(.es)
+        self.et = try container.sdkDecodeIfPresent(.et)
+        self.fi = try container.sdkDecodeIfPresent(.fi)
+        self.fr = try container.sdkDecodeIfPresent(.fr)
+        self.he = try container.sdkDecodeIfPresent(.he)
+        self.hr = try container.sdkDecodeIfPresent(.hr)
+        self.hu = try container.sdkDecodeIfPresent(.hu)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.it = try container.sdkDecodeIfPresent(.it)
+        self.ja = try container.sdkDecodeIfPresent(.ja)
+        self.ko = try container.sdkDecodeIfPresent(.ko)
+        self.lt = try container.sdkDecodeIfPresent(.lt)
+        self.lv = try container.sdkDecodeIfPresent(.lv)
+        self.mn = try container.sdkDecodeIfPresent(.mn)
+        self.nb = try container.sdkDecodeIfPresent(.nb)
+        self.nl = try container.sdkDecodeIfPresent(.nl)
+        self.pl = try container.sdkDecodeIfPresent(.pl)
+        self.pt = try container.sdkDecodeIfPresent(.pt)
+        self.ro = try container.sdkDecodeIfPresent(.ro)
+        self.ru = try container.sdkDecodeIfPresent(.ru)
+        self.sl = try container.sdkDecodeIfPresent(.sl)
+        self.sr = try container.sdkDecodeIfPresent(.sr)
+        self.sv = try container.sdkDecodeIfPresent(.sv)
+        self.tr = try container.sdkDecodeIfPresent(.tr)
+        self.vi = try container.sdkDecodeIfPresent(.vi)
+        self.ptBr = try container.sdkDecodeIfPresent(.ptBr)
+        self.zhCn = try container.sdkDecodeIfPresent(.zhCn)
+        self.zhTw = try container.sdkDecodeIfPresent(.zhTw)
     }
 }
 
-public extension GroupTranslatedContent {
-    init(
-        type: GroupTranslatedContentType? = nil,
-        ar: GroupContent? = nil,
-        bg: GroupContent? = nil,
-        bs: GroupContent? = nil,
-        ca: GroupContent? = nil,
-        cs: GroupContent? = nil,
-        da: GroupContent? = nil,
-        de: GroupContent? = nil,
-        el: GroupContent? = nil,
-        en: GroupContent? = nil,
-        es: GroupContent? = nil,
-        et: GroupContent? = nil,
-        fi: GroupContent? = nil,
-        fr: GroupContent? = nil,
-        he: GroupContent? = nil,
-        hr: GroupContent? = nil,
-        hu: GroupContent? = nil,
-        id: GroupContent? = nil,
-        it: GroupContent? = nil,
-        ja: GroupContent? = nil,
-        ko: GroupContent? = nil,
-        lt: GroupContent? = nil,
-        lv: GroupContent? = nil,
-        mn: GroupContent? = nil,
-        nb: GroupContent? = nil,
-        nl: GroupContent? = nil,
-        pl: GroupContent? = nil,
-        pt: GroupContent? = nil,
-        ro: GroupContent? = nil,
-        ru: GroupContent? = nil,
-        sl: GroupContent? = nil,
-        sr: GroupContent? = nil,
-        sv: GroupContent? = nil,
-        tr: GroupContent? = nil,
-        vi: GroupContent? = nil,
-        ptBr: GroupContent? = nil,
-        zhCn: GroupContent? = nil,
-        zhTw: GroupContent? = nil
-    ) {
+extension GroupTranslatedContent {
+    public init(type: GroupTranslatedContentType? = nil, ar: GroupContent? = nil, bg: GroupContent? = nil, bs: GroupContent? = nil, ca: GroupContent? = nil, cs: GroupContent? = nil, da: GroupContent? = nil, de: GroupContent? = nil, el: GroupContent? = nil, en: GroupContent? = nil, es: GroupContent? = nil, et: GroupContent? = nil, fi: GroupContent? = nil, fr: GroupContent? = nil, he: GroupContent? = nil, hr: GroupContent? = nil, hu: GroupContent? = nil, id: GroupContent? = nil, it: GroupContent? = nil, ja: GroupContent? = nil, ko: GroupContent? = nil, lt: GroupContent? = nil, lv: GroupContent? = nil, mn: GroupContent? = nil, nb: GroupContent? = nil, nl: GroupContent? = nil, pl: GroupContent? = nil, pt: GroupContent? = nil, ro: GroupContent? = nil, ru: GroupContent? = nil, sl: GroupContent? = nil, sr: GroupContent? = nil, sv: GroupContent? = nil, tr: GroupContent? = nil, vi: GroupContent? = nil, ptBr: GroupContent? = nil, zhCn: GroupContent? = nil, zhTw: GroupContent? = nil) {
         self.init()
         (self.type, self.ar) = (type, ar)
         (self.bg, self.bs) = (bg, bs)
@@ -290,15 +251,12 @@ public extension GroupTranslatedContent {
 public struct GroupTranslatedContentType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let groupTranslatedContent = GroupTranslatedContentType(rawValue: "group_translated_content")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -311,15 +269,12 @@ public struct GroupTranslatedContentType: RawRepresentable, Hashable, Codable, S
 public struct GroupContentType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let groupContent = GroupContentType(rawValue: "group_content")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

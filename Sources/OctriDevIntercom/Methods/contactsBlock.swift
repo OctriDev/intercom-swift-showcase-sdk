@@ -6,31 +6,16 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ContactsMethods {
-    /// Blocks a single contact. Supply the `contact_id` of the contact to block. Blocking the contact also archives the
-    /// contact's conversations.
+extension ContactsMethods {
+    /// Blocks a single contact. Supply the `contact_id` of the contact to block. Blocking the contact also archives the contact's conversations.
     ///
-    /// Block a single contact. **Note:** conversations of the contact will also be archived during the process. More
-    /// details in [FAQ How do I block Inbox spam?](https://www.intercom.com/help/en/articles/8838656-inbox-faqs)
+    /// Block a single contact. **Note:** conversations of the contact will also be archived during the process. More details in [FAQ How do I block Inbox spam?](https://www.intercom.com/help/en/articles/8838656-inbox-faqs)
     ///
     /// - Parameters:
     /// - contactId: contact_id
-    static func blockContact(
-        config: ClientConfig,
-        contactId: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ContactBlocked {
-        try await (sdkRequest(
-            "POST",
-            ["/contacts/", sdkEncodePathSegment(sdkWireString(contactId)), "/block"].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "BlockContact",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions
-        )).data
+    public static func blockContact(config: ClientConfig, contactId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ContactBlocked {
+        return try (await sdkRequest("POST", ["/contacts/", sdkEncodePathSegment(sdkWireString(contactId)), "/block"].joined(), config: config, decoder: .json, operationId: "BlockContact", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions)).data
     }
 }

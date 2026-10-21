@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// SharedContact domain models
+// SharedContact domain models
 /// An object containing notes meta data about the notes that a contact has. Up to 10 will be displayed here. Use
 /// the url to get more.
 public struct ContactNotes: Codable {
@@ -27,25 +27,25 @@ public struct ContactNotes: Codable {
     }
 
     init() {
-        (data, url, totalCount, hasMore) = (nil, nil, nil, nil)
+        (self.data, self.url, self.totalCount, self.hasMore) = (nil, nil, nil, nil)
     }
 }
 
-public extension ContactNotes {
-    init(from decoder: Decoder) throws {
+extension ContactNotes {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        data = try container.sdkDecodeIfPresent(.data)
-        url = try container.sdkDecodeIfPresent(.url)
-        totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        if let value = url {
+        self.data = try container.sdkDecodeIfPresent(.data)
+        self.url = try container.sdkDecodeIfPresent(.url)
+        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        if let value = self.url {
             try sdkValidateUri("url", value)
         }
     }
 }
 
-public extension ContactNotes {
-    init(data: [AddressableList]? = nil, url: String? = nil, totalCount: Int? = nil, hasMore: Bool? = nil) throws {
+extension ContactNotes {
+    public init(data: [AddressableList]? = nil, url: String? = nil, totalCount: Int? = nil, hasMore: Bool? = nil) throws {
         self.init()
         (self.data, self.url) = (data, url)
         (self.totalCount, self.hasMore) = (totalCount, hasMore)
@@ -78,25 +78,25 @@ public struct ContactTags: Codable {
     }
 
     init() {
-        (data, url, totalCount, hasMore) = (nil, nil, nil, nil)
+        (self.data, self.url, self.totalCount, self.hasMore) = (nil, nil, nil, nil)
     }
 }
 
-public extension ContactTags {
-    init(from decoder: Decoder) throws {
+extension ContactTags {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        data = try container.sdkDecodeIfPresent(.data)
-        url = try container.sdkDecodeIfPresent(.url)
-        totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        if let value = url {
+        self.data = try container.sdkDecodeIfPresent(.data)
+        self.url = try container.sdkDecodeIfPresent(.url)
+        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        if let value = self.url {
             try sdkValidateUri("url", value)
         }
     }
 }
 
-public extension ContactTags {
-    init(data: [AddressableList]? = nil, url: String? = nil, totalCount: Int? = nil, hasMore: Bool? = nil) throws {
+extension ContactTags {
+    public init(data: [AddressableList]? = nil, url: String? = nil, totalCount: Int? = nil, hasMore: Bool? = nil) throws {
         self.init()
         (self.data, self.url) = (data, url)
         (self.totalCount, self.hasMore) = (totalCount, hasMore)
@@ -125,21 +125,21 @@ public struct ContactReference: Codable {
     }
 
     init() {
-        (type, id, externalId) = (nil, nil, nil)
+        (self.type, self.id, self.externalId) = (nil, nil, nil)
     }
 }
 
-public extension ContactReference {
-    init(from decoder: Decoder) throws {
+extension ContactReference {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        externalId = try container.sdkDecodeIfPresent(.externalId)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.externalId = try container.sdkDecodeIfPresent(.externalId)
     }
 }
 
-public extension ContactReference {
-    init(type: ContactReferenceType? = nil, id: String? = nil, externalId: String? = nil) {
+extension ContactReference {
+    public init(type: ContactReferenceType? = nil, id: String? = nil, externalId: String? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         self.externalId = externalId
@@ -169,22 +169,22 @@ public struct ContactLocation: Codable {
     }
 
     init() {
-        (type, country, region, city) = (nil, nil, nil, nil)
+        (self.type, self.country, self.region, self.city) = (nil, nil, nil, nil)
     }
 }
 
-public extension ContactLocation {
-    init(from decoder: Decoder) throws {
+extension ContactLocation {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        country = try container.sdkDecodeIfPresent(.country)
-        region = try container.sdkDecodeIfPresent(.region)
-        city = try container.sdkDecodeIfPresent(.city)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.country = try container.sdkDecodeIfPresent(.country)
+        self.region = try container.sdkDecodeIfPresent(.region)
+        self.city = try container.sdkDecodeIfPresent(.city)
     }
 }
 
-public extension ContactLocation {
-    init(type: String? = nil, country: String? = nil, region: String? = nil, city: String? = nil) {
+extension ContactLocation {
+    public init(type: String? = nil, country: String? = nil, region: String? = nil, city: String? = nil) {
         self.init()
         (self.type, self.country) = (type, country)
         (self.region, self.city) = (region, city)
@@ -214,25 +214,25 @@ public struct ContactCompanies: Codable {
     }
 
     init() {
-        (data, url, totalCount, hasMore) = (nil, nil, nil, nil)
+        (self.data, self.url, self.totalCount, self.hasMore) = (nil, nil, nil, nil)
     }
 }
 
-public extension ContactCompanies {
-    init(from decoder: Decoder) throws {
+extension ContactCompanies {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        data = try container.sdkDecodeIfPresent(.data)
-        url = try container.sdkDecodeIfPresent(.url)
-        totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        hasMore = try container.sdkDecodeIfPresent(.hasMore)
-        if let value = url {
+        self.data = try container.sdkDecodeIfPresent(.data)
+        self.url = try container.sdkDecodeIfPresent(.url)
+        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        if let value = self.url {
             try sdkValidateUri("url", value)
         }
     }
 }
 
-public extension ContactCompanies {
-    init(data: [CompanyData]? = nil, url: String? = nil, totalCount: Int? = nil, hasMore: Bool? = nil) throws {
+extension ContactCompanies {
+    public init(data: [CompanyData]? = nil, url: String? = nil, totalCount: Int? = nil, hasMore: Bool? = nil) throws {
         self.init()
         (self.data, self.url) = (data, url)
         (self.totalCount, self.hasMore) = (totalCount, hasMore)
@@ -252,19 +252,19 @@ public struct ContactSocialProfiles: Codable {
     }
 
     init() {
-        data = nil
+        self.data = nil
     }
 }
 
-public extension ContactSocialProfiles {
-    init(from decoder: Decoder) throws {
+extension ContactSocialProfiles {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension ContactSocialProfiles {
-    init(data: [SocialProfile]? = nil) {
+extension ContactSocialProfiles {
+    public init(data: [SocialProfile]? = nil) {
         self.init()
         self.data = data
     }
@@ -274,15 +274,12 @@ public extension ContactSocialProfiles {
 public struct ContactReferenceType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let contact = ContactReferenceType(rawValue: "contact")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

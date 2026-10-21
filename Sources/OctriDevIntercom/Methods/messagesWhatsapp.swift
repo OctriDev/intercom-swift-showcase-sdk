@@ -6,23 +6,15 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension MessagesMethods {
-    /// Retrieves the delivery status and conversation details for a specific WhatsApp message. Supply the message's
-    /// `message_id` to check whether it was sent, delivered, read, or failed. The response includes error details when
-    /// delivery fails.
+extension MessagesMethods {
+    /// Retrieves the delivery status and conversation details for a specific WhatsApp message. Supply the message's `message_id` to check whether it was sent, delivered, read, or failed. The response includes error details when delivery fails.
     ///
-    /// Retrieves the delivery status of a specific WhatsApp message by its message ID. Returns the current status,
-    /// conversation details, and any error information if the message failed to deliver.
+    /// Retrieves the delivery status of a specific WhatsApp message by its message ID. Returns the current status, conversation details, and any error information if the message failed to deliver.
     ///
     /// - Parameters:
     /// - messageId: The WhatsApp message ID to check status for
-    static func retrieveWhatsAppMessageStatus(
-        config: ClientConfig,
-        messageId: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> WhatsappMessageStatus {
-        try await (sdkRequest("GET", "/messages/whatsapp/status", config: config, query: [
+    public static func retrieveWhatsAppMessageStatus(config: ClientConfig, messageId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> WhatsappMessageStatus {
+        return try (await sdkRequest("GET", "/messages/whatsapp/status", config: config, query: [
             SdkQueryParameter("message_id", value: messageId),
         ], decoder: .json, operationId: "RetrieveWhatsAppMessageStatus", extraHeaders: sdkHeaders([
             ("Intercom-Version", sdkHeaderValue(intercomVersion)),

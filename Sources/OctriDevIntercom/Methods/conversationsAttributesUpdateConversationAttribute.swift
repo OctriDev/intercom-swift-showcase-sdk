@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ConversationsAttributesMethods {
-    struct UpdateConversationAttributeOptions: Codable {
+extension ConversationsAttributesMethods {
+    public struct UpdateConversationAttributeOptions: Codable {
         public var id: Int
         public var intercomVersion: IntercomVersion?
         public var name: String?
@@ -22,8 +22,7 @@ public extension ConversationsAttributesMethods {
         }
     }
 
-    /// Updates an existing conversation attribute's configuration. Supply the fields to change, such as `name`,
-    /// `description`, or team visibility; for relationship attributes, `reference.type` must be `one` or `many`.
+    /// Updates an existing conversation attribute's configuration. Supply the fields to change, such as `name`, `description`, or team visibility; for relationship attributes, `reference.type` must be `one` or `many`.
     ///
     /// Update an existing conversation attribute.
     ///
@@ -38,25 +37,11 @@ public extension ConversationsAttributesMethods {
     ///   all teams.
     /// - reference: (Relationship data type only) Reference configuration for
     ///   related objects.
-    static func updateConversationAttribute(
-        config: ClientConfig,
-        options: UpdateConversationAttributeOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ConversationAttribute {
+    public static func updateConversationAttribute(config: ClientConfig, options: UpdateConversationAttributeOptions, requestOptions: RequestOptions? = nil) async throws -> ConversationAttribute {
         let requestBody = UpdateConversationAttributeRequestBody(options: options)
 
-        return try await (sdkRequest(
-            "PUT",
-            ["/conversations/attributes/", sdkEncodePathSegment(sdkWireString(options.id))].joined(),
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "updateConversationAttribute",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "404": Error2.self]
-        )).data
+        return try (await sdkRequest("PUT", ["/conversations/attributes/", sdkEncodePathSegment(sdkWireString(options.id))].joined(), config: config, body: requestBody, decoder: .json, operationId: "updateConversationAttribute", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
     }
 }

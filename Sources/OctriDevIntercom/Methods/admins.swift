@@ -8,52 +8,31 @@ import Foundation
 #endif
 public enum AdminsMethods {}
 
-public extension AdminsMethods {
-    /// Lists the admins associated with the workspace. Set `display_avatar` to `true` to include each admin's avatar
-    /// object and image URL; it defaults to `false` when omitted.
+extension AdminsMethods {
+    /// Lists the admins associated with the workspace. Set `display_avatar` to `true` to include each admin's avatar object and image URL; it defaults to `false` when omitted.
     ///
     /// You can fetch a list of admins for a given workspace.
     ///
     /// - Parameters:
     /// - displayAvatar: If set to true, the response will include the admin's
     ///   avatar object containing the image URL. Defaults to false.
-    static func listAdmins(
-        config: ClientConfig,
-        displayAvatar: Bool? = nil,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> AdminList {
-        try await (sdkRequest("GET", "/admins", config: config, query: [
+    public static func listAdmins(config: ClientConfig, displayAvatar: Bool? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> AdminList {
+        return try (await sdkRequest("GET", "/admins", config: config, query: [
             SdkQueryParameter("display_avatar", value: displayAvatar),
         ], decoder: .json, operationId: "listAdmins", extraHeaders: sdkHeaders([
             ("Intercom-Version", sdkHeaderValue(intercomVersion)),
         ]), options: requestOptions, errors: ["401": Error2.self])).data
     }
 
-    /// Retrieves the details of a specific admin account. Use the admin identifier to view the admin's profile, away
-    /// settings, team assignments, and role information when present.
+    /// Retrieves the details of a specific admin account. Use the admin identifier to view the admin's profile, away settings, team assignments, and role information when present.
     ///
     /// You can retrieve the details of a single admin.
     ///
     /// - Parameters:
     /// - adminId: The unique identifier of a given admin
-    static func retrieveAdmin(
-        config: ClientConfig,
-        adminId: Int,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Admin {
-        try await (sdkRequest(
-            "GET",
-            ["/admins/", sdkEncodePathSegment(sdkWireString(adminId))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "retrieveAdmin",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "404": Error2.self]
-        )).data
+    public static func retrieveAdmin(config: ClientConfig, adminId: Int, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Admin {
+        return try (await sdkRequest("GET", ["/admins/", sdkEncodePathSegment(sdkWireString(adminId))].joined(), config: config, decoder: .json, operationId: "retrieveAdmin", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
     }
 }

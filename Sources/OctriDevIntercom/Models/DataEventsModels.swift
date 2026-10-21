@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// DataEvents domain models
+// DataEvents domain models
 /// A list of event summaries for the user. Each event summary should contain the event name, the time the event
 /// occurred, and the number of times the event occurred. The event name should be a past tense 'verb-noun'
 /// combination, to improve readability, for example `updated-plan`.
@@ -30,22 +30,22 @@ public struct CreateDataEventSummariesRequestEventSummaries: Codable {
     }
 
     init() {
-        (eventName, count, first, last) = (nil, nil, nil, nil)
+        (self.eventName, self.count, self.first, self.last) = (nil, nil, nil, nil)
     }
 }
 
-public extension CreateDataEventSummariesRequestEventSummaries {
-    init(from decoder: Decoder) throws {
+extension CreateDataEventSummariesRequestEventSummaries {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        eventName = try container.sdkDecodeIfPresent(.eventName)
-        count = try container.sdkDecodeIfPresent(.count)
-        first = try container.sdkDecodeIfPresent(.first)
-        last = try container.sdkDecodeIfPresent(.last)
+        self.eventName = try container.sdkDecodeIfPresent(.eventName)
+        self.count = try container.sdkDecodeIfPresent(.count)
+        self.first = try container.sdkDecodeIfPresent(.first)
+        self.last = try container.sdkDecodeIfPresent(.last)
     }
 }
 
-public extension CreateDataEventSummariesRequestEventSummaries {
-    init(eventName: String? = nil, count: Int? = nil, first: Int? = nil, last: Int? = nil) {
+extension CreateDataEventSummariesRequestEventSummaries {
+    public init(eventName: String? = nil, count: Int? = nil, first: Int? = nil, last: Int? = nil) {
         self.init()
         (self.eventName, self.count) = (eventName, count)
         (self.first, self.last) = (first, last)
@@ -70,20 +70,20 @@ public struct CreateDataEventSummariesRequest: Codable {
     }
 
     init() {
-        (userId, eventSummaries) = (nil, nil)
+        (self.userId, self.eventSummaries) = (nil, nil)
     }
 }
 
-public extension CreateDataEventSummariesRequest {
-    init(from decoder: Decoder) throws {
+extension CreateDataEventSummariesRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        userId = try container.sdkDecodeIfPresent(.userId)
-        eventSummaries = try container.sdkDecodeIfPresent(.eventSummaries)
+        self.userId = try container.sdkDecodeIfPresent(.userId)
+        self.eventSummaries = try container.sdkDecodeIfPresent(.eventSummaries)
     }
 }
 
-public extension CreateDataEventSummariesRequest {
-    init(userId: String? = nil, eventSummaries: CreateDataEventSummariesRequestEventSummaries? = nil) {
+extension CreateDataEventSummariesRequest {
+    public init(userId: String? = nil, eventSummaries: CreateDataEventSummariesRequestEventSummaries? = nil) {
         self.init()
         (self.userId, self.eventSummaries) = (userId, eventSummaries)
     }
@@ -116,29 +116,23 @@ public struct DataEventSummaryItem: Codable {
     }
 
     init() {
-        (name, first, last, count, description) = (nil, nil, nil, nil, nil)
+        (self.name, self.first, self.last, self.count, self.description) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension DataEventSummaryItem {
-    init(from decoder: Decoder) throws {
+extension DataEventSummaryItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        first = try container.sdkDecodeIfPresent(.first)
-        last = try container.sdkDecodeIfPresent(.last)
-        count = try container.sdkDecodeIfPresent(.count)
-        description = try container.sdkDecodeIfPresent(.description)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.first = try container.sdkDecodeIfPresent(.first)
+        self.last = try container.sdkDecodeIfPresent(.last)
+        self.count = try container.sdkDecodeIfPresent(.count)
+        self.description = try container.sdkDecodeIfPresent(.description)
     }
 }
 
-public extension DataEventSummaryItem {
-    init(
-        name: String? = nil,
-        first: String? = nil,
-        last: String? = nil,
-        count: Int? = nil,
-        description: String? = nil
-    ) {
+extension DataEventSummaryItem {
+    public init(name: String? = nil, first: String? = nil, last: String? = nil, count: Int? = nil, description: String? = nil) {
         self.init()
         (self.name, self.first) = (name, first)
         (self.last, self.count) = (last, count)
@@ -172,29 +166,23 @@ public struct DataEventSummary: Codable {
     }
 
     init() {
-        (type, email, intercomUserId, userId, events) = (nil, nil, nil, nil, nil)
+        (self.type, self.email, self.intercomUserId, self.userId, self.events) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension DataEventSummary {
-    init(from decoder: Decoder) throws {
+extension DataEventSummary {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        email = try container.sdkDecodeIfPresent(.email)
-        intercomUserId = try container.sdkDecodeIfPresent(.intercomUserId)
-        userId = try container.sdkDecodeIfPresent(.userId)
-        events = try container.sdkDecodeIfPresent(.events)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.email = try container.sdkDecodeIfPresent(.email)
+        self.intercomUserId = try container.sdkDecodeIfPresent(.intercomUserId)
+        self.userId = try container.sdkDecodeIfPresent(.userId)
+        self.events = try container.sdkDecodeIfPresent(.events)
     }
 }
 
-public extension DataEventSummary {
-    init(
-        type: DataEventSummaryType? = nil,
-        email: String? = nil,
-        intercomUserId: String? = nil,
-        userId: String? = nil,
-        events: [DataEventSummaryItem?]? = nil
-    ) {
+extension DataEventSummary {
+    public init(type: DataEventSummaryType? = nil, email: String? = nil, intercomUserId: String? = nil, userId: String? = nil, events: [DataEventSummaryItem?]? = nil) {
         self.init()
         (self.type, self.email) = (type, email)
         (self.intercomUserId, self.userId) = (intercomUserId, userId)
@@ -236,32 +224,25 @@ public struct CreateDataEventRequest: Codable {
     }
 
     init() {
-        (eventName, createdAt, userId, id, email) = (nil, nil, nil, nil, nil)
-        metadata = nil
+        (self.eventName, self.createdAt, self.userId, self.id, self.email) = (nil, nil, nil, nil, nil)
+        self.metadata = nil
     }
 }
 
-public extension CreateDataEventRequest {
-    init(from decoder: Decoder) throws {
+extension CreateDataEventRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        eventName = try container.sdkDecodeIfPresent(.eventName)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        userId = try container.sdkDecodeIfPresent(.userId)
-        id = try container.sdkDecodeIfPresent(.id)
-        email = try container.sdkDecodeIfPresent(.email)
-        metadata = try container.sdkDecodeIfPresent(.metadata)
+        self.eventName = try container.sdkDecodeIfPresent(.eventName)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.userId = try container.sdkDecodeIfPresent(.userId)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.email = try container.sdkDecodeIfPresent(.email)
+        self.metadata = try container.sdkDecodeIfPresent(.metadata)
     }
 }
 
-public extension CreateDataEventRequest {
-    init(
-        eventName: String? = nil,
-        createdAt: Int? = nil,
-        userId: String? = nil,
-        id: String? = nil,
-        email: String? = nil,
-        metadata: [String: String]? = nil
-    ) {
+extension CreateDataEventRequest {
+    public init(eventName: String? = nil, createdAt: Int? = nil, userId: String? = nil, id: String? = nil, email: String? = nil, metadata: [String: String]? = nil) {
         self.init()
         (self.eventName, self.createdAt) = (eventName, createdAt)
         (self.userId, self.id) = (userId, id)
@@ -273,15 +254,12 @@ public extension CreateDataEventRequest {
 public struct DataEventSummaryType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let eventSummary = DataEventSummaryType(rawValue: "event.summary")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

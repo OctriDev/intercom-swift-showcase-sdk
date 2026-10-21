@@ -3,28 +3,11 @@
 
 import Foundation
 
-public extension ConversationsNamespace {
-    /// Lists IDs and retained metadata for deleted conversations. Use `page` and `per_page` to paginate the results;
-    /// each page contains up to 20 results by default. Set `order` to `asc` or `desc` to control the ordering of
-    /// conversation IDs.
+extension ConversationsNamespace {
+/// Lists IDs and retained metadata for deleted conversations. Use `page` and `per_page` to paginate the results; each page contains up to 20 results by default. Set `order` to `asc` or `desc` to control the ordering of conversation IDs.
     ///
-    /// List all deleted conversation IDs. {% admonition type="warning" name="Pagination" %} You can use pagination to
-    /// limit the number of results returned. The default is `20` results per page. You can navigate to next pages using
-    /// the `page` param. {% /admonition %}
-    func listDeletedIds(
-        page: Int? = nil,
-        perPage: Int? = nil,
-        order: String? = nil,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DeletedConversationList {
-        try await ConversationsMethods.listDeletedConversationIds(
-            config: config,
-            page: page,
-            perPage: perPage,
-            order: order,
-            intercomVersion: intercomVersion,
-            requestOptions: requestOptions
-        )
+    /// List all deleted conversation IDs. {% admonition type="warning" name="Pagination" %} You can use pagination to limit the number of results returned. The default is `20` results per page. You can navigate to next pages using the `page` param. {% /admonition %}
+    public func listDeletedIds(page: Int? = nil, perPage: Int? = nil, order: String? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DeletedConversationList {
+        return try await ConversationsMethods.listDeletedConversationIds(config: config, page: page, perPage: perPage, order: order, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 }

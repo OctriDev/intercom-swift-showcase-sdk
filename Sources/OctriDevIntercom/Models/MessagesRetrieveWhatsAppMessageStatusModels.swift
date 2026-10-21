@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Messages domain models
+// Messages domain models
 /// Error details, present only when status is "failed"
 public struct WhatsappMessageStatusError: Codable {
     /// Error message
@@ -17,20 +17,20 @@ public struct WhatsappMessageStatusError: Codable {
     }
 
     init() {
-        (message, details) = (nil, nil)
+        (self.message, self.details) = (nil, nil)
     }
 }
 
-public extension WhatsappMessageStatusError {
-    init(from decoder: Decoder) throws {
+extension WhatsappMessageStatusError {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        message = try container.sdkDecodeIfPresent(.message)
-        details = try container.sdkDecodeIfPresent(.details)
+        self.message = try container.sdkDecodeIfPresent(.message)
+        self.details = try container.sdkDecodeIfPresent(.details)
     }
 }
 
-public extension WhatsappMessageStatusError {
-    init(message: String? = nil, details: String? = nil) {
+extension WhatsappMessageStatusError {
+    public init(message: String? = nil, details: String? = nil) {
         self.init()
         (self.message, self.details) = (message, details)
     }
@@ -74,36 +74,27 @@ public struct WhatsappMessageStatus: Codable {
     }
 
     init() {
-        (conversationId, status, type, createdAt, updatedAt) = (nil, nil, nil, nil, nil)
-        (templateName, messageId, error) = (nil, nil, nil)
+        (self.conversationId, self.status, self.type, self.createdAt, self.updatedAt) = (nil, nil, nil, nil, nil)
+        (self.templateName, self.messageId, self.error) = (nil, nil, nil)
     }
 }
 
-public extension WhatsappMessageStatus {
-    init(from decoder: Decoder) throws {
+extension WhatsappMessageStatus {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        conversationId = try container.sdkDecodeIfPresent(.conversationId)
-        status = try container.sdkDecodeIfPresent(.status)
-        type = try container.sdkDecodeIfPresent(.type)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        templateName = try container.sdkDecodeIfPresent(.templateName)
-        messageId = try container.sdkDecodeIfPresent(.messageId)
-        error = try container.sdkDecodeIfPresent(.error)
+        self.conversationId = try container.sdkDecodeIfPresent(.conversationId)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.templateName = try container.sdkDecodeIfPresent(.templateName)
+        self.messageId = try container.sdkDecodeIfPresent(.messageId)
+        self.error = try container.sdkDecodeIfPresent(.error)
     }
 }
 
-public extension WhatsappMessageStatus {
-    init(
-        conversationId: String? = nil,
-        status: WhatsappMessageStatusStatus? = nil,
-        type: String? = nil,
-        createdAt: Int? = nil,
-        updatedAt: Int? = nil,
-        templateName: String? = nil,
-        messageId: String? = nil,
-        error: WhatsappMessageStatusError? = nil
-    ) {
+extension WhatsappMessageStatus {
+    public init(conversationId: String? = nil, status: WhatsappMessageStatusStatus? = nil, type: String? = nil, createdAt: Int? = nil, updatedAt: Int? = nil, templateName: String? = nil, messageId: String? = nil, error: WhatsappMessageStatusError? = nil) {
         self.init()
         (self.conversationId, self.status) = (conversationId, status)
         (self.type, self.createdAt) = (type, createdAt)
@@ -116,10 +107,7 @@ public extension WhatsappMessageStatus {
 public struct WhatsappMessageStatusStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let sent = WhatsappMessageStatusStatus(rawValue: "sent")
     public static let delivered = WhatsappMessageStatusStatus(rawValue: "delivered")
     public static let read = WhatsappMessageStatusStatus(rawValue: "read")
@@ -127,7 +115,7 @@ public struct WhatsappMessageStatusStatus: RawRepresentable, Hashable, Codable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

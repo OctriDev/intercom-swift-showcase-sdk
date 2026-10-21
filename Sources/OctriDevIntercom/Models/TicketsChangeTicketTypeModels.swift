@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Tickets domain models
+// Tickets domain models
 /// You can change the type of a Ticket
 public struct ChangeTicketTypeRequest: Codable {
     /// The ID of the new ticket type. Must be in the same category as the current type.
@@ -23,36 +23,26 @@ public struct ChangeTicketTypeRequest: Codable {
         case ticketAttributes = "ticket_attributes"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ChangeTicketTypeRequest {
-    init(from decoder: Decoder) throws {
+extension ChangeTicketTypeRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.ticketTypeId) else {
-            throw SdkValidationError(
-                field: "ticket_type_id",
-                code: "required",
-                message: "Validation failed for 'ticket_type_id': value is required"
-            )
+            throw SdkValidationError(field: "ticket_type_id", code: "required", message: "Validation failed for 'ticket_type_id': value is required")
         }
         guard container.contains(.ticketStateId) else {
-            throw SdkValidationError(
-                field: "ticket_state_id",
-                code: "required",
-                message: "Validation failed for 'ticket_state_id': value is required"
-            )
+            throw SdkValidationError(field: "ticket_state_id", code: "required", message: "Validation failed for 'ticket_state_id': value is required")
         }
-        ticketTypeId = try container.sdkDecodeRequired(.ticketTypeId)
-        ticketStateId = try container.sdkDecodeRequired(.ticketStateId)
-        ticketAttributes = try container.sdkDecodeIfPresent(.ticketAttributes)
+        self.ticketTypeId = try container.sdkDecodeRequired(.ticketTypeId)
+        self.ticketStateId = try container.sdkDecodeRequired(.ticketStateId)
+        self.ticketAttributes = try container.sdkDecodeIfPresent(.ticketAttributes)
     }
 }
 
-public extension ChangeTicketTypeRequest {
-    init(ticketTypeId: String, ticketStateId: String, ticketAttributes: [String: JSONValue]? = nil) {
+extension ChangeTicketTypeRequest {
+    public init(ticketTypeId: String, ticketStateId: String, ticketAttributes: [String: JSONValue]? = nil) {
         (self.ticketTypeId, self.ticketStateId) = (ticketTypeId, ticketStateId)
         self.ticketAttributes = ticketAttributes
     }

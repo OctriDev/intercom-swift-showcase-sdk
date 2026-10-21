@@ -6,32 +6,17 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension CompaniesMethods {
-    /// Lists the segments associated with a specific company. Use the company identifier to retrieve the segments that
-    /// belong to it.
+extension CompaniesMethods {
+    /// Lists the segments associated with a specific company. Use the company identifier to retrieve the segments that belong to it.
     ///
     /// You can fetch a list of all segments that belong to a company.
     ///
     /// - Parameters:
     /// - companyId: The unique identifier for the company which is given by
     ///   Intercom
-    static func listCompaniesAttachedSegments(
-        config: ClientConfig,
-        companyId: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> CompanyAttachedSegments {
-        try await (sdkRequest(
-            "GET",
-            ["/companies/", sdkEncodePathSegment(sdkWireString(companyId)), "/segments"].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "listCompaniesAttachedSegments",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "404": Error2.self]
-        )).data
+    public static func listCompaniesAttachedSegments(config: ClientConfig, companyId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> CompanyAttachedSegments {
+        return try (await sdkRequest("GET", ["/companies/", sdkEncodePathSegment(sdkWireString(companyId)), "/segments"].joined(), config: config, decoder: .json, operationId: "listCompaniesAttachedSegments", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Contacts domain models
+// Contacts domain models
 /// A paginated list of deleted contacts.
 public struct DeletedContactList: Codable {
     /// Always list
@@ -29,27 +29,22 @@ public struct DeletedContactList: Codable {
     }
 
     init() {
-        (type, data, totalCount, pages) = (nil, nil, nil, nil)
+        (self.type, self.data, self.totalCount, self.pages) = (nil, nil, nil, nil)
     }
 }
 
-public extension DeletedContactList {
-    init(from decoder: Decoder) throws {
+extension DeletedContactList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        data = try container.sdkDecodeIfPresent(.data)
-        totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        pages = try container.sdkDecodeIfPresent(.pages)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.data = try container.sdkDecodeIfPresent(.data)
+        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        self.pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-public extension DeletedContactList {
-    init(
-        type: DeletedContactListType? = nil,
-        data: [DeletedContact]? = nil,
-        totalCount: Int? = nil,
-        pages: DeletedContactListPages? = nil
-    ) {
+extension DeletedContactList {
+    public init(type: DeletedContactListType? = nil, data: [DeletedContact]? = nil, totalCount: Int? = nil, pages: DeletedContactListPages? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
         (self.totalCount, self.pages) = (totalCount, pages)
@@ -97,36 +92,27 @@ public struct DeletedContact: Codable {
     }
 
     init() {
-        (type, id, externalId, email, role) = (nil, nil, nil, nil, nil)
-        (status, mergedIntoId, updatedAt) = (nil, nil, nil)
+        (self.type, self.id, self.externalId, self.email, self.role) = (nil, nil, nil, nil, nil)
+        (self.status, self.mergedIntoId, self.updatedAt) = (nil, nil, nil)
     }
 }
 
-public extension DeletedContact {
-    init(from decoder: Decoder) throws {
+extension DeletedContact {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        externalId = try container.sdkDecodeIfPresent(.externalId)
-        email = try container.sdkDecodeIfPresent(.email)
-        role = try container.sdkDecodeIfPresent(.role)
-        status = try container.sdkDecodeIfPresent(.status)
-        mergedIntoId = try container.sdkDecodeIfPresent(.mergedIntoId)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.externalId = try container.sdkDecodeIfPresent(.externalId)
+        self.email = try container.sdkDecodeIfPresent(.email)
+        self.role = try container.sdkDecodeIfPresent(.role)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.mergedIntoId = try container.sdkDecodeIfPresent(.mergedIntoId)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
     }
 }
 
-public extension DeletedContact {
-    init(
-        type: DeletedContactType? = nil,
-        id: String? = nil,
-        externalId: String? = nil,
-        email: String? = nil,
-        role: DeletedContactRole? = nil,
-        status: DeletedContactStatus? = nil,
-        mergedIntoId: String? = nil,
-        updatedAt: Int? = nil
-    ) {
+extension DeletedContact {
+    public init(type: DeletedContactType? = nil, id: String? = nil, externalId: String? = nil, email: String? = nil, role: DeletedContactRole? = nil, status: DeletedContactStatus? = nil, mergedIntoId: String? = nil, updatedAt: Int? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.externalId, self.email) = (externalId, email)
@@ -158,22 +144,22 @@ public struct DeletedContactListPages: Codable {
     }
 
     init() {
-        (type, page, perPage, totalPages) = (nil, nil, nil, nil)
+        (self.type, self.page, self.perPage, self.totalPages) = (nil, nil, nil, nil)
     }
 }
 
-public extension DeletedContactListPages {
-    init(from decoder: Decoder) throws {
+extension DeletedContactListPages {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        page = try container.sdkDecodeIfPresent(.page)
-        perPage = try container.sdkDecodeIfPresent(.perPage)
-        totalPages = try container.sdkDecodeIfPresent(.totalPages)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.page = try container.sdkDecodeIfPresent(.page)
+        self.perPage = try container.sdkDecodeIfPresent(.perPage)
+        self.totalPages = try container.sdkDecodeIfPresent(.totalPages)
     }
 }
 
-public extension DeletedContactListPages {
-    init(type: DeletedContactListPagesType? = nil, page: Int? = nil, perPage: Int? = nil, totalPages: Int? = nil) {
+extension DeletedContactListPages {
+    public init(type: DeletedContactListPagesType? = nil, page: Int? = nil, perPage: Int? = nil, totalPages: Int? = nil) {
         self.init()
         (self.type, self.page) = (type, page)
         (self.perPage, self.totalPages) = (perPage, totalPages)
@@ -184,15 +170,12 @@ public extension DeletedContactListPages {
 public struct DeletedContactListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let list = DeletedContactListType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -205,16 +188,13 @@ public struct DeletedContactListType: RawRepresentable, Hashable, Codable, Senda
 public struct DeletedContactRole: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let user = DeletedContactRole(rawValue: "user")
     public static let lead = DeletedContactRole(rawValue: "lead")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -227,10 +207,7 @@ public struct DeletedContactRole: RawRepresentable, Hashable, Codable, Sendable,
 public struct DeletedContactStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let archived = DeletedContactStatus(rawValue: "archived")
     public static let blocked = DeletedContactStatus(rawValue: "blocked")
     public static let merged = DeletedContactStatus(rawValue: "merged")
@@ -239,7 +216,7 @@ public struct DeletedContactStatus: RawRepresentable, Hashable, Codable, Sendabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -252,15 +229,12 @@ public struct DeletedContactStatus: RawRepresentable, Hashable, Codable, Sendabl
 public struct DeletedContactType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let contact = DeletedContactType(rawValue: "contact")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -273,15 +247,12 @@ public struct DeletedContactType: RawRepresentable, Hashable, Codable, Sendable,
 public struct DeletedContactListPagesType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let pages = DeletedContactListPagesType(rawValue: "pages")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

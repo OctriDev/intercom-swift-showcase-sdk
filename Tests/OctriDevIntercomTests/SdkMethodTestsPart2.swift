@@ -40,13 +40,13 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.content.bulkActions(
-                action: decoded("\"publish\""),
-                contentIds: decoded(sdkMethodFixture24Value1),
-                intercomVersion: decoded("\"2.17\""),
-                availability: decoded("null"),
-                audience: decoded("null"),
-                tags: decoded("null")
-            )
+            action: decoded("\"publish\""),
+            contentIds: decoded(sdkMethodFixture24Value1),
+            intercomVersion: decoded("\"2.17\""),
+            availability: decoded("null"),
+            audience: decoded("null"),
+            tags: decoded("null")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -93,10 +93,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.contacts.bulkCreate(
-                contacts: decoded(sdkMethodFixture26Value1),
-                intercomVersion: decoded("\"2.17\""),
-                job: decoded("null")
-            )
+            contacts: decoded(sdkMethodFixture26Value1),
+            intercomVersion: decoded("\"2.17\""),
+            job: decoded("null")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -143,10 +143,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.contacts.bulkDelete(
-                contacts: decoded("[{\"id\":\"abc123\"},{\"id\":\"def456\"}]"),
-                intercomVersion: decoded("\"2.17\""),
-                job: decoded("null")
-            )
+            contacts: decoded("[{\"id\":\"abc123\"},{\"id\":\"def456\"}]"),
+            intercomVersion: decoded("\"2.17\""),
+            job: decoded("null")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -193,10 +193,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.contacts.bulkUpdate(
-                contacts: decoded(sdkMethodFixture30Value1),
-                intercomVersion: decoded("\"2.17\""),
-                job: decoded("null")
-            )
+            contacts: decoded(sdkMethodFixture30Value1),
+            intercomVersion: decoded("\"2.17\""),
+            job: decoded("null")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -264,12 +264,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.tickets.changeType(
-                ticketId: decoded("\"ticket-1\""),
-                ticketTypeId: decoded("\"1234\""),
-                ticketStateId: decoded("\"5678\""),
-                intercomVersion: decoded("\"2.17\""),
-                ticketAttributes: decoded("null")
-            )
+            ticketId: decoded("\"ticket-1\""),
+            ticketTypeId: decoded("\"1234\""),
+            ticketStateId: decoded("\"5678\""),
+            intercomVersion: decoded("\"2.17\""),
+            ticketAttributes: decoded("null")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -303,8 +303,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testCollectFinVoiceCallByExternalIdCollectFinVoiceCallByExternalId404ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testCollectFinVoiceCallByExternalIdCollectFinVoiceCallByExternalId404ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/404") else {
             return
         }
@@ -315,8 +314,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.calls.collectFinVoiceByExternalId(
-                externalId: decoded("\"external-1\"")
-            )
+            externalId: decoded("\"external-1\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 404)
@@ -361,8 +360,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.calls.collectFinVoiceById(
-                id: decoded("1")
-            )
+            id: decoded("1")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 404)
@@ -378,8 +377,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testCollectFinVoiceCallByPhoneNumberCollectFinVoiceCallByPhoneNumberReachesMockAndDecodesResponse(
-    ) async throws {
+    func testCollectFinVoiceCallByPhoneNumberCollectFinVoiceCallByPhoneNumberReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -397,8 +395,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testCollectFinVoiceCallByPhoneNumberCollectFinVoiceCallByPhoneNumber401ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testCollectFinVoiceCallByPhoneNumberCollectFinVoiceCallByPhoneNumber401ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -409,8 +406,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.calls.collectFinVoiceByPhoneNumber(
-                phoneNumber: decoded("\"+15555550100\"")
-            )
+            phoneNumber: decoded("\"+15555550100\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -426,8 +423,7 @@ extension SdkMethodTests {
         XCTAssertTrue(true)
     }
 
-    func testCollectFinVoiceCallsByConversationIdCollectFinVoiceCallsByConversationIdReachesMockAndDecodesResponse(
-    ) async throws {
+    func testCollectFinVoiceCallsByConversationIdCollectFinVoiceCallsByConversationIdReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -445,8 +441,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testCollectFinVoiceCallsByConversationIdCollectFinVoiceCallsByConXcec0e1bb48ReachesMockAndDecodesResponse(
-    ) async throws {
+    func testCollectFinVoiceCallsByConversationIdCollectFinVoiceCallsByConXcec0e1bb48ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -457,8 +452,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.calls.collectFinVoiceByConversationId(
-                conversationId: decoded("\"conversation-1\"")
-            )
+            conversationId: decoded("\"conversation-1\"")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -507,12 +502,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.conversations.convertToTicket(
-                conversationId: decoded("123"),
-                ticketTypeId: decoded("\"53\""),
-                intercomVersion: decoded("\"2.17\""),
-                ticketStateId: decoded("null"),
-                attributes: decoded("null")
-            )
+            conversationId: decoded("123"),
+            ticketTypeId: decoded("\"53\""),
+            intercomVersion: decoded("\"2.17\""),
+            ticketStateId: decoded("null"),
+            attributes: decoded("null")
+        )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)

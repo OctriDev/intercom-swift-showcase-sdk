@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ArticlesMethods {
-    struct CreateArticleOptions: Codable {
+extension ArticlesMethods {
+    public struct CreateArticleOptions: Codable {
         public var title: String
         public var authorId: Int
         public var intercomVersion: IntercomVersion?
@@ -32,13 +32,9 @@ public extension ArticlesMethods {
         }
     }
 
-    /// Creates a new article in the help center. Supply `title` and `author_id`; `state` defaults to draft, and you can
-    /// provide article content in HTML or Markdown. Article tags are read-only through the Articles API and must be
-    /// managed through the Tags API or the Intercom UI.
+    /// Creates a new article in the help center. Supply `title` and `author_id`; `state` defaults to draft, and you can provide article content in HTML or Markdown. Article tags are read-only through the Articles API and must be managed through the Tags API or the Intercom UI.
     ///
-    /// You can create a new article by making a POST request to `https://api.intercom.io/articles`. > 📘 Tags cannot be
-    /// managed via the Articles API > > Article tags are read-only in responses. To create, update, or delete tags, use
-    /// the Intercom UI or the Tags API endpoints.
+    /// You can create a new article by making a POST request to `https://api.intercom.io/articles`. > 📘 Tags cannot be managed via the Articles API > > Article tags are read-only in responses. To create, update, or delete tags, use the Intercom UI or the Tags API endpoints.
     ///
     /// - Parameters:
     /// - title: The title of the article.For multilingual articles, this will be
@@ -98,11 +94,7 @@ public extension ArticlesMethods {
     ///   published. Sending in the same request as `scheduled_publish_at` returns 400
     ///   — only one pending schedule per article. Empty string returns 400
     ///   `parameter_invalid`.
-    static func createArticle(
-        config: ClientConfig,
-        options: CreateArticleOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Article {
+    public static func createArticle(config: ClientConfig, options: CreateArticleOptions, requestOptions: RequestOptions? = nil) async throws -> Article {
         if let scheduledPublishAt = options.scheduledPublishAt?.valueOrNil {
             try sdkValidateDateTime("scheduled_publish_at", scheduledPublishAt)
         }
@@ -113,18 +105,8 @@ public extension ArticlesMethods {
 
         let requestBody = CreateArticleRequestBody(options: options)
 
-        return try await (sdkRequest(
-            "POST",
-            "/articles",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "createArticle",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["400": Error2.self, "401": Error2.self]
-        )).data
+        return try (await sdkRequest("POST", "/articles", config: config, body: requestBody, decoder: .json, operationId: "createArticle", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
+        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self])).data
     }
 }

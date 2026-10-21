@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Articles domain models
+// Articles domain models
 /// You can Update an Article
 public struct UpdateArticleRequestRequest: Codable {
     /// The title of the article.For multilingual articles, this will be the title of the default language's
@@ -100,66 +100,43 @@ public struct UpdateArticleRequestRequest: Codable {
     }
 
     init() {
-        (title, description, body, bodyMarkdown, authorId) = (nil, nil, nil, nil, nil)
-        (state, parentId, parentType, translatedContent, folderId) = (nil, nil, nil, nil, nil)
-        (audienceIds, aiChatbotAvailability, aiCopilotAvailability, aiSalesAgentAvailability, scheduledPublishAt) = (
-            nil,
-            nil,
-            nil,
-            nil,
-            nil
-        )
-        scheduledUnpublishAt = nil
+        (self.title, self.description, self.body, self.bodyMarkdown, self.authorId) = (nil, nil, nil, nil, nil)
+        (self.state, self.parentId, self.parentType, self.translatedContent, self.folderId) = (nil, nil, nil, nil, nil)
+        (self.audienceIds, self.aiChatbotAvailability, self.aiCopilotAvailability, self.aiSalesAgentAvailability, self.scheduledPublishAt) = (nil, nil, nil, nil, nil)
+        self.scheduledUnpublishAt = nil
     }
 }
 
-public extension UpdateArticleRequestRequest {
-    init(from decoder: Decoder) throws {
+extension UpdateArticleRequestRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        title = try container.sdkDecodeIfPresent(.title)
-        description = try container.sdkDecodeIfPresent(.description)
-        body = try container.sdkDecodeIfPresent(.body)
-        bodyMarkdown = try container.sdkDecodeIfPresent(.bodyMarkdown)
-        authorId = try container.sdkDecodeIfPresent(.authorId)
-        state = try container.sdkDecodeIfPresent(.state)
-        parentId = try container.sdkDecodeIfPresent(.parentId)
-        parentType = try container.sdkDecodeIfPresent(.parentType)
-        translatedContent = try container.sdkDecodeIfPresent(.translatedContent)
-        folderId = try container.sdkDecodeIfPresent(.folderId)
-        audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
-        aiChatbotAvailability = try container.sdkDecodeIfPresent(.aiChatbotAvailability)
-        aiCopilotAvailability = try container.sdkDecodeIfPresent(.aiCopilotAvailability)
-        aiSalesAgentAvailability = try container.sdkDecodeIfPresent(.aiSalesAgentAvailability)
-        scheduledPublishAt = try container.sdkDecodeIfPresent(.scheduledPublishAt)
-        scheduledUnpublishAt = try container.sdkDecodeIfPresent(.scheduledUnpublishAt)
-        if let value = scheduledPublishAt {
+        self.title = try container.sdkDecodeIfPresent(.title)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.body = try container.sdkDecodeIfPresent(.body)
+        self.bodyMarkdown = try container.sdkDecodeIfPresent(.bodyMarkdown)
+        self.authorId = try container.sdkDecodeIfPresent(.authorId)
+        self.state = try container.sdkDecodeIfPresent(.state)
+        self.parentId = try container.sdkDecodeIfPresent(.parentId)
+        self.parentType = try container.sdkDecodeIfPresent(.parentType)
+        self.translatedContent = try container.sdkDecodeIfPresent(.translatedContent)
+        self.folderId = try container.sdkDecodeIfPresent(.folderId)
+        self.audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
+        self.aiChatbotAvailability = try container.sdkDecodeIfPresent(.aiChatbotAvailability)
+        self.aiCopilotAvailability = try container.sdkDecodeIfPresent(.aiCopilotAvailability)
+        self.aiSalesAgentAvailability = try container.sdkDecodeIfPresent(.aiSalesAgentAvailability)
+        self.scheduledPublishAt = try container.sdkDecodeIfPresent(.scheduledPublishAt)
+        self.scheduledUnpublishAt = try container.sdkDecodeIfPresent(.scheduledUnpublishAt)
+        if let value = self.scheduledPublishAt {
             try sdkValidateDateTime("scheduled_publish_at", sdkWireString(value))
         }
-        if let value = scheduledUnpublishAt {
+        if let value = self.scheduledUnpublishAt {
             try sdkValidateDateTime("scheduled_unpublish_at", sdkWireString(value))
         }
     }
 }
 
-public extension UpdateArticleRequestRequest {
-    init(
-        title: String? = nil,
-        description: String? = nil,
-        body: String? = nil,
-        bodyMarkdown: String? = nil,
-        authorId: Int? = nil,
-        state: UpdateArticleRequestRequestState? = nil,
-        parentId: String? = nil,
-        parentType: String? = nil,
-        translatedContent: ArticleTranslatedContentRequest? = nil,
-        folderId: Int? = nil,
-        audienceIds: [Int]? = nil,
-        aiChatbotAvailability: Bool? = nil,
-        aiCopilotAvailability: Bool? = nil,
-        aiSalesAgentAvailability: Bool? = nil,
-        scheduledPublishAt: Date? = nil,
-        scheduledUnpublishAt: Date? = nil
-    ) throws {
+extension UpdateArticleRequestRequest {
+    public init(title: String? = nil, description: String? = nil, body: String? = nil, bodyMarkdown: String? = nil, authorId: Int? = nil, state: UpdateArticleRequestRequestState? = nil, parentId: String? = nil, parentType: String? = nil, translatedContent: ArticleTranslatedContentRequest? = nil, folderId: Int? = nil, audienceIds: [Int]? = nil, aiChatbotAvailability: Bool? = nil, aiCopilotAvailability: Bool? = nil, aiSalesAgentAvailability: Bool? = nil, scheduledPublishAt: Date? = nil, scheduledUnpublishAt: Date? = nil) throws {
         self.init()
         (self.title, self.description) = (title, description)
         (self.body, self.bodyMarkdown) = (body, bodyMarkdown)
@@ -227,46 +204,29 @@ public struct ArticleStatistics: Codable {
     }
 
     init() {
-        (type, views, conversions, reactions, happyReactionPercentage) = (nil, nil, nil, nil, nil)
-        (neutralReactionPercentage, sadReactionPercentage, finInvolvements, finResolutions, finResolutionRate) = (
-            nil,
-            nil,
-            nil,
-            nil,
-            nil
-        )
+        (self.type, self.views, self.conversions, self.reactions, self.happyReactionPercentage) = (nil, nil, nil, nil, nil)
+        (self.neutralReactionPercentage, self.sadReactionPercentage, self.finInvolvements, self.finResolutions, self.finResolutionRate) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ArticleStatistics {
-    init(from decoder: Decoder) throws {
+extension ArticleStatistics {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        views = try container.sdkDecodeIfPresent(.views)
-        conversions = try container.sdkDecodeIfPresent(.conversions)
-        reactions = try container.sdkDecodeIfPresent(.reactions)
-        happyReactionPercentage = try container.sdkDecodeIfPresent(.happyReactionPercentage)
-        neutralReactionPercentage = try container.sdkDecodeIfPresent(.neutralReactionPercentage)
-        sadReactionPercentage = try container.sdkDecodeIfPresent(.sadReactionPercentage)
-        finInvolvements = try container.sdkDecodeIfPresent(.finInvolvements)
-        finResolutions = try container.sdkDecodeIfPresent(.finResolutions)
-        finResolutionRate = try container.sdkDecodeIfPresent(.finResolutionRate)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.views = try container.sdkDecodeIfPresent(.views)
+        self.conversions = try container.sdkDecodeIfPresent(.conversions)
+        self.reactions = try container.sdkDecodeIfPresent(.reactions)
+        self.happyReactionPercentage = try container.sdkDecodeIfPresent(.happyReactionPercentage)
+        self.neutralReactionPercentage = try container.sdkDecodeIfPresent(.neutralReactionPercentage)
+        self.sadReactionPercentage = try container.sdkDecodeIfPresent(.sadReactionPercentage)
+        self.finInvolvements = try container.sdkDecodeIfPresent(.finInvolvements)
+        self.finResolutions = try container.sdkDecodeIfPresent(.finResolutions)
+        self.finResolutionRate = try container.sdkDecodeIfPresent(.finResolutionRate)
     }
 }
 
-public extension ArticleStatistics {
-    init(
-        type: ArticleStatisticsType? = nil,
-        views: Int? = nil,
-        conversions: Int? = nil,
-        reactions: Int? = nil,
-        happyReactionPercentage: Double? = nil,
-        neutralReactionPercentage: Double? = nil,
-        sadReactionPercentage: Double? = nil,
-        finInvolvements: Int? = nil,
-        finResolutions: Int? = nil,
-        finResolutionRate: Double? = nil
-    ) {
+extension ArticleStatistics {
+    public init(type: ArticleStatisticsType? = nil, views: Int? = nil, conversions: Int? = nil, reactions: Int? = nil, happyReactionPercentage: Double? = nil, neutralReactionPercentage: Double? = nil, sadReactionPercentage: Double? = nil, finInvolvements: Int? = nil, finResolutions: Int? = nil, finResolutionRate: Double? = nil) {
         self.init()
         (self.type, self.views) = (type, views)
         (self.conversions, self.reactions) = (conversions, reactions)
@@ -400,102 +360,63 @@ public struct ArticleTranslatedContent: Codable {
     }
 
     init() {
-        (type, ar, bg, bs, ca) = (nil, nil, nil, nil, nil)
-        (cs, da, de, el, en) = (nil, nil, nil, nil, nil)
-        (es, et, fi, fr, he) = (nil, nil, nil, nil, nil)
-        (hr, hu, id, it, ja) = (nil, nil, nil, nil, nil)
-        (ko, lt, lv, mn, nb) = (nil, nil, nil, nil, nil)
-        (nl, pl, pt, ro, ru) = (nil, nil, nil, nil, nil)
-        (sl, sr, sv, tr, vi) = (nil, nil, nil, nil, nil)
-        (ptBr, zhCn, zhTw) = (nil, nil, nil)
+        (self.type, self.ar, self.bg, self.bs, self.ca) = (nil, nil, nil, nil, nil)
+        (self.cs, self.da, self.de, self.el, self.en) = (nil, nil, nil, nil, nil)
+        (self.es, self.et, self.fi, self.fr, self.he) = (nil, nil, nil, nil, nil)
+        (self.hr, self.hu, self.id, self.it, self.ja) = (nil, nil, nil, nil, nil)
+        (self.ko, self.lt, self.lv, self.mn, self.nb) = (nil, nil, nil, nil, nil)
+        (self.nl, self.pl, self.pt, self.ro, self.ru) = (nil, nil, nil, nil, nil)
+        (self.sl, self.sr, self.sv, self.tr, self.vi) = (nil, nil, nil, nil, nil)
+        (self.ptBr, self.zhCn, self.zhTw) = (nil, nil, nil)
     }
 }
 
-public extension ArticleTranslatedContent {
-    init(from decoder: Decoder) throws {
+extension ArticleTranslatedContent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        ar = try container.sdkDecodeIfPresent(.ar)
-        bg = try container.sdkDecodeIfPresent(.bg)
-        bs = try container.sdkDecodeIfPresent(.bs)
-        ca = try container.sdkDecodeIfPresent(.ca)
-        cs = try container.sdkDecodeIfPresent(.cs)
-        da = try container.sdkDecodeIfPresent(.da)
-        de = try container.sdkDecodeIfPresent(.de)
-        el = try container.sdkDecodeIfPresent(.el)
-        en = try container.sdkDecodeIfPresent(.en)
-        es = try container.sdkDecodeIfPresent(.es)
-        et = try container.sdkDecodeIfPresent(.et)
-        fi = try container.sdkDecodeIfPresent(.fi)
-        fr = try container.sdkDecodeIfPresent(.fr)
-        he = try container.sdkDecodeIfPresent(.he)
-        hr = try container.sdkDecodeIfPresent(.hr)
-        hu = try container.sdkDecodeIfPresent(.hu)
-        id = try container.sdkDecodeIfPresent(.id)
-        it = try container.sdkDecodeIfPresent(.it)
-        ja = try container.sdkDecodeIfPresent(.ja)
-        ko = try container.sdkDecodeIfPresent(.ko)
-        lt = try container.sdkDecodeIfPresent(.lt)
-        lv = try container.sdkDecodeIfPresent(.lv)
-        mn = try container.sdkDecodeIfPresent(.mn)
-        nb = try container.sdkDecodeIfPresent(.nb)
-        nl = try container.sdkDecodeIfPresent(.nl)
-        pl = try container.sdkDecodeIfPresent(.pl)
-        pt = try container.sdkDecodeIfPresent(.pt)
-        ro = try container.sdkDecodeIfPresent(.ro)
-        ru = try container.sdkDecodeIfPresent(.ru)
-        sl = try container.sdkDecodeIfPresent(.sl)
-        sr = try container.sdkDecodeIfPresent(.sr)
-        sv = try container.sdkDecodeIfPresent(.sv)
-        tr = try container.sdkDecodeIfPresent(.tr)
-        vi = try container.sdkDecodeIfPresent(.vi)
-        ptBr = try container.sdkDecodeIfPresent(.ptBr)
-        zhCn = try container.sdkDecodeIfPresent(.zhCn)
-        zhTw = try container.sdkDecodeIfPresent(.zhTw)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.ar = try container.sdkDecodeIfPresent(.ar)
+        self.bg = try container.sdkDecodeIfPresent(.bg)
+        self.bs = try container.sdkDecodeIfPresent(.bs)
+        self.ca = try container.sdkDecodeIfPresent(.ca)
+        self.cs = try container.sdkDecodeIfPresent(.cs)
+        self.da = try container.sdkDecodeIfPresent(.da)
+        self.de = try container.sdkDecodeIfPresent(.de)
+        self.el = try container.sdkDecodeIfPresent(.el)
+        self.en = try container.sdkDecodeIfPresent(.en)
+        self.es = try container.sdkDecodeIfPresent(.es)
+        self.et = try container.sdkDecodeIfPresent(.et)
+        self.fi = try container.sdkDecodeIfPresent(.fi)
+        self.fr = try container.sdkDecodeIfPresent(.fr)
+        self.he = try container.sdkDecodeIfPresent(.he)
+        self.hr = try container.sdkDecodeIfPresent(.hr)
+        self.hu = try container.sdkDecodeIfPresent(.hu)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.it = try container.sdkDecodeIfPresent(.it)
+        self.ja = try container.sdkDecodeIfPresent(.ja)
+        self.ko = try container.sdkDecodeIfPresent(.ko)
+        self.lt = try container.sdkDecodeIfPresent(.lt)
+        self.lv = try container.sdkDecodeIfPresent(.lv)
+        self.mn = try container.sdkDecodeIfPresent(.mn)
+        self.nb = try container.sdkDecodeIfPresent(.nb)
+        self.nl = try container.sdkDecodeIfPresent(.nl)
+        self.pl = try container.sdkDecodeIfPresent(.pl)
+        self.pt = try container.sdkDecodeIfPresent(.pt)
+        self.ro = try container.sdkDecodeIfPresent(.ro)
+        self.ru = try container.sdkDecodeIfPresent(.ru)
+        self.sl = try container.sdkDecodeIfPresent(.sl)
+        self.sr = try container.sdkDecodeIfPresent(.sr)
+        self.sv = try container.sdkDecodeIfPresent(.sv)
+        self.tr = try container.sdkDecodeIfPresent(.tr)
+        self.vi = try container.sdkDecodeIfPresent(.vi)
+        self.ptBr = try container.sdkDecodeIfPresent(.ptBr)
+        self.zhCn = try container.sdkDecodeIfPresent(.zhCn)
+        self.zhTw = try container.sdkDecodeIfPresent(.zhTw)
     }
 }
 
-public extension ArticleTranslatedContent {
-    init(
-        type: ArticleTranslatedContentType? = nil,
-        ar: ArticleContent? = nil,
-        bg: ArticleContent? = nil,
-        bs: ArticleContent? = nil,
-        ca: ArticleContent? = nil,
-        cs: ArticleContent? = nil,
-        da: ArticleContent? = nil,
-        de: ArticleContent? = nil,
-        el: ArticleContent? = nil,
-        en: ArticleContent? = nil,
-        es: ArticleContent? = nil,
-        et: ArticleContent? = nil,
-        fi: ArticleContent? = nil,
-        fr: ArticleContent? = nil,
-        he: ArticleContent? = nil,
-        hr: ArticleContent? = nil,
-        hu: ArticleContent? = nil,
-        id: ArticleContent? = nil,
-        it: ArticleContent? = nil,
-        ja: ArticleContent? = nil,
-        ko: ArticleContent? = nil,
-        lt: ArticleContent? = nil,
-        lv: ArticleContent? = nil,
-        mn: ArticleContent? = nil,
-        nb: ArticleContent? = nil,
-        nl: ArticleContent? = nil,
-        pl: ArticleContent? = nil,
-        pt: ArticleContent? = nil,
-        ro: ArticleContent? = nil,
-        ru: ArticleContent? = nil,
-        sl: ArticleContent? = nil,
-        sr: ArticleContent? = nil,
-        sv: ArticleContent? = nil,
-        tr: ArticleContent? = nil,
-        vi: ArticleContent? = nil,
-        ptBr: ArticleContent? = nil,
-        zhCn: ArticleContent? = nil,
-        zhTw: ArticleContent? = nil
-    ) {
+extension ArticleTranslatedContent {
+    public init(type: ArticleTranslatedContentType? = nil, ar: ArticleContent? = nil, bg: ArticleContent? = nil, bs: ArticleContent? = nil, ca: ArticleContent? = nil, cs: ArticleContent? = nil, da: ArticleContent? = nil, de: ArticleContent? = nil, el: ArticleContent? = nil, en: ArticleContent? = nil, es: ArticleContent? = nil, et: ArticleContent? = nil, fi: ArticleContent? = nil, fr: ArticleContent? = nil, he: ArticleContent? = nil, hr: ArticleContent? = nil, hu: ArticleContent? = nil, id: ArticleContent? = nil, it: ArticleContent? = nil, ja: ArticleContent? = nil, ko: ArticleContent? = nil, lt: ArticleContent? = nil, lv: ArticleContent? = nil, mn: ArticleContent? = nil, nb: ArticleContent? = nil, nl: ArticleContent? = nil, pl: ArticleContent? = nil, pt: ArticleContent? = nil, ro: ArticleContent? = nil, ru: ArticleContent? = nil, sl: ArticleContent? = nil, sr: ArticleContent? = nil, sv: ArticleContent? = nil, tr: ArticleContent? = nil, vi: ArticleContent? = nil, ptBr: ArticleContent? = nil, zhCn: ArticleContent? = nil, zhTw: ArticleContent? = nil) {
         self.init()
         (self.type, self.ar) = (type, ar)
         (self.bg, self.bs) = (bg, bs)

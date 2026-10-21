@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// TaggedModelsSegments domain models
+// TaggedModelsSegments domain models
 /// A segment is a group of your contacts defined by the rules that you set.
 public struct Segment: Codable {
     /// The type of object.
@@ -39,34 +39,26 @@ public struct Segment: Codable {
     }
 
     init() {
-        (type, id, name, createdAt, updatedAt) = (nil, nil, nil, nil, nil)
-        (personType, count) = (nil, nil)
+        (self.type, self.id, self.name, self.createdAt, self.updatedAt) = (nil, nil, nil, nil, nil)
+        (self.personType, self.count) = (nil, nil)
     }
 }
 
-public extension Segment {
-    init(from decoder: Decoder) throws {
+extension Segment {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        personType = try container.sdkDecodeIfPresent(.personType)
-        count = try container.sdkDecodeIfPresent(.count)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.personType = try container.sdkDecodeIfPresent(.personType)
+        self.count = try container.sdkDecodeIfPresent(.count)
     }
 }
 
-public extension Segment {
-    init(
-        type: SegmentType? = nil,
-        id: String? = nil,
-        name: String? = nil,
-        createdAt: Int? = nil,
-        updatedAt: Int? = nil,
-        personType: SegmentPersonType? = nil,
-        count: Int? = nil
-    ) {
+extension Segment {
+    public init(type: SegmentType? = nil, id: String? = nil, name: String? = nil, createdAt: Int? = nil, updatedAt: Int? = nil, personType: SegmentPersonType? = nil, count: Int? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.name, self.createdAt) = (name, createdAt)
@@ -79,16 +71,13 @@ public extension Segment {
 public struct SegmentPersonType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let contact = SegmentPersonType(rawValue: "contact")
     public static let user = SegmentPersonType(rawValue: "user")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -101,15 +90,12 @@ public struct SegmentPersonType: RawRepresentable, Hashable, Codable, Sendable, 
 public struct SegmentType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let segment = SegmentType(rawValue: "segment")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

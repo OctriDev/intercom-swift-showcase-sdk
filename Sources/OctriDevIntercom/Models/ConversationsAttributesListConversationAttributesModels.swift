@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// ConversationsAttributes domain models
+// ConversationsAttributes domain models
 /// A list of all conversation attributes belonging to a workspace.
 public struct ConversationAttributeList: Codable {
     /// The type of the object.
@@ -18,39 +18,35 @@ public struct ConversationAttributeList: Codable {
     }
 
     init() {
-        (type, data) = (nil, nil)
+        (self.type, self.data) = (nil, nil)
     }
 }
 
-public extension ConversationAttributeList {
-    init(from decoder: Decoder) throws {
+extension ConversationAttributeList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension ConversationAttributeList {
-    init(type: ConversationAttributeListTypeX208e7954? = nil, data: [ConversationAttribute]? = nil) {
+extension ConversationAttributeList {
+    public init(type: ConversationAttributeListTypeX208e7954? = nil, data: [ConversationAttribute]? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
     }
 }
 
 /// The type of the object.
-public struct ConversationAttributeListTypeX208e7954: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct ConversationAttributeListTypeX208e7954: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let list = ConversationAttributeListTypeX208e7954(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

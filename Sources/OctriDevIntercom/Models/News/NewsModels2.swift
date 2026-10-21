@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// TaggedModelsNews domain models
+// TaggedModelsNews domain models
 /// Assigns a news item to a newsfeed.
 public struct NewsfeedAssignment: Codable {
     /// The unique identifier for the newsfeed which is given by Intercom. Publish dates cannot be in the future, to
@@ -22,20 +22,20 @@ public struct NewsfeedAssignment: Codable {
     }
 
     init() {
-        (newsfeedId, publishedAt) = (nil, nil)
+        (self.newsfeedId, self.publishedAt) = (nil, nil)
     }
 }
 
-public extension NewsfeedAssignment {
-    init(from decoder: Decoder) throws {
+extension NewsfeedAssignment {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        newsfeedId = try container.sdkDecodeIfPresent(.newsfeedId)
-        publishedAt = try container.sdkDecodeIfPresent(.publishedAt)
+        self.newsfeedId = try container.sdkDecodeIfPresent(.newsfeedId)
+        self.publishedAt = try container.sdkDecodeIfPresent(.publishedAt)
     }
 }
 
-public extension NewsfeedAssignment {
-    init(newsfeedId: Int? = nil, publishedAt: Int? = nil) {
+extension NewsfeedAssignment {
+    public init(newsfeedId: Int? = nil, publishedAt: Int? = nil) {
         self.init()
         (self.newsfeedId, self.publishedAt) = (newsfeedId, publishedAt)
     }
@@ -69,32 +69,26 @@ public struct Newsfeed: Codable {
     }
 
     init() {
-        (id, type, name, createdAt, updatedAt) = (nil, nil, nil, nil, nil)
+        (self.id, self.type, self.name, self.createdAt, self.updatedAt) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension Newsfeed {
-    init(from decoder: Decoder) throws {
+extension Newsfeed {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        type = try container.sdkDecodeIfPresent(.type)
-        name = try container.sdkDecodeIfPresent(.name)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        if let value = type {
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        if let value = self.type {
             try sdkValidateRawEnum("type", value, NewsfeedType.allCases.map(\.rawValue))
         }
     }
 }
 
-public extension Newsfeed {
-    init(
-        id: String? = nil,
-        type: NewsfeedType? = nil,
-        name: String? = nil,
-        createdAt: Int? = nil,
-        updatedAt: Int? = nil
-    ) throws {
+extension Newsfeed {
+    public init(id: String? = nil, type: NewsfeedType? = nil, name: String? = nil, createdAt: Int? = nil, updatedAt: Int? = nil) throws {
         self.init()
         (self.id, self.type) = (id, type)
         (self.name, self.createdAt) = (name, createdAt)
@@ -167,55 +161,40 @@ public struct NewsItem: Codable {
     }
 
     init() {
-        (type, id, workspaceId, title, body) = (nil, nil, nil, nil, nil)
-        (senderId, state, newsfeedAssignments, labels, coverImageUrl) = (nil, nil, nil, nil, nil)
-        (reactions, deliverSilently, createdAt, updatedAt) = (nil, nil, nil, nil)
+        (self.type, self.id, self.workspaceId, self.title, self.body) = (nil, nil, nil, nil, nil)
+        (self.senderId, self.state, self.newsfeedAssignments, self.labels, self.coverImageUrl) = (nil, nil, nil, nil, nil)
+        (self.reactions, self.deliverSilently, self.createdAt, self.updatedAt) = (nil, nil, nil, nil)
     }
 }
 
-public extension NewsItem {
-    init(from decoder: Decoder) throws {
+extension NewsItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        workspaceId = try container.sdkDecodeIfPresent(.workspaceId)
-        title = try container.sdkDecodeIfPresent(.title)
-        body = try container.sdkDecodeIfPresent(.body)
-        senderId = try container.sdkDecodeIfPresent(.senderId)
-        state = try container.sdkDecodeIfPresent(.state)
-        newsfeedAssignments = try container.sdkDecodeIfPresent(.newsfeedAssignments)
-        labels = try container.sdkDecodeIfPresent(.labels)
-        coverImageUrl = try container.sdkDecodeIfPresent(.coverImageUrl)
-        reactions = try container.sdkDecodeIfPresent(.reactions)
-        deliverSilently = try container.sdkDecodeIfPresent(.deliverSilently)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        if let value = type {
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.workspaceId = try container.sdkDecodeIfPresent(.workspaceId)
+        self.title = try container.sdkDecodeIfPresent(.title)
+        self.body = try container.sdkDecodeIfPresent(.body)
+        self.senderId = try container.sdkDecodeIfPresent(.senderId)
+        self.state = try container.sdkDecodeIfPresent(.state)
+        self.newsfeedAssignments = try container.sdkDecodeIfPresent(.newsfeedAssignments)
+        self.labels = try container.sdkDecodeIfPresent(.labels)
+        self.coverImageUrl = try container.sdkDecodeIfPresent(.coverImageUrl)
+        self.reactions = try container.sdkDecodeIfPresent(.reactions)
+        self.deliverSilently = try container.sdkDecodeIfPresent(.deliverSilently)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        if let value = self.type {
             try sdkValidateRawEnum("type", value, NewsItemType.allCases.map(\.rawValue))
         }
-        if let value = coverImageUrl {
+        if let value = self.coverImageUrl {
             try sdkValidateUri("cover_image_url", value)
         }
     }
 }
 
-public extension NewsItem {
-    init(
-        type: NewsItemType? = nil,
-        id: String? = nil,
-        workspaceId: String? = nil,
-        title: String? = nil,
-        body: String? = nil,
-        senderId: Int? = nil,
-        state: NewsItemState? = nil,
-        newsfeedAssignments: [NewsfeedAssignment]? = nil,
-        labels: [String?]? = nil,
-        coverImageUrl: String? = nil,
-        reactions: [String?]? = nil,
-        deliverSilently: Bool? = nil,
-        createdAt: Int? = nil,
-        updatedAt: Int? = nil
-    ) throws {
+extension NewsItem {
+    public init(type: NewsItemType? = nil, id: String? = nil, workspaceId: String? = nil, title: String? = nil, body: String? = nil, senderId: Int? = nil, state: NewsItemState? = nil, newsfeedAssignments: [NewsfeedAssignment]? = nil, labels: [String?]? = nil, coverImageUrl: String? = nil, reactions: [String?]? = nil, deliverSilently: Bool? = nil, createdAt: Int? = nil, updatedAt: Int? = nil) throws {
         self.init()
         (self.type, self.id) = (type, id)
         (self.workspaceId, self.title) = (workspaceId, title)
@@ -273,16 +252,13 @@ public enum NewsItemType: String, CaseIterable, Codable {
 public struct NewsItemState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let draft = NewsItemState(rawValue: "draft")
     public static let live = NewsItemState(rawValue: "live")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

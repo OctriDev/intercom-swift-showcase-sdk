@@ -6,15 +6,10 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DataConnectorsMethods {
-    /// Lists a data connector's version history, with the newest version first. Each entry is a configuration snapshot
-    /// with its current status and an optional note; connectors that have never been published return an empty `data`
-    /// list. Use `starting_after` to paginate, and provide one of the required version-reading OAuth scopes.
+extension DataConnectorsMethods {
+    /// Lists a data connector's version history, with the newest version first. Each entry is a configuration snapshot with its current status and an optional note; connectors that have never been published return an empty `data` list. Use `starting_after` to paginate, and provide one of the required version-reading OAuth scopes.
     ///
-    /// Retrieve the version history of a data connector, newest first. Each entry is a point-in-time snapshot of the
-    /// connector's configuration, with the status it has today and an optional note. Results are paginated.
-    /// `pages.next` is omitted on the last page. A data connector that has never been published returns an empty `data`
-    /// list. Requires the `read_data_connector_versions` or `read_write_data_connector_versions` OAuth scope.
+    /// Retrieve the version history of a data connector, newest first. Each entry is a point-in-time snapshot of the connector's configuration, with the status it has today and an optional note. Results are paginated. `pages.next` is omitted on the last page. A data connector that has never been published returns an empty `data` list. Requires the `read_data_connector_versions` or `read_write_data_connector_versions` OAuth scope.
     ///
     /// - Parameters:
     /// - id: The unique identifier for the data connector.
@@ -23,69 +18,30 @@ public extension DataConnectorsMethods {
     ///   value falls back to the default of 20.
     /// - startingAfter: Cursor for pagination. Use the value from
     ///   `pages.next.starting_after` in a previous response.
-    static func listDataConnectorVersions(
-        config: ClientConfig,
-        id: String,
-        perPage: Int? = nil,
-        startingAfter: String? = nil,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DataConnectorVersionList {
-        if let perPage {
+    public static func listDataConnectorVersions(config: ClientConfig, id: String, perPage: Int? = nil, startingAfter: String? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DataConnectorVersionList {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 50)
         }
 
-        return try await (sdkRequest(
-            "GET",
-            ["/data_connectors/", sdkEncodePathSegment(sdkWireString(id)), "/versions"].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("per_page", value: perPage),
-                SdkQueryParameter("starting_after", value: startingAfter),
-            ],
-            decoder: .json,
-            operationId: "listDataConnectorVersions",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self]
-        )).data
+        return try (await sdkRequest("GET", ["/data_connectors/", sdkEncodePathSegment(sdkWireString(id)), "/versions"].joined(), config: config, query: [
+            SdkQueryParameter("per_page", value: perPage),
+            SdkQueryParameter("starting_after", value: startingAfter),
+        ], decoder: .json, operationId: "listDataConnectorVersions", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self])).data
     }
 
-    /// Retrieves a single version snapshot of a data connector, including the connector configuration as it was at that
-    /// version. Use the version's `entity_version_id` as `version_id`. Access requires a version-reading OAuth scope.
+    /// Retrieves a single version snapshot of a data connector, including the connector configuration as it was at that version. Use the version's `entity_version_id` as `version_id`. Access requires a version-reading OAuth scope.
     ///
-    /// Retrieve a single version of a data connector, including the connector configuration as it was at that version.
-    /// Requires the `read_data_connector_versions` or `read_write_data_connector_versions` OAuth scope.
+    /// Retrieve a single version of a data connector, including the connector configuration as it was at that version. Requires the `read_data_connector_versions` or `read_write_data_connector_versions` OAuth scope.
     ///
     /// - Parameters:
     /// - id: The unique identifier for the data connector.
     /// - versionId: The `entity_version_id` of the version, as returned by List
     ///   versions of a data connector.
-    static func retrieveDataConnectorVersion(
-        config: ClientConfig,
-        id: String,
-        versionId: Int,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DataConnectorVersion {
-        try await (sdkRequest(
-            "GET",
-            [
-                "/data_connectors/",
-                sdkEncodePathSegment(sdkWireString(id)),
-                "/versions/",
-                sdkEncodePathSegment(sdkWireString(versionId)),
-            ].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "retrieveDataConnectorVersion",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "404": Error2.self]
-        )).data
+    public static func retrieveDataConnectorVersion(config: ClientConfig, id: String, versionId: Int, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DataConnectorVersion {
+        return try (await sdkRequest("GET", ["/data_connectors/", sdkEncodePathSegment(sdkWireString(id)), "/versions/", sdkEncodePathSegment(sdkWireString(versionId))].joined(), config: config, decoder: .json, operationId: "retrieveDataConnectorVersion", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
     }
 }

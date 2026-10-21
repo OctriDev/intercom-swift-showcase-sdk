@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// CustomObjectInstances domain models
+// CustomObjectInstances domain models
 /// deleted custom object instance object
 public struct CustomObjectInstanceDeleted: Codable {
     /// The unique identifier of the Custom Object type that defines the structure of the Custom Object instance.
@@ -23,21 +23,21 @@ public struct CustomObjectInstanceDeleted: Codable {
     }
 
     init() {
-        (object, id, deleted) = (nil, nil, nil)
+        (self.object, self.id, self.deleted) = (nil, nil, nil)
     }
 }
 
-public extension CustomObjectInstanceDeleted {
-    init(from decoder: Decoder) throws {
+extension CustomObjectInstanceDeleted {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.sdkDecodeIfPresent(.object)
-        id = try container.sdkDecodeIfPresent(.id)
-        deleted = try container.sdkDecodeIfPresent(.deleted)
+        self.object = try container.sdkDecodeIfPresent(.object)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-public extension CustomObjectInstanceDeleted {
-    init(object: String? = nil, id: String? = nil, deleted: Bool? = nil) {
+extension CustomObjectInstanceDeleted {
+    public init(object: String? = nil, id: String? = nil, deleted: Bool? = nil) {
         self.init()
         (self.object, self.id) = (object, id)
         self.deleted = deleted
@@ -65,27 +65,22 @@ public struct CreateOrUpdateCustomObjectInstanceRequest: Codable {
     }
 
     init() {
-        (externalId, externalCreatedAt, externalUpdatedAt, customAttributes) = (nil, nil, nil, nil)
+        (self.externalId, self.externalCreatedAt, self.externalUpdatedAt, self.customAttributes) = (nil, nil, nil, nil)
     }
 }
 
-public extension CreateOrUpdateCustomObjectInstanceRequest {
-    init(from decoder: Decoder) throws {
+extension CreateOrUpdateCustomObjectInstanceRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        externalId = try container.sdkDecodeIfPresent(.externalId)
-        externalCreatedAt = try container.sdkDecodeIfPresent(.externalCreatedAt)
-        externalUpdatedAt = try container.sdkDecodeIfPresent(.externalUpdatedAt)
-        customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
+        self.externalId = try container.sdkDecodeIfPresent(.externalId)
+        self.externalCreatedAt = try container.sdkDecodeIfPresent(.externalCreatedAt)
+        self.externalUpdatedAt = try container.sdkDecodeIfPresent(.externalUpdatedAt)
+        self.customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
     }
 }
 
-public extension CreateOrUpdateCustomObjectInstanceRequest {
-    init(
-        externalId: String? = nil,
-        externalCreatedAt: Int? = nil,
-        externalUpdatedAt: Int? = nil,
-        customAttributes: [String: String]? = nil
-    ) {
+extension CreateOrUpdateCustomObjectInstanceRequest {
+    public init(externalId: String? = nil, externalCreatedAt: Int? = nil, externalUpdatedAt: Int? = nil, customAttributes: [String: String]? = nil) {
         self.init()
         (self.externalId, self.externalCreatedAt) = (externalId, externalCreatedAt)
         (self.externalUpdatedAt, self.customAttributes) = (externalUpdatedAt, customAttributes)

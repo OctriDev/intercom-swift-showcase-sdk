@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// TaggedModelsDataEvents domain models
+// TaggedModelsDataEvents domain models
 /// Data events are used to notify Intercom of changes to your data.
 public struct DataEvent: Codable {
     /// The name of the event that occurred. This is presented to your App's admins when filtering and creating
@@ -45,50 +45,31 @@ public struct DataEvent: Codable {
         case metadata
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DataEvent {
-    init(from decoder: Decoder) throws {
+extension DataEvent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.eventName) else {
-            throw SdkValidationError(
-                field: "event_name",
-                code: "required",
-                message: "Validation failed for 'event_name': value is required"
-            )
+            throw SdkValidationError(field: "event_name", code: "required", message: "Validation failed for 'event_name': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
-        eventName = try container.sdkDecodeRequired(.eventName)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        type = try container.sdkDecodeIfPresent(.type)
-        userId = try container.sdkDecodeIfPresent(.userId)
-        id = try container.sdkDecodeIfPresent(.id)
-        intercomUserId = try container.sdkDecodeIfPresent(.intercomUserId)
-        email = try container.sdkDecodeIfPresent(.email)
-        metadata = try container.sdkDecodeIfPresent(.metadata)
+        self.eventName = try container.sdkDecodeRequired(.eventName)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.userId = try container.sdkDecodeIfPresent(.userId)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.intercomUserId = try container.sdkDecodeIfPresent(.intercomUserId)
+        self.email = try container.sdkDecodeIfPresent(.email)
+        self.metadata = try container.sdkDecodeIfPresent(.metadata)
     }
 }
 
-public extension DataEvent {
-    init(
-        eventName: String,
-        createdAt: Int,
-        type: DataEventType? = nil,
-        userId: String? = nil,
-        id: String? = nil,
-        intercomUserId: String? = nil,
-        email: String? = nil,
-        metadata: [String: String]? = nil
-    ) {
+extension DataEvent {
+    public init(eventName: String, createdAt: Int, type: DataEventType? = nil, userId: String? = nil, id: String? = nil, intercomUserId: String? = nil, email: String? = nil, metadata: [String: String]? = nil) {
         (self.eventName, self.createdAt) = (eventName, createdAt)
         (self.type, self.userId) = (type, userId)
         (self.id, self.intercomUserId) = (id, intercomUserId)
@@ -100,15 +81,12 @@ public extension DataEvent {
 public struct DataEventType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let event = DataEventType(rawValue: "event")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// TaggedModelsConversations domain models
+// TaggedModelsConversations domain models
 /// Payload to merge a secondary conversation into a primary conversation.
 public struct MergeConversationsRequest: Codable {
     /// The ID of the primary (target) conversation to merge into.
@@ -14,27 +14,21 @@ public struct MergeConversationsRequest: Codable {
         case mergeIntoConversationId = "merge_into_conversation_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension MergeConversationsRequest {
-    init(from decoder: Decoder) throws {
+extension MergeConversationsRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.mergeIntoConversationId) else {
-            throw SdkValidationError(
-                field: "merge_into_conversation_id",
-                code: "required",
-                message: "Validation failed for 'merge_into_conversation_id': value is required"
-            )
+            throw SdkValidationError(field: "merge_into_conversation_id", code: "required", message: "Validation failed for 'merge_into_conversation_id': value is required")
         }
-        mergeIntoConversationId = try container.sdkDecodeRequired(.mergeIntoConversationId)
+        self.mergeIntoConversationId = try container.sdkDecodeRequired(.mergeIntoConversationId)
     }
 }
 
-public extension MergeConversationsRequest {
-    init(mergeIntoConversationId: Int) {
+extension MergeConversationsRequest {
+    public init(mergeIntoConversationId: Int) {
         self.mergeIntoConversationId = mergeIntoConversationId
     }
 }

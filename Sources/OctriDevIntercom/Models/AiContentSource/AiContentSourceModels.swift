@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// TaggedModelsAiContentSource domain models
+// TaggedModelsAiContentSource domain models
 /// The content source used by AI Agent in the conversation.
 public struct ContentSource: Codable {
     /// The type of the content source.
@@ -27,27 +27,22 @@ public struct ContentSource: Codable {
     }
 
     init() {
-        (contentType, url, title, locale) = (nil, nil, nil, nil)
+        (self.contentType, self.url, self.title, self.locale) = (nil, nil, nil, nil)
     }
 }
 
-public extension ContentSource {
-    init(from decoder: Decoder) throws {
+extension ContentSource {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        contentType = try container.sdkDecodeIfPresent(.contentType)
-        url = try container.sdkDecodeIfPresent(.url)
-        title = try container.sdkDecodeIfPresent(.title)
-        locale = try container.sdkDecodeIfPresent(.locale)
+        self.contentType = try container.sdkDecodeIfPresent(.contentType)
+        self.url = try container.sdkDecodeIfPresent(.url)
+        self.title = try container.sdkDecodeIfPresent(.title)
+        self.locale = try container.sdkDecodeIfPresent(.locale)
     }
 }
 
-public extension ContentSource {
-    init(
-        contentType: ContentSourceContentType? = nil,
-        url: String? = nil,
-        title: String? = nil,
-        locale: String? = nil
-    ) {
+extension ContentSource {
+    public init(contentType: ContentSourceContentType? = nil, url: String? = nil, title: String? = nil, locale: String? = nil) {
         self.init()
         (self.contentType, self.url) = (contentType, url)
         (self.title, self.locale) = (title, locale)
@@ -58,10 +53,7 @@ public extension ContentSource {
 public struct ContentSourceContentType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let file = ContentSourceContentType(rawValue: "file")
     public static let article = ContentSourceContentType(rawValue: "article")
     public static let externalContent = ContentSourceContentType(rawValue: "external_content")
@@ -71,7 +63,7 @@ public struct ContentSourceContentType: RawRepresentable, Hashable, Codable, Sen
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

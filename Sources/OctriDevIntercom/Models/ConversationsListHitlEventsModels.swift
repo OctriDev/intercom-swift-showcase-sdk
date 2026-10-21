@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Conversations domain models
+// Conversations domain models
 /// A single event in a Fin human-in-the-loop consultation on a conversation.
 public struct HitlEvent: Codable {
     /// Identifies the consultation this event belongs to. The same on every event of one consultation, so it is not
@@ -41,34 +41,26 @@ public struct HitlEvent: Codable {
     }
 
     init() {
-        (hitlCycleId, eventType, conversationPartId, ruleId, ruleName) = (nil, nil, nil, nil, nil)
-        (createdAt, data) = (nil, nil)
+        (self.hitlCycleId, self.eventType, self.conversationPartId, self.ruleId, self.ruleName) = (nil, nil, nil, nil, nil)
+        (self.createdAt, self.data) = (nil, nil)
     }
 }
 
-public extension HitlEvent {
-    init(from decoder: Decoder) throws {
+extension HitlEvent {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        hitlCycleId = try container.sdkDecodeIfPresent(.hitlCycleId)
-        eventType = try container.sdkDecodeIfPresent(.eventType)
-        conversationPartId = try container.sdkDecodeIfPresent(.conversationPartId)
-        ruleId = try container.sdkDecodeIfPresent(.ruleId)
-        ruleName = try container.sdkDecodeIfPresent(.ruleName)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.hitlCycleId = try container.sdkDecodeIfPresent(.hitlCycleId)
+        self.eventType = try container.sdkDecodeIfPresent(.eventType)
+        self.conversationPartId = try container.sdkDecodeIfPresent(.conversationPartId)
+        self.ruleId = try container.sdkDecodeIfPresent(.ruleId)
+        self.ruleName = try container.sdkDecodeIfPresent(.ruleName)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension HitlEvent {
-    init(
-        hitlCycleId: String? = nil,
-        eventType: HitlEventEventType? = nil,
-        conversationPartId: String? = nil,
-        ruleId: String? = nil,
-        ruleName: String? = nil,
-        createdAt: Int? = nil,
-        data: HitlEventData? = nil
-    ) {
+extension HitlEvent {
+    public init(hitlCycleId: String? = nil, eventType: HitlEventEventType? = nil, conversationPartId: String? = nil, ruleId: String? = nil, ruleName: String? = nil, createdAt: Int? = nil, data: HitlEventData? = nil) {
         self.init()
         (self.hitlCycleId, self.eventType) = (hitlCycleId, eventType)
         (self.conversationPartId, self.ruleId) = (conversationPartId, ruleId)
@@ -168,62 +160,41 @@ public struct HitlEventData: Codable {
     }
 
     init() {
-        (channel, ruleThresholdPercent, confidencePercent, sharpAsk, askRationale) = (nil, nil, nil, nil, nil)
-        (issueSummary, customerQuestion, draft, roundIndex, teammateInput) = (nil, nil, nil, nil, nil)
-        (reviewerAdminId, regenerationOutcome, revisedDraft, outcome, approvedDraftType) = (nil, nil, nil, nil, nil)
-        (finalDraft, sentText, durationSeconds, roundsCount, payloadTruncated) = (nil, nil, nil, nil, nil)
+        (self.channel, self.ruleThresholdPercent, self.confidencePercent, self.sharpAsk, self.askRationale) = (nil, nil, nil, nil, nil)
+        (self.issueSummary, self.customerQuestion, self.draft, self.roundIndex, self.teammateInput) = (nil, nil, nil, nil, nil)
+        (self.reviewerAdminId, self.regenerationOutcome, self.revisedDraft, self.outcome, self.approvedDraftType) = (nil, nil, nil, nil, nil)
+        (self.finalDraft, self.sentText, self.durationSeconds, self.roundsCount, self.payloadTruncated) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension HitlEventData {
-    init(from decoder: Decoder) throws {
+extension HitlEventData {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        channel = try container.sdkDecodeIfPresent(.channel)
-        ruleThresholdPercent = try container.sdkDecodeIfPresent(.ruleThresholdPercent)
-        confidencePercent = try container.sdkDecodeIfPresent(.confidencePercent)
-        sharpAsk = try container.sdkDecodeIfPresent(.sharpAsk)
-        askRationale = try container.sdkDecodeIfPresent(.askRationale)
-        issueSummary = try container.sdkDecodeIfPresent(.issueSummary)
-        customerQuestion = try container.sdkDecodeIfPresent(.customerQuestion)
-        draft = try container.sdkDecodeIfPresent(.draft)
-        roundIndex = try container.sdkDecodeIfPresent(.roundIndex)
-        teammateInput = try container.sdkDecodeIfPresent(.teammateInput)
-        reviewerAdminId = try container.sdkDecodeIfPresent(.reviewerAdminId)
-        regenerationOutcome = try container.sdkDecodeIfPresent(.regenerationOutcome)
-        revisedDraft = try container.sdkDecodeIfPresent(.revisedDraft)
-        outcome = try container.sdkDecodeIfPresent(.outcome)
-        approvedDraftType = try container.sdkDecodeIfPresent(.approvedDraftType)
-        finalDraft = try container.sdkDecodeIfPresent(.finalDraft)
-        sentText = try container.sdkDecodeIfPresent(.sentText)
-        durationSeconds = try container.sdkDecodeIfPresent(.durationSeconds)
-        roundsCount = try container.sdkDecodeIfPresent(.roundsCount)
-        payloadTruncated = try container.sdkDecodeIfPresent(.payloadTruncated)
+        self.channel = try container.sdkDecodeIfPresent(.channel)
+        self.ruleThresholdPercent = try container.sdkDecodeIfPresent(.ruleThresholdPercent)
+        self.confidencePercent = try container.sdkDecodeIfPresent(.confidencePercent)
+        self.sharpAsk = try container.sdkDecodeIfPresent(.sharpAsk)
+        self.askRationale = try container.sdkDecodeIfPresent(.askRationale)
+        self.issueSummary = try container.sdkDecodeIfPresent(.issueSummary)
+        self.customerQuestion = try container.sdkDecodeIfPresent(.customerQuestion)
+        self.draft = try container.sdkDecodeIfPresent(.draft)
+        self.roundIndex = try container.sdkDecodeIfPresent(.roundIndex)
+        self.teammateInput = try container.sdkDecodeIfPresent(.teammateInput)
+        self.reviewerAdminId = try container.sdkDecodeIfPresent(.reviewerAdminId)
+        self.regenerationOutcome = try container.sdkDecodeIfPresent(.regenerationOutcome)
+        self.revisedDraft = try container.sdkDecodeIfPresent(.revisedDraft)
+        self.outcome = try container.sdkDecodeIfPresent(.outcome)
+        self.approvedDraftType = try container.sdkDecodeIfPresent(.approvedDraftType)
+        self.finalDraft = try container.sdkDecodeIfPresent(.finalDraft)
+        self.sentText = try container.sdkDecodeIfPresent(.sentText)
+        self.durationSeconds = try container.sdkDecodeIfPresent(.durationSeconds)
+        self.roundsCount = try container.sdkDecodeIfPresent(.roundsCount)
+        self.payloadTruncated = try container.sdkDecodeIfPresent(.payloadTruncated)
     }
 }
 
-public extension HitlEventData {
-    init(
-        channel: HitlEventDataChannel? = nil,
-        ruleThresholdPercent: Int? = nil,
-        confidencePercent: Int? = nil,
-        sharpAsk: String? = nil,
-        askRationale: String? = nil,
-        issueSummary: String? = nil,
-        customerQuestion: String? = nil,
-        draft: String? = nil,
-        roundIndex: Int? = nil,
-        teammateInput: String? = nil,
-        reviewerAdminId: String? = nil,
-        regenerationOutcome: String? = nil,
-        revisedDraft: String? = nil,
-        outcome: HitlEventDataOutcome? = nil,
-        approvedDraftType: HitlEventDataApprovedDraftType? = nil,
-        finalDraft: String? = nil,
-        sentText: String? = nil,
-        durationSeconds: Int? = nil,
-        roundsCount: Int? = nil,
-        payloadTruncated: Bool? = nil
-    ) {
+extension HitlEventData {
+    public init(channel: HitlEventDataChannel? = nil, ruleThresholdPercent: Int? = nil, confidencePercent: Int? = nil, sharpAsk: String? = nil, askRationale: String? = nil, issueSummary: String? = nil, customerQuestion: String? = nil, draft: String? = nil, roundIndex: Int? = nil, teammateInput: String? = nil, reviewerAdminId: String? = nil, regenerationOutcome: String? = nil, revisedDraft: String? = nil, outcome: HitlEventDataOutcome? = nil, approvedDraftType: HitlEventDataApprovedDraftType? = nil, finalDraft: String? = nil, sentText: String? = nil, durationSeconds: Int? = nil, roundsCount: Int? = nil, payloadTruncated: Bool? = nil) {
         self.init()
         (self.channel, self.ruleThresholdPercent) = (channel, ruleThresholdPercent)
         (self.confidencePercent, self.sharpAsk) = (confidencePercent, sharpAsk)
@@ -252,20 +223,20 @@ public struct HitlEventList: Codable {
     }
 
     init() {
-        (type, data) = (nil, nil)
+        (self.type, self.data) = (nil, nil)
     }
 }
 
-public extension HitlEventList {
-    init(from decoder: Decoder) throws {
+extension HitlEventList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension HitlEventList {
-    init(type: HitlEventListType? = nil, data: [HitlEvent]? = nil) {
+extension HitlEventList {
+    public init(type: HitlEventListType? = nil, data: [HitlEvent]? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
     }
@@ -275,10 +246,7 @@ public extension HitlEventList {
 public struct HitlEventEventType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let finConsultationStarted = HitlEventEventType(rawValue: "fin_consultation_started")
     public static let finDraftProposed = HitlEventEventType(rawValue: "fin_draft_proposed")
     public static let finTeammateInputReceived = HitlEventEventType(rawValue: "fin_teammate_input_received")
@@ -287,7 +255,7 @@ public struct HitlEventEventType: RawRepresentable, Hashable, Codable, Sendable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -300,10 +268,7 @@ public struct HitlEventEventType: RawRepresentable, Hashable, Codable, Sendable,
 public struct HitlEventDataOutcome: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let approved = HitlEventDataOutcome(rawValue: "approved")
     public static let takenOver = HitlEventDataOutcome(rawValue: "taken_over")
     public static let timedOutSent = HitlEventDataOutcome(rawValue: "timed_out_sent")
@@ -312,7 +277,7 @@ public struct HitlEventDataOutcome: RawRepresentable, Hashable, Codable, Sendabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -325,10 +290,7 @@ public struct HitlEventDataOutcome: RawRepresentable, Hashable, Codable, Sendabl
 public struct HitlEventDataChannel: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let email = HitlEventDataChannel(rawValue: "email")
     public static let chat = HitlEventDataChannel(rawValue: "chat")
     public static let voice = HitlEventDataChannel(rawValue: "voice")
@@ -336,7 +298,7 @@ public struct HitlEventDataChannel: RawRepresentable, Hashable, Codable, Sendabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -349,15 +311,12 @@ public struct HitlEventDataChannel: RawRepresentable, Hashable, Codable, Sendabl
 public struct HitlEventListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let list = HitlEventListType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -370,16 +329,13 @@ public struct HitlEventListType: RawRepresentable, Hashable, Codable, Sendable, 
 public struct HitlEventDataApprovedDraftType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let original = HitlEventDataApprovedDraftType(rawValue: "original")
     public static let revised = HitlEventDataApprovedDraftType(rawValue: "revised")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

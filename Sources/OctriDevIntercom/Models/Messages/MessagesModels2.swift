@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// TaggedModelsMessages domain models
+// TaggedModelsMessages domain models
 /// Message are how you reach out to contacts in Intercom. They are created when an admin sends an outbound message
 /// to a contact.
 public struct Message: Codable {
@@ -39,69 +39,39 @@ public struct Message: Codable {
         case conversationId = "conversation_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension Message {
-    init(from decoder: Decoder) throws {
+extension Message {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
         guard container.contains(.createdAt) else {
-            throw SdkValidationError(
-                field: "created_at",
-                code: "required",
-                message: "Validation failed for 'created_at': value is required"
-            )
+            throw SdkValidationError(field: "created_at", code: "required", message: "Validation failed for 'created_at': value is required")
         }
         guard container.contains(.body) else {
-            throw SdkValidationError(
-                field: "body",
-                code: "required",
-                message: "Validation failed for 'body': value is required"
-            )
+            throw SdkValidationError(field: "body", code: "required", message: "Validation failed for 'body': value is required")
         }
         guard container.contains(.messageType) else {
-            throw SdkValidationError(
-                field: "message_type",
-                code: "required",
-                message: "Validation failed for 'message_type': value is required"
-            )
+            throw SdkValidationError(field: "message_type", code: "required", message: "Validation failed for 'message_type': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        id = try container.sdkDecodeRequired(.id)
-        createdAt = try container.sdkDecodeRequired(.createdAt)
-        body = try container.sdkDecodeRequired(.body)
-        messageType = try container.sdkDecodeRequired(.messageType)
-        subject = try container.sdkDecodeIfPresent(.subject)
-        conversationId = try container.sdkDecodeIfPresent(.conversationId)
+        self.type = try container.sdkDecodeRequired(.type)
+        self.id = try container.sdkDecodeRequired(.id)
+        self.createdAt = try container.sdkDecodeRequired(.createdAt)
+        self.body = try container.sdkDecodeRequired(.body)
+        self.messageType = try container.sdkDecodeRequired(.messageType)
+        self.subject = try container.sdkDecodeIfPresent(.subject)
+        self.conversationId = try container.sdkDecodeIfPresent(.conversationId)
     }
 }
 
-public extension Message {
-    init(
-        type: String,
-        id: String,
-        createdAt: Int,
-        body: String,
-        messageType: MessageMessageType,
-        subject: String? = nil,
-        conversationId: String? = nil
-    ) {
+extension Message {
+    public init(type: String, id: String, createdAt: Int, body: String, messageType: MessageMessageType, subject: String? = nil, conversationId: String? = nil) {
         (self.type, self.id) = (type, id)
         (self.createdAt, self.body) = (createdAt, body)
         (self.messageType, self.subject) = (messageType, subject)
@@ -113,10 +83,7 @@ public extension Message {
 public struct MessageMessageType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let email = MessageMessageType(rawValue: "email")
     public static let inapp = MessageMessageType(rawValue: "inapp")
     public static let facebook = MessageMessageType(rawValue: "facebook")
@@ -124,7 +91,7 @@ public struct MessageMessageType: RawRepresentable, Hashable, Codable, Sendable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

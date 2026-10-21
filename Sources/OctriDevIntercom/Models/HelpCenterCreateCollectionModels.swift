@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// HelpCenter domain models
+// HelpCenter domain models
 /// You can create a collection
 public struct CreateCollectionRequest: Codable {
     /// The name of the collection. For multilingual collections, this will be the name of the default language's
@@ -33,37 +33,25 @@ public struct CreateCollectionRequest: Codable {
         case helpCenterId = "help_center_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateCollectionRequest {
-    init(from decoder: Decoder) throws {
+extension CreateCollectionRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        translatedContent = try container.sdkDecodeIfPresent(.translatedContent)
-        parentId = try container.sdkDecodeIfPresent(.parentId)
-        helpCenterId = try container.sdkDecodeIfPresent(.helpCenterId)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.translatedContent = try container.sdkDecodeIfPresent(.translatedContent)
+        self.parentId = try container.sdkDecodeIfPresent(.parentId)
+        self.helpCenterId = try container.sdkDecodeIfPresent(.helpCenterId)
     }
 }
 
-public extension CreateCollectionRequest {
-    init(
-        name: String,
-        description: String? = nil,
-        translatedContent: GroupTranslatedContent? = nil,
-        parentId: String? = nil,
-        helpCenterId: Int? = nil
-    ) {
+extension CreateCollectionRequest {
+    public init(name: String, description: String? = nil, translatedContent: GroupTranslatedContent? = nil, parentId: String? = nil, helpCenterId: Int? = nil) {
         (self.name, self.description) = (name, description)
         (self.translatedContent, self.parentId) = (translatedContent, parentId)
         self.helpCenterId = helpCenterId

@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension TicketsMethods {
-    struct EnqueueCreateTicketOptions: Codable {
+extension TicketsMethods {
+    public struct EnqueueCreateTicketOptions: Codable {
         public var ticketTypeId: String
         public var contacts: [CreateTicketRequestContactsItem]
         public var intercomVersion: IntercomVersion?
@@ -25,13 +25,9 @@ public extension TicketsMethods {
         }
     }
 
-    /// Enqueues ticket creation for asynchronous processing after performing best-effort input validation. Supply
-    /// `ticket_type_id` and `contacts`; invalid inputs are not enqueued. Use the returned job identifier or URL to
-    /// check the job's progress and retrieve the created ticket when processing completes.
+    /// Enqueues ticket creation for asynchronous processing after performing best-effort input validation. Supply `ticket_type_id` and `contacts`; invalid inputs are not enqueued. Use the returned job identifier or URL to check the job's progress and retrieve the created ticket when processing completes.
     ///
-    /// Enqueues ticket creation for asynchronous processing, returning if the job was enqueued successfully to be
-    /// processed. We attempt to perform a best-effort validation on inputs before tasks are enqueued. If the given
-    /// parameters are incorrect, we won't enqueue the job.
+    /// Enqueues ticket creation for asynchronous processing, returning if the job was enqueued successfully to be processed. We attempt to perform a best-effort validation on inputs before tasks are enqueued. If the given parameters are incorrect, we won't enqueue the job.
     ///
     /// - Parameters:
     /// - ticketTypeId: The ID of the type of ticket you want to create
@@ -60,25 +56,11 @@ public extension TicketsMethods {
     ///   types. Defaults to messenger if not provided.
     /// - skipNotifications: Option to disable notifications when a Ticket is
     ///   created.
-    static func enqueueCreateTicket(
-        config: ClientConfig,
-        options: EnqueueCreateTicketOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> Jobs {
+    public static func enqueueCreateTicket(config: ClientConfig, options: EnqueueCreateTicketOptions, requestOptions: RequestOptions? = nil) async throws -> Jobs {
         let requestBody = EnqueueCreateTicketRequestBody(options: options)
 
-        return try await (sdkRequest(
-            "POST",
-            "/tickets/enqueue",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "enqueueCreateTicket",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["400": Error2.self, "401": Error2.self]
-        )).data
+        return try (await sdkRequest("POST", "/tickets/enqueue", config: config, body: requestBody, decoder: .json, operationId: "enqueueCreateTicket", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
+        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self])).data
     }
 }

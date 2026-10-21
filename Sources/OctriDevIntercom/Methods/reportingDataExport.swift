@@ -8,10 +8,8 @@ import Foundation
 #endif
 public enum ReportingDataExportMethods {}
 
-public extension ReportingDataExportMethods {
-    /// Retrieves the status and download details for a reporting data export job. Supply the workspace and client
-    /// identifiers along with the job identifier to look up the export. Use the returned status to determine whether
-    /// the job is ready to download.
+extension ReportingDataExportMethods {
+    /// Retrieves the status and download details for a reporting data export job. Supply the workspace and client identifiers along with the job identifier to look up the export. Use the returned status to determine whether the job is ready to download.
     ///
     /// - Parameters:
     /// - jobIdentifier: Path segment `job_identifier` of
@@ -19,69 +17,31 @@ public extension ReportingDataExportMethods {
     /// - appId: The Intercom defined code of the workspace the company is
     ///   associated to.
     /// - jobIdentifier2: Unique identifier of the job.
-    static func getReportingData(
-        config: ClientConfig,
-        jobIdentifier: String,
-        appId: String,
-        clientId: String,
-        jobIdentifier2: String,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> GetReportingDataResponse {
-        try await (sdkRequest(
-            "GET",
-            ["/export/reporting_data/", sdkEncodePathSegment(sdkWireString(jobIdentifier))].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("app_id", value: appId),
-                SdkQueryParameter("client_id", value: clientId),
-                SdkQueryParameter("job_identifier", value: jobIdentifier2),
-            ],
-            decoder: .json,
-            operationId: "getReportingData",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["404": Error2.self]
-        )).data
+    public static func getReportingData(config: ClientConfig, jobIdentifier: String, appId: String, clientId: String, jobIdentifier2: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> GetReportingDataResponse {
+        return try (await sdkRequest("GET", ["/export/reporting_data/", sdkEncodePathSegment(sdkWireString(jobIdentifier))].joined(), config: config, query: [
+            SdkQueryParameter("app_id", value: appId),
+            SdkQueryParameter("client_id", value: clientId),
+            SdkQueryParameter("job_identifier", value: jobIdentifier2),
+        ], decoder: .json, operationId: "getReportingData", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["404": Error2.self])).data
     }
 
-    /// Downloads the data file for a completed reporting data export job. Provide the job identifier and app ID, and
-    /// send the required `Accept` header to receive the file as an octet stream.
+    /// Downloads the data file for a completed reporting data export job. Provide the job identifier and app ID, and send the required `Accept` header to receive the file as an octet stream.
     ///
-    /// Download the data from a completed reporting data export job. > Octet header required > > You will have to
-    /// specify the header Accept: `application/octet-stream` when hitting this endpoint.
+    /// Download the data from a completed reporting data export job. > Octet header required > > You will have to specify the header Accept: `application/octet-stream` when hitting this endpoint.
     ///
     /// - Parameters:
     /// - jobIdentifier: Path segment `job_identifier` of
     ///   `/download/reporting_data/{job_identifier}`.
     /// - accept: Required header for downloading the export file
-    static func getReportingData2(
-        config: ClientConfig,
-        jobIdentifier: String,
-        appId: String,
-        jobIdentifier2: String,
-        accept: GetReportingData2Parameter,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> SdkEmptyResponse {
-        try await (sdkRequest(
-            "GET",
-            ["/download/reporting_data/", sdkEncodePathSegment(sdkWireString(jobIdentifier))].joined(),
-            config: config,
-            query: [
-                SdkQueryParameter("app_id", value: appId),
-                SdkQueryParameter("job_identifier", value: jobIdentifier2),
-            ],
-            decoder: .empty,
-            operationId: "getReportingData_2",
-            extraHeaders: sdkHeaders([
-                ("Accept", sdkHeaderValue(accept)),
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["404": Error2.self]
-        )).data
+    public static func getReportingData2(config: ClientConfig, jobIdentifier: String, appId: String, jobIdentifier2: String, accept: GetReportingData2Parameter, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+        return try (await sdkRequest("GET", ["/download/reporting_data/", sdkEncodePathSegment(sdkWireString(jobIdentifier))].joined(), config: config, query: [
+            SdkQueryParameter("app_id", value: appId),
+            SdkQueryParameter("job_identifier", value: jobIdentifier2),
+        ], decoder: .empty, operationId: "getReportingData_2", extraHeaders: sdkHeaders([
+            ("Accept", sdkHeaderValue(accept)),
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["404": Error2.self])).data
     }
 }

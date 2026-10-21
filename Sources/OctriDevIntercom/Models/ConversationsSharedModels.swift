@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Conversations domain models
+// Conversations domain models
 /// Conversations are how you can communicate with users in Intercom. They are created when a contact replies to an
 /// outbound message, or when one admin directly sends a message to a single contact.
 public struct ConversationList: Codable {
@@ -28,27 +28,22 @@ public struct ConversationList: Codable {
     }
 
     init() {
-        (type, conversations, totalCount, pages) = (nil, nil, nil, nil)
+        (self.type, self.conversations, self.totalCount, self.pages) = (nil, nil, nil, nil)
     }
 }
 
-public extension ConversationList {
-    init(from decoder: Decoder) throws {
+extension ConversationList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        conversations = try container.sdkDecodeIfPresent(.conversations)
-        totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        pages = try container.sdkDecodeIfPresent(.pages)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.conversations = try container.sdkDecodeIfPresent(.conversations)
+        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        self.pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-public extension ConversationList {
-    init(
-        type: ConversationListType? = nil,
-        conversations: [ConversationListItem]? = nil,
-        totalCount: Int? = nil,
-        pages: CursorPages? = nil
-    ) {
+extension ConversationList {
+    public init(type: ConversationListType? = nil, conversations: [ConversationListItem]? = nil, totalCount: Int? = nil, pages: CursorPages? = nil) {
         self.init()
         (self.type, self.conversations) = (type, conversations)
         (self.totalCount, self.pages) = (totalCount, pages)
@@ -65,27 +60,21 @@ public struct ConversationParticipantsResponse: Codable {
         case customers
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ConversationParticipantsResponse {
-    init(from decoder: Decoder) throws {
+extension ConversationParticipantsResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.customers) else {
-            throw SdkValidationError(
-                field: "customers",
-                code: "required",
-                message: "Validation failed for 'customers': value is required"
-            )
+            throw SdkValidationError(field: "customers", code: "required", message: "Validation failed for 'customers': value is required")
         }
-        customers = try container.sdkDecodeRequired(.customers)
+        self.customers = try container.sdkDecodeRequired(.customers)
     }
 }
 
-public extension ConversationParticipantsResponse {
-    init(customers: [ConversationParticipantsResponseCustomersItem]) {
+extension ConversationParticipantsResponse {
+    public init(customers: [ConversationParticipantsResponseCustomersItem]) {
         self.customers = customers
     }
 }
@@ -104,35 +93,25 @@ public struct ConversationParticipantsResponseCustomersItem: Codable {
         case id
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ConversationParticipantsResponseCustomersItem {
-    init(from decoder: Decoder) throws {
+extension ConversationParticipantsResponseCustomersItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        id = try container.sdkDecodeRequired(.id)
+        self.type = try container.sdkDecodeRequired(.type)
+        self.id = try container.sdkDecodeRequired(.id)
     }
 }
 
-public extension ConversationParticipantsResponseCustomersItem {
-    init(type: String, id: String) {
+extension ConversationParticipantsResponseCustomersItem {
+    public init(type: String, id: String) {
         (self.type, self.id) = (type, id)
     }
 }
@@ -141,15 +120,12 @@ public extension ConversationParticipantsResponseCustomersItem {
 public struct ConversationListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let conversationList = ConversationListType(rawValue: "conversation.list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

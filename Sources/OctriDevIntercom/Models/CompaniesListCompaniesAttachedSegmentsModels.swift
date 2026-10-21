@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Companies domain models
+// Companies domain models
 /// A list of Segment Objects
 public struct CompanyAttachedSegments: Codable {
     /// The type of object - `list`
@@ -18,20 +18,20 @@ public struct CompanyAttachedSegments: Codable {
     }
 
     init() {
-        (type, data) = (nil, nil)
+        (self.type, self.data) = (nil, nil)
     }
 }
 
-public extension CompanyAttachedSegments {
-    init(from decoder: Decoder) throws {
+extension CompanyAttachedSegments {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension CompanyAttachedSegments {
-    init(type: CompanyAttachedSegmentsType? = nil, data: [Segment]? = nil) {
+extension CompanyAttachedSegments {
+    public init(type: CompanyAttachedSegmentsType? = nil, data: [Segment]? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
     }
@@ -41,15 +41,12 @@ public extension CompanyAttachedSegments {
 public struct CompanyAttachedSegmentsType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let list = CompanyAttachedSegmentsType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

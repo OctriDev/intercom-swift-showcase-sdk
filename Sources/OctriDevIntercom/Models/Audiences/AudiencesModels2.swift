@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// TaggedModelsAudiences domain models
+// TaggedModelsAudiences domain models
 /// An audience represents a group of contacts that can be targeted by Fin.
 public struct Audience: Codable {
     /// The type of object.
@@ -39,34 +39,26 @@ public struct Audience: Codable {
     }
 
     init() {
-        (type, id, name, predicates, rolePredicates) = (nil, nil, nil, nil, nil)
-        (createdAt, updatedAt) = (nil, nil)
+        (self.type, self.id, self.name, self.predicates, self.rolePredicates) = (nil, nil, nil, nil, nil)
+        (self.createdAt, self.updatedAt) = (nil, nil)
     }
 }
 
-public extension Audience {
-    init(from decoder: Decoder) throws {
+extension Audience {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        predicates = try container.sdkDecodeIfPresent(.predicates)
-        rolePredicates = try container.sdkDecodeIfPresent(.rolePredicates)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.predicates = try container.sdkDecodeIfPresent(.predicates)
+        self.rolePredicates = try container.sdkDecodeIfPresent(.rolePredicates)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
     }
 }
 
-public extension Audience {
-    init(
-        type: AudienceType? = nil,
-        id: String? = nil,
-        name: String? = nil,
-        predicates: [Predicate]? = nil,
-        rolePredicates: [Predicate]? = nil,
-        createdAt: Int? = nil,
-        updatedAt: Int? = nil
-    ) {
+extension Audience {
+    public init(type: AudienceType? = nil, id: String? = nil, name: String? = nil, predicates: [Predicate]? = nil, rolePredicates: [Predicate]? = nil, createdAt: Int? = nil, updatedAt: Int? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.name, self.predicates) = (name, predicates)
@@ -79,15 +71,12 @@ public extension Audience {
 public struct AudienceType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let audience = AudienceType(rawValue: "audience")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

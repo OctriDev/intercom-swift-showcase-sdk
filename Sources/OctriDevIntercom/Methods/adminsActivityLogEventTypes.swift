@@ -6,28 +6,13 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension AdminsMethods {
-    /// Lists the event type values available for filtering admin activity logs. Use the returned values with the
-    /// `event_types` filter when searching activity logs.
+extension AdminsMethods {
+    /// Lists the event type values available for filtering admin activity logs. Use the returned values with the `event_types` filter when searching activity logs.
     ///
-    /// You can get a list of all activity log event types. This is useful for discovering valid values to use with the
-    /// `event_types` filter on the List all activity logs endpoint.
-    static func listActivityLogEventTypes(
-        config: ClientConfig,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> ActivityLogEventTypeList {
-        try await (sdkRequest(
-            "GET",
-            "/admins/activity_log_event_types",
-            config: config,
-            decoder: .json,
-            operationId: "listActivityLogEventTypes",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self]
-        )).data
+    /// You can get a list of all activity log event types. This is useful for discovering valid values to use with the `event_types` filter on the List all activity logs endpoint.
+    public static func listActivityLogEventTypes(config: ClientConfig, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ActivityLogEventTypeList {
+        return try (await sdkRequest("GET", "/admins/activity_log_event_types", config: config, decoder: .json, operationId: "listActivityLogEventTypes", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self])).data
     }
 }

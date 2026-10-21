@@ -6,36 +6,25 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension ContactsMethods {
-    /// Lists contacts in the workspace that are no longer active, including their status and identifiers that can help
-    /// you locate them for recovery or deletion. Use `page` and `per_page` to paginate the results.
+extension ContactsMethods {
+    /// Lists contacts in the workspace that are no longer active, including their status and identifiers that can help you locate them for recovery or deletion. Use `page` and `per_page` to paginate the results.
     ///
-    /// Fetch a paginated list of the contacts in your workspace that are no longer active, so you can recover ones
-    /// whose `id`, `email`, or `external_id` you no longer have and then permanently delete them. Each entry carries a
-    /// `status` describing why the contact is inactive: `archived`, `blocked`, `merged`, `pending_deletion`, or
-    /// `permanently_deleted`. `merged_into_id` is present only when `status` is `merged`, and `external_id` and `email`
-    /// are `null` for `permanently_deleted` contacts.
+    /// Fetch a paginated list of the contacts in your workspace that are no longer active, so you can recover ones whose `id`, `email`, or `external_id` you no longer have and then permanently delete them. Each entry carries a `status` describing why the contact is inactive: `archived`, `blocked`, `merged`, `pending_deletion`, or `permanently_deleted`. `merged_into_id` is present only when `status` is `merged`, and `external_id` and `email` are `null` for `permanently_deleted` contacts.
     ///
     /// - Parameters:
     /// - perPage: The number of results per page. Defaults to `10`, with a maximum
     ///   of `150`.
     /// - page: The page of results to fetch. Defaults to `1`.
-    static func listDeletedContacts(
-        config: ClientConfig,
-        perPage: Int? = nil,
-        page: Int? = nil,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DeletedContactList {
-        if let perPage {
+    public static func listDeletedContacts(config: ClientConfig, perPage: Int? = nil, page: Int? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DeletedContactList {
+        if let perPage = perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 150)
         }
 
-        if let page {
+        if let page = page {
             try validateRange("page", Double(page), min: 1)
         }
 
-        return try await (sdkRequest("GET", "/contacts/deleted", config: config, query: [
+        return try (await sdkRequest("GET", "/contacts/deleted", config: config, query: [
             SdkQueryParameter("per_page", value: perPage),
             SdkQueryParameter("page", value: page),
         ], decoder: .json, operationId: "listDeletedContacts", extraHeaders: sdkHeaders([

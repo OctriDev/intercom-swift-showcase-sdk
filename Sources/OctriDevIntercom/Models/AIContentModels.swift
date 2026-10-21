@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// AIContent domain models
+// AIContent domain models
 /// You can add an Content Import Source to your Fin Content Library.
 public struct CreateContentImportSourceRequest: Codable {
     /// If you intend to create or update External Pages via the API, this should be set to `api`.
@@ -27,42 +27,27 @@ public struct CreateContentImportSourceRequest: Codable {
         case audienceIds = "audience_ids"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateContentImportSourceRequest {
-    init(from decoder: Decoder) throws {
+extension CreateContentImportSourceRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.syncBehavior) else {
-            throw SdkValidationError(
-                field: "sync_behavior",
-                code: "required",
-                message: "Validation failed for 'sync_behavior': value is required"
-            )
+            throw SdkValidationError(field: "sync_behavior", code: "required", message: "Validation failed for 'sync_behavior': value is required")
         }
         guard container.contains(.url) else {
-            throw SdkValidationError(
-                field: "url",
-                code: "required",
-                message: "Validation failed for 'url': value is required"
-            )
+            throw SdkValidationError(field: "url", code: "required", message: "Validation failed for 'url': value is required")
         }
-        syncBehavior = try container.sdkDecodeRequired(.syncBehavior)
-        url = try container.sdkDecodeRequired(.url)
-        status = try container.sdkDecodeIfPresent(.status)
-        audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
+        self.syncBehavior = try container.sdkDecodeRequired(.syncBehavior)
+        self.url = try container.sdkDecodeRequired(.url)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
     }
 }
 
-public extension CreateContentImportSourceRequest {
-    init(
-        syncBehavior: CreateContentImportSourceRequestSyncBehavior,
-        url: String,
-        status: CreateContentImportSourceRequestStatus? = nil,
-        audienceIds: CreateContentImportSourceRequestAudienceIds? = nil
-    ) {
+extension CreateContentImportSourceRequest {
+    public init(syncBehavior: CreateContentImportSourceRequestSyncBehavior, url: String, status: CreateContentImportSourceRequestStatus? = nil, audienceIds: CreateContentImportSourceRequestAudienceIds? = nil) {
         (self.syncBehavior, self.url) = (syncBehavior, url)
         (self.status, self.audienceIds) = (status, audienceIds)
     }
@@ -97,44 +82,28 @@ public struct UpdateContentImportSourceRequest: Codable {
         case applyAudienceToExistingContent = "apply_audience_to_existing_content"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension UpdateContentImportSourceRequest {
-    init(from decoder: Decoder) throws {
+extension UpdateContentImportSourceRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.syncBehavior) else {
-            throw SdkValidationError(
-                field: "sync_behavior",
-                code: "required",
-                message: "Validation failed for 'sync_behavior': value is required"
-            )
+            throw SdkValidationError(field: "sync_behavior", code: "required", message: "Validation failed for 'sync_behavior': value is required")
         }
         guard container.contains(.url) else {
-            throw SdkValidationError(
-                field: "url",
-                code: "required",
-                message: "Validation failed for 'url': value is required"
-            )
+            throw SdkValidationError(field: "url", code: "required", message: "Validation failed for 'url': value is required")
         }
-        syncBehavior = try container.sdkDecodeRequired(.syncBehavior)
-        url = try container.sdkDecodeRequired(.url)
-        status = try container.sdkDecodeIfPresent(.status)
-        audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
-        applyAudienceToExistingContent = try container.sdkDecodeIfPresent(.applyAudienceToExistingContent)
+        self.syncBehavior = try container.sdkDecodeRequired(.syncBehavior)
+        self.url = try container.sdkDecodeRequired(.url)
+        self.status = try container.sdkDecodeIfPresent(.status)
+        self.audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
+        self.applyAudienceToExistingContent = try container.sdkDecodeIfPresent(.applyAudienceToExistingContent)
     }
 }
 
-public extension UpdateContentImportSourceRequest {
-    init(
-        syncBehavior: UpdateContentImportSourceRequestSyncBehavior,
-        url: String,
-        status: UpdateContentImportSourceRequestStatus? = nil,
-        audienceIds: UpdateContentImportSourceRequestAudienceIds? = nil,
-        applyAudienceToExistingContent: Bool? = nil
-    ) {
+extension UpdateContentImportSourceRequest {
+    public init(syncBehavior: UpdateContentImportSourceRequestSyncBehavior, url: String, status: UpdateContentImportSourceRequestStatus? = nil, audienceIds: UpdateContentImportSourceRequestAudienceIds? = nil, applyAudienceToExistingContent: Bool? = nil) {
         (self.syncBehavior, self.url) = (syncBehavior, url)
         (self.status, self.audienceIds) = (status, audienceIds)
         self.applyAudienceToExistingContent = applyAudienceToExistingContent
@@ -147,32 +116,22 @@ public indirect enum CreateContentImportSourceRequestAudienceIds {
 }
 
 extension CreateContentImportSourceRequestAudienceIds: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for CreateContentImportSourceRequestAudienceIds"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for CreateContentImportSourceRequestAudienceIds")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
 extension CreateContentImportSourceRequestAudienceIds {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(Int.self) {
-            return .intValue(value)
-        }
-        if let value = try? container.decode([Int].self) {
-            return .intList(value)
-        }
+        if let value = try? container.decode(Int.self) { return .intValue(value) }
+        if let value = try? container.decode([Int].self) { return .intList(value) }
         return nil
     }
 }
@@ -202,32 +161,22 @@ public indirect enum UpdateContentImportSourceRequestAudienceIds {
 }
 
 extension UpdateContentImportSourceRequestAudienceIds: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for UpdateContentImportSourceRequestAudienceIds"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for UpdateContentImportSourceRequestAudienceIds")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
 extension UpdateContentImportSourceRequestAudienceIds {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(Int.self) {
-            return .intValue(value)
-        }
-        if let value = try? container.decode([Int].self) {
-            return .intList(value)
-        }
+        if let value = try? container.decode(Int.self) { return .intValue(value) }
+        if let value = try? container.decode([Int].self) { return .intList(value) }
         return nil
     }
 }
@@ -302,73 +251,41 @@ public struct CreateExternalPageRequest: Codable {
         case audienceIds = "audience_ids"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateExternalPageRequest {
-    init(from decoder: Decoder) throws {
+extension CreateExternalPageRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.title) else {
-            throw SdkValidationError(
-                field: "title",
-                code: "required",
-                message: "Validation failed for 'title': value is required"
-            )
+            throw SdkValidationError(field: "title", code: "required", message: "Validation failed for 'title': value is required")
         }
         guard container.contains(.html) else {
-            throw SdkValidationError(
-                field: "html",
-                code: "required",
-                message: "Validation failed for 'html': value is required"
-            )
+            throw SdkValidationError(field: "html", code: "required", message: "Validation failed for 'html': value is required")
         }
         guard container.contains(.locale) else {
-            throw SdkValidationError(
-                field: "locale",
-                code: "required",
-                message: "Validation failed for 'locale': value is required"
-            )
+            throw SdkValidationError(field: "locale", code: "required", message: "Validation failed for 'locale': value is required")
         }
         guard container.contains(.sourceId) else {
-            throw SdkValidationError(
-                field: "source_id",
-                code: "required",
-                message: "Validation failed for 'source_id': value is required"
-            )
+            throw SdkValidationError(field: "source_id", code: "required", message: "Validation failed for 'source_id': value is required")
         }
         guard container.contains(.externalId) else {
-            throw SdkValidationError(
-                field: "external_id",
-                code: "required",
-                message: "Validation failed for 'external_id': value is required"
-            )
+            throw SdkValidationError(field: "external_id", code: "required", message: "Validation failed for 'external_id': value is required")
         }
-        title = try container.sdkDecodeRequired(.title)
-        html = try container.sdkDecodeRequired(.html)
-        locale = try container.sdkDecodeRequired(.locale)
-        sourceId = try container.sdkDecodeRequired(.sourceId)
-        externalId = try container.sdkDecodeRequired(.externalId)
-        url = try container.sdkDecodeIfPresent(.url)
-        aiAgentAvailability = try container.sdkDecodeIfPresent(.aiAgentAvailability)
-        aiCopilotAvailability = try container.sdkDecodeIfPresent(.aiCopilotAvailability)
-        audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
+        self.title = try container.sdkDecodeRequired(.title)
+        self.html = try container.sdkDecodeRequired(.html)
+        self.locale = try container.sdkDecodeRequired(.locale)
+        self.sourceId = try container.sdkDecodeRequired(.sourceId)
+        self.externalId = try container.sdkDecodeRequired(.externalId)
+        self.url = try container.sdkDecodeIfPresent(.url)
+        self.aiAgentAvailability = try container.sdkDecodeIfPresent(.aiAgentAvailability)
+        self.aiCopilotAvailability = try container.sdkDecodeIfPresent(.aiCopilotAvailability)
+        self.audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
     }
 }
 
-public extension CreateExternalPageRequest {
-    init(
-        title: String,
-        html: String,
-        locale: CreateExternalPageRequestLocale,
-        sourceId: Int,
-        externalId: String,
-        url: String? = nil,
-        aiAgentAvailability: Bool? = nil,
-        aiCopilotAvailability: Bool? = nil,
-        audienceIds: [Int]? = nil
-    ) {
+extension CreateExternalPageRequest {
+    public init(title: String, html: String, locale: CreateExternalPageRequestLocale, sourceId: Int, externalId: String, url: String? = nil, aiAgentAvailability: Bool? = nil, aiCopilotAvailability: Bool? = nil, audienceIds: [Int]? = nil) {
         (self.title, self.html) = (title, html)
         (self.locale, self.sourceId) = (locale, sourceId)
         (self.externalId, self.url) = (externalId, url)
@@ -420,71 +337,40 @@ public struct UpdateExternalPageRequest: Codable {
         case audienceIds = "audience_ids"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension UpdateExternalPageRequest {
-    init(from decoder: Decoder) throws {
+extension UpdateExternalPageRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.title) else {
-            throw SdkValidationError(
-                field: "title",
-                code: "required",
-                message: "Validation failed for 'title': value is required"
-            )
+            throw SdkValidationError(field: "title", code: "required", message: "Validation failed for 'title': value is required")
         }
         guard container.contains(.html) else {
-            throw SdkValidationError(
-                field: "html",
-                code: "required",
-                message: "Validation failed for 'html': value is required"
-            )
+            throw SdkValidationError(field: "html", code: "required", message: "Validation failed for 'html': value is required")
         }
         guard container.contains(.url) else {
-            throw SdkValidationError(
-                field: "url",
-                code: "required",
-                message: "Validation failed for 'url': value is required"
-            )
+            throw SdkValidationError(field: "url", code: "required", message: "Validation failed for 'url': value is required")
         }
         guard container.contains(.locale) else {
-            throw SdkValidationError(
-                field: "locale",
-                code: "required",
-                message: "Validation failed for 'locale': value is required"
-            )
+            throw SdkValidationError(field: "locale", code: "required", message: "Validation failed for 'locale': value is required")
         }
         guard container.contains(.sourceId) else {
-            throw SdkValidationError(
-                field: "source_id",
-                code: "required",
-                message: "Validation failed for 'source_id': value is required"
-            )
+            throw SdkValidationError(field: "source_id", code: "required", message: "Validation failed for 'source_id': value is required")
         }
-        title = try container.sdkDecodeRequired(.title)
-        html = try container.sdkDecodeRequired(.html)
-        url = try container.sdkDecodeRequired(.url)
-        locale = try container.sdkDecodeRequired(.locale)
-        sourceId = try container.sdkDecodeRequired(.sourceId)
-        finAvailability = try container.sdkDecodeIfPresent(.finAvailability)
-        externalId = try container.sdkDecodeIfPresent(.externalId)
-        audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
+        self.title = try container.sdkDecodeRequired(.title)
+        self.html = try container.sdkDecodeRequired(.html)
+        self.url = try container.sdkDecodeRequired(.url)
+        self.locale = try container.sdkDecodeRequired(.locale)
+        self.sourceId = try container.sdkDecodeRequired(.sourceId)
+        self.finAvailability = try container.sdkDecodeIfPresent(.finAvailability)
+        self.externalId = try container.sdkDecodeIfPresent(.externalId)
+        self.audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
     }
 }
 
-public extension UpdateExternalPageRequest {
-    init(
-        title: String,
-        html: String,
-        url: String,
-        locale: UpdateExternalPageRequestLocale,
-        sourceId: Int,
-        finAvailability: Bool? = nil,
-        externalId: String? = nil,
-        audienceIds: [Int]? = nil
-    ) {
+extension UpdateExternalPageRequest {
+    public init(title: String, html: String, url: String, locale: UpdateExternalPageRequestLocale, sourceId: Int, finAvailability: Bool? = nil, externalId: String? = nil, audienceIds: [Int]? = nil) {
         (self.title, self.html) = (title, html)
         (self.url, self.locale) = (url, locale)
         (self.sourceId, self.finAvailability) = (sourceId, finAvailability)
@@ -496,15 +382,12 @@ public extension UpdateExternalPageRequest {
 public struct UpdateExternalPageRequestLocale: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let en = UpdateExternalPageRequestLocale(rawValue: "en")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -514,20 +397,16 @@ public struct UpdateExternalPageRequestLocale: RawRepresentable, Hashable, Codab
 }
 
 /// The status of the content import source.
-public struct CreateContentImportSourceRequestStatus: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct CreateContentImportSourceRequestStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let active = CreateContentImportSourceRequestStatus(rawValue: "active")
     public static let deactivated = CreateContentImportSourceRequestStatus(rawValue: "deactivated")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -537,19 +416,15 @@ public struct CreateContentImportSourceRequestStatus: RawRepresentable, Hashable
 }
 
 /// If you intend to create or update External Pages via the API, this should be set to `api`.
-public struct CreateContentImportSourceRequestSyncBehavior: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct CreateContentImportSourceRequestSyncBehavior: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let api = CreateContentImportSourceRequestSyncBehavior(rawValue: "api")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -559,20 +434,16 @@ public struct CreateContentImportSourceRequestSyncBehavior: RawRepresentable, Ha
 }
 
 /// The status of the content import source.
-public struct UpdateContentImportSourceRequestStatus: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct UpdateContentImportSourceRequestStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let active = UpdateContentImportSourceRequestStatus(rawValue: "active")
     public static let deactivated = UpdateContentImportSourceRequestStatus(rawValue: "deactivated")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -585,15 +456,12 @@ public struct UpdateContentImportSourceRequestStatus: RawRepresentable, Hashable
 public struct CreateExternalPageRequestLocale: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let en = CreateExternalPageRequestLocale(rawValue: "en")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -604,21 +472,17 @@ public struct CreateExternalPageRequestLocale: RawRepresentable, Hashable, Codab
 
 /// If you intend to create or update External Pages via the API, this should be set to `api`. You can not
 /// change the value to or from api.
-public struct UpdateContentImportSourceRequestSyncBehavior: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct UpdateContentImportSourceRequestSyncBehavior: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let api = UpdateContentImportSourceRequestSyncBehavior(rawValue: "api")
     public static let automated = UpdateContentImportSourceRequestSyncBehavior(rawValue: "automated")
     public static let manual = UpdateContentImportSourceRequestSyncBehavior(rawValue: "manual")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

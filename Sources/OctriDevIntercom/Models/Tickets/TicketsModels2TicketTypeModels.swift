@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// TaggedModelsTickets domain models
+// TaggedModelsTickets domain models
 /// A ticket type, used to define the data fields to be captured in a ticket.
 public struct TicketType: Codable {
     /// String representing the object's type. Always has the value `ticket_type`.
@@ -54,45 +54,32 @@ public struct TicketType: Codable {
     }
 
     init() {
-        (type, id, category, name, description) = (nil, nil, nil, nil, nil)
-        (icon, workspaceId, ticketTypeAttributes, ticketStates, archived) = (nil, nil, nil, nil, nil)
-        (createdAt, updatedAt) = (nil, nil)
+        (self.type, self.id, self.category, self.name, self.description) = (nil, nil, nil, nil, nil)
+        (self.icon, self.workspaceId, self.ticketTypeAttributes, self.ticketStates, self.archived) = (nil, nil, nil, nil, nil)
+        (self.createdAt, self.updatedAt) = (nil, nil)
     }
 }
 
-public extension TicketType {
-    init(from decoder: Decoder) throws {
+extension TicketType {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        category = try container.sdkDecodeIfPresent(.category)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        icon = try container.sdkDecodeIfPresent(.icon)
-        workspaceId = try container.sdkDecodeIfPresent(.workspaceId)
-        ticketTypeAttributes = try container.sdkDecodeIfPresent(.ticketTypeAttributes)
-        ticketStates = try container.sdkDecodeIfPresent(.ticketStates)
-        archived = try container.sdkDecodeIfPresent(.archived)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.category = try container.sdkDecodeIfPresent(.category)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.icon = try container.sdkDecodeIfPresent(.icon)
+        self.workspaceId = try container.sdkDecodeIfPresent(.workspaceId)
+        self.ticketTypeAttributes = try container.sdkDecodeIfPresent(.ticketTypeAttributes)
+        self.ticketStates = try container.sdkDecodeIfPresent(.ticketStates)
+        self.archived = try container.sdkDecodeIfPresent(.archived)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
     }
 }
 
-public extension TicketType {
-    init(
-        type: String? = nil,
-        id: String? = nil,
-        category: TicketTypeCategory? = nil,
-        name: String? = nil,
-        description: String? = nil,
-        icon: String? = nil,
-        workspaceId: String? = nil,
-        ticketTypeAttributes: TicketTypeAttributeList? = nil,
-        ticketStates: TicketTypeTicketStates? = nil,
-        archived: Bool? = nil,
-        createdAt: Int? = nil,
-        updatedAt: Int? = nil
-    ) {
+extension TicketType {
+    public init(type: String? = nil, id: String? = nil, category: TicketTypeCategory? = nil, name: String? = nil, description: String? = nil, icon: String? = nil, workspaceId: String? = nil, ticketTypeAttributes: TicketTypeAttributeList? = nil, ticketStates: TicketTypeTicketStates? = nil, archived: Bool? = nil, createdAt: Int? = nil, updatedAt: Int? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.category, self.name) = (category, name)
@@ -117,34 +104,28 @@ public struct TicketPartTranslations: Codable {
         case original
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension TicketPartTranslations {
-    init(from decoder: Decoder) throws {
+extension TicketPartTranslations {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.original) else {
-            throw SdkValidationError(
-                field: "original",
-                code: "required",
-                message: "Validation failed for 'original': value is required"
-            )
+            throw SdkValidationError(field: "original", code: "required", message: "Validation failed for 'original': value is required")
         }
-        original = try container.sdkDecodeRequired(.original)
+        self.original = try container.sdkDecodeRequired(.original)
         additionalProperties = try decoder.sdkAdditionalProperties(besides: CodingKeys.self)
     }
 }
 
-public extension TicketPartTranslations {
-    init(original: String) {
+extension TicketPartTranslations {
+    public init(original: String) {
         self.original = original
     }
 }
 
-public extension TicketPartTranslations {
-    func encode(to encoder: Encoder) throws {
+extension TicketPartTranslations {
+    public func encode(to encoder: Encoder) throws {
         try encoder.sdkEncodeAdditionalProperties(additionalProperties)
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(original, forKey: .original)
@@ -165,20 +146,20 @@ public struct TicketContacts: Codable {
     }
 
     init() {
-        (type, contacts) = (nil, nil)
+        (self.type, self.contacts) = (nil, nil)
     }
 }
 
-public extension TicketContacts {
-    init(from decoder: Decoder) throws {
+extension TicketContacts {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        contacts = try container.sdkDecodeIfPresent(.contacts)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.contacts = try container.sdkDecodeIfPresent(.contacts)
     }
 }
 
-public extension TicketContacts {
-    init(type: TicketContactsType? = nil, contacts: [ContactReference]? = nil) {
+extension TicketContacts {
+    public init(type: TicketContactsType? = nil, contacts: [ContactReference]? = nil) {
         self.init()
         (self.type, self.contacts) = (type, contacts)
     }
@@ -212,29 +193,23 @@ public struct TicketState: Codable {
     }
 
     init() {
-        (type, id, category, internalLabel, externalLabel) = (nil, nil, nil, nil, nil)
+        (self.type, self.id, self.category, self.internalLabel, self.externalLabel) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension TicketState {
-    init(from decoder: Decoder) throws {
+extension TicketState {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        category = try container.sdkDecodeIfPresent(.category)
-        internalLabel = try container.sdkDecodeIfPresent(.internalLabel)
-        externalLabel = try container.sdkDecodeIfPresent(.externalLabel)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.category = try container.sdkDecodeIfPresent(.category)
+        self.internalLabel = try container.sdkDecodeIfPresent(.internalLabel)
+        self.externalLabel = try container.sdkDecodeIfPresent(.externalLabel)
     }
 }
 
-public extension TicketState {
-    init(
-        type: String? = nil,
-        id: String? = nil,
-        category: TicketStateCategory? = nil,
-        internalLabel: String? = nil,
-        externalLabel: String? = nil
-    ) {
+extension TicketState {
+    public init(type: String? = nil, id: String? = nil, category: TicketStateCategory? = nil, internalLabel: String? = nil, externalLabel: String? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.category, self.internalLabel) = (category, internalLabel)
@@ -254,35 +229,25 @@ public struct TicketPartUpdatedAttributeData: Codable {
         case value
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension TicketPartUpdatedAttributeData {
-    init(from decoder: Decoder) throws {
+extension TicketPartUpdatedAttributeData {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.attribute) else {
-            throw SdkValidationError(
-                field: "attribute",
-                code: "required",
-                message: "Validation failed for 'attribute': value is required"
-            )
+            throw SdkValidationError(field: "attribute", code: "required", message: "Validation failed for 'attribute': value is required")
         }
         guard container.contains(.value) else {
-            throw SdkValidationError(
-                field: "value",
-                code: "required",
-                message: "Validation failed for 'value': value is required"
-            )
+            throw SdkValidationError(field: "value", code: "required", message: "Validation failed for 'value': value is required")
         }
-        attribute = try container.sdkDecodeRequired(.attribute)
-        value = try container.sdkDecodeRequired(.value)
+        self.attribute = try container.sdkDecodeRequired(.attribute)
+        self.value = try container.sdkDecodeRequired(.value)
     }
 }
 
-public extension TicketPartUpdatedAttributeData {
-    init(attribute: TicketPartUpdatedAttributeDataAttribute, value: TicketPartUpdatedAttributeDataValue) {
+extension TicketPartUpdatedAttributeData {
+    public init(attribute: TicketPartUpdatedAttributeDataAttribute, value: TicketPartUpdatedAttributeDataValue) {
         (self.attribute, self.value) = (attribute, value)
     }
 }
@@ -291,10 +256,7 @@ public extension TicketPartUpdatedAttributeData {
 public struct TicketStateCategory: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let submitted = TicketStateCategory(rawValue: "submitted")
     public static let inProgress = TicketStateCategory(rawValue: "in_progress")
     public static let waitingOnCustomer = TicketStateCategory(rawValue: "waiting_on_customer")
@@ -302,7 +264,7 @@ public struct TicketStateCategory: RawRepresentable, Hashable, Codable, Sendable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -315,17 +277,14 @@ public struct TicketStateCategory: RawRepresentable, Hashable, Codable, Sendable
 public struct TicketTypeCategory: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let customer = TicketTypeCategory(rawValue: "Customer")
     public static let backOffice = TicketTypeCategory(rawValue: "Back-office")
     public static let tracker = TicketTypeCategory(rawValue: "Tracker")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -338,17 +297,14 @@ public struct TicketTypeCategory: RawRepresentable, Hashable, Codable, Sendable,
 public struct TicketCategory: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let customer = TicketCategory(rawValue: "Customer")
     public static let backOffice = TicketCategory(rawValue: "Back-office")
     public static let tracker = TicketCategory(rawValue: "Tracker")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -358,19 +314,15 @@ public struct TicketCategory: RawRepresentable, Hashable, Codable, Sendable, Sdk
 }
 
 /// The type of the object. Always 'attribute'.
-public struct TicketPartUpdatedAttributeDataAttributeType: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct TicketPartUpdatedAttributeDataAttributeType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let attribute = TicketPartUpdatedAttributeDataAttributeType(rawValue: "attribute")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -383,15 +335,12 @@ public struct TicketPartUpdatedAttributeDataAttributeType: RawRepresentable, Has
 public struct TicketContactsType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let contactList = TicketContactsType(rawValue: "contact.list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -404,10 +353,7 @@ public struct TicketContactsType: RawRepresentable, Hashable, Codable, Sendable,
 public struct TicketPartTicketState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let submitted = TicketPartTicketState(rawValue: "submitted")
     public static let inProgress = TicketPartTicketState(rawValue: "in_progress")
     public static let waitingOnCustomer = TicketPartTicketState(rawValue: "waiting_on_customer")
@@ -415,7 +361,7 @@ public struct TicketPartTicketState: RawRepresentable, Hashable, Codable, Sendab
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -428,15 +374,12 @@ public struct TicketPartTicketState: RawRepresentable, Hashable, Codable, Sendab
 public struct TicketTypeX4ef5b118: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let ticket = TicketTypeX4ef5b118(rawValue: "ticket")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -449,10 +392,7 @@ public struct TicketTypeX4ef5b118: RawRepresentable, Hashable, Codable, Sendable
 public struct TicketPartPreviousTicketState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let submitted = TicketPartPreviousTicketState(rawValue: "submitted")
     public static let inProgress = TicketPartPreviousTicketState(rawValue: "in_progress")
     public static let waitingOnCustomer = TicketPartPreviousTicketState(rawValue: "waiting_on_customer")
@@ -460,7 +400,7 @@ public struct TicketPartPreviousTicketState: RawRepresentable, Hashable, Codable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -470,19 +410,15 @@ public struct TicketPartPreviousTicketState: RawRepresentable, Hashable, Codable
 }
 
 /// The type of the object. Always 'value'.
-public struct TicketPartUpdatedAttributeDataValueType: RawRepresentable, Hashable, Codable, Sendable,
-    SdkWireConvertible {
+public struct TicketPartUpdatedAttributeDataValueType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let value = TicketPartUpdatedAttributeDataValueType(rawValue: "value")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

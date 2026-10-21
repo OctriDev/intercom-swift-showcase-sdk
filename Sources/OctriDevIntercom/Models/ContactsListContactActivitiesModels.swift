@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Contacts domain models
+// Contacts domain models
 /// Pagination information.
 public struct ContactActivityListPages: Codable {
     /// Optional enumerated value serialized in the `type` wire field.
@@ -22,21 +22,21 @@ public struct ContactActivityListPages: Codable {
     }
 
     init() {
-        (type, perPage, next) = (nil, nil, nil)
+        (self.type, self.perPage, self.next) = (nil, nil, nil)
     }
 }
 
-public extension ContactActivityListPages {
-    init(from decoder: Decoder) throws {
+extension ContactActivityListPages {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        perPage = try container.sdkDecodeIfPresent(.perPage)
-        next = try container.sdkDecodeIfPresent(.next)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.perPage = try container.sdkDecodeIfPresent(.perPage)
+        self.next = try container.sdkDecodeIfPresent(.next)
     }
 }
 
-public extension ContactActivityListPages {
-    init(type: ContactActivityListPagesType? = nil, perPage: Int? = nil, next: ContactActivityListPagesNext? = nil) {
+extension ContactActivityListPages {
+    public init(type: ContactActivityListPagesType? = nil, perPage: Int? = nil, next: ContactActivityListPagesNext? = nil) {
         self.init()
         (self.type, self.perPage) = (type, perPage)
         self.next = next
@@ -60,21 +60,21 @@ public struct ContactActivityList: Codable {
     }
 
     init() {
-        (type, data, pages) = (nil, nil, nil)
+        (self.type, self.data, self.pages) = (nil, nil, nil)
     }
 }
 
-public extension ContactActivityList {
-    init(from decoder: Decoder) throws {
+extension ContactActivityList {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        data = try container.sdkDecodeIfPresent(.data)
-        pages = try container.sdkDecodeIfPresent(.pages)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.data = try container.sdkDecodeIfPresent(.data)
+        self.pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-public extension ContactActivityList {
-    init(type: ContactActivityListType? = nil, data: [ContactActivity]? = nil, pages: ContactActivityListPages? = nil) {
+extension ContactActivityList {
+    public init(type: ContactActivityListType? = nil, data: [ContactActivity]? = nil, pages: ContactActivityListPages? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
         self.pages = pages
@@ -128,40 +128,29 @@ public struct ContactActivity: Codable {
     }
 
     init() {
-        (type, id, eventType, contactId, externalId) = (nil, nil, nil, nil, nil)
-        (role, mergeSourceId, mergeTargetId, failureReason, createdAt) = (nil, nil, nil, nil, nil)
+        (self.type, self.id, self.eventType, self.contactId, self.externalId) = (nil, nil, nil, nil, nil)
+        (self.role, self.mergeSourceId, self.mergeTargetId, self.failureReason, self.createdAt) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ContactActivity {
-    init(from decoder: Decoder) throws {
+extension ContactActivity {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        eventType = try container.sdkDecodeIfPresent(.eventType)
-        contactId = try container.sdkDecodeIfPresent(.contactId)
-        externalId = try container.sdkDecodeIfPresent(.externalId)
-        role = try container.sdkDecodeIfPresent(.role)
-        mergeSourceId = try container.sdkDecodeIfPresent(.mergeSourceId)
-        mergeTargetId = try container.sdkDecodeIfPresent(.mergeTargetId)
-        failureReason = try container.sdkDecodeIfPresent(.failureReason)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.eventType = try container.sdkDecodeIfPresent(.eventType)
+        self.contactId = try container.sdkDecodeIfPresent(.contactId)
+        self.externalId = try container.sdkDecodeIfPresent(.externalId)
+        self.role = try container.sdkDecodeIfPresent(.role)
+        self.mergeSourceId = try container.sdkDecodeIfPresent(.mergeSourceId)
+        self.mergeTargetId = try container.sdkDecodeIfPresent(.mergeTargetId)
+        self.failureReason = try container.sdkDecodeIfPresent(.failureReason)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
     }
 }
 
-public extension ContactActivity {
-    init(
-        type: ContactActivityType? = nil,
-        id: String? = nil,
-        eventType: ContactActivityEventType? = nil,
-        contactId: String? = nil,
-        externalId: String? = nil,
-        role: String? = nil,
-        mergeSourceId: String? = nil,
-        mergeTargetId: String? = nil,
-        failureReason: String? = nil,
-        createdAt: Int? = nil
-    ) {
+extension ContactActivity {
+    public init(type: ContactActivityType? = nil, id: String? = nil, eventType: ContactActivityEventType? = nil, contactId: String? = nil, externalId: String? = nil, role: String? = nil, mergeSourceId: String? = nil, mergeTargetId: String? = nil, failureReason: String? = nil, createdAt: Int? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.eventType, self.contactId) = (eventType, contactId)
@@ -182,19 +171,19 @@ public struct ContactActivityListPagesNext: Codable {
     }
 
     init() {
-        startingAfter = nil
+        self.startingAfter = nil
     }
 }
 
-public extension ContactActivityListPagesNext {
-    init(from decoder: Decoder) throws {
+extension ContactActivityListPagesNext {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        startingAfter = try container.sdkDecodeIfPresent(.startingAfter)
+        self.startingAfter = try container.sdkDecodeIfPresent(.startingAfter)
     }
 }
 
-public extension ContactActivityListPagesNext {
-    init(startingAfter: String? = nil) {
+extension ContactActivityListPagesNext {
+    public init(startingAfter: String? = nil) {
         self.init()
         self.startingAfter = startingAfter
     }
@@ -204,15 +193,12 @@ public extension ContactActivityListPagesNext {
 public struct ContactActivityType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let contactActivity = ContactActivityType(rawValue: "contact_activity")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -225,15 +211,12 @@ public struct ContactActivityType: RawRepresentable, Hashable, Codable, Sendable
 public struct ContactActivityListPagesType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let pages = ContactActivityListPagesType(rawValue: "pages")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -246,15 +229,12 @@ public struct ContactActivityListPagesType: RawRepresentable, Hashable, Codable,
 public struct ContactActivityListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let list = ContactActivityListType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -267,10 +247,7 @@ public struct ContactActivityListType: RawRepresentable, Hashable, Codable, Send
 public struct ContactActivityEventType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let contactCreated = ContactActivityEventType(rawValue: "contact.created")
     public static let contactRoleUpdated = ContactActivityEventType(rawValue: "contact.role_updated")
     public static let contactDeleted = ContactActivityEventType(rawValue: "contact.deleted")
@@ -279,7 +256,7 @@ public struct ContactActivityEventType: RawRepresentable, Hashable, Codable, Sen
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

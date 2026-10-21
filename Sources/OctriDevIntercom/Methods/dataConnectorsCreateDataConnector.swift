@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension DataConnectorsMethods {
-    struct CreateDataConnectorOptions: Codable {
+extension DataConnectorsMethods {
+    public struct CreateDataConnectorOptions: Codable {
         public var name: String
         public var intercomVersion: IntercomVersion?
         public var description: String?
@@ -29,11 +29,9 @@ public extension DataConnectorsMethods {
         }
     }
 
-    /// Creates a new data connector for calling an external API. Provide `name` and any configuration fields; the
-    /// connector starts in `draft` state. Configure its settings before setting it to `live`.
+    /// Creates a new data connector for calling an external API. Provide `name` and any configuration fields; the connector starts in `draft` state. Configure its settings before setting it to `live`.
     ///
-    /// Create a new data connector. The connector is created in `draft` state. Configure its URL, headers, data inputs,
-    /// and other settings, then set it to `live` when ready.
+    /// Create a new data connector. The connector is created in `draft` state. Configure its URL, headers, data inputs, and other settings, then set it to `live` when ready.
     ///
     /// - Parameters:
     /// - name: The name of the data connector.
@@ -57,25 +55,11 @@ public extension DataConnectorsMethods {
     ///   `response_fields` and sets `configuration_response_type` to
     ///   `mock_response_type`.
     /// - tokenIds: IDs of authentication tokens to attach to this data connector.
-    static func createDataConnector(
-        config: ClientConfig,
-        options: CreateDataConnectorOptions,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DataConnectorDetail {
+    public static func createDataConnector(config: ClientConfig, options: CreateDataConnectorOptions, requestOptions: RequestOptions? = nil) async throws -> DataConnectorDetail {
         let requestBody = CreateDataConnectorRequestBody(options: options)
 
-        return try await (sdkRequest(
-            "POST",
-            "/data_connectors",
-            config: config,
-            body: requestBody,
-            decoder: .json,
-            operationId: "createDataConnector",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "422": Error2.self]
-        )).data
+        return try (await sdkRequest("POST", "/data_connectors", config: config, body: requestBody, decoder: .json, operationId: "createDataConnector", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "422": Error2.self])).data
     }
 }

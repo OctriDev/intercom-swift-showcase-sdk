@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Conversations domain models
+// Conversations domain models
 /// Typed representation of the `DetachContactFromConversationRequest` API schema.
 public struct DetachContactFromConversationRequest: Codable {
     /// The `id` of the admin who is performing the action.
@@ -14,27 +14,21 @@ public struct DetachContactFromConversationRequest: Codable {
         case adminId = "admin_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension DetachContactFromConversationRequest {
-    init(from decoder: Decoder) throws {
+extension DetachContactFromConversationRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.adminId) else {
-            throw SdkValidationError(
-                field: "admin_id",
-                code: "required",
-                message: "Validation failed for 'admin_id': value is required"
-            )
+            throw SdkValidationError(field: "admin_id", code: "required", message: "Validation failed for 'admin_id': value is required")
         }
-        adminId = try container.sdkDecodeRequired(.adminId)
+        self.adminId = try container.sdkDecodeRequired(.adminId)
     }
 }
 
-public extension DetachContactFromConversationRequest {
-    init(adminId: String) {
+extension DetachContactFromConversationRequest {
+    public init(adminId: String) {
         self.adminId = adminId
     }
 }

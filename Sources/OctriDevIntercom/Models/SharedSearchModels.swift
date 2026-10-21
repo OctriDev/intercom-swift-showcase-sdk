@@ -3,33 +3,25 @@
 
 import Foundation
 
-/// SharedSearch domain models
+// SharedSearch domain models
 public indirect enum SearchRequestQuery {
     case singleFilterSearchRequest(SingleFilterSearchRequest)
     case multipleFilterSearchRequest(MultipleFilterSearchRequest)
 }
 
 extension SearchRequestQuery: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) {
-                self = value; return
-            }
+            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
         }
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for SearchRequestQuery"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for SearchRequestQuery")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
@@ -47,14 +39,8 @@ extension SearchRequestQuery {
 
 extension SearchRequestQuery {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container
-            .decode(SingleFilterSearchRequest.self) {
-            return .singleFilterSearchRequest(value)
-        }
-        if let value = try? container
-            .decode(MultipleFilterSearchRequest.self) {
-            return .multipleFilterSearchRequest(value)
-        }
+        if let value = try? container.decode(SingleFilterSearchRequest.self) { return .singleFilterSearchRequest(value) }
+        if let value = try? container.decode(MultipleFilterSearchRequest.self) { return .multipleFilterSearchRequest(value) }
         return nil
     }
 }
@@ -81,28 +67,22 @@ public struct SearchRequest: Codable {
         case pagination
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension SearchRequest {
-    init(from decoder: Decoder) throws {
+extension SearchRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.query) else {
-            throw SdkValidationError(
-                field: "query",
-                code: "required",
-                message: "Validation failed for 'query': value is required"
-            )
+            throw SdkValidationError(field: "query", code: "required", message: "Validation failed for 'query': value is required")
         }
-        query = try container.sdkDecodeRequired(.query)
-        pagination = try container.sdkDecodeIfPresent(.pagination)
+        self.query = try container.sdkDecodeRequired(.query)
+        self.pagination = try container.sdkDecodeIfPresent(.pagination)
     }
 }
 
-public extension SearchRequest {
-    init(query: SearchRequestQuery, pagination: StartingAfterPaging? = nil) {
+extension SearchRequest {
+    public init(query: SearchRequestQuery, pagination: StartingAfterPaging? = nil) {
         (self.query, self.pagination) = (query, pagination)
     }
 }

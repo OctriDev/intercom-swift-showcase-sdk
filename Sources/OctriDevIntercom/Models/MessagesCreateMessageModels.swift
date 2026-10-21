@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Messages domain models
+// Messages domain models
 /// A recipient of a message
 public struct Recipient: Codable {
     /// The role associated to the contact - `user` or `lead`.
@@ -18,35 +18,25 @@ public struct Recipient: Codable {
         case id
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension Recipient {
-    init(from decoder: Decoder) throws {
+extension Recipient {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        id = try container.sdkDecodeRequired(.id)
+        self.type = try container.sdkDecodeRequired(.type)
+        self.id = try container.sdkDecodeRequired(.id)
     }
 }
 
-public extension Recipient {
-    init(type: RecipientType, id: String) {
+extension Recipient {
+    public init(type: RecipientType, id: String) {
         (self.type, self.id) = (type, id)
     }
 }
@@ -95,40 +85,29 @@ public struct CreateMessageRequest: Codable {
     }
 
     init() {
-        (messageType, subject, body, template, from) = (nil, nil, nil, nil, nil)
-        (to, cc, bcc, createdAt, createConversationWithoutContactReply) = (nil, nil, nil, nil, nil)
+        (self.messageType, self.subject, self.body, self.template, self.from) = (nil, nil, nil, nil, nil)
+        (self.to, self.cc, self.bcc, self.createdAt, self.createConversationWithoutContactReply) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension CreateMessageRequest {
-    init(from decoder: Decoder) throws {
+extension CreateMessageRequest {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        messageType = try container.sdkDecodeIfPresent(.messageType)
-        subject = try container.sdkDecodeIfPresent(.subject)
-        body = try container.sdkDecodeIfPresent(.body)
-        template = try container.sdkDecodeIfPresent(.template)
-        from = try container.sdkDecodeIfPresent(.from)
-        to = try container.sdkDecodeIfPresent(.to)
-        cc = try container.sdkDecodeIfPresent(.cc)
-        bcc = try container.sdkDecodeIfPresent(.bcc)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        createConversationWithoutContactReply = try container.sdkDecodeIfPresent(.createConversationWithoutContactReply)
+        self.messageType = try container.sdkDecodeIfPresent(.messageType)
+        self.subject = try container.sdkDecodeIfPresent(.subject)
+        self.body = try container.sdkDecodeIfPresent(.body)
+        self.template = try container.sdkDecodeIfPresent(.template)
+        self.from = try container.sdkDecodeIfPresent(.from)
+        self.to = try container.sdkDecodeIfPresent(.to)
+        self.cc = try container.sdkDecodeIfPresent(.cc)
+        self.bcc = try container.sdkDecodeIfPresent(.bcc)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.createConversationWithoutContactReply = try container.sdkDecodeIfPresent(.createConversationWithoutContactReply)
     }
 }
 
-public extension CreateMessageRequest {
-    init(
-        messageType: CreateMessageRequestMessageType? = nil,
-        subject: String? = nil,
-        body: String? = nil,
-        template: String? = nil,
-        from: CreateMessageRequestFrom? = nil,
-        to: CreateMessageRequestTo? = nil,
-        cc: CreateMessageRequestCc? = nil,
-        bcc: CreateMessageRequestBcc? = nil,
-        createdAt: Int? = nil,
-        createConversationWithoutContactReply: Bool? = nil
-    ) {
+extension CreateMessageRequest {
+    public init(messageType: CreateMessageRequestMessageType? = nil, subject: String? = nil, body: String? = nil, template: String? = nil, from: CreateMessageRequestFrom? = nil, to: CreateMessageRequestTo? = nil, cc: CreateMessageRequestCc? = nil, bcc: CreateMessageRequestBcc? = nil, createdAt: Int? = nil, createConversationWithoutContactReply: Bool? = nil) {
         self.init()
         (self.messageType, self.subject) = (messageType, subject)
         (self.body, self.template) = (body, template)
@@ -145,32 +124,22 @@ public indirect enum CreateMessageRequestTo {
 }
 
 extension CreateMessageRequestTo: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for CreateMessageRequestTo"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for CreateMessageRequestTo")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
 extension CreateMessageRequestTo {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(Recipient.self) {
-            return .recipient(value)
-        }
-        if let value = try? container.decode([Recipient].self) {
-            return .recipientList(value)
-        }
+        if let value = try? container.decode(Recipient.self) { return .recipient(value) }
+        if let value = try? container.decode([Recipient].self) { return .recipientList(value) }
         return nil
     }
 }
@@ -191,32 +160,22 @@ public indirect enum CreateMessageRequestBcc {
 }
 
 extension CreateMessageRequestBcc: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for CreateMessageRequestBcc"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for CreateMessageRequestBcc")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
 extension CreateMessageRequestBcc {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(Recipient.self) {
-            return .recipient(value)
-        }
-        if let value = try? container.decode([Recipient].self) {
-            return .recipientList(value)
-        }
+        if let value = try? container.decode(Recipient.self) { return .recipient(value) }
+        if let value = try? container.decode([Recipient].self) { return .recipientList(value) }
         return nil
     }
 }
@@ -237,32 +196,22 @@ public indirect enum CreateMessageRequestCc {
 }
 
 extension CreateMessageRequestCc: Codable {
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) {
-            self = value; return
-        }
-        throw DecodingError.dataCorruptedError(
-            in: container,
-            debugDescription: "No variant matched for CreateMessageRequestCc"
-        )
+        if let value = Self.decodeGroup1(from: container) { self = value; return }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for CreateMessageRequestCc")
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
     }
 }
 
 extension CreateMessageRequestCc {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(Recipient.self) {
-            return .recipient(value)
-        }
-        if let value = try? container.decode([Recipient].self) {
-            return .recipientList(value)
-        }
+        if let value = try? container.decode(Recipient.self) { return .recipient(value) }
+        if let value = try? container.decode([Recipient].self) { return .recipientList(value) }
         return nil
     }
 }
@@ -291,35 +240,25 @@ public struct CreateMessageRequestFrom: Codable {
         case id
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateMessageRequestFrom {
-    init(from decoder: Decoder) throws {
+extension CreateMessageRequestFrom {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
         guard container.contains(.id) else {
-            throw SdkValidationError(
-                field: "id",
-                code: "required",
-                message: "Validation failed for 'id': value is required"
-            )
+            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        id = try container.sdkDecodeRequired(.id)
+        self.type = try container.sdkDecodeRequired(.type)
+        self.id = try container.sdkDecodeRequired(.id)
     }
 }
 
-public extension CreateMessageRequestFrom {
-    init(type: CreateMessageRequestFromType, id: Int) {
+extension CreateMessageRequestFrom {
+    public init(type: CreateMessageRequestFromType, id: Int) {
         (self.type, self.id) = (type, id)
     }
 }
@@ -328,15 +267,12 @@ public extension CreateMessageRequestFrom {
 public struct CreateMessageRequestFromType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let admin = CreateMessageRequestFromType(rawValue: "admin")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -349,17 +285,14 @@ public struct CreateMessageRequestFromType: RawRepresentable, Hashable, Codable,
 public struct CreateMessageRequestMessageType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let inApp = CreateMessageRequestMessageType(rawValue: "in_app")
     public static let email = CreateMessageRequestMessageType(rawValue: "email")
     public static let whatsapp = CreateMessageRequestMessageType(rawValue: "whatsapp")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -372,16 +305,13 @@ public struct CreateMessageRequestMessageType: RawRepresentable, Hashable, Codab
 public struct RecipientType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let user = RecipientType(rawValue: "user")
     public static let lead = RecipientType(rawValue: "lead")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

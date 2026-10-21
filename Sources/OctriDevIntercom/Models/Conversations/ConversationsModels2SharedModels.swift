@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// TaggedModelsConversations domain models
+// TaggedModelsConversations domain models
 /// The outcome of a single evaluator within a scorecard.
 public struct ConversationScorecardEvaluatorResult: Codable {
     /// The evaluator's selected value (typically a label such as `pass`, `fail`, or a category identifier).
@@ -41,34 +41,26 @@ public struct ConversationScorecardEvaluatorResult: Codable {
     }
 
     init() {
-        (value, valueLabel, source, reasoning, reasonIds) = (nil, nil, nil, nil, nil)
-        (reasons, otherText) = (nil, nil)
+        (self.value, self.valueLabel, self.source, self.reasoning, self.reasonIds) = (nil, nil, nil, nil, nil)
+        (self.reasons, self.otherText) = (nil, nil)
     }
 }
 
-public extension ConversationScorecardEvaluatorResult {
-    init(from decoder: Decoder) throws {
+extension ConversationScorecardEvaluatorResult {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        value = try container.sdkDecodeIfPresent(.value)
-        valueLabel = try container.sdkDecodeIfPresent(.valueLabel)
-        source = try container.sdkDecodeIfPresent(.source)
-        reasoning = try container.sdkDecodeIfPresent(.reasoning)
-        reasonIds = try container.sdkDecodeIfPresent(.reasonIds)
-        reasons = try container.sdkDecodeIfPresent(.reasons)
-        otherText = try container.sdkDecodeIfPresent(.otherText)
+        self.value = try container.sdkDecodeIfPresent(.value)
+        self.valueLabel = try container.sdkDecodeIfPresent(.valueLabel)
+        self.source = try container.sdkDecodeIfPresent(.source)
+        self.reasoning = try container.sdkDecodeIfPresent(.reasoning)
+        self.reasonIds = try container.sdkDecodeIfPresent(.reasonIds)
+        self.reasons = try container.sdkDecodeIfPresent(.reasons)
+        self.otherText = try container.sdkDecodeIfPresent(.otherText)
     }
 }
 
-public extension ConversationScorecardEvaluatorResult {
-    init(
-        value: String? = nil,
-        valueLabel: String? = nil,
-        source: String? = nil,
-        reasoning: String? = nil,
-        reasonIds: [String]? = nil,
-        reasons: [ConversationScorecardEvaluatorReason]? = nil,
-        otherText: String? = nil
-    ) {
+extension ConversationScorecardEvaluatorResult {
+    public init(value: String? = nil, valueLabel: String? = nil, source: String? = nil, reasoning: String? = nil, reasonIds: [String]? = nil, reasons: [ConversationScorecardEvaluatorReason]? = nil, otherText: String? = nil) {
         self.init()
         (self.value, self.valueLabel) = (value, valueLabel)
         (self.source, self.reasoning) = (source, reasoning)
@@ -93,20 +85,20 @@ public struct ConversationScorecardReviewer: Codable {
     }
 
     init() {
-        (type, adminId) = (nil, nil)
+        (self.type, self.adminId) = (nil, nil)
     }
 }
 
-public extension ConversationScorecardReviewer {
-    init(from decoder: Decoder) throws {
+extension ConversationScorecardReviewer {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        adminId = try container.sdkDecodeIfPresent(.adminId)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.adminId = try container.sdkDecodeIfPresent(.adminId)
     }
 }
 
-public extension ConversationScorecardReviewer {
-    init(type: ConversationScorecardReviewerType? = nil, adminId: String? = nil) {
+extension ConversationScorecardReviewer {
+    public init(type: ConversationScorecardReviewerType? = nil, adminId: String? = nil) {
         self.init()
         (self.type, self.adminId) = (type, adminId)
     }
@@ -127,20 +119,20 @@ public struct ConversationScorecardNoteAuthor: Codable {
     }
 
     init() {
-        (type, adminId) = (nil, nil)
+        (self.type, self.adminId) = (nil, nil)
     }
 }
 
-public extension ConversationScorecardNoteAuthor {
-    init(from decoder: Decoder) throws {
+extension ConversationScorecardNoteAuthor {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        adminId = try container.sdkDecodeIfPresent(.adminId)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.adminId = try container.sdkDecodeIfPresent(.adminId)
     }
 }
 
-public extension ConversationScorecardNoteAuthor {
-    init(type: ConversationScorecardNoteAuthorType? = nil, adminId: String? = nil) {
+extension ConversationScorecardNoteAuthor {
+    public init(type: ConversationScorecardNoteAuthorType? = nil, adminId: String? = nil) {
         self.init()
         (self.type, self.adminId) = (type, adminId)
     }
@@ -163,20 +155,20 @@ public struct ConversationScorecardRevisedBy: Codable {
     }
 
     init() {
-        (type, adminId) = (nil, nil)
+        (self.type, self.adminId) = (nil, nil)
     }
 }
 
-public extension ConversationScorecardRevisedBy {
-    init(from decoder: Decoder) throws {
+extension ConversationScorecardRevisedBy {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        adminId = try container.sdkDecodeIfPresent(.adminId)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.adminId = try container.sdkDecodeIfPresent(.adminId)
     }
 }
 
-public extension ConversationScorecardRevisedBy {
-    init(type: ConversationScorecardRevisedByType? = nil, adminId: String? = nil) {
+extension ConversationScorecardRevisedBy {
+    public init(type: ConversationScorecardRevisedByType? = nil, adminId: String? = nil) {
         self.init()
         (self.type, self.adminId) = (type, adminId)
     }
@@ -208,29 +200,23 @@ public struct ConversationScorecardNote: Codable {
     }
 
     init() {
-        (id, createdAt, updatedAt, author, body) = (nil, nil, nil, nil, nil)
+        (self.id, self.createdAt, self.updatedAt, self.author, self.body) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ConversationScorecardNote {
-    init(from decoder: Decoder) throws {
+extension ConversationScorecardNote {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.sdkDecodeIfPresent(.id)
-        createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        author = try container.sdkDecodeIfPresent(.author)
-        body = try container.sdkDecodeIfPresent(.body)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        self.author = try container.sdkDecodeIfPresent(.author)
+        self.body = try container.sdkDecodeIfPresent(.body)
     }
 }
 
-public extension ConversationScorecardNote {
-    init(
-        id: String? = nil,
-        createdAt: Int? = nil,
-        updatedAt: Int? = nil,
-        author: ConversationScorecardNoteAuthor? = nil,
-        body: String? = nil
-    ) {
+extension ConversationScorecardNote {
+    public init(id: String? = nil, createdAt: Int? = nil, updatedAt: Int? = nil, author: ConversationScorecardNoteAuthor? = nil, body: String? = nil) {
         self.init()
         (self.id, self.createdAt) = (id, createdAt)
         (self.updatedAt, self.author) = (updatedAt, author)
@@ -313,51 +299,35 @@ public struct ConversationScorecard: Codable {
     }
 
     init() {
-        (scorecardId, scorecardVersionId, name, scorecardType, passed) = (nil, nil, nil, nil, nil)
-        (score, aiScore, evaluatedAt, reviewedTeammate, reviewer) = (nil, nil, nil, nil, nil)
-        (reviewStatus, submittedBy, revisedBy, notes, evaluators) = (nil, nil, nil, nil, nil)
+        (self.scorecardId, self.scorecardVersionId, self.name, self.scorecardType, self.passed) = (nil, nil, nil, nil, nil)
+        (self.score, self.aiScore, self.evaluatedAt, self.reviewedTeammate, self.reviewer) = (nil, nil, nil, nil, nil)
+        (self.reviewStatus, self.submittedBy, self.revisedBy, self.notes, self.evaluators) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension ConversationScorecard {
-    init(from decoder: Decoder) throws {
+extension ConversationScorecard {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        scorecardId = try container.sdkDecodeIfPresent(.scorecardId)
-        scorecardVersionId = try container.sdkDecodeIfPresent(.scorecardVersionId)
-        name = try container.sdkDecodeIfPresent(.name)
-        scorecardType = try container.sdkDecodeIfPresent(.scorecardType)
-        passed = try container.sdkDecodeIfPresent(.passed)
-        score = try container.sdkDecodeIfPresent(.score)
-        aiScore = try container.sdkDecodeIfPresent(.aiScore)
-        evaluatedAt = try container.sdkDecodeIfPresent(.evaluatedAt)
-        reviewedTeammate = try container.sdkDecodeIfPresent(.reviewedTeammate)
-        reviewer = try container.sdkDecodeIfPresent(.reviewer)
-        reviewStatus = try container.sdkDecodeIfPresent(.reviewStatus)
-        submittedBy = try container.sdkDecodeIfPresent(.submittedBy)
-        revisedBy = try container.sdkDecodeIfPresent(.revisedBy)
-        notes = try container.sdkDecodeIfPresent(.notes)
-        evaluators = try container.sdkDecodeIfPresent(.evaluators)
+        self.scorecardId = try container.sdkDecodeIfPresent(.scorecardId)
+        self.scorecardVersionId = try container.sdkDecodeIfPresent(.scorecardVersionId)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.scorecardType = try container.sdkDecodeIfPresent(.scorecardType)
+        self.passed = try container.sdkDecodeIfPresent(.passed)
+        self.score = try container.sdkDecodeIfPresent(.score)
+        self.aiScore = try container.sdkDecodeIfPresent(.aiScore)
+        self.evaluatedAt = try container.sdkDecodeIfPresent(.evaluatedAt)
+        self.reviewedTeammate = try container.sdkDecodeIfPresent(.reviewedTeammate)
+        self.reviewer = try container.sdkDecodeIfPresent(.reviewer)
+        self.reviewStatus = try container.sdkDecodeIfPresent(.reviewStatus)
+        self.submittedBy = try container.sdkDecodeIfPresent(.submittedBy)
+        self.revisedBy = try container.sdkDecodeIfPresent(.revisedBy)
+        self.notes = try container.sdkDecodeIfPresent(.notes)
+        self.evaluators = try container.sdkDecodeIfPresent(.evaluators)
     }
 }
 
-public extension ConversationScorecard {
-    init(
-        scorecardId: String? = nil,
-        scorecardVersionId: String? = nil,
-        name: String? = nil,
-        scorecardType: String? = nil,
-        passed: Bool? = nil,
-        score: Double? = nil,
-        aiScore: Double? = nil,
-        evaluatedAt: Int? = nil,
-        reviewedTeammate: ConversationScorecardReviewedTeammate? = nil,
-        reviewer: ConversationScorecardReviewer? = nil,
-        reviewStatus: ConversationScorecardReviewStatus? = nil,
-        submittedBy: ConversationScorecardSubmittedBy? = nil,
-        revisedBy: ConversationScorecardRevisedBy? = nil,
-        notes: [ConversationScorecardNote]? = nil,
-        evaluators: [ConversationScorecardEvaluator]? = nil
-    ) {
+extension ConversationScorecard {
+    public init(scorecardId: String? = nil, scorecardVersionId: String? = nil, name: String? = nil, scorecardType: String? = nil, passed: Bool? = nil, score: Double? = nil, aiScore: Double? = nil, evaluatedAt: Int? = nil, reviewedTeammate: ConversationScorecardReviewedTeammate? = nil, reviewer: ConversationScorecardReviewer? = nil, reviewStatus: ConversationScorecardReviewStatus? = nil, submittedBy: ConversationScorecardSubmittedBy? = nil, revisedBy: ConversationScorecardRevisedBy? = nil, notes: [ConversationScorecardNote]? = nil, evaluators: [ConversationScorecardEvaluator]? = nil) {
         self.init()
         (self.scorecardId, self.scorecardVersionId) = (scorecardId, scorecardVersionId)
         (self.name, self.scorecardType) = (name, scorecardType)
@@ -386,20 +356,20 @@ public struct ConversationScorecardReviewedTeammate: Codable {
     }
 
     init() {
-        (type, adminId) = (nil, nil)
+        (self.type, self.adminId) = (nil, nil)
     }
 }
 
-public extension ConversationScorecardReviewedTeammate {
-    init(from decoder: Decoder) throws {
+extension ConversationScorecardReviewedTeammate {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        adminId = try container.sdkDecodeIfPresent(.adminId)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.adminId = try container.sdkDecodeIfPresent(.adminId)
     }
 }
 
-public extension ConversationScorecardReviewedTeammate {
-    init(type: ConversationScorecardReviewedTeammateType? = nil, adminId: String? = nil) {
+extension ConversationScorecardReviewedTeammate {
+    public init(type: ConversationScorecardReviewedTeammateType? = nil, adminId: String? = nil) {
         self.init()
         (self.type, self.adminId) = (type, adminId)
     }
@@ -423,21 +393,21 @@ public struct ConversationScorecardEvaluator: Codable {
     }
 
     init() {
-        (evaluatorId, name, result) = (nil, nil, nil)
+        (self.evaluatorId, self.name, self.result) = (nil, nil, nil)
     }
 }
 
-public extension ConversationScorecardEvaluator {
-    init(from decoder: Decoder) throws {
+extension ConversationScorecardEvaluator {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        evaluatorId = try container.sdkDecodeIfPresent(.evaluatorId)
-        name = try container.sdkDecodeIfPresent(.name)
-        result = try container.sdkDecodeIfPresent(.result)
+        self.evaluatorId = try container.sdkDecodeIfPresent(.evaluatorId)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.result = try container.sdkDecodeIfPresent(.result)
     }
 }
 
-public extension ConversationScorecardEvaluator {
-    init(evaluatorId: String? = nil, name: String? = nil, result: ConversationScorecardEvaluatorResult? = nil) {
+extension ConversationScorecardEvaluator {
+    public init(evaluatorId: String? = nil, name: String? = nil, result: ConversationScorecardEvaluatorResult? = nil) {
         self.init()
         (self.evaluatorId, self.name) = (evaluatorId, name)
         self.result = result
@@ -455,19 +425,19 @@ public struct ConversationScorecardEvaluatorReason: Codable {
     }
 
     init() {
-        name = nil
+        self.name = nil
     }
 }
 
-public extension ConversationScorecardEvaluatorReason {
-    init(from decoder: Decoder) throws {
+extension ConversationScorecardEvaluatorReason {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
+        self.name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-public extension ConversationScorecardEvaluatorReason {
-    init(name: String? = nil) {
+extension ConversationScorecardEvaluatorReason {
+    public init(name: String? = nil) {
         self.init()
         self.name = name
     }
@@ -506,32 +476,25 @@ public struct ConversationMonitorEvaluation: Codable {
     }
 
     init() {
-        (monitorId, monitorName, monitorType, result, explanation) = (nil, nil, nil, nil, nil)
-        evaluatedAt = nil
+        (self.monitorId, self.monitorName, self.monitorType, self.result, self.explanation) = (nil, nil, nil, nil, nil)
+        self.evaluatedAt = nil
     }
 }
 
-public extension ConversationMonitorEvaluation {
-    init(from decoder: Decoder) throws {
+extension ConversationMonitorEvaluation {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        monitorId = try container.sdkDecodeIfPresent(.monitorId)
-        monitorName = try container.sdkDecodeIfPresent(.monitorName)
-        monitorType = try container.sdkDecodeIfPresent(.monitorType)
-        result = try container.sdkDecodeIfPresent(.result)
-        explanation = try container.sdkDecodeIfPresent(.explanation)
-        evaluatedAt = try container.sdkDecodeIfPresent(.evaluatedAt)
+        self.monitorId = try container.sdkDecodeIfPresent(.monitorId)
+        self.monitorName = try container.sdkDecodeIfPresent(.monitorName)
+        self.monitorType = try container.sdkDecodeIfPresent(.monitorType)
+        self.result = try container.sdkDecodeIfPresent(.result)
+        self.explanation = try container.sdkDecodeIfPresent(.explanation)
+        self.evaluatedAt = try container.sdkDecodeIfPresent(.evaluatedAt)
     }
 }
 
-public extension ConversationMonitorEvaluation {
-    init(
-        monitorId: String? = nil,
-        monitorName: String? = nil,
-        monitorType: String? = nil,
-        result: String? = nil,
-        explanation: String? = nil,
-        evaluatedAt: Int? = nil
-    ) {
+extension ConversationMonitorEvaluation {
+    public init(monitorId: String? = nil, monitorName: String? = nil, monitorType: String? = nil, result: String? = nil, explanation: String? = nil, evaluatedAt: Int? = nil) {
         self.init()
         (self.monitorId, self.monitorName) = (monitorId, monitorName)
         (self.monitorType, self.result) = (monitorType, result)

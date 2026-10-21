@@ -7,7 +7,7 @@ import Foundation
     import FoundationNetworking
 #endif
 
-/// Canonical folders operation model declarations
+// Canonical folders operation model declarations
 public struct ListFoldersResponse: Codable {
     /// - Example: "list"
     public var type: ListFoldersResponseType?
@@ -29,22 +29,22 @@ public struct ListFoldersResponse: Codable {
     }
 
     init() {
-        (type, data, totalCount, pages) = (nil, nil, nil, nil)
+        (self.type, self.data, self.totalCount, self.pages) = (nil, nil, nil, nil)
     }
 }
 
-public extension ListFoldersResponse {
-    init(from decoder: Decoder) throws {
+extension ListFoldersResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        data = try container.sdkDecodeIfPresent(.data)
-        totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        pages = try container.sdkDecodeIfPresent(.pages)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.data = try container.sdkDecodeIfPresent(.data)
+        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        self.pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-public extension ListFoldersResponse {
-    init(type: ListFoldersResponseType? = nil, data: [Folder]? = nil, totalCount: Int? = nil, pages: PagesLink? = nil) {
+extension ListFoldersResponse {
+    public init(type: ListFoldersResponseType? = nil, data: [Folder]? = nil, totalCount: Int? = nil, pages: PagesLink? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
         (self.totalCount, self.pages) = (totalCount, pages)
@@ -72,22 +72,22 @@ public struct UpdateFolderRequestBodyFolder: Codable {
     }
 
     init() {
-        (name, description, emoji, parentFolderId) = (nil, nil, nil, nil)
+        (self.name, self.description, self.emoji, self.parentFolderId) = (nil, nil, nil, nil)
     }
 }
 
-public extension UpdateFolderRequestBodyFolder {
-    init(from decoder: Decoder) throws {
+extension UpdateFolderRequestBodyFolder {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.sdkDecodeIfPresent(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        emoji = try container.sdkDecodeIfPresent(.emoji)
-        parentFolderId = try container.sdkDecodeIfPresent(.parentFolderId)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.emoji = try container.sdkDecodeIfPresent(.emoji)
+        self.parentFolderId = try container.sdkDecodeIfPresent(.parentFolderId)
     }
 }
 
-public extension UpdateFolderRequestBodyFolder {
-    init(name: String? = nil, description: String? = nil, emoji: String? = nil, parentFolderId: Int? = nil) {
+extension UpdateFolderRequestBodyFolder {
+    public init(name: String? = nil, description: String? = nil, emoji: String? = nil, parentFolderId: Int? = nil) {
         self.init()
         (self.name, self.description) = (name, description)
         (self.emoji, self.parentFolderId) = (emoji, parentFolderId)
@@ -114,30 +114,24 @@ public struct CreateFolderRequestBodyFolder: Codable {
         case parentFolderId = "parent_folder_id"
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension CreateFolderRequestBodyFolder {
-    init(from decoder: Decoder) throws {
+extension CreateFolderRequestBodyFolder {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.name) else {
-            throw SdkValidationError(
-                field: "name",
-                code: "required",
-                message: "Validation failed for 'name': value is required"
-            )
+            throw SdkValidationError(field: "name", code: "required", message: "Validation failed for 'name': value is required")
         }
-        name = try container.sdkDecodeRequired(.name)
-        description = try container.sdkDecodeIfPresent(.description)
-        emoji = try container.sdkDecodeIfPresent(.emoji)
-        parentFolderId = try container.sdkDecodeIfPresent(.parentFolderId)
+        self.name = try container.sdkDecodeRequired(.name)
+        self.description = try container.sdkDecodeIfPresent(.description)
+        self.emoji = try container.sdkDecodeIfPresent(.emoji)
+        self.parentFolderId = try container.sdkDecodeIfPresent(.parentFolderId)
     }
 }
 
-public extension CreateFolderRequestBodyFolder {
-    init(name: String, description: String? = nil, emoji: String? = nil, parentFolderId: Int? = nil) {
+extension CreateFolderRequestBodyFolder {
+    public init(name: String, description: String? = nil, emoji: String? = nil, parentFolderId: Int? = nil) {
         (self.name, self.description) = (name, description)
         (self.emoji, self.parentFolderId) = (emoji, parentFolderId)
     }

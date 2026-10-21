@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// TaggedModelsTags domain models
+// TaggedModelsTags domain models
 /// A tag allows you to label your contacts, companies, and conversations and list them using that tag.
 public struct TagBasic: Codable {
     /// value is "tag"
@@ -23,21 +23,21 @@ public struct TagBasic: Codable {
     }
 
     init() {
-        (type, id, name) = (nil, nil, nil)
+        (self.type, self.id, self.name) = (nil, nil, nil)
     }
 }
 
-public extension TagBasic {
-    init(from decoder: Decoder) throws {
+extension TagBasic {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-public extension TagBasic {
-    init(type: String? = nil, id: String? = nil, name: String? = nil) {
+extension TagBasic {
+    public init(type: String? = nil, id: String? = nil, name: String? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         self.name = name
@@ -72,29 +72,23 @@ public struct Tag: Codable {
     }
 
     init() {
-        (type, id, name, appliedAt, appliedBy) = (nil, nil, nil, nil, nil)
+        (self.type, self.id, self.name, self.appliedAt, self.appliedBy) = (nil, nil, nil, nil, nil)
     }
 }
 
-public extension Tag {
-    init(from decoder: Decoder) throws {
+extension Tag {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        name = try container.sdkDecodeIfPresent(.name)
-        appliedAt = try container.sdkDecodeIfPresent(.appliedAt)
-        appliedBy = try container.sdkDecodeIfPresent(.appliedBy)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.name = try container.sdkDecodeIfPresent(.name)
+        self.appliedAt = try container.sdkDecodeIfPresent(.appliedAt)
+        self.appliedBy = try container.sdkDecodeIfPresent(.appliedBy)
     }
 }
 
-public extension Tag {
-    init(
-        type: String? = nil,
-        id: String? = nil,
-        name: String? = nil,
-        appliedAt: Int? = nil,
-        appliedBy: Reference? = nil
-    ) {
+extension Tag {
+    public init(type: String? = nil, id: String? = nil, name: String? = nil, appliedAt: Int? = nil, appliedBy: Reference? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.name, self.appliedAt) = (name, appliedAt)

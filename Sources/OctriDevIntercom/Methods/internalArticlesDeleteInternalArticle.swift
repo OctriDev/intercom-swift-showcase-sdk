@@ -6,32 +6,17 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-public extension InternalArticlesMethods {
+extension InternalArticlesMethods {
     /// Deletes a single internal article. Use `internal_article_id` to identify the article to remove.
     ///
-    /// You can delete a single internal article by making a DELETE request to
-    /// `https://api.intercom.io/internal_articles/<id>`.
+    /// You can delete a single internal article by making a DELETE request to `https://api.intercom.io/internal_articles/<id>`.
     ///
     /// - Parameters:
     /// - internalArticleId: The unique identifier for the internal article which is
     ///   given by Intercom.
-    static func deleteInternalArticle(
-        config: ClientConfig,
-        internalArticleId: Int,
-        intercomVersion: IntercomVersion? = nil,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DeletedInternalArticleObject {
-        try await (sdkRequest(
-            "DELETE",
-            ["/internal_articles/", sdkEncodePathSegment(sdkWireString(internalArticleId))].joined(),
-            config: config,
-            decoder: .json,
-            operationId: "deleteInternalArticle",
-            extraHeaders: sdkHeaders([
-                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-            ]),
-            options: requestOptions,
-            errors: ["401": Error2.self, "404": Error2.self]
-        )).data
+    public static func deleteInternalArticle(config: ClientConfig, internalArticleId: Int, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DeletedInternalArticleObject {
+        return try (await sdkRequest("DELETE", ["/internal_articles/", sdkEncodePathSegment(sdkWireString(internalArticleId))].joined(), config: config, decoder: .json, operationId: "deleteInternalArticle", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
     }
 }

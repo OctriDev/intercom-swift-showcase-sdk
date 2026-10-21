@@ -3,9 +3,9 @@
 
 import Foundation
 
-/// Contacts domain models
-public extension MergePreviewSummary {
-    init(attributeChanges: MergePreviewAttributeChanges? = nil, reassignments: MergePreviewReassignments? = nil) {
+// Contacts domain models
+extension MergePreviewSummary {
+    public init(attributeChanges: MergePreviewAttributeChanges? = nil, reassignments: MergePreviewReassignments? = nil) {
         self.init()
         (self.attributeChanges, self.reassignments) = (attributeChanges, reassignments)
     }
@@ -16,17 +16,14 @@ public extension MergePreviewSummary {
 public struct MergePreviewAttributeChangeOutcome: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let adopted = MergePreviewAttributeChangeOutcome(rawValue: "adopted")
     public static let discarded = MergePreviewAttributeChangeOutcome(rawValue: "discarded")
     public static let merged = MergePreviewAttributeChangeOutcome(rawValue: "merged")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -39,16 +36,12 @@ public struct MergePreviewAttributeChangeOutcome: RawRepresentable, Hashable, Co
 public struct MergePreviewReasonCode: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let sourceSameAsTarget = MergePreviewReasonCode(rawValue: "source_same_as_target")
     public static let invalidMergeRolePair = MergePreviewReasonCode(rawValue: "invalid_merge_role_pair")
     public static let noSharedIdentifier = MergePreviewReasonCode(rawValue: "no_shared_identifier")
     public static let facebookUser = MergePreviewReasonCode(rawValue: "facebook_user")
-    public static let externalLeadChannelNotAllowed =
-        MergePreviewReasonCode(rawValue: "external_lead_channel_not_allowed")
+    public static let externalLeadChannelNotAllowed = MergePreviewReasonCode(rawValue: "external_lead_channel_not_allowed")
     public static let mailingList = MergePreviewReasonCode(rawValue: "mailing_list")
     public static let whatsappDataCannotBeMerged = MergePreviewReasonCode(rawValue: "whatsapp_data_cannot_be_merged")
     public static let telegramDataCannotBeMerged = MergePreviewReasonCode(rawValue: "telegram_data_cannot_be_merged")
@@ -57,7 +50,7 @@ public struct MergePreviewReasonCode: RawRepresentable, Hashable, Codable, Senda
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Content domain models
+// Content domain models
 public indirect enum ContentSearchResult {
     case contentSearchDefaultItem(ContentSearchDefaultItem)
     case contentSearchArticleItem(ContentSearchArticleItem)
@@ -12,6 +12,7 @@ public indirect enum ContentSearchResult {
 }
 
 extension ContentSearchResult: Codable {
+
     private enum CodingKeys: String, CodingKey {
         case discriminator = "type"
     }
@@ -19,16 +20,12 @@ extension ContentSearchResult: Codable {
     public init(from decoder: Decoder) throws {
         let tagged = try decoder.container(keyedBy: CodingKeys.self)
         let discriminator = try tagged.decode(String.self, forKey: .discriminator)
-        if let value = try Self.decodeGroup1(discriminator, from: decoder) {
-            self = value; return
-        }
+        if let value = try Self.decodeGroup1(discriminator, from: decoder) { self = value; return }
         self = try .unknown(tag: discriminator, raw: JSONValue(from: decoder))
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) {
-            return
-        }
+        if try encodeGroup1(to: encoder) { return }
         if case let .unknown(_, raw) = self {
             var container = encoder.singleValueContainer()
             try container.encode(raw)
@@ -40,15 +37,15 @@ extension ContentSearchResult {
     static func decodeGroup1(_ discriminator: String, from decoder: Decoder) throws -> Self? {
         switch discriminator {
         case "content_snippet":
-            try .contentSearchDefaultItem(ContentSearchDefaultItem(from: decoder))
+        return .contentSearchDefaultItem(try ContentSearchDefaultItem(from: decoder))
         case "external_content":
-            try .contentSearchDefaultItem(ContentSearchDefaultItem(from: decoder))
+        return .contentSearchDefaultItem(try ContentSearchDefaultItem(from: decoder))
         case "file_source_content":
-            try .contentSearchDefaultItem(ContentSearchDefaultItem(from: decoder))
+        return .contentSearchDefaultItem(try ContentSearchDefaultItem(from: decoder))
         case "internal_article":
-            try .contentSearchDefaultItem(ContentSearchDefaultItem(from: decoder))
-        case "article": try .contentSearchArticleItem(ContentSearchArticleItem(from: decoder))
-        default: nil
+        return .contentSearchDefaultItem(try ContentSearchDefaultItem(from: decoder))
+        case "article": return .contentSearchArticleItem(try ContentSearchArticleItem(from: decoder))
+        default: return nil
         }
     }
 }
@@ -83,33 +80,27 @@ public struct ContentSearchDefaultItem: Codable {
         case title
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ContentSearchDefaultItem {
-    init(from decoder: Decoder) throws {
+extension ContentSearchDefaultItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        title = try container.sdkDecodeIfPresent(.title)
-        try sdkValidateRawEnum("type", type, ContentSearchDefaultItemType.allCases.map(\.rawValue))
+        self.type = try container.sdkDecodeRequired(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.title = try container.sdkDecodeIfPresent(.title)
+            try sdkValidateRawEnum("type", self.type, ContentSearchDefaultItemType.allCases.map(\.rawValue))
     }
 }
 
-public extension ContentSearchDefaultItem {
-    init(type: ContentSearchDefaultItemType, id: String? = nil, title: String? = nil) throws {
+extension ContentSearchDefaultItem {
+    public init(type: ContentSearchDefaultItemType, id: String? = nil, title: String? = nil) throws {
         (self.type, self.id) = (type, id)
         self.title = title
-        try sdkValidateRawEnum("type", self.type, ContentSearchDefaultItemType.allCases.map(\.rawValue))
+            try sdkValidateRawEnum("type", self.type, ContentSearchDefaultItemType.allCases.map(\.rawValue))
     }
 }
 
@@ -136,27 +127,22 @@ public struct ContentSearchArticleContentItem: Codable {
     }
 
     init() {
-        (type, id, title, locale) = (nil, nil, nil, nil)
+        (self.type, self.id, self.title, self.locale) = (nil, nil, nil, nil)
     }
 }
 
-public extension ContentSearchArticleContentItem {
-    init(from decoder: Decoder) throws {
+extension ContentSearchArticleContentItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        title = try container.sdkDecodeIfPresent(.title)
-        locale = try container.sdkDecodeIfPresent(.locale)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.title = try container.sdkDecodeIfPresent(.title)
+        self.locale = try container.sdkDecodeIfPresent(.locale)
     }
 }
 
-public extension ContentSearchArticleContentItem {
-    init(
-        type: ContentSearchArticleContentItemType? = nil,
-        id: String? = nil,
-        title: String? = nil,
-        locale: String? = nil
-    ) {
+extension ContentSearchArticleContentItem {
+    public init(type: ContentSearchArticleContentItemType? = nil, id: String? = nil, title: String? = nil, locale: String? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.title, self.locale) = (title, locale)
@@ -193,38 +179,31 @@ public struct ContentSearchResponsePages: Codable {
     }
 
     init() {
-        (type, page, perPage, totalPages, next) = (nil, nil, nil, nil, nil)
-        prev = nil
+        (self.type, self.page, self.perPage, self.totalPages, self.next) = (nil, nil, nil, nil, nil)
+        self.prev = nil
     }
 }
 
-public extension ContentSearchResponsePages {
-    init(from decoder: Decoder) throws {
+extension ContentSearchResponsePages {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        page = try container.sdkDecodeIfPresent(.page)
-        perPage = try container.sdkDecodeIfPresent(.perPage)
-        totalPages = try container.sdkDecodeIfPresent(.totalPages)
-        next = try container.sdkDecodeIfPresent(.next)
-        prev = try container.sdkDecodeIfPresent(.prev)
-        if let value = next {
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.page = try container.sdkDecodeIfPresent(.page)
+        self.perPage = try container.sdkDecodeIfPresent(.perPage)
+        self.totalPages = try container.sdkDecodeIfPresent(.totalPages)
+        self.next = try container.sdkDecodeIfPresent(.next)
+        self.prev = try container.sdkDecodeIfPresent(.prev)
+        if let value = self.next {
             try sdkValidateUri("next", value)
         }
-        if let value = prev {
+        if let value = self.prev {
             try sdkValidateUri("prev", value)
         }
     }
 }
 
-public extension ContentSearchResponsePages {
-    init(
-        type: ContentSearchResponsePagesType? = nil,
-        page: Int? = nil,
-        perPage: Int? = nil,
-        totalPages: Int? = nil,
-        next: String? = nil,
-        prev: String? = nil
-    ) throws {
+extension ContentSearchResponsePages {
+    public init(type: ContentSearchResponsePagesType? = nil, page: Int? = nil, perPage: Int? = nil, totalPages: Int? = nil, next: String? = nil, prev: String? = nil) throws {
         self.init()
         (self.type, self.page) = (type, page)
         (self.perPage, self.totalPages) = (perPage, totalPages)
@@ -259,39 +238,28 @@ public struct ContentSearchArticleItem: Codable {
         case contents
     }
 
-    private init(sdkCopy value: Self) {
-        self = value
-    }
+    private init(sdkCopy value: Self) { self = value }
 }
 
-public extension ContentSearchArticleItem {
-    init(from decoder: Decoder) throws {
+extension ContentSearchArticleItem {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(
-                field: "type",
-                code: "required",
-                message: "Validation failed for 'type': value is required"
-            )
+            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
         }
-        type = try container.sdkDecodeRequired(.type)
-        id = try container.sdkDecodeIfPresent(.id)
-        title = try container.sdkDecodeIfPresent(.title)
-        contents = try container.sdkDecodeIfPresent(.contents)
-        try sdkValidateRawEnum("type", type, ContentSearchArticleItemType.allCases.map(\.rawValue))
+        self.type = try container.sdkDecodeRequired(.type)
+        self.id = try container.sdkDecodeIfPresent(.id)
+        self.title = try container.sdkDecodeIfPresent(.title)
+        self.contents = try container.sdkDecodeIfPresent(.contents)
+            try sdkValidateRawEnum("type", self.type, ContentSearchArticleItemType.allCases.map(\.rawValue))
     }
 }
 
-public extension ContentSearchArticleItem {
-    init(
-        type: ContentSearchArticleItemType,
-        id: String? = nil,
-        title: String? = nil,
-        contents: [ContentSearchArticleContentItem]? = nil
-    ) throws {
+extension ContentSearchArticleItem {
+    public init(type: ContentSearchArticleItemType, id: String? = nil, title: String? = nil, contents: [ContentSearchArticleContentItem]? = nil) throws {
         (self.type, self.id) = (type, id)
         (self.title, self.contents) = (title, contents)
-        try sdkValidateRawEnum("type", self.type, ContentSearchArticleItemType.allCases.map(\.rawValue))
+            try sdkValidateRawEnum("type", self.type, ContentSearchArticleItemType.allCases.map(\.rawValue))
     }
 }
 
@@ -316,27 +284,22 @@ public struct ContentSearchResponse: Codable {
     }
 
     init() {
-        (type, totalCount, pages, data) = (nil, nil, nil, nil)
+        (self.type, self.totalCount, self.pages, self.data) = (nil, nil, nil, nil)
     }
 }
 
-public extension ContentSearchResponse {
-    init(from decoder: Decoder) throws {
+extension ContentSearchResponse {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.sdkDecodeIfPresent(.type)
-        totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        pages = try container.sdkDecodeIfPresent(.pages)
-        data = try container.sdkDecodeIfPresent(.data)
+        self.type = try container.sdkDecodeIfPresent(.type)
+        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        self.pages = try container.sdkDecodeIfPresent(.pages)
+        self.data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-public extension ContentSearchResponse {
-    init(
-        type: ContentSearchResponseType? = nil,
-        totalCount: Int? = nil,
-        pages: ContentSearchResponsePages? = nil,
-        data: [ContentSearchResult]? = nil
-    ) {
+extension ContentSearchResponse {
+    public init(type: ContentSearchResponseType? = nil, totalCount: Int? = nil, pages: ContentSearchResponsePages? = nil, data: [ContentSearchResult]? = nil) {
         self.init()
         (self.type, self.totalCount) = (type, totalCount)
         (self.pages, self.data) = (pages, data)
@@ -368,15 +331,12 @@ public enum ContentSearchDefaultItemType: String, CaseIterable, Codable {
 public struct ContentSearchResponsePagesType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let pages = ContentSearchResponsePagesType(rawValue: "pages")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -389,15 +349,12 @@ public struct ContentSearchResponsePagesType: RawRepresentable, Hashable, Codabl
 public struct ContentSearchResponseType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let list = ContentSearchResponseType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -428,15 +385,12 @@ public enum ContentSearchArticleItemType: String, CaseIterable, Codable {
 public struct ContentSearchArticleContentItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
+    public init(rawValue: String) { self.rawValue = rawValue }
     public static let articleContent = ContentSearchArticleContentItemType(rawValue: "article_content")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        try self.init(rawValue: container.decode(String.self))
+        self.init(rawValue: try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
