@@ -68,7 +68,7 @@ public class TicketsNamespace {
         intercomVersion: IntercomVersion? = nil,
         requestOptions: RequestOptions? = nil
     ) async throws -> Conversation {
-        try await TicketsMethods.unlinkTicketsConversation(
+        try await TicketsMethods.unlinkTicketConversation(
             config: config,
             ticketId: ticketId,
             id: id,

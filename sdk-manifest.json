@@ -40683,8 +40683,8 @@
       ]
     },
     {
-      "id": "unlinkTicketsConversation",
-      "wireOperationId": "unlinkTicketsConversation",
+      "id": "unlinkTicketConversation",
+      "wireOperationId": "unlinkTicketConversation",
       "method": "delete",
       "path": "/tickets/{ticket_id}/linked_conversations/{id}",
       "namespace": [
@@ -40698,7 +40698,7 @@
       "publicMethods": [
         {
           "mode": "normal",
-          "name": "unlinkTicketsConversation"
+          "name": "unlinkTicketConversation"
         }
       ],
       "requestModes": [],
@@ -91481,7 +91481,7 @@
         ]
       },
       {
-        "id": "unlinkTicketsConversation",
+        "id": "unlinkTicketConversation",
         "method": "delete",
         "path": "/tickets/{ticket_id}/linked_conversations/{id}",
         "summary": "Unlinks a conversation or converted customer ticket from the tracker ticket it is linked to. Supply the tracker ticket identifier and the identifier of the linked conversation or customer ticket. This operation requires the `write_tickets` OAuth scope.",

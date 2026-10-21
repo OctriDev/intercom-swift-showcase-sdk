@@ -135,7 +135,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testUnlinkTicketsConversationUnlinkTicketsConversationReachesMockAndDecodesResponse() async throws {
+    func testUnlinkTicketConversationUnlinkTicketConversationReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient() else {
             return
         }
@@ -155,7 +155,7 @@ extension SdkMethodTests {
         )
     }
 
-    func testUnlinkTicketsConversationUnlinkTicketsConversation400ReachesMockAndDecodesResponse() async throws {
+    func testUnlinkTicketConversationUnlinkTicketConversation400ReachesMockAndDecodesResponse() async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/400") else {
             return
         }

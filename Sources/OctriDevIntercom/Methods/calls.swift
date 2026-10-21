@@ -7,3 +7,54 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum CallsMethods {}
+
+public extension CallsMethods {
+    /// Lists calls in a paginated result set. Use `page` and `per_page` to navigate the results; `per_page` defaults to
+    /// 25 and has a maximum of 25.
+    ///
+    /// Retrieve a paginated list of calls.
+    ///
+    /// - Parameters:
+    /// - page: The page of results to fetch. Defaults to first page
+    /// - perPage: How many results to display per page. Defaults to 25. Max 25.
+    static func listCalls(
+        config: ClientConfig,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CallList {
+        try await (sdkRequest("GET", "/calls", config: config, query: [
+            SdkQueryParameter("page", value: page),
+            SdkQueryParameter("per_page", value: perPage),
+        ], decoder: .json, operationId: "listCalls", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self])).data
+    }
+
+    /// Retrieves a single call by its identifier. Use `call_id` to select the call whose details you need.
+    ///
+    /// Retrieve a single call by id.
+    ///
+    /// - Parameters:
+    /// - callId: The id of the call to retrieve
+    static func showCall(
+        config: ClientConfig,
+        callId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Call {
+        try await (sdkRequest(
+            "GET",
+            ["/calls/", sdkEncodePathSegment(sdkWireString(callId))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "showCall",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).data
+    }
+}

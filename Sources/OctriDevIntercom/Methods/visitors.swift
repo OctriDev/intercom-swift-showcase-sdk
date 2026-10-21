@@ -7,3 +7,69 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum VisitorsMethods {}
+
+public extension VisitorsMethods {
+    /// Updates an existing visitor using either the visitor's Intercom `id` or your `user_id`. Supply the identifier in
+    /// the request body along with any profile or custom attribute values to change. The response contains the updated
+    /// visitor.
+    ///
+    /// Sending a PUT request to `/visitors` will result in an update of an existing Visitor. **Option 1.** You can
+    /// update a visitor by passing in the `user_id` of the visitor in the Request body. **Option 2.** You can update a
+    /// visitor by passing in the `id` of the visitor in the Request body.
+    ///
+    /// - Parameters:
+    /// - id: A unique identified for the visitor which is given by Intercom.
+    /// - userId: A unique identified for the visitor which is given by you.
+    /// - name: The visitor's name.
+    /// - customAttributes: The custom attributes which are set for the visitor.
+    static func updateVisitor(
+        config: ClientConfig,
+        intercomVersion: IntercomVersion? = nil,
+        id: String? = nil,
+        userId: String? = nil,
+        name: String? = nil,
+        customAttributes: [String: String]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Visitor {
+        let requestBody = UpdateVisitorRequestBody(
+            id: id,
+            userId: userId,
+            name: name,
+            customAttributes: customAttributes
+        )
+
+        return try await (sdkRequest(
+            "PUT",
+            "/visitors",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "updateVisitor",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).data
+    }
+
+    /// Retrieves a visitor using the visitor's `user_id`. Use this operation when you need the details associated with
+    /// a specific visitor identifier. The response includes visitor identity and profile information.
+    ///
+    /// You can fetch the details of a single visitor.
+    ///
+    /// - Parameters:
+    /// - userId: The user_id of the Visitor you want to retrieve.
+    static func retrieveVisitorWithUserId(
+        config: ClientConfig,
+        userId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Visitor {
+        try await (sdkRequest("GET", "/visitors", config: config, query: [
+            SdkQueryParameter("user_id", value: userId),
+        ], decoder: .json, operationId: "retrieveVisitorWithUserId", extraHeaders: sdkHeaders([
+            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
+    }
+}
