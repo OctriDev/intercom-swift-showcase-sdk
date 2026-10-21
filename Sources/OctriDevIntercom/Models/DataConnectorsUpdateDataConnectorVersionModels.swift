@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DataConnectors domain models
+/// DataConnectors domain models
 /// Payload for updating a data connector version.
 public struct UpdateDataConnectorVersionRequest: Codable {
     /// The new note for the version. Sending `null`, an empty string, or a whitespace-only string clears the note.
@@ -14,21 +14,27 @@ public struct UpdateDataConnectorVersionRequest: Codable {
         case note
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension UpdateDataConnectorVersionRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.note) else {
-            throw SdkValidationError(field: "note", code: "required", message: "Validation failed for 'note': value is required")
-        }
-        self.note = try container.sdkDecodeNullable(.note)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension UpdateDataConnectorVersionRequest {
-    public init(note: String?) {
+public extension UpdateDataConnectorVersionRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.note) else {
+            throw SdkValidationError(
+                field: "note",
+                code: "required",
+                message: "Validation failed for 'note': value is required"
+            )
+        }
+        note = try container.sdkDecodeNullable(.note)
+    }
+}
+
+public extension UpdateDataConnectorVersionRequest {
+    init(note: String?) {
         self.note = note
     }
 }

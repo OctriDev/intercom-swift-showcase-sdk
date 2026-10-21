@@ -3,25 +3,33 @@
 
 import Foundation
 
-// CreateTicket domain models
+/// CreateTicket domain models
 public indirect enum CreateTicketReplyWithCommentRequest {
     case contactReplyTicketRequest(ContactReplyTicketRequest)
     case adminReplyTicketRequest(AdminReplyTicketRequest)
 }
 
 extension CreateTicketReplyWithCommentRequest: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
+            if let value = Self.decodeLossless1(from: container, raw) {
+                self = value; return
+            }
         }
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for CreateTicketReplyWithCommentRequest")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for CreateTicketReplyWithCommentRequest"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
@@ -39,8 +47,13 @@ extension CreateTicketReplyWithCommentRequest {
 
 extension CreateTicketReplyWithCommentRequest {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(ContactReplyTicketRequest.self) { return .contactReplyTicketRequest(value) }
-        if let value = try? container.decode(AdminReplyTicketRequest.self) { return .adminReplyTicketRequest(value) }
+        if let value = try? container
+            .decode(ContactReplyTicketRequest.self) {
+            return .contactReplyTicketRequest(value)
+        }
+        if let value = try? container.decode(AdminReplyTicketRequest.self) {
+            return .adminReplyTicketRequest(value)
+        }
         return nil
     }
 }
@@ -99,31 +112,50 @@ public struct CreateTicketRequest: Codable {
         case channel
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateTicketRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.ticketTypeId) else {
-            throw SdkValidationError(field: "ticket_type_id", code: "required", message: "Validation failed for 'ticket_type_id': value is required")
-        }
-        guard container.contains(.contacts) else {
-            throw SdkValidationError(field: "contacts", code: "required", message: "Validation failed for 'contacts': value is required")
-        }
-        self.ticketTypeId = try container.sdkDecodeRequired(.ticketTypeId)
-        self.contacts = try container.sdkDecodeRequired(.contacts)
-        self.conversationToLinkId = try container.sdkDecodeIfPresent(.conversationToLinkId)
-        self.companyId = try container.sdkDecodeIfPresent(.companyId)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.ticketAttributes = try container.sdkDecodeIfPresent(.ticketAttributes)
-        self.assignment = try container.sdkDecodeIfPresent(.assignment)
-        self.channel = try container.sdkDecodeIfPresent(.channel)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateTicketRequest {
-    public init(ticketTypeId: String, contacts: [CreateTicketRequestContactsItem], conversationToLinkId: String? = nil, companyId: String? = nil, createdAt: Int? = nil, ticketAttributes: TicketRequestCustomAttributes? = nil, assignment: CreateTicketRequestAssignment? = nil, channel: CreateTicketRequestChannel? = nil) {
+public extension CreateTicketRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.ticketTypeId) else {
+            throw SdkValidationError(
+                field: "ticket_type_id",
+                code: "required",
+                message: "Validation failed for 'ticket_type_id': value is required"
+            )
+        }
+        guard container.contains(.contacts) else {
+            throw SdkValidationError(
+                field: "contacts",
+                code: "required",
+                message: "Validation failed for 'contacts': value is required"
+            )
+        }
+        ticketTypeId = try container.sdkDecodeRequired(.ticketTypeId)
+        contacts = try container.sdkDecodeRequired(.contacts)
+        conversationToLinkId = try container.sdkDecodeIfPresent(.conversationToLinkId)
+        companyId = try container.sdkDecodeIfPresent(.companyId)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        ticketAttributes = try container.sdkDecodeIfPresent(.ticketAttributes)
+        assignment = try container.sdkDecodeIfPresent(.assignment)
+        channel = try container.sdkDecodeIfPresent(.channel)
+    }
+}
+
+public extension CreateTicketRequest {
+    init(
+        ticketTypeId: String,
+        contacts: [CreateTicketRequestContactsItem],
+        conversationToLinkId: String? = nil,
+        companyId: String? = nil,
+        createdAt: Int? = nil,
+        ticketAttributes: TicketRequestCustomAttributes? = nil,
+        assignment: CreateTicketRequestAssignment? = nil,
+        channel: CreateTicketRequestChannel? = nil
+    ) {
         (self.ticketTypeId, self.contacts) = (ticketTypeId, contacts)
         (self.conversationToLinkId, self.companyId) = (conversationToLinkId, companyId)
         (self.createdAt, self.ticketAttributes) = (createdAt, ticketAttributes)
@@ -146,20 +178,20 @@ public struct CreateTicketRequestAssignment: Codable {
     }
 
     init() {
-        (self.adminAssigneeId, self.teamAssigneeId) = (nil, nil)
+        (adminAssigneeId, teamAssigneeId) = (nil, nil)
     }
 }
 
-extension CreateTicketRequestAssignment {
-    public init(from decoder: Decoder) throws {
+public extension CreateTicketRequestAssignment {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.adminAssigneeId = try container.sdkDecodeIfPresent(.adminAssigneeId)
-        self.teamAssigneeId = try container.sdkDecodeIfPresent(.teamAssigneeId)
+        adminAssigneeId = try container.sdkDecodeIfPresent(.adminAssigneeId)
+        teamAssigneeId = try container.sdkDecodeIfPresent(.teamAssigneeId)
     }
 }
 
-extension CreateTicketRequestAssignment {
-    public init(adminAssigneeId: String? = nil, teamAssigneeId: String? = nil) {
+public extension CreateTicketRequestAssignment {
+    init(adminAssigneeId: String? = nil, teamAssigneeId: String? = nil) {
         self.init()
         (self.adminAssigneeId, self.teamAssigneeId) = (adminAssigneeId, teamAssigneeId)
     }
@@ -169,12 +201,15 @@ extension CreateTicketRequestAssignment {
 public struct CreateTicketRequestChannel: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let email = CreateTicketRequestChannel(rawValue: "email")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

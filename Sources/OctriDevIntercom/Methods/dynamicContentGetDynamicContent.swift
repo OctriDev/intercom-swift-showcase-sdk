@@ -6,16 +6,32 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DynamicContentMethods {
-    /// Retrieves a single reusable dynamic content item by its unique identifier. Use the `id` path parameter to select the item and the `Intercom-Version` header to choose an API version. The authenticated user needs the `read_dynamic_content` scope.
+public extension DynamicContentMethods {
+    /// Retrieves a single reusable dynamic content item by its unique identifier. Use the `id` path parameter to select
+    /// the item and the `Intercom-Version` header to choose an API version. The authenticated user needs the
+    /// `read_dynamic_content` scope.
     ///
     /// You can fetch a single dynamic content by its id. Requires the `read_dynamic_content` scope.
     ///
     /// - Parameters:
     /// - id: The unique identifier for the dynamic content.
-    public static func getDynamicContent(config: ClientConfig, id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DynamicContent {
-        return try (await sdkRequest("GET", ["/dynamic_contents/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "getDynamicContent", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self])).data
+    static func getDynamicContent(
+        config: ClientConfig,
+        id: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DynamicContent {
+        try await (sdkRequest(
+            "GET",
+            ["/dynamic_contents/", sdkEncodePathSegment(sdkWireString(id))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "getDynamicContent",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self]
+        )).data
     }
 }

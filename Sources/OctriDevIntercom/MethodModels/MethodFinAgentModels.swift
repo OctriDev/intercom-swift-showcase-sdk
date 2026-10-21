@@ -7,7 +7,7 @@ import Foundation
     import FoundationNetworking
 #endif
 
-// Canonical finAgent operation model declarations
+/// Canonical finAgent operation model declarations
 /// Metadata about the conversation. Only attributes are accepted (no history).
 public struct RunFinProcedureRequestBodyConversationMetadata: Codable {
     /// A hash of conversation attributes. Limit to 20 attributes.
@@ -19,19 +19,19 @@ public struct RunFinProcedureRequestBodyConversationMetadata: Codable {
     }
 
     init() {
-        self.attributes = nil
+        attributes = nil
     }
 }
 
-extension RunFinProcedureRequestBodyConversationMetadata {
-    public init(from decoder: Decoder) throws {
+public extension RunFinProcedureRequestBodyConversationMetadata {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.attributes = try container.sdkDecodeIfPresent(.attributes)
+        attributes = try container.sdkDecodeIfPresent(.attributes)
     }
 }
 
-extension RunFinProcedureRequestBodyConversationMetadata {
-    public init(attributes: [String: JSONValue]? = nil) {
+public extension RunFinProcedureRequestBodyConversationMetadata {
+    init(attributes: [String: JSONValue]? = nil) {
         self.init()
         self.attributes = attributes
     }
@@ -80,30 +80,39 @@ public struct RunFinProcedureResponse: Codable {
     }
 
     init() {
-        (self.conversationId, self.intercomConversationId, self.userId, self.procedureId, self.status) = (nil, nil, nil, nil, nil)
-        (self.createdAtMs, self.errors, self.sseSubscriptionUrl) = (nil, nil, nil)
+        (conversationId, intercomConversationId, userId, procedureId, status) = (nil, nil, nil, nil, nil)
+        (createdAtMs, errors, sseSubscriptionUrl) = (nil, nil, nil)
     }
 }
 
-extension RunFinProcedureResponse {
-    public init(from decoder: Decoder) throws {
+public extension RunFinProcedureResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.conversationId = try container.sdkDecodeIfPresent(.conversationId)
-        self.intercomConversationId = try container.sdkDecodeIfPresent(.intercomConversationId)
-        self.userId = try container.sdkDecodeIfPresent(.userId)
-        self.procedureId = try container.sdkDecodeIfPresent(.procedureId)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.createdAtMs = try container.sdkDecodeIfPresent(.createdAtMs)
-        self.errors = try container.sdkDecodeIfPresent(.errors)
-        self.sseSubscriptionUrl = try container.sdkDecodeIfPresent(.sseSubscriptionUrl)
-        if let value = self.createdAtMs {
+        conversationId = try container.sdkDecodeIfPresent(.conversationId)
+        intercomConversationId = try container.sdkDecodeIfPresent(.intercomConversationId)
+        userId = try container.sdkDecodeIfPresent(.userId)
+        procedureId = try container.sdkDecodeIfPresent(.procedureId)
+        status = try container.sdkDecodeIfPresent(.status)
+        createdAtMs = try container.sdkDecodeIfPresent(.createdAtMs)
+        errors = try container.sdkDecodeIfPresent(.errors)
+        sseSubscriptionUrl = try container.sdkDecodeIfPresent(.sseSubscriptionUrl)
+        if let value = createdAtMs {
             try sdkValidateDateTime("created_at_ms", sdkWireString(value))
         }
     }
 }
 
-extension RunFinProcedureResponse {
-    public init(conversationId: String? = nil, intercomConversationId: String? = nil, userId: String? = nil, procedureId: String? = nil, status: RunFinProcedureResponseStatus? = nil, createdAtMs: Date? = nil, errors: FinAgentAttributeErrors? = nil, sseSubscriptionUrl: String? = nil) throws {
+public extension RunFinProcedureResponse {
+    init(
+        conversationId: String? = nil,
+        intercomConversationId: String? = nil,
+        userId: String? = nil,
+        procedureId: String? = nil,
+        status: RunFinProcedureResponseStatus? = nil,
+        createdAtMs: Date? = nil,
+        errors: FinAgentAttributeErrors? = nil,
+        sseSubscriptionUrl: String? = nil
+    ) throws {
         self.init()
         (self.conversationId, self.intercomConversationId) = (conversationId, intercomConversationId)
         (self.userId, self.procedureId) = (userId, procedureId)
@@ -145,22 +154,27 @@ public struct EscalateFinConversationResponse: Codable {
     }
 
     init() {
-        (self.conversationId, self.intercomConversationId, self.sseSubscriptionUrl, self.status) = (nil, nil, nil, nil)
+        (conversationId, intercomConversationId, sseSubscriptionUrl, status) = (nil, nil, nil, nil)
     }
 }
 
-extension EscalateFinConversationResponse {
-    public init(from decoder: Decoder) throws {
+public extension EscalateFinConversationResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.conversationId = try container.sdkDecodeIfPresent(.conversationId)
-        self.intercomConversationId = try container.sdkDecodeIfPresent(.intercomConversationId)
-        self.sseSubscriptionUrl = try container.sdkDecodeIfPresent(.sseSubscriptionUrl)
-        self.status = try container.sdkDecodeIfPresent(.status)
+        conversationId = try container.sdkDecodeIfPresent(.conversationId)
+        intercomConversationId = try container.sdkDecodeIfPresent(.intercomConversationId)
+        sseSubscriptionUrl = try container.sdkDecodeIfPresent(.sseSubscriptionUrl)
+        status = try container.sdkDecodeIfPresent(.status)
     }
 }
 
-extension EscalateFinConversationResponse {
-    public init(conversationId: String? = nil, intercomConversationId: String? = nil, sseSubscriptionUrl: String? = nil, status: EscalateFinConversationResponseStatus? = nil) {
+public extension EscalateFinConversationResponse {
+    init(
+        conversationId: String? = nil,
+        intercomConversationId: String? = nil,
+        sseSubscriptionUrl: String? = nil,
+        status: EscalateFinConversationResponseStatus? = nil
+    ) {
         self.init()
         (self.conversationId, self.intercomConversationId) = (conversationId, intercomConversationId)
         (self.sseSubscriptionUrl, self.status) = (sseSubscriptionUrl, status)
@@ -206,29 +220,37 @@ public struct ReplyToFinResponse: Codable {
     }
 
     init() {
-        (self.conversationId, self.intercomConversationId, self.userId, self.status, self.createdAtMs) = (nil, nil, nil, nil, nil)
-        (self.errors, self.sseSubscriptionUrl) = (nil, nil)
+        (conversationId, intercomConversationId, userId, status, createdAtMs) = (nil, nil, nil, nil, nil)
+        (errors, sseSubscriptionUrl) = (nil, nil)
     }
 }
 
-extension ReplyToFinResponse {
-    public init(from decoder: Decoder) throws {
+public extension ReplyToFinResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.conversationId = try container.sdkDecodeIfPresent(.conversationId)
-        self.intercomConversationId = try container.sdkDecodeIfPresent(.intercomConversationId)
-        self.userId = try container.sdkDecodeIfPresent(.userId)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.createdAtMs = try container.sdkDecodeIfPresent(.createdAtMs)
-        self.errors = try container.sdkDecodeIfPresent(.errors)
-        self.sseSubscriptionUrl = try container.sdkDecodeIfPresent(.sseSubscriptionUrl)
-        if let value = self.createdAtMs {
+        conversationId = try container.sdkDecodeIfPresent(.conversationId)
+        intercomConversationId = try container.sdkDecodeIfPresent(.intercomConversationId)
+        userId = try container.sdkDecodeIfPresent(.userId)
+        status = try container.sdkDecodeIfPresent(.status)
+        createdAtMs = try container.sdkDecodeIfPresent(.createdAtMs)
+        errors = try container.sdkDecodeIfPresent(.errors)
+        sseSubscriptionUrl = try container.sdkDecodeIfPresent(.sseSubscriptionUrl)
+        if let value = createdAtMs {
             try sdkValidateDateTime("created_at_ms", sdkWireString(value))
         }
     }
 }
 
-extension ReplyToFinResponse {
-    public init(conversationId: String? = nil, intercomConversationId: String? = nil, userId: String? = nil, status: ReplyToFinResponseStatus? = nil, createdAtMs: Date? = nil, errors: FinAgentAttributeErrors? = nil, sseSubscriptionUrl: String? = nil) throws {
+public extension ReplyToFinResponse {
+    init(
+        conversationId: String? = nil,
+        intercomConversationId: String? = nil,
+        userId: String? = nil,
+        status: ReplyToFinResponseStatus? = nil,
+        createdAtMs: Date? = nil,
+        errors: FinAgentAttributeErrors? = nil,
+        sseSubscriptionUrl: String? = nil
+    ) throws {
         self.init()
         (self.conversationId, self.intercomConversationId) = (conversationId, intercomConversationId)
         (self.userId, self.status) = (userId, status)
@@ -279,29 +301,37 @@ public struct AskFinResponse: Codable {
     }
 
     init() {
-        (self.conversationId, self.intercomConversationId, self.userId, self.status, self.createdAtMs) = (nil, nil, nil, nil, nil)
-        (self.errors, self.sseSubscriptionUrl) = (nil, nil)
+        (conversationId, intercomConversationId, userId, status, createdAtMs) = (nil, nil, nil, nil, nil)
+        (errors, sseSubscriptionUrl) = (nil, nil)
     }
 }
 
-extension AskFinResponse {
-    public init(from decoder: Decoder) throws {
+public extension AskFinResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.conversationId = try container.sdkDecodeIfPresent(.conversationId)
-        self.intercomConversationId = try container.sdkDecodeIfPresent(.intercomConversationId)
-        self.userId = try container.sdkDecodeIfPresent(.userId)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.createdAtMs = try container.sdkDecodeIfPresent(.createdAtMs)
-        self.errors = try container.sdkDecodeIfPresent(.errors)
-        self.sseSubscriptionUrl = try container.sdkDecodeIfPresent(.sseSubscriptionUrl)
-        if let value = self.createdAtMs {
+        conversationId = try container.sdkDecodeIfPresent(.conversationId)
+        intercomConversationId = try container.sdkDecodeIfPresent(.intercomConversationId)
+        userId = try container.sdkDecodeIfPresent(.userId)
+        status = try container.sdkDecodeIfPresent(.status)
+        createdAtMs = try container.sdkDecodeIfPresent(.createdAtMs)
+        errors = try container.sdkDecodeIfPresent(.errors)
+        sseSubscriptionUrl = try container.sdkDecodeIfPresent(.sseSubscriptionUrl)
+        if let value = createdAtMs {
             try sdkValidateDateTime("created_at_ms", sdkWireString(value))
         }
     }
 }
 
-extension AskFinResponse {
-    public init(conversationId: String? = nil, intercomConversationId: String? = nil, userId: String? = nil, status: AskFinResponseStatus? = nil, createdAtMs: Date? = nil, errors: FinAgentAttributeErrors? = nil, sseSubscriptionUrl: String? = nil) throws {
+public extension AskFinResponse {
+    init(
+        conversationId: String? = nil,
+        intercomConversationId: String? = nil,
+        userId: String? = nil,
+        status: AskFinResponseStatus? = nil,
+        createdAtMs: Date? = nil,
+        errors: FinAgentAttributeErrors? = nil,
+        sseSubscriptionUrl: String? = nil
+    ) throws {
         self.init()
         (self.conversationId, self.intercomConversationId) = (conversationId, intercomConversationId)
         (self.userId, self.status) = (userId, status)
@@ -326,20 +356,20 @@ public struct ListFinCapabilitiesResponse: Codable {
     }
 
     init() {
-        (self.version, self.capabilities) = (nil, nil)
+        (version, capabilities) = (nil, nil)
     }
 }
 
-extension ListFinCapabilitiesResponse {
-    public init(from decoder: Decoder) throws {
+public extension ListFinCapabilitiesResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.version = try container.sdkDecodeIfPresent(.version)
-        self.capabilities = try container.sdkDecodeIfPresent(.capabilities)
+        version = try container.sdkDecodeIfPresent(.version)
+        capabilities = try container.sdkDecodeIfPresent(.capabilities)
     }
 }
 
-extension ListFinCapabilitiesResponse {
-    public init(version: String? = nil, capabilities: [ListFinCapabilitiesResponseCapabilitiesItem]? = nil) {
+public extension ListFinCapabilitiesResponse {
+    init(version: String? = nil, capabilities: [ListFinCapabilitiesResponseCapabilitiesItem]? = nil) {
         self.init()
         (self.version, self.capabilities) = (version, capabilities)
     }
@@ -376,25 +406,32 @@ public struct ListFinCapabilitiesResponseCapabilitiesItem: Codable {
     }
 
     init() {
-        (self.type, self.id, self.name, self.description, self.endpoint) = (nil, nil, nil, nil, nil)
-        self.method = nil
+        (type, id, name, description, endpoint) = (nil, nil, nil, nil, nil)
+        method = nil
     }
 }
 
-extension ListFinCapabilitiesResponseCapabilitiesItem {
-    public init(from decoder: Decoder) throws {
+public extension ListFinCapabilitiesResponseCapabilitiesItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.endpoint = try container.sdkDecodeIfPresent(.endpoint)
-        self.method = try container.sdkDecodeIfPresent(.method)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        description = try container.sdkDecodeIfPresent(.description)
+        endpoint = try container.sdkDecodeIfPresent(.endpoint)
+        method = try container.sdkDecodeIfPresent(.method)
     }
 }
 
-extension ListFinCapabilitiesResponseCapabilitiesItem {
-    public init(type: String? = nil, id: String? = nil, name: String? = nil, description: String? = nil, endpoint: String? = nil, method: String? = nil) {
+public extension ListFinCapabilitiesResponseCapabilitiesItem {
+    init(
+        type: String? = nil,
+        id: String? = nil,
+        name: String? = nil,
+        description: String? = nil,
+        endpoint: String? = nil,
+        method: String? = nil
+    ) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.name, self.description) = (name, description)
@@ -441,29 +478,37 @@ public struct StartFinConversationResponse: Codable {
     }
 
     init() {
-        (self.conversationId, self.intercomConversationId, self.userId, self.status, self.createdAtMs) = (nil, nil, nil, nil, nil)
-        (self.errors, self.sseSubscriptionUrl) = (nil, nil)
+        (conversationId, intercomConversationId, userId, status, createdAtMs) = (nil, nil, nil, nil, nil)
+        (errors, sseSubscriptionUrl) = (nil, nil)
     }
 }
 
-extension StartFinConversationResponse {
-    public init(from decoder: Decoder) throws {
+public extension StartFinConversationResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.conversationId = try container.sdkDecodeIfPresent(.conversationId)
-        self.intercomConversationId = try container.sdkDecodeIfPresent(.intercomConversationId)
-        self.userId = try container.sdkDecodeIfPresent(.userId)
-        self.status = try container.sdkDecodeIfPresent(.status)
-        self.createdAtMs = try container.sdkDecodeIfPresent(.createdAtMs)
-        self.errors = try container.sdkDecodeIfPresent(.errors)
-        self.sseSubscriptionUrl = try container.sdkDecodeIfPresent(.sseSubscriptionUrl)
-        if let value = self.createdAtMs {
+        conversationId = try container.sdkDecodeIfPresent(.conversationId)
+        intercomConversationId = try container.sdkDecodeIfPresent(.intercomConversationId)
+        userId = try container.sdkDecodeIfPresent(.userId)
+        status = try container.sdkDecodeIfPresent(.status)
+        createdAtMs = try container.sdkDecodeIfPresent(.createdAtMs)
+        errors = try container.sdkDecodeIfPresent(.errors)
+        sseSubscriptionUrl = try container.sdkDecodeIfPresent(.sseSubscriptionUrl)
+        if let value = createdAtMs {
             try sdkValidateDateTime("created_at_ms", sdkWireString(value))
         }
     }
 }
 
-extension StartFinConversationResponse {
-    public init(conversationId: String? = nil, intercomConversationId: String? = nil, userId: String? = nil, status: StartFinConversationResponseStatus? = nil, createdAtMs: Date? = nil, errors: FinAgentAttributeErrors? = nil, sseSubscriptionUrl: String? = nil) throws {
+public extension StartFinConversationResponse {
+    init(
+        conversationId: String? = nil,
+        intercomConversationId: String? = nil,
+        userId: String? = nil,
+        status: StartFinConversationResponseStatus? = nil,
+        createdAtMs: Date? = nil,
+        errors: FinAgentAttributeErrors? = nil,
+        sseSubscriptionUrl: String? = nil
+    ) throws {
         self.init()
         (self.conversationId, self.intercomConversationId) = (conversationId, intercomConversationId)
         (self.userId, self.status) = (userId, status)
@@ -493,21 +538,25 @@ public struct SubmitFinCsatResponse: Codable {
     }
 
     init() {
-        (self.conversationId, self.rating, self.status) = (nil, nil, nil)
+        (conversationId, rating, status) = (nil, nil, nil)
     }
 }
 
-extension SubmitFinCsatResponse {
-    public init(from decoder: Decoder) throws {
+public extension SubmitFinCsatResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.conversationId = try container.sdkDecodeIfPresent(.conversationId)
-        self.rating = try container.sdkDecodeIfPresent(.rating)
-        self.status = try container.sdkDecodeIfPresent(.status)
+        conversationId = try container.sdkDecodeIfPresent(.conversationId)
+        rating = try container.sdkDecodeIfPresent(.rating)
+        status = try container.sdkDecodeIfPresent(.status)
     }
 }
 
-extension SubmitFinCsatResponse {
-    public init(conversationId: String? = nil, rating: SubmitFinCsatResponseRating? = nil, status: SubmitFinCsatResponseStatus? = nil) {
+public extension SubmitFinCsatResponse {
+    init(
+        conversationId: String? = nil,
+        rating: SubmitFinCsatResponseRating? = nil,
+        status: SubmitFinCsatResponseStatus? = nil
+    ) {
         self.init()
         (self.conversationId, self.rating) = (conversationId, rating)
         self.status = status
@@ -524,13 +573,13 @@ public struct SubmitFinCsatResponseXc47b0270: Codable {
     }
 
     init() {
-        self.errors = nil
+        errors = nil
     }
 }
 
-extension SubmitFinCsatResponseXc47b0270 {
-    public init(from decoder: Decoder) throws {
+public extension SubmitFinCsatResponseXc47b0270 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.errors = try container.sdkDecodeIfPresent(.errors)
+        errors = try container.sdkDecodeIfPresent(.errors)
     }
 }

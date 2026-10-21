@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Articles domain models
+/// Articles domain models
 /// A paginated list of versions of an article.
 public struct ArticleVersionList: Codable {
     /// The type of the object - `list`.
@@ -27,22 +27,27 @@ public struct ArticleVersionList: Codable {
     }
 
     init() {
-        (self.type, self.pages, self.totalCount, self.data) = (nil, nil, nil, nil)
+        (type, pages, totalCount, data) = (nil, nil, nil, nil)
     }
 }
 
-extension ArticleVersionList {
-    public init(from decoder: Decoder) throws {
+public extension ArticleVersionList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.pages = try container.sdkDecodeIfPresent(.pages)
-        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        type = try container.sdkDecodeIfPresent(.type)
+        pages = try container.sdkDecodeIfPresent(.pages)
+        totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension ArticleVersionList {
-    public init(type: ArticleVersionListType? = nil, pages: CursorPages? = nil, totalCount: Int? = nil, data: [ArticleVersionSummary]? = nil) {
+public extension ArticleVersionList {
+    init(
+        type: ArticleVersionListType? = nil,
+        pages: CursorPages? = nil,
+        totalCount: Int? = nil,
+        data: [ArticleVersionSummary]? = nil
+    ) {
         self.init()
         (self.type, self.pages) = (type, pages)
         (self.totalCount, self.data) = (totalCount, data)
@@ -53,12 +58,15 @@ extension ArticleVersionList {
 public struct ArticleVersionListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let list = ArticleVersionListType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

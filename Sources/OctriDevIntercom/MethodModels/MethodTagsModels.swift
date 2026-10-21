@@ -7,7 +7,7 @@ import Foundation
     import FoundationNetworking
 #endif
 
-// Canonical tags operation model declarations
+/// Canonical tags operation model declarations
 public indirect enum CreateTagRequestBody {
     case createOrUpdateTagRequest(CreateOrUpdateTagRequest)
     case tagCompanyRequest(TagCompanyRequest)
@@ -16,18 +16,26 @@ public indirect enum CreateTagRequestBody {
 }
 
 extension CreateTagRequestBody: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
+            if let value = Self.decodeLossless1(from: container, raw) {
+                self = value; return
+            }
         }
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for CreateTagRequestBody")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for CreateTagRequestBody"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
@@ -51,10 +59,18 @@ extension CreateTagRequestBody {
 
 extension CreateTagRequestBody {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(CreateOrUpdateTagRequest.self) { return .createOrUpdateTagRequest(value) }
-        if let value = try? container.decode(TagCompanyRequest.self) { return .tagCompanyRequest(value) }
-        if let value = try? container.decode(UntagCompanyRequest.self) { return .untagCompanyRequest(value) }
-        if let value = try? container.decode(TagMultipleUsersRequest.self) { return .tagMultipleUsersRequest(value) }
+        if let value = try? container.decode(CreateOrUpdateTagRequest.self) {
+            return .createOrUpdateTagRequest(value)
+        }
+        if let value = try? container.decode(TagCompanyRequest.self) {
+            return .tagCompanyRequest(value)
+        }
+        if let value = try? container.decode(UntagCompanyRequest.self) {
+            return .untagCompanyRequest(value)
+        }
+        if let value = try? container.decode(TagMultipleUsersRequest.self) {
+            return .tagMultipleUsersRequest(value)
+        }
         return nil
     }
 }

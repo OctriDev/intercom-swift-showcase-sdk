@@ -8,16 +8,23 @@ import Foundation
 #endif
 public enum CallsMethods {}
 
-extension CallsMethods {
-    /// Lists calls in a paginated result set. Use `page` and `per_page` to navigate the results; `per_page` defaults to 25 and has a maximum of 25.
+public extension CallsMethods {
+    /// Lists calls in a paginated result set. Use `page` and `per_page` to navigate the results; `per_page` defaults to
+    /// 25 and has a maximum of 25.
     ///
     /// Retrieve a paginated list of calls.
     ///
     /// - Parameters:
     /// - page: The page of results to fetch. Defaults to first page
     /// - perPage: How many results to display per page. Defaults to 25. Max 25.
-    public static func listCalls(config: ClientConfig, page: Int? = nil, perPage: Int? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> CallList {
-        return try (await sdkRequest("GET", "/calls", config: config, query: [
+    static func listCalls(
+        config: ClientConfig,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CallList {
+        try await (sdkRequest("GET", "/calls", config: config, query: [
             SdkQueryParameter("page", value: page),
             SdkQueryParameter("per_page", value: perPage),
         ], decoder: .json, operationId: "listCalls", extraHeaders: sdkHeaders([
@@ -31,9 +38,23 @@ extension CallsMethods {
     ///
     /// - Parameters:
     /// - callId: The id of the call to retrieve
-    public static func showCall(config: ClientConfig, callId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Call {
-        return try (await sdkRequest("GET", ["/calls/", sdkEncodePathSegment(sdkWireString(callId))].joined(), config: config, decoder: .json, operationId: "showCall", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
+    static func showCall(
+        config: ClientConfig,
+        callId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Call {
+        try await (sdkRequest(
+            "GET",
+            ["/calls/", sdkEncodePathSegment(sdkWireString(callId))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "showCall",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).data
     }
 }

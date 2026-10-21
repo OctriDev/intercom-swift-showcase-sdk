@@ -6,10 +6,14 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DataConnectorsMethods {
-    /// Updates the note on a data connector version; no other version field can be changed. Send an empty or whitespace-only string to clear the note. This operation does not publish the version or roll the connector back, and it requires the `read_write_data_connector_versions` OAuth scope.
+public extension DataConnectorsMethods {
+    /// Updates the note on a data connector version; no other version field can be changed. Send an empty or
+    /// whitespace-only string to clear the note. This operation does not publish the version or roll the connector
+    /// back, and it requires the `read_write_data_connector_versions` OAuth scope.
     ///
-    /// Update the note on a data connector version. The note is the only field that can be changed. This does not publish the version or roll the connector back to it. Send an empty string to clear the note. Requires the `read_write_data_connector_versions` OAuth scope.
+    /// Update the note on a data connector version. The note is the only field that can be changed. This does not
+    /// publish the version or roll the connector back to it. Send an empty string to clear the note. Requires the
+    /// `read_write_data_connector_versions` OAuth scope.
     ///
     /// - Parameters:
     /// - id: The unique identifier for the data connector.
@@ -17,11 +21,33 @@ extension DataConnectorsMethods {
     ///   versions of a data connector.
     /// - note: The new note for the version. Sending `null`, an empty string, or a
     ///   whitespace-only string clears the note.
-    public static func updateDataConnectorVersion(config: ClientConfig, id: String, versionId: Int, note: String?, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DataConnectorVersion {
+    static func updateDataConnectorVersion(
+        config: ClientConfig,
+        id: String,
+        versionId: Int,
+        note: String?,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DataConnectorVersion {
         let requestBody = UpdateDataConnectorVersionRequestBody(note: note)
 
-        return try (await sdkRequest("PATCH", ["/data_connectors/", sdkEncodePathSegment(sdkWireString(id)), "/versions/", sdkEncodePathSegment(sdkWireString(versionId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "updateDataConnectorVersion", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self])).data
+        return try await (sdkRequest(
+            "PATCH",
+            [
+                "/data_connectors/",
+                sdkEncodePathSegment(sdkWireString(id)),
+                "/versions/",
+                sdkEncodePathSegment(sdkWireString(versionId)),
+            ].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "updateDataConnectorVersion",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self]
+        )).data
     }
 }

@@ -3,25 +3,33 @@
 
 import Foundation
 
-// Contacts domain models
+/// Contacts domain models
 public indirect enum ContactSearchRequestQuery {
     case singleFilterSearchRequest(SingleFilterSearchRequest)
     case multipleFilterSearchRequest(MultipleFilterSearchRequest)
 }
 
 extension ContactSearchRequestQuery: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
+            if let value = Self.decodeLossless1(from: container, raw) {
+                self = value; return
+            }
         }
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for ContactSearchRequestQuery")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for ContactSearchRequestQuery"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
@@ -39,8 +47,14 @@ extension ContactSearchRequestQuery {
 
 extension ContactSearchRequestQuery {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(SingleFilterSearchRequest.self) { return .singleFilterSearchRequest(value) }
-        if let value = try? container.decode(MultipleFilterSearchRequest.self) { return .multipleFilterSearchRequest(value) }
+        if let value = try? container
+            .decode(SingleFilterSearchRequest.self) {
+            return .singleFilterSearchRequest(value)
+        }
+        if let value = try? container
+            .decode(MultipleFilterSearchRequest.self) {
+            return .multipleFilterSearchRequest(value)
+        }
         return nil
     }
 }
@@ -71,20 +85,20 @@ public struct ContactSearchRequestSort: Codable {
     }
 
     init() {
-        (self.field, self.order) = (nil, nil)
+        (field, order) = (nil, nil)
     }
 }
 
-extension ContactSearchRequestSort {
-    public init(from decoder: Decoder) throws {
+public extension ContactSearchRequestSort {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.field = try container.sdkDecodeIfPresent(.field)
-        self.order = try container.sdkDecodeIfPresent(.order)
+        field = try container.sdkDecodeIfPresent(.field)
+        order = try container.sdkDecodeIfPresent(.order)
     }
 }
 
-extension ContactSearchRequestSort {
-    public init(field: String? = nil, order: ContactSearchRequestSortOrder? = nil) {
+public extension ContactSearchRequestSort {
+    init(field: String? = nil, order: ContactSearchRequestSortOrder? = nil) {
         self.init()
         (self.field, self.order) = (field, order)
     }
@@ -105,23 +119,33 @@ public struct ContactSearchRequest: Codable {
         case sort
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ContactSearchRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.query) else {
-            throw SdkValidationError(field: "query", code: "required", message: "Validation failed for 'query': value is required")
-        }
-        self.query = try container.sdkDecodeRequired(.query)
-        self.pagination = try container.sdkDecodeIfPresent(.pagination)
-        self.sort = try container.sdkDecodeIfPresent(.sort)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ContactSearchRequest {
-    public init(query: ContactSearchRequestQuery, pagination: StartingAfterPaging? = nil, sort: ContactSearchRequestSort? = nil) {
+public extension ContactSearchRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.query) else {
+            throw SdkValidationError(
+                field: "query",
+                code: "required",
+                message: "Validation failed for 'query': value is required"
+            )
+        }
+        query = try container.sdkDecodeRequired(.query)
+        pagination = try container.sdkDecodeIfPresent(.pagination)
+        sort = try container.sdkDecodeIfPresent(.sort)
+    }
+}
+
+public extension ContactSearchRequest {
+    init(
+        query: ContactSearchRequestQuery,
+        pagination: StartingAfterPaging? = nil,
+        sort: ContactSearchRequestSort? = nil
+    ) {
         (self.query, self.pagination) = (query, pagination)
         self.sort = sort
     }
@@ -132,13 +156,16 @@ extension ContactSearchRequest {
 public struct ContactSearchRequestSortOrder: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let ascending = ContactSearchRequestSortOrder(rawValue: "ascending")
     public static let descending = ContactSearchRequestSortOrder(rawValue: "descending")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

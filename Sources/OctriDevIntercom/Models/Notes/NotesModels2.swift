@@ -3,7 +3,7 @@
 
 import Foundation
 
-// TaggedModelsNotes domain models
+/// TaggedModelsNotes domain models
 /// Represents the contact that the note was created about.
 public struct NoteContact: Codable {
     /// String representing the object's type. Always has the value `contact`.
@@ -18,20 +18,20 @@ public struct NoteContact: Codable {
     }
 
     init() {
-        (self.type, self.id) = (nil, nil)
+        (type, id) = (nil, nil)
     }
 }
 
-extension NoteContact {
-    public init(from decoder: Decoder) throws {
+public extension NoteContact {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-extension NoteContact {
-    public init(type: String? = nil, id: String? = nil) {
+public extension NoteContact {
+    init(type: String? = nil, id: String? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
     }
@@ -52,20 +52,20 @@ public struct CompanyNoteCompany: Codable {
     }
 
     init() {
-        (self.type, self.id) = (nil, nil)
+        (type, id) = (nil, nil)
     }
 }
 
-extension CompanyNoteCompany {
-    public init(from decoder: Decoder) throws {
+public extension CompanyNoteCompany {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-extension CompanyNoteCompany {
-    public init(type: String? = nil, id: String? = nil) {
+public extension CompanyNoteCompany {
+    init(type: String? = nil, id: String? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
     }
@@ -104,26 +104,34 @@ public struct Note: Codable {
     }
 
     init() {
-        (self.type, self.id, self.createdAt, self.contact, self.company) = (nil, nil, nil, nil, nil)
-        (self.author, self.body) = (nil, nil)
+        (type, id, createdAt, contact, company) = (nil, nil, nil, nil, nil)
+        (author, body) = (nil, nil)
     }
 }
 
-extension Note {
-    public init(from decoder: Decoder) throws {
+public extension Note {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.contact = try container.sdkDecodeIfPresent(.contact)
-        self.company = try container.sdkDecodeIfPresent(.company)
-        self.author = try container.sdkDecodeIfPresent(.author)
-        self.body = try container.sdkDecodeIfPresent(.body)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        contact = try container.sdkDecodeIfPresent(.contact)
+        company = try container.sdkDecodeIfPresent(.company)
+        author = try container.sdkDecodeIfPresent(.author)
+        body = try container.sdkDecodeIfPresent(.body)
     }
 }
 
-extension Note {
-    public init(type: String? = nil, id: String? = nil, createdAt: Int? = nil, contact: NoteContact? = nil, company: NoteCompany? = nil, author: Admin? = nil, body: String? = nil) {
+public extension Note {
+    init(
+        type: String? = nil,
+        id: String? = nil,
+        createdAt: Int? = nil,
+        contact: NoteContact? = nil,
+        company: NoteCompany? = nil,
+        author: Admin? = nil,
+        body: String? = nil
+    ) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.createdAt, self.contact) = (createdAt, contact)
@@ -161,25 +169,32 @@ public struct CompanyNote: Codable {
     }
 
     init() {
-        (self.type, self.id, self.createdAt, self.company, self.author) = (nil, nil, nil, nil, nil)
-        self.body = nil
+        (type, id, createdAt, company, author) = (nil, nil, nil, nil, nil)
+        body = nil
     }
 }
 
-extension CompanyNote {
-    public init(from decoder: Decoder) throws {
+public extension CompanyNote {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.company = try container.sdkDecodeIfPresent(.company)
-        self.author = try container.sdkDecodeIfPresent(.author)
-        self.body = try container.sdkDecodeIfPresent(.body)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        company = try container.sdkDecodeIfPresent(.company)
+        author = try container.sdkDecodeIfPresent(.author)
+        body = try container.sdkDecodeIfPresent(.body)
     }
 }
 
-extension CompanyNote {
-    public init(type: String? = nil, id: String? = nil, createdAt: Int? = nil, company: CompanyNoteCompany? = nil, author: Admin? = nil, body: String? = nil) {
+public extension CompanyNote {
+    init(
+        type: String? = nil,
+        id: String? = nil,
+        createdAt: Int? = nil,
+        company: CompanyNoteCompany? = nil,
+        author: Admin? = nil,
+        body: String? = nil
+    ) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.createdAt, self.company) = (createdAt, company)
@@ -201,20 +216,20 @@ public struct NoteCompany: Codable {
     }
 
     init() {
-        (self.type, self.id) = (nil, nil)
+        (type, id) = (nil, nil)
     }
 }
 
-extension NoteCompany {
-    public init(from decoder: Decoder) throws {
+public extension NoteCompany {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-extension NoteCompany {
-    public init(type: String? = nil, id: String? = nil) {
+public extension NoteCompany {
+    init(type: String? = nil, id: String? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
     }

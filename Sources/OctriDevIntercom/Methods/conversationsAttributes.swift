@@ -8,39 +8,76 @@ import Foundation
 #endif
 public enum ConversationsAttributesMethods {}
 
-extension ConversationsAttributesMethods {
-    /// Lists conversation attributes defined for the workspace. Set `include_archived` to include archived attributes; by default, the list excludes them.
+public extension ConversationsAttributesMethods {
+    /// Lists conversation attributes defined for the workspace. Set `include_archived` to include archived attributes;
+    /// by default, the list excludes them.
     ///
     /// You can fetch a list of all conversation attributes for your workspace.
     ///
     /// - Parameters:
     /// - includeArchived: Include archived attributes in the list. Default `false`.
-    public static func listConversationAttributes(config: ClientConfig, includeArchived: Bool? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ConversationAttributeList {
-        return try (await sdkRequest("GET", "/conversations/attributes", config: config, query: [
+    static func listConversationAttributes(
+        config: ClientConfig,
+        includeArchived: Bool? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ConversationAttributeList {
+        try await (sdkRequest("GET", "/conversations/attributes", config: config, query: [
             SdkQueryParameter("include_archived", value: includeArchived),
         ], decoder: .json, operationId: "listConversationAttributes", extraHeaders: sdkHeaders([
             ("Intercom-Version", sdkHeaderValue(intercomVersion)),
         ]), options: requestOptions, errors: ["401": Error2.self])).data
     }
 
-    /// Creates a conversation attribute for the workspace. Provide `name` and `data_type` to define the attribute; supported attribute types determine which additional configuration fields apply.
+    /// Creates a conversation attribute for the workspace. Provide `name` and `data_type` to define the attribute;
+    /// supported attribute types determine which additional configuration fields apply.
     ///
     /// Create a new conversation attribute.
-    public static func createConversationAttribute(config: ClientConfig, body: CreateConversationAttributeRequest, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ConversationAttribute {
-        return try (await sdkRequest("POST", "/conversations/attributes", config: config, rawBody: (try sdkEncodeBody(body, contentType: "application/json")), decoder: .json, operationId: "createConversationAttribute", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "422": Error2.self])).data
+    static func createConversationAttribute(
+        config: ClientConfig,
+        body: CreateConversationAttributeRequest,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ConversationAttribute {
+        try await (sdkRequest(
+            "POST",
+            "/conversations/attributes",
+            config: config,
+            rawBody: sdkEncodeBody(body, contentType: "application/json"),
+            decoder: .json,
+            operationId: "createConversationAttribute",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "422": Error2.self]
+        )).data
     }
 
-    /// Retrieves a conversation attribute by its ID. Use the attribute ID to fetch its definition and type-specific configuration.
+    /// Retrieves a conversation attribute by its ID. Use the attribute ID to fetch its definition and type-specific
+    /// configuration.
     ///
     /// Retrieve a single conversation attribute by ID.
     ///
     /// - Parameters:
     /// - id: The conversation attribute id
-    public static func getConversationAttribute(config: ClientConfig, id: Int, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ConversationAttribute {
-        return try (await sdkRequest("GET", ["/conversations/attributes/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "getConversationAttribute", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
+    static func getConversationAttribute(
+        config: ClientConfig,
+        id: Int,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ConversationAttribute {
+        try await (sdkRequest(
+            "GET",
+            ["/conversations/attributes/", sdkEncodePathSegment(sdkWireString(id))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "getConversationAttribute",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).data
     }
 }

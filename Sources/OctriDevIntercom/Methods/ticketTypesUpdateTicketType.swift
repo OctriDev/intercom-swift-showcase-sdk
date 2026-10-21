@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension TicketTypesMethods {
-    public struct UpdateTicketTypeOptions: Codable {
+public extension TicketTypesMethods {
+    struct UpdateTicketTypeOptions: Codable {
         public var ticketTypeId: String
         public var intercomVersion: IntercomVersion?
         public var name: String?
@@ -22,9 +22,12 @@ extension TicketTypesMethods {
         }
     }
 
-    /// Replaces the configurable details of an existing ticket type. Supply only the fields you want to change; `category` accepts Customer, Back-office, or Tracker, and omitted `icon` and `is_internal` values use their defined defaults when provided. The updated response includes the ticket type's current details.
+    /// Replaces the configurable details of an existing ticket type. Supply only the fields you want to change;
+    /// `category` accepts Customer, Back-office, or Tracker, and omitted `icon` and `is_internal` values use their
+    /// defined defaults when provided. The updated response includes the ticket type's current details.
     ///
-    /// You can update a ticket type. > 📘 Updating a ticket type. > > For the `icon` propery, use an emoji from [Twemoji Cheatsheet](https://twemoji-cheatsheet.vercel.app/)
+    /// You can update a ticket type. > 📘 Updating a ticket type. > > For the `icon` propery, use an emoji from [Twemoji
+    /// Cheatsheet](https://twemoji-cheatsheet.vercel.app/)
     ///
     /// - Parameters:
     /// - ticketTypeId: The unique identifier for the ticket type which is given by
@@ -37,11 +40,25 @@ extension TicketTypesMethods {
     /// - isInternal: Whether the tickets associated with this ticket type are
     ///   intended for internal use only or will be shared with customers. This is
     ///   currently a limited attribute.
-    public static func updateTicketType(config: ClientConfig, options: UpdateTicketTypeOptions, requestOptions: RequestOptions? = nil) async throws -> TicketType {
+    static func updateTicketType(
+        config: ClientConfig,
+        options: UpdateTicketTypeOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> TicketType {
         let requestBody = UpdateTicketTypeRequestBody(options: options)
 
-        return try (await sdkRequest("PUT", ["/ticket_types/", sdkEncodePathSegment(sdkWireString(options.ticketTypeId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "updateTicketType", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            ["/ticket_types/", sdkEncodePathSegment(sdkWireString(options.ticketTypeId))].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "updateTicketType",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self]
+        )).data
     }
 }

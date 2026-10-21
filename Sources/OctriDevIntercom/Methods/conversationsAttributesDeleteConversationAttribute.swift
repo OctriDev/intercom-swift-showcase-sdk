@@ -6,16 +6,31 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ConversationsAttributesMethods {
-    /// Archives a conversation attribute without permanently deleting it. Use this operation when the attribute should no longer be active but its record must remain available.
+public extension ConversationsAttributesMethods {
+    /// Archives a conversation attribute without permanently deleting it. Use this operation when the attribute should
+    /// no longer be active but its record must remain available.
     ///
     /// Archive a conversation attribute (soft delete). The attribute is marked as archived but not permanently deleted.
     ///
     /// - Parameters:
     /// - id: The conversation attribute id
-    public static func deleteConversationAttribute(config: ClientConfig, id: Int, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ConversationAttribute {
-        return try (await sdkRequest("DELETE", ["/conversations/attributes/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "deleteConversationAttribute", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
+    static func deleteConversationAttribute(
+        config: ClientConfig,
+        id: Int,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ConversationAttribute {
+        try await (sdkRequest(
+            "DELETE",
+            ["/conversations/attributes/", sdkEncodePathSegment(sdkWireString(id))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "deleteConversationAttribute",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).data
     }
 }

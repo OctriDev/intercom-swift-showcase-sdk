@@ -6,10 +6,15 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension HelpCenterMethods {
-    /// Creates a redirect in a help center, mapping a source URL to an article or collection. Supply `from_url`, `locale`, `target_type`, and `target_id`; the source URL must be absolute and within the help center's URL space, and the target must belong to that help center. Use the `read_write_help_center_redirects_scope` OAuth scope to create redirects.
+public extension HelpCenterMethods {
+    /// Creates a redirect in a help center, mapping a source URL to an article or collection. Supply `from_url`,
+    /// `locale`, `target_type`, and `target_id`; the source URL must be absolute and within the help center's URL
+    /// space, and the target must belong to that help center. Use the `read_write_help_center_redirects_scope` OAuth
+    /// scope to create redirects.
     ///
-    /// You can create a new URL redirect by making a POST request to `https://api.intercom.io/help_center/help_centers/{help_center_id}/redirects`. Requires the `read_write_help_center_redirects_scope` OAuth scope.
+    /// You can create a new URL redirect by making a POST request to
+    /// `https://api.intercom.io/help_center/help_centers/{help_center_id}/redirects`. Requires the
+    /// `read_write_help_center_redirects_scope` OAuth scope.
     ///
     /// - Parameters:
     /// - helpCenterId: The unique identifier for the help center.
@@ -20,11 +25,35 @@ extension HelpCenterMethods {
     /// - targetType: The type of the redirect target.
     /// - targetId: The unique identifier of the target article or collection. The
     ///   target must be a member of the help center.
-    public static func createHelpCenterRedirect(config: ClientConfig, helpCenterId: String, fromUrl: String, locale: String, targetType: CreateHelpCenterRedirectRequestTargetType, targetId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> HelpCenterRedirect {
-        let requestBody = CreateHelpCenterRedirectRequestBody(fromUrl: fromUrl, locale: locale, targetType: targetType, targetId: targetId)
+    static func createHelpCenterRedirect(
+        config: ClientConfig,
+        helpCenterId: String,
+        fromUrl: String,
+        locale: String,
+        targetType: CreateHelpCenterRedirectRequestTargetType,
+        targetId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> HelpCenterRedirect {
+        let requestBody = CreateHelpCenterRedirectRequestBody(
+            fromUrl: fromUrl,
+            locale: locale,
+            targetType: targetType,
+            targetId: targetId
+        )
 
-        return try (await sdkRequest("POST", ["/help_center/help_centers/", sdkEncodePathSegment(sdkWireString(helpCenterId)), "/redirects"].joined(), config: config, body: requestBody, decoder: .json, operationId: "createHelpCenterRedirect", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "409": Error2.self, "422": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/help_center/help_centers/", sdkEncodePathSegment(sdkWireString(helpCenterId)), "/redirects"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "createHelpCenterRedirect",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self, "409": Error2.self, "422": Error2.self]
+        )).data
     }
 }

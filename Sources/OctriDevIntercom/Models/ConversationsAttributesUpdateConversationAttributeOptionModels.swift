@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ConversationsAttributes domain models
+/// ConversationsAttributes domain models
 /// Payload for renaming a list option on a conversation attribute.
 public struct UpdateConversationAttributeOptionRequest: Codable {
     /// The updated label for the option.
@@ -14,21 +14,27 @@ public struct UpdateConversationAttributeOptionRequest: Codable {
         case label
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension UpdateConversationAttributeOptionRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.label) else {
-            throw SdkValidationError(field: "label", code: "required", message: "Validation failed for 'label': value is required")
-        }
-        self.label = try container.sdkDecodeRequired(.label)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension UpdateConversationAttributeOptionRequest {
-    public init(label: String) {
+public extension UpdateConversationAttributeOptionRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.label) else {
+            throw SdkValidationError(
+                field: "label",
+                code: "required",
+                message: "Validation failed for 'label': value is required"
+            )
+        }
+        label = try container.sdkDecodeRequired(.label)
+    }
+}
+
+public extension UpdateConversationAttributeOptionRequest {
+    init(label: String) {
         self.label = label
     }
 }

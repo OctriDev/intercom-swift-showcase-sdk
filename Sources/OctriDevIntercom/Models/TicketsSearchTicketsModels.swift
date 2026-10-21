@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Tickets domain models
+/// Tickets domain models
 /// Tickets are how you track requests from your users.
 public struct TicketList: Codable {
     /// Always ticket.list
@@ -27,22 +27,22 @@ public struct TicketList: Codable {
     }
 
     init() {
-        (self.type, self.tickets, self.totalCount, self.pages) = (nil, nil, nil, nil)
+        (type, tickets, totalCount, pages) = (nil, nil, nil, nil)
     }
 }
 
-extension TicketList {
-    public init(from decoder: Decoder) throws {
+public extension TicketList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.tickets = try container.sdkDecodeIfPresent(.tickets)
-        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        self.pages = try container.sdkDecodeIfPresent(.pages)
+        type = try container.sdkDecodeIfPresent(.type)
+        tickets = try container.sdkDecodeIfPresent(.tickets)
+        totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-extension TicketList {
-    public init(type: TicketListType? = nil, tickets: [Ticket?]? = nil, totalCount: Int? = nil, pages: CursorPages? = nil) {
+public extension TicketList {
+    init(type: TicketListType? = nil, tickets: [Ticket?]? = nil, totalCount: Int? = nil, pages: CursorPages? = nil) {
         self.init()
         (self.type, self.tickets) = (type, tickets)
         (self.totalCount, self.pages) = (totalCount, pages)
@@ -53,12 +53,15 @@ extension TicketList {
 public struct TicketListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let ticketList = TicketListType(rawValue: "ticket.list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

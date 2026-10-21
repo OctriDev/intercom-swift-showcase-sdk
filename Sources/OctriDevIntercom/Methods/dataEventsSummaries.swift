@@ -6,10 +6,13 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DataEventsMethods {
-    /// Creates event summaries that track how often an event occurred and when it first and last occurred for a user. Supply the user's `user_id` and an `event_summaries` object containing event names, counts, and timestamps. Use past-tense verb-noun event names, such as `updated-plan`.
+public extension DataEventsMethods {
+    /// Creates event summaries that track how often an event occurred and when it first and last occurred for a user.
+    /// Supply the user's `user_id` and an `event_summaries` object containing event names, counts, and timestamps. Use
+    /// past-tense verb-noun event names, such as `updated-plan`.
     ///
-    /// Create event summaries for a user. Event summaries are used to track the number of times an event has occurred, the first time it occurred and the last time it occurred.
+    /// Create event summaries for a user. Event summaries are used to track the number of times an event has occurred,
+    /// the first time it occurred and the last time it occurred.
     ///
     /// - Parameters:
     /// - userId: Your identifier for the user.
@@ -17,11 +20,27 @@ extension DataEventsMethods {
     ///   should contain the event name, the time the event occurred, and the number
     ///   of times the event occurred. The event name should be a past tense
     ///   'verb-noun' combination, to improve readability, for example `updated-plan`.
-    public static func dataEventSummaries(config: ClientConfig, intercomVersion: IntercomVersion? = nil, userId: String? = nil, eventSummaries: CreateDataEventSummariesRequestEventSummaries? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
+    static func dataEventSummaries(
+        config: ClientConfig,
+        intercomVersion: IntercomVersion? = nil,
+        userId: String? = nil,
+        eventSummaries: CreateDataEventSummariesRequestEventSummaries? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
         let requestBody = DataEventSummariesRequestBody(userId: userId, eventSummaries: eventSummaries)
 
-        return try (await sdkRequest("POST", "/events/summaries", config: config, body: requestBody, decoder: .empty, operationId: "dataEventSummaries", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/events/summaries",
+            config: config,
+            body: requestBody,
+            decoder: .empty,
+            operationId: "dataEventSummaries",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self]
+        )).data
     }
 }

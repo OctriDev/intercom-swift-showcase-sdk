@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ContentSnippetsMethods {
-    public struct UpdateContentSnippetOptions: Codable {
+public extension ContentSnippetsMethods {
+    struct UpdateContentSnippetOptions: Codable {
         public var id: String
         public var intercomVersion: IntercomVersion?
         public var title: String?
@@ -24,7 +24,9 @@ extension ContentSnippetsMethods {
         }
     }
 
-    /// Replaces the supplied fields on an existing content snippet while leaving omitted fields unchanged. Provide only the fields you want to update, and use either `json_blocks` or `body_markdown` for the content, not both. Pass an empty `audience_ids` array to clear audience targeting.
+    /// Replaces the supplied fields on an existing content snippet while leaving omitted fields unchanged. Provide only
+    /// the fields you want to update, and use either `json_blocks` or `body_markdown` for the content, not both. Pass
+    /// an empty `audience_ids` array to clear audience targeting.
     ///
     /// You can update an existing content snippet.
     ///
@@ -47,15 +49,29 @@ extension ContentSnippetsMethods {
     ///   AI Copilot.
     /// - aiSalesAgentAvailability: Whether the content snippet should be available
     ///   for AI Sales Agent.
-    public static func updateContentSnippet(config: ClientConfig, options: UpdateContentSnippetOptions, requestOptions: RequestOptions? = nil) async throws -> ContentSnippet {
+    static func updateContentSnippet(
+        config: ClientConfig,
+        options: UpdateContentSnippetOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContentSnippet {
         if let title = options.title {
             try validateLength("title", title, max: 255)
         }
 
         let requestBody = UpdateContentSnippetRequestBody(options: options)
 
-        return try (await sdkRequest("PUT", ["/content_snippets/", sdkEncodePathSegment(sdkWireString(options.id))].joined(), config: config, body: requestBody, decoder: .json, operationId: "updateContentSnippet", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
-        ]), options: requestOptions, errors: ["404": Error2.self, "422": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            ["/content_snippets/", sdkEncodePathSegment(sdkWireString(options.id))].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "updateContentSnippet",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["404": Error2.self, "422": Error2.self]
+        )).data
     }
 }

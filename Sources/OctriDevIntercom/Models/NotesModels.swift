@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Notes domain models
+/// Notes domain models
 /// A paginated list of notes associated with a contact or a company.
 public struct NoteList: Codable {
     /// String representing the object's type. Always has the value `list`.
@@ -27,22 +27,22 @@ public struct NoteList: Codable {
     }
 
     init() {
-        (self.type, self.data, self.totalCount, self.pages) = (nil, nil, nil, nil)
+        (type, data, totalCount, pages) = (nil, nil, nil, nil)
     }
 }
 
-extension NoteList {
-    public init(from decoder: Decoder) throws {
+public extension NoteList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.data = try container.sdkDecodeIfPresent(.data)
-        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        self.pages = try container.sdkDecodeIfPresent(.pages)
+        type = try container.sdkDecodeIfPresent(.type)
+        data = try container.sdkDecodeIfPresent(.data)
+        totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-extension NoteList {
-    public init(type: String? = nil, data: [Note]? = nil, totalCount: Int? = nil, pages: CursorPages? = nil) {
+public extension NoteList {
+    init(type: String? = nil, data: [Note]? = nil, totalCount: Int? = nil, pages: CursorPages? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
         (self.totalCount, self.pages) = (totalCount, pages)
@@ -68,21 +68,21 @@ public struct DeletedNoteObject: Codable {
     }
 
     init() {
-        (self.id, self.type, self.deleted) = (nil, nil, nil)
+        (id, type, deleted) = (nil, nil, nil)
     }
 }
 
-extension DeletedNoteObject {
-    public init(from decoder: Decoder) throws {
+public extension DeletedNoteObject {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.deleted = try container.sdkDecodeIfPresent(.deleted)
+        id = try container.sdkDecodeIfPresent(.id)
+        type = try container.sdkDecodeIfPresent(.type)
+        deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-extension DeletedNoteObject {
-    public init(id: String? = nil, type: DeletedNoteObjectType? = nil, deleted: Bool? = nil) {
+public extension DeletedNoteObject {
+    init(id: String? = nil, type: DeletedNoteObjectType? = nil, deleted: Bool? = nil) {
         self.init()
         (self.id, self.type) = (id, type)
         self.deleted = deleted
@@ -93,12 +93,15 @@ extension DeletedNoteObject {
 public struct DeletedNoteObjectType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let note = DeletedNoteObjectType(rawValue: "note")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

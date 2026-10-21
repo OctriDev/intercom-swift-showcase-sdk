@@ -3,7 +3,7 @@
 
 import Foundation
 
-// ConversationsAttributes domain models
+/// ConversationsAttributes domain models
 /// (Relationship data type only) Reference configuration for related objects.
 public struct UpdateConversationAttributeRequestReference: Codable {
     /// The cardinality of the relationship: `one` or `many`.
@@ -16,22 +16,28 @@ public struct UpdateConversationAttributeRequestReference: Codable {
         case objectTypeId = "object_type_id"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension UpdateConversationAttributeRequestReference {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.objectTypeId = try container.sdkDecodeIfPresent(.objectTypeId)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension UpdateConversationAttributeRequestReference {
-    public init(type: UpdateConversationAttributeRequestReferenceType, objectTypeId: String? = nil) {
+public extension UpdateConversationAttributeRequestReference {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        objectTypeId = try container.sdkDecodeIfPresent(.objectTypeId)
+    }
+}
+
+public extension UpdateConversationAttributeRequestReference {
+    init(type: UpdateConversationAttributeRequestReferenceType, objectTypeId: String? = nil) {
         (self.type, self.objectTypeId) = (type, objectTypeId)
     }
 }
@@ -64,25 +70,32 @@ public struct UpdateConversationAttributeRequest: Codable {
     }
 
     init() {
-        (self.name, self.description, self.multiline, self.required, self.visibleToTeamIds) = (nil, nil, nil, nil, nil)
-        self.reference = nil
+        (name, description, multiline, required, visibleToTeamIds) = (nil, nil, nil, nil, nil)
+        reference = nil
     }
 }
 
-extension UpdateConversationAttributeRequest {
-    public init(from decoder: Decoder) throws {
+public extension UpdateConversationAttributeRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.multiline = try container.sdkDecodeIfPresent(.multiline)
-        self.required = try container.sdkDecodeIfPresent(.required)
-        self.visibleToTeamIds = try container.sdkDecodeIfPresent(.visibleToTeamIds)
-        self.reference = try container.sdkDecodeIfPresent(.reference)
+        name = try container.sdkDecodeIfPresent(.name)
+        description = try container.sdkDecodeIfPresent(.description)
+        multiline = try container.sdkDecodeIfPresent(.multiline)
+        required = try container.sdkDecodeIfPresent(.required)
+        visibleToTeamIds = try container.sdkDecodeIfPresent(.visibleToTeamIds)
+        reference = try container.sdkDecodeIfPresent(.reference)
     }
 }
 
-extension UpdateConversationAttributeRequest {
-    public init(name: String? = nil, description: String? = nil, multiline: Bool? = nil, required: Bool? = nil, visibleToTeamIds: [String]? = nil, reference: UpdateConversationAttributeRequestReference? = nil) {
+public extension UpdateConversationAttributeRequest {
+    init(
+        name: String? = nil,
+        description: String? = nil,
+        multiline: Bool? = nil,
+        required: Bool? = nil,
+        visibleToTeamIds: [String]? = nil,
+        reference: UpdateConversationAttributeRequestReference? = nil
+    ) {
         self.init()
         (self.name, self.description) = (name, description)
         (self.multiline, self.required) = (multiline, required)
@@ -91,16 +104,20 @@ extension UpdateConversationAttributeRequest {
 }
 
 /// The cardinality of the relationship: `one` or `many`.
-public struct UpdateConversationAttributeRequestReferenceType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct UpdateConversationAttributeRequestReferenceType: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let one = UpdateConversationAttributeRequestReferenceType(rawValue: "one")
     public static let many = UpdateConversationAttributeRequestReferenceType(rawValue: "many")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -6,10 +6,13 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension HelpCenterMethods {
-    /// Replaces collection details for a specified collection. Supply the collection fields you want to change, such as `name`, `description`, translated content, or parent collection. Use the collection identifier assigned by Intercom to select the collection.
+public extension HelpCenterMethods {
+    /// Replaces collection details for a specified collection. Supply the collection fields you want to change, such as
+    /// `name`, `description`, translated content, or parent collection. Use the collection identifier assigned by
+    /// Intercom to select the collection.
     ///
-    /// You can update the details of a single collection by making a PUT request to `https://api.intercom.io/collections/<id>`.
+    /// You can update the details of a single collection by making a PUT request to
+    /// `https://api.intercom.io/collections/<id>`.
     ///
     /// - Parameters:
     /// - collectionId: The unique identifier for the collection which is given by
@@ -22,11 +25,35 @@ extension HelpCenterMethods {
     ///   locale codes and the values are the translated content of the Group.
     /// - parentId: The id of the parent collection. If `null` then it will be
     ///   updated as the first level collection.
-    public static func updateCollection(config: ClientConfig, collectionId: Int, intercomVersion: IntercomVersion? = nil, name: String? = nil, description: String? = nil, translatedContent: SdkOptional<GroupTranslatedContent>? = nil, parentId: SdkOptional<String>? = nil, requestOptions: RequestOptions? = nil) async throws -> Collection {
-        let requestBody = UpdateCollectionRequestBody(name: name, description: description, translatedContent: translatedContent, parentId: parentId)
+    static func updateCollection(
+        config: ClientConfig,
+        collectionId: Int,
+        intercomVersion: IntercomVersion? = nil,
+        name: String? = nil,
+        description: String? = nil,
+        translatedContent: SdkOptional<GroupTranslatedContent>? = nil,
+        parentId: SdkOptional<String>? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Collection {
+        let requestBody = UpdateCollectionRequestBody(
+            name: name,
+            description: description,
+            translatedContent: translatedContent,
+            parentId: parentId
+        )
 
-        return try (await sdkRequest("PUT", ["/help_center/collections/", sdkEncodePathSegment(sdkWireString(collectionId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "updateCollection", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            ["/help_center/collections/", sdkEncodePathSegment(sdkWireString(collectionId))].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "updateCollection",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).data
     }
 }

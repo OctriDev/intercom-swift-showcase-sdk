@@ -6,10 +6,14 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension FinAgentMethods {
-    /// Sends a user's reply to Fin after Fin has returned a response and the conversation is awaiting a user reply. Include the conversation ID, message, and user details so Fin can continue the conversation.
+public extension FinAgentMethods {
+    /// Sends a user's reply to Fin after Fin has returned a response and the conversation is awaiting a user reply.
+    /// Include the conversation ID, message, and user details so Fin can continue the conversation.
     ///
-    /// Once Fin has returned a response to a user's message, its status will be `awaiting_user_reply`. If a user replies, use this endpoint to send this response to Fin. {% admonition type="warning" %} To request access to the Fin Agent API, go to **Settings > Integrations > Fin Agent API** in your workspace and tell us about your use case. Once access is granted, **Fin Agent API** appears under **Fin AI Agent > Deploy**. {% /admonition %}
+    /// Once Fin has returned a response to a user's message, its status will be `awaiting_user_reply`. If a user
+    /// replies, use this endpoint to send this response to Fin. {% admonition type="warning" %} To request access to
+    /// the Fin Agent API, go to **Settings > Integrations > Fin Agent API** in your workspace and tell us about your
+    /// use case. Once access is granted, **Fin Agent API** appears under **Fin AI Agent > Deploy**. {% /admonition %}
     ///
     /// - Parameters:
     /// - conversationId: The ID of the conversation.
@@ -17,15 +21,38 @@ extension FinAgentMethods {
     /// - user: A user object representing the user in a Fin Agent conversation.
     /// - attachments: An array of attachments to include with the message. Maximum
     ///   of 10 attachments.
-    public static func replyToFin(config: ClientConfig, conversationId: String, message: FinAgentMessage, user: FinAgentUser, intercomVersion: IntercomVersion? = nil, attachments: [FinAgentAttachment]? = nil, requestOptions: RequestOptions? = nil) async throws -> ReplyToFinResponse {
-        if let attachments = attachments {
+    static func replyToFin(
+        config: ClientConfig,
+        conversationId: String,
+        message: FinAgentMessage,
+        user: FinAgentUser,
+        intercomVersion: IntercomVersion? = nil,
+        attachments: [FinAgentAttachment]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ReplyToFinResponse {
+        if let attachments {
             try validateItems("attachments", attachments, max: 10)
         }
 
-        let requestBody = ReplyToFinRequestBody(conversationId: conversationId, message: message, user: user, attachments: attachments)
+        let requestBody = ReplyToFinRequestBody(
+            conversationId: conversationId,
+            message: message,
+            user: user,
+            attachments: attachments
+        )
 
-        return try (await sdkRequest("POST", "/fin/reply", config: config, body: requestBody, decoder: .json, operationId: "replyToFin", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/fin/reply",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "replyToFin",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["400": Error2.self, "401": Error2.self]
+        )).data
     }
 }

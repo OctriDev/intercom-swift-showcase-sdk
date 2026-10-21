@@ -3,25 +3,33 @@
 
 import Foundation
 
-// Companies domain models
+/// Companies domain models
 public indirect enum CompanySearchRequestQuery {
     case singleFilterSearchRequest(SingleFilterSearchRequest)
     case multipleFilterSearchRequest(MultipleFilterSearchRequest)
 }
 
 extension CompanySearchRequestQuery: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
+            if let value = Self.decodeLossless1(from: container, raw) {
+                self = value; return
+            }
         }
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for CompanySearchRequestQuery")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for CompanySearchRequestQuery"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
@@ -39,8 +47,14 @@ extension CompanySearchRequestQuery {
 
 extension CompanySearchRequestQuery {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(SingleFilterSearchRequest.self) { return .singleFilterSearchRequest(value) }
-        if let value = try? container.decode(MultipleFilterSearchRequest.self) { return .multipleFilterSearchRequest(value) }
+        if let value = try? container
+            .decode(SingleFilterSearchRequest.self) {
+            return .singleFilterSearchRequest(value)
+        }
+        if let value = try? container
+            .decode(MultipleFilterSearchRequest.self) {
+            return .multipleFilterSearchRequest(value)
+        }
         return nil
     }
 }
@@ -70,23 +84,33 @@ public struct CompanySearchRequest: Codable {
         case sort
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CompanySearchRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.query) else {
-            throw SdkValidationError(field: "query", code: "required", message: "Validation failed for 'query': value is required")
-        }
-        self.query = try container.sdkDecodeRequired(.query)
-        self.pagination = try container.sdkDecodeIfPresent(.pagination)
-        self.sort = try container.sdkDecodeIfPresent(.sort)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CompanySearchRequest {
-    public init(query: CompanySearchRequestQuery, pagination: StartingAfterPaging? = nil, sort: CompanySearchRequestSort? = nil) {
+public extension CompanySearchRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.query) else {
+            throw SdkValidationError(
+                field: "query",
+                code: "required",
+                message: "Validation failed for 'query': value is required"
+            )
+        }
+        query = try container.sdkDecodeRequired(.query)
+        pagination = try container.sdkDecodeIfPresent(.pagination)
+        sort = try container.sdkDecodeIfPresent(.sort)
+    }
+}
+
+public extension CompanySearchRequest {
+    init(
+        query: CompanySearchRequestQuery,
+        pagination: StartingAfterPaging? = nil,
+        sort: CompanySearchRequestSort? = nil
+    ) {
         (self.query, self.pagination) = (query, pagination)
         self.sort = sort
     }
@@ -108,20 +132,20 @@ public struct CompanySearchRequestSort: Codable {
     }
 
     init() {
-        (self.field, self.order) = (nil, nil)
+        (field, order) = (nil, nil)
     }
 }
 
-extension CompanySearchRequestSort {
-    public init(from decoder: Decoder) throws {
+public extension CompanySearchRequestSort {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.field = try container.sdkDecodeIfPresent(.field)
-        self.order = try container.sdkDecodeIfPresent(.order)
+        field = try container.sdkDecodeIfPresent(.field)
+        order = try container.sdkDecodeIfPresent(.order)
     }
 }
 
-extension CompanySearchRequestSort {
-    public init(field: String? = nil, order: CompanySearchRequestSortOrder? = nil) {
+public extension CompanySearchRequestSort {
+    init(field: String? = nil, order: CompanySearchRequestSortOrder? = nil) {
         self.init()
         (self.field, self.order) = (field, order)
     }
@@ -132,13 +156,16 @@ extension CompanySearchRequestSort {
 public struct CompanySearchRequestSortOrder: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let ascending = CompanySearchRequestSortOrder(rawValue: "ascending")
     public static let descending = CompanySearchRequestSortOrder(rawValue: "descending")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

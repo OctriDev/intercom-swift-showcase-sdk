@@ -6,15 +6,43 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ReportingDataExportMethods {
-    /// Enqueues a reporting data export job for a selected dataset, attributes, and time range. Supply `dataset_id`, `attribute_ids`, `start_time`, and `end_time`; for conversation exports in the current API version, the export includes conversations that received no user reply. Use the returned job identifier to check the job status and retrieve its data.
+public extension ReportingDataExportMethods {
+    /// Enqueues a reporting data export job for a selected dataset, attributes, and time range. Supply `dataset_id`,
+    /// `attribute_ids`, `start_time`, and `end_time`; for conversation exports in the current API version, the export
+    /// includes conversations that received no user reply. Use the returned job identifier to check the job status and
+    /// retrieve its data.
     ///
-    /// For the conversation dataset, from this version onward this export returns all conversations, including those that never received a user reply. Earlier versions return only conversations that received at least one user reply. Other datasets are unaffected.
-    public static func createEnqueue(config: ClientConfig, datasetId: String, attributeIds: [String], startTime: Int, endTime: Int, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> CreateEnqueueResponse {
-        let requestBody = CreateEnqueueRequestBody(datasetId: datasetId, attributeIds: attributeIds, startTime: startTime, endTime: endTime)
+    /// For the conversation dataset, from this version onward this export returns all conversations, including those
+    /// that never received a user reply. Earlier versions return only conversations that received at least one user
+    /// reply. Other datasets are unaffected.
+    static func createEnqueue(
+        config: ClientConfig,
+        datasetId: String,
+        attributeIds: [String],
+        startTime: Int,
+        endTime: Int,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateEnqueueResponse {
+        let requestBody = CreateEnqueueRequestBody(
+            datasetId: datasetId,
+            attributeIds: attributeIds,
+            startTime: startTime,
+            endTime: endTime
+        )
 
-        return try (await sdkRequest("POST", "/export/reporting_data/enqueue", config: config, body: requestBody, decoder: .json, operationId: "createEnqueue", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "429": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/export/reporting_data/enqueue",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "createEnqueue",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["400": Error2.self, "401": Error2.self, "429": Error2.self]
+        )).data
     }
 }

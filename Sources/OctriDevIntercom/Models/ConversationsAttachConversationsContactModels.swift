@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Conversations domain models
+/// Conversations domain models
 public indirect enum AttachContactToConversationRequestCustomer {
     case attachContactToConversationRequestCustomerVariant0(AttachContactToConversationRequestCustomerVariant0)
     case attachContactToConversationRequestCustomerVariant1(AttachContactToConversationRequestCustomerVariant1)
@@ -11,30 +11,47 @@ public indirect enum AttachContactToConversationRequestCustomer {
 }
 
 extension AttachContactToConversationRequestCustomer: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
+            if let value = Self.decodeLossless1(from: container, raw) {
+                self = value; return
+            }
         }
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for AttachContactToConversationRequestCustomer")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for AttachContactToConversationRequestCustomer"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension AttachContactToConversationRequestCustomer {
     static func decodeLossless1(from container: SingleValueDecodingContainer, _ raw: JSONValue) -> Self? {
-        if let value = try? container.decode(AttachContactToConversationRequestCustomerVariant0.self), sdkKeepsEveryKey(value, of: raw) {
+        if let value = try? container.decode(AttachContactToConversationRequestCustomerVariant0.self), sdkKeepsEveryKey(
+            value,
+            of: raw
+        ) {
             return .attachContactToConversationRequestCustomerVariant0(value)
         }
-        if let value = try? container.decode(AttachContactToConversationRequestCustomerVariant1.self), sdkKeepsEveryKey(value, of: raw) {
+        if let value = try? container.decode(AttachContactToConversationRequestCustomerVariant1.self), sdkKeepsEveryKey(
+            value,
+            of: raw
+        ) {
             return .attachContactToConversationRequestCustomerVariant1(value)
         }
-        if let value = try? container.decode(AttachContactToConversationRequestCustomerVariant2.self), sdkKeepsEveryKey(value, of: raw) {
+        if let value = try? container.decode(AttachContactToConversationRequestCustomerVariant2.self), sdkKeepsEveryKey(
+            value,
+            of: raw
+        ) {
             return .attachContactToConversationRequestCustomerVariant2(value)
         }
         return nil
@@ -46,17 +63,17 @@ extension AttachContactToConversationRequestCustomer {
         if let value = try? container.decode(
             AttachContactToConversationRequestCustomerVariant0.self
         ) {
-            return             .attachContactToConversationRequestCustomerVariant0(value)
+            return .attachContactToConversationRequestCustomerVariant0(value)
         }
         if let value = try? container.decode(
             AttachContactToConversationRequestCustomerVariant1.self
         ) {
-            return             .attachContactToConversationRequestCustomerVariant1(value)
+            return .attachContactToConversationRequestCustomerVariant1(value)
         }
         if let value = try? container.decode(
             AttachContactToConversationRequestCustomerVariant2.self
         ) {
-            return             .attachContactToConversationRequestCustomerVariant2(value)
+            return .attachContactToConversationRequestCustomerVariant2(value)
         }
         return nil
     }
@@ -80,18 +97,26 @@ public indirect enum CustomerRequest {
 }
 
 extension CustomerRequest: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
+            if let value = Self.decodeLossless1(from: container, raw) {
+                self = value; return
+            }
         }
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for CustomerRequest")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for CustomerRequest"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
@@ -112,9 +137,15 @@ extension CustomerRequest {
 
 extension CustomerRequest {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(CustomerRequestVariant0.self) { return .customerRequestVariant0(value) }
-        if let value = try? container.decode(CustomerRequestVariant1.self) { return .customerRequestVariant1(value) }
-        if let value = try? container.decode(CustomerRequestVariant2.self) { return .customerRequestVariant2(value) }
+        if let value = try? container.decode(CustomerRequestVariant0.self) {
+            return .customerRequestVariant0(value)
+        }
+        if let value = try? container.decode(CustomerRequestVariant1.self) {
+            return .customerRequestVariant1(value)
+        }
+        if let value = try? container.decode(CustomerRequestVariant2.self) {
+            return .customerRequestVariant2(value)
+        }
         return nil
     }
 }
@@ -140,21 +171,27 @@ public struct CustomerRequestVariant0: Codable {
         case intercomUserId = "intercom_user_id"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CustomerRequestVariant0 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.intercomUserId) else {
-            throw SdkValidationError(field: "intercom_user_id", code: "required", message: "Validation failed for 'intercom_user_id': value is required")
-        }
-        self.intercomUserId = try container.sdkDecodeRequired(.intercomUserId)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CustomerRequestVariant0 {
-    public init(intercomUserId: String) {
+public extension CustomerRequestVariant0 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.intercomUserId) else {
+            throw SdkValidationError(
+                field: "intercom_user_id",
+                code: "required",
+                message: "Validation failed for 'intercom_user_id': value is required"
+            )
+        }
+        intercomUserId = try container.sdkDecodeRequired(.intercomUserId)
+    }
+}
+
+public extension CustomerRequestVariant0 {
+    init(intercomUserId: String) {
         self.intercomUserId = intercomUserId
     }
 }
@@ -172,22 +209,28 @@ public struct AttachContactToConversationRequestCustomerVariant0: Codable {
         case customer
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AttachContactToConversationRequestCustomerVariant0 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.intercomUserId) else {
-            throw SdkValidationError(field: "intercom_user_id", code: "required", message: "Validation failed for 'intercom_user_id': value is required")
-        }
-        self.intercomUserId = try container.sdkDecodeRequired(.intercomUserId)
-        self.customer = try container.sdkDecodeIfPresent(.customer)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AttachContactToConversationRequestCustomerVariant0 {
-    public init(intercomUserId: String, customer: CustomerRequest? = nil) {
+public extension AttachContactToConversationRequestCustomerVariant0 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.intercomUserId) else {
+            throw SdkValidationError(
+                field: "intercom_user_id",
+                code: "required",
+                message: "Validation failed for 'intercom_user_id': value is required"
+            )
+        }
+        intercomUserId = try container.sdkDecodeRequired(.intercomUserId)
+        customer = try container.sdkDecodeIfPresent(.customer)
+    }
+}
+
+public extension AttachContactToConversationRequestCustomerVariant0 {
+    init(intercomUserId: String, customer: CustomerRequest? = nil) {
         (self.intercomUserId, self.customer) = (intercomUserId, customer)
     }
 }
@@ -202,21 +245,27 @@ public struct CustomerRequestVariant2: Codable {
         case email
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CustomerRequestVariant2 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.email) else {
-            throw SdkValidationError(field: "email", code: "required", message: "Validation failed for 'email': value is required")
-        }
-        self.email = try container.sdkDecodeRequired(.email)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CustomerRequestVariant2 {
-    public init(email: String) {
+public extension CustomerRequestVariant2 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.email) else {
+            throw SdkValidationError(
+                field: "email",
+                code: "required",
+                message: "Validation failed for 'email': value is required"
+            )
+        }
+        email = try container.sdkDecodeRequired(.email)
+    }
+}
+
+public extension CustomerRequestVariant2 {
+    init(email: String) {
         self.email = email
     }
 }
@@ -234,22 +283,28 @@ public struct AttachContactToConversationRequestCustomerVariant2: Codable {
         case customer
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AttachContactToConversationRequestCustomerVariant2 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.email) else {
-            throw SdkValidationError(field: "email", code: "required", message: "Validation failed for 'email': value is required")
-        }
-        self.email = try container.sdkDecodeRequired(.email)
-        self.customer = try container.sdkDecodeIfPresent(.customer)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AttachContactToConversationRequestCustomerVariant2 {
-    public init(email: String, customer: CustomerRequest? = nil) {
+public extension AttachContactToConversationRequestCustomerVariant2 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.email) else {
+            throw SdkValidationError(
+                field: "email",
+                code: "required",
+                message: "Validation failed for 'email': value is required"
+            )
+        }
+        email = try container.sdkDecodeRequired(.email)
+        customer = try container.sdkDecodeIfPresent(.customer)
+    }
+}
+
+public extension AttachContactToConversationRequestCustomerVariant2 {
+    init(email: String, customer: CustomerRequest? = nil) {
         (self.email, self.customer) = (email, customer)
     }
 }
@@ -267,22 +322,28 @@ public struct AttachContactToConversationRequestCustomerVariant1: Codable {
         case customer
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AttachContactToConversationRequestCustomerVariant1 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.userId) else {
-            throw SdkValidationError(field: "user_id", code: "required", message: "Validation failed for 'user_id': value is required")
-        }
-        self.userId = try container.sdkDecodeRequired(.userId)
-        self.customer = try container.sdkDecodeIfPresent(.customer)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AttachContactToConversationRequestCustomerVariant1 {
-    public init(userId: String, customer: CustomerRequest? = nil) {
+public extension AttachContactToConversationRequestCustomerVariant1 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.userId) else {
+            throw SdkValidationError(
+                field: "user_id",
+                code: "required",
+                message: "Validation failed for 'user_id': value is required"
+            )
+        }
+        userId = try container.sdkDecodeRequired(.userId)
+        customer = try container.sdkDecodeIfPresent(.customer)
+    }
+}
+
+public extension AttachContactToConversationRequestCustomerVariant1 {
+    init(userId: String, customer: CustomerRequest? = nil) {
         (self.userId, self.customer) = (userId, customer)
     }
 }
@@ -301,20 +362,20 @@ public struct AttachContactToConversationRequest: Codable {
     }
 
     init() {
-        (self.adminId, self.customer) = (nil, nil)
+        (adminId, customer) = (nil, nil)
     }
 }
 
-extension AttachContactToConversationRequest {
-    public init(from decoder: Decoder) throws {
+public extension AttachContactToConversationRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.adminId = try container.sdkDecodeIfPresent(.adminId)
-        self.customer = try container.sdkDecodeIfPresent(.customer)
+        adminId = try container.sdkDecodeIfPresent(.adminId)
+        customer = try container.sdkDecodeIfPresent(.customer)
     }
 }
 
-extension AttachContactToConversationRequest {
-    public init(adminId: String? = nil, customer: AttachContactToConversationRequestCustomer? = nil) {
+public extension AttachContactToConversationRequest {
+    init(adminId: String? = nil, customer: AttachContactToConversationRequestCustomer? = nil) {
         self.init()
         (self.adminId, self.customer) = (adminId, customer)
     }
@@ -330,21 +391,27 @@ public struct CustomerRequestVariant1: Codable {
         case userId = "user_id"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CustomerRequestVariant1 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.userId) else {
-            throw SdkValidationError(field: "user_id", code: "required", message: "Validation failed for 'user_id': value is required")
-        }
-        self.userId = try container.sdkDecodeRequired(.userId)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CustomerRequestVariant1 {
-    public init(userId: String) {
+public extension CustomerRequestVariant1 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.userId) else {
+            throw SdkValidationError(
+                field: "user_id",
+                code: "required",
+                message: "Validation failed for 'user_id': value is required"
+            )
+        }
+        userId = try container.sdkDecodeRequired(.userId)
+    }
+}
+
+public extension CustomerRequestVariant1 {
+    init(userId: String) {
         self.userId = userId
     }
 }

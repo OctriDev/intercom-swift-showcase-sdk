@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Companies domain models
+/// Companies domain models
 /// You can create or update a Company
 public struct CreateOrUpdateCompanyRequest: Codable {
     /// The name of the Company
@@ -54,29 +54,40 @@ public struct CreateOrUpdateCompanyRequest: Codable {
     }
 
     init() {
-        (self.name, self.companyId, self.plan, self.size, self.website) = (nil, nil, nil, nil, nil)
-        (self.industry, self.customAttributes, self.remoteCreatedAt, self.updateLastRequestAt, self.monthlySpend) = (nil, nil, nil, nil, nil)
+        (name, companyId, plan, size, website) = (nil, nil, nil, nil, nil)
+        (industry, customAttributes, remoteCreatedAt, updateLastRequestAt, monthlySpend) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension CreateOrUpdateCompanyRequest {
-    public init(from decoder: Decoder) throws {
+public extension CreateOrUpdateCompanyRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.companyId = try container.sdkDecodeIfPresent(.companyId)
-        self.plan = try container.sdkDecodeIfPresent(.plan)
-        self.size = try container.sdkDecodeIfPresent(.size)
-        self.website = try container.sdkDecodeIfPresent(.website)
-        self.industry = try container.sdkDecodeIfPresent(.industry)
-        self.customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
-        self.remoteCreatedAt = try container.sdkDecodeIfPresent(.remoteCreatedAt)
-        self.updateLastRequestAt = try container.sdkDecodeIfPresent(.updateLastRequestAt)
-        self.monthlySpend = try container.sdkDecodeIfPresent(.monthlySpend)
+        name = try container.sdkDecodeIfPresent(.name)
+        companyId = try container.sdkDecodeIfPresent(.companyId)
+        plan = try container.sdkDecodeIfPresent(.plan)
+        size = try container.sdkDecodeIfPresent(.size)
+        website = try container.sdkDecodeIfPresent(.website)
+        industry = try container.sdkDecodeIfPresent(.industry)
+        customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
+        remoteCreatedAt = try container.sdkDecodeIfPresent(.remoteCreatedAt)
+        updateLastRequestAt = try container.sdkDecodeIfPresent(.updateLastRequestAt)
+        monthlySpend = try container.sdkDecodeIfPresent(.monthlySpend)
     }
 }
 
-extension CreateOrUpdateCompanyRequest {
-    public init(name: String? = nil, companyId: String? = nil, plan: String? = nil, size: Int? = nil, website: String? = nil, industry: String? = nil, customAttributes: [String: String]? = nil, remoteCreatedAt: Int? = nil, updateLastRequestAt: Bool? = nil, monthlySpend: Int? = nil) {
+public extension CreateOrUpdateCompanyRequest {
+    init(
+        name: String? = nil,
+        companyId: String? = nil,
+        plan: String? = nil,
+        size: Int? = nil,
+        website: String? = nil,
+        industry: String? = nil,
+        customAttributes: [String: String]? = nil,
+        remoteCreatedAt: Int? = nil,
+        updateLastRequestAt: Bool? = nil,
+        monthlySpend: Int? = nil
+    ) {
         self.init()
         (self.name, self.companyId) = (name, companyId)
         (self.plan, self.size) = (plan, size)

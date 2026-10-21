@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Admins domain models
+/// Admins domain models
 /// A list of admins associated with a given workspace.
 public struct AdminList: Codable {
     /// String representing the object's type. Always has the value `admin.list`.
@@ -18,20 +18,20 @@ public struct AdminList: Codable {
     }
 
     init() {
-        (self.type, self.admins) = (nil, nil)
+        (type, admins) = (nil, nil)
     }
 }
 
-extension AdminList {
-    public init(from decoder: Decoder) throws {
+public extension AdminList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.admins = try container.sdkDecodeIfPresent(.admins)
+        type = try container.sdkDecodeIfPresent(.type)
+        admins = try container.sdkDecodeIfPresent(.admins)
     }
 }
 
-extension AdminList {
-    public init(type: String? = nil, admins: [Admin?]? = nil) {
+public extension AdminList {
+    init(type: String? = nil, admins: [Admin?]? = nil) {
         self.init()
         (self.type, self.admins) = (type, admins)
     }

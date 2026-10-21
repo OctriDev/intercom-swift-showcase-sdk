@@ -3,17 +3,17 @@
 
 import Foundation
 
-// Shared domain models
-extension TagList {
-    public init(from decoder: Decoder) throws {
+/// Shared domain models
+public extension TagList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        type = try container.sdkDecodeIfPresent(.type)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension TagList {
-    public init(type: TagListType? = nil, data: [Tag]? = nil) {
+public extension TagList {
+    init(type: TagListType? = nil, data: [Tag]? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
     }
@@ -34,20 +34,20 @@ public struct TeamPriorityLevel: Codable {
     }
 
     init() {
-        (self.primaryTeamIds, self.secondaryTeamIds) = (nil, nil)
+        (primaryTeamIds, secondaryTeamIds) = (nil, nil)
     }
 }
 
-extension TeamPriorityLevel {
-    public init(from decoder: Decoder) throws {
+public extension TeamPriorityLevel {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.primaryTeamIds = try container.sdkDecodeIfPresent(.primaryTeamIds)
-        self.secondaryTeamIds = try container.sdkDecodeIfPresent(.secondaryTeamIds)
+        primaryTeamIds = try container.sdkDecodeIfPresent(.primaryTeamIds)
+        secondaryTeamIds = try container.sdkDecodeIfPresent(.secondaryTeamIds)
     }
 }
 
-extension TeamPriorityLevel {
-    public init(primaryTeamIds: [Int]? = nil, secondaryTeamIds: [Int]? = nil) {
+public extension TeamPriorityLevel {
+    init(primaryTeamIds: [Int]? = nil, secondaryTeamIds: [Int]? = nil) {
         self.init()
         (self.primaryTeamIds, self.secondaryTeamIds) = (primaryTeamIds, secondaryTeamIds)
     }
@@ -70,29 +70,39 @@ public struct Error2: Codable {
         case requestId = "request_id"
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension Error2 {
-    public init(from decoder: Decoder) throws {
+public extension Error2 {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
         }
         guard container.contains(.errors) else {
-            throw SdkValidationError(field: "errors", code: "required", message: "Validation failed for 'errors': value is required")
+            throw SdkValidationError(
+                field: "errors",
+                code: "required",
+                message: "Validation failed for 'errors': value is required"
+            )
         }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.errors = try container.sdkDecodeRequired(.errors)
-        self.requestId = try container.sdkDecodeIfPresent(.requestId)
-        if let value = self.requestId {
+        type = try container.sdkDecodeRequired(.type)
+        errors = try container.sdkDecodeRequired(.errors)
+        requestId = try container.sdkDecodeIfPresent(.requestId)
+        if let value = requestId {
             try sdkValidateUuid("request_id", value)
         }
     }
 }
 
-extension Error2 {
-    public init(type: String, errors: [Error2ErrorsItem], requestId: String? = nil) throws {
+public extension Error2 {
+    init(type: String, errors: [Error2ErrorsItem], requestId: String? = nil) throws {
         (self.type, self.errors) = (type, errors)
         self.requestId = requestId
         if let value = self.requestId {
@@ -120,27 +130,27 @@ public struct AddressableList: Codable {
     }
 
     init() {
-        (self.type, self.id, self.url) = (nil, nil, nil)
+        (type, id, url) = (nil, nil, nil)
     }
 }
 
-extension AddressableList {
-    public init(from decoder: Decoder) throws {
+public extension AddressableList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.url = try container.sdkDecodeIfPresent(.url)
-        if let value = self.type {
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        url = try container.sdkDecodeIfPresent(.url)
+        if let value = type {
             try sdkValidateUri("type", value)
         }
-        if let value = self.url {
+        if let value = url {
             try sdkValidateUri("url", value)
         }
     }
 }
 
-extension AddressableList {
-    public init(type: String? = nil, id: String? = nil, url: String? = nil) throws {
+public extension AddressableList {
+    init(type: String? = nil, id: String? = nil, url: String? = nil) throws {
         self.init()
         (self.type, self.id) = (type, id)
         self.url = url
@@ -161,27 +171,39 @@ public indirect enum SingleFilterSearchRequestValue {
 }
 
 extension SingleFilterSearchRequestValue: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for SingleFilterSearchRequestValue")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for SingleFilterSearchRequestValue"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension SingleFilterSearchRequestValue {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode(Int.self) { return .intValue(value) }
-        if let value = try? container.decode(Bool.self) { return .boolValue(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container.decode(Int.self) {
+            return .intValue(value)
+        }
+        if let value = try? container.decode(Bool.self) {
+            return .boolValue(value)
+        }
         if let value = try? container.decode(
             [SingleFilterSearchRequestValueVariant3Item].self
         ) {
-            return             .singleFilterSearchRequestValueVariant3ItemList(value)
+            return .singleFilterSearchRequestValueVariant3ItemList(value)
         }
         return nil
     }
@@ -227,21 +249,21 @@ public struct Translation: Codable {
     }
 
     init() {
-        (self.name, self.description, self.locale) = (nil, nil, nil)
+        (name, description, locale) = (nil, nil, nil)
     }
 }
 
-extension Translation {
-    public init(from decoder: Decoder) throws {
+public extension Translation {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.locale = try container.sdkDecodeIfPresent(.locale)
+        name = try container.sdkDecodeIfPresent(.name)
+        description = try container.sdkDecodeIfPresent(.description)
+        locale = try container.sdkDecodeIfPresent(.locale)
     }
 }
 
-extension Translation {
-    public init(name: String? = nil, description: String? = nil, locale: String? = nil) {
+public extension Translation {
+    init(name: String? = nil, description: String? = nil, locale: String? = nil) {
         self.init()
         (self.name, self.description) = (name, description)
         self.locale = locale
@@ -272,21 +294,21 @@ public struct SlaApplied: Codable {
     }
 
     init() {
-        (self.type, self.slaName, self.slaStatus) = (nil, nil, nil)
+        (type, slaName, slaStatus) = (nil, nil, nil)
     }
 }
 
-extension SlaApplied {
-    public init(from decoder: Decoder) throws {
+public extension SlaApplied {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.slaName = try container.sdkDecodeIfPresent(.slaName)
-        self.slaStatus = try container.sdkDecodeIfPresent(.slaStatus)
+        type = try container.sdkDecodeIfPresent(.type)
+        slaName = try container.sdkDecodeIfPresent(.slaName)
+        slaStatus = try container.sdkDecodeIfPresent(.slaStatus)
     }
 }
 
-extension SlaApplied {
-    public init(type: String? = nil, slaName: String? = nil, slaStatus: SlaAppliedSlaStatus? = nil) {
+public extension SlaApplied {
+    init(type: String? = nil, slaName: String? = nil, slaStatus: SlaAppliedSlaStatus? = nil) {
         self.init()
         (self.type, self.slaName) = (type, slaName)
         self.slaStatus = slaStatus
@@ -297,12 +319,15 @@ extension SlaApplied {
 public struct TagsType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let tagList = TagsType(rawValue: "tag.list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -315,13 +340,16 @@ public struct TagsType: RawRepresentable, Hashable, Codable, Sendable, SdkWireCo
 public struct MergeHistoryItemSourceContactRole: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let lead = MergeHistoryItemSourceContactRole(rawValue: "lead")
     public static let user = MergeHistoryItemSourceContactRole(rawValue: "user")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -338,7 +366,10 @@ public struct MergeHistoryItemSourceContactRole: RawRepresentable, Hashable, Cod
 public struct SlaAppliedSlaStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let hit = SlaAppliedSlaStatus(rawValue: "hit")
     public static let missed = SlaAppliedSlaStatus(rawValue: "missed")
     public static let cancelled = SlaAppliedSlaStatus(rawValue: "cancelled")
@@ -346,7 +377,7 @@ public struct SlaAppliedSlaStatus: RawRepresentable, Hashable, Codable, Sendable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -359,13 +390,16 @@ public struct SlaAppliedSlaStatus: RawRepresentable, Hashable, Codable, Sendable
 public struct MultipleFilterSearchRequestOperator: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let and = MultipleFilterSearchRequestOperator(rawValue: "AND")
     public static let or = MultipleFilterSearchRequestOperator(rawValue: "OR")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -378,12 +412,15 @@ public struct MultipleFilterSearchRequestOperator: RawRepresentable, Hashable, C
 public struct TagListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let list = TagListType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -396,12 +433,15 @@ public struct TagListType: RawRepresentable, Hashable, Codable, Sendable, SdkWir
 public struct ContentSourcesListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let contentSourceList = ContentSourcesListType(rawValue: "content_source.list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -414,12 +454,15 @@ public struct ContentSourcesListType: RawRepresentable, Hashable, Codable, Senda
 public struct CompanyDataType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let company = CompanyDataType(rawValue: "company")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -432,12 +475,15 @@ public struct CompanyDataType: RawRepresentable, Hashable, Codable, Sendable, Sd
 public struct SubscriptionTypeListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let list = SubscriptionTypeListType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -454,7 +500,10 @@ public struct SubscriptionTypeListType: RawRepresentable, Hashable, Codable, Sen
 public struct SingleFilterSearchRequestOperator: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let unknown = SingleFilterSearchRequestOperator(rawValue: "=")
     public static let unknown2 = SingleFilterSearchRequestOperator(rawValue: "!=")
     public static let `in` = SingleFilterSearchRequestOperator(rawValue: "IN")
@@ -470,7 +519,7 @@ public struct SingleFilterSearchRequestOperator: RawRepresentable, Hashable, Cod
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -483,12 +532,15 @@ public struct SingleFilterSearchRequestOperator: RawRepresentable, Hashable, Cod
 public struct PagesLinkType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let pages = PagesLinkType(rawValue: "pages")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -501,12 +553,15 @@ public struct PagesLinkType: RawRepresentable, Hashable, Codable, Sendable, SdkW
 public struct CursorPagesType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let pages = CursorPagesType(rawValue: "pages")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -519,7 +574,10 @@ public struct CursorPagesType: RawRepresentable, Hashable, Codable, Sendable, Sd
 public struct IntercomVersion: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let value10 = IntercomVersion(rawValue: "1.0")
     public static let value11 = IntercomVersion(rawValue: "1.1")
     public static let value12 = IntercomVersion(rawValue: "1.2")
@@ -546,7 +604,7 @@ public struct IntercomVersion: RawRepresentable, Hashable, Codable, Sendable, Sd
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

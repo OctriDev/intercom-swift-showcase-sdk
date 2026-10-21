@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Admins domain models
+/// Admins domain models
 /// Admins are the teammate accounts that have access to a workspace
 public struct AdminWithApp: Codable {
     /// String representing the object's type. Always has the value `admin`.
@@ -55,32 +55,45 @@ public struct AdminWithApp: Codable {
     }
 
     init() {
-        (self.type, self.id, self.name, self.email, self.jobTitle) = (nil, nil, nil, nil, nil)
-        (self.awayModeEnabled, self.awayModeReassign, self.hasInboxSeat, self.teamIds, self.avatar) = (nil, nil, nil, nil, nil)
-        (self.emailVerified, self.app) = (nil, nil)
+        (type, id, name, email, jobTitle) = (nil, nil, nil, nil, nil)
+        (awayModeEnabled, awayModeReassign, hasInboxSeat, teamIds, avatar) = (nil, nil, nil, nil, nil)
+        (emailVerified, app) = (nil, nil)
     }
 }
 
-extension AdminWithApp {
-    public init(from decoder: Decoder) throws {
+public extension AdminWithApp {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.email = try container.sdkDecodeIfPresent(.email)
-        self.jobTitle = try container.sdkDecodeIfPresent(.jobTitle)
-        self.awayModeEnabled = try container.sdkDecodeIfPresent(.awayModeEnabled)
-        self.awayModeReassign = try container.sdkDecodeIfPresent(.awayModeReassign)
-        self.hasInboxSeat = try container.sdkDecodeIfPresent(.hasInboxSeat)
-        self.teamIds = try container.sdkDecodeIfPresent(.teamIds)
-        self.avatar = try container.sdkDecodeIfPresent(.avatar)
-        self.emailVerified = try container.sdkDecodeIfPresent(.emailVerified)
-        self.app = try container.sdkDecodeIfPresent(.app)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        email = try container.sdkDecodeIfPresent(.email)
+        jobTitle = try container.sdkDecodeIfPresent(.jobTitle)
+        awayModeEnabled = try container.sdkDecodeIfPresent(.awayModeEnabled)
+        awayModeReassign = try container.sdkDecodeIfPresent(.awayModeReassign)
+        hasInboxSeat = try container.sdkDecodeIfPresent(.hasInboxSeat)
+        teamIds = try container.sdkDecodeIfPresent(.teamIds)
+        avatar = try container.sdkDecodeIfPresent(.avatar)
+        emailVerified = try container.sdkDecodeIfPresent(.emailVerified)
+        app = try container.sdkDecodeIfPresent(.app)
     }
 }
 
-extension AdminWithApp {
-    public init(type: String? = nil, id: String? = nil, name: String? = nil, email: String? = nil, jobTitle: String? = nil, awayModeEnabled: Bool? = nil, awayModeReassign: Bool? = nil, hasInboxSeat: Bool? = nil, teamIds: [Int]? = nil, avatar: AdminWithAppAvatar? = nil, emailVerified: Bool? = nil, app: App? = nil) {
+public extension AdminWithApp {
+    init(
+        type: String? = nil,
+        id: String? = nil,
+        name: String? = nil,
+        email: String? = nil,
+        jobTitle: String? = nil,
+        awayModeEnabled: Bool? = nil,
+        awayModeReassign: Bool? = nil,
+        hasInboxSeat: Bool? = nil,
+        teamIds: [Int]? = nil,
+        avatar: AdminWithAppAvatar? = nil,
+        emailVerified: Bool? = nil,
+        app: App? = nil
+    ) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.name, self.email) = (name, email)
@@ -95,17 +108,24 @@ extension AdminWithApp {
 public struct ActivityLogActivityType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
-    public static let adminConversationAssignmentLimitChange = ActivityLogActivityType(rawValue: "admin_conversation_assignment_limit_change")
-    public static let adminTicketAssignmentLimitChange = ActivityLogActivityType(rawValue: "admin_ticket_assignment_limit_change")
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static let adminConversationAssignmentLimitChange =
+        ActivityLogActivityType(rawValue: "admin_conversation_assignment_limit_change")
+    public static let adminTicketAssignmentLimitChange =
+        ActivityLogActivityType(rawValue: "admin_ticket_assignment_limit_change")
     public static let adminAvatarChange = ActivityLogActivityType(rawValue: "admin_avatar_change")
     public static let adminAwayModeChange = ActivityLogActivityType(rawValue: "admin_away_mode_change")
     public static let adminDeletion = ActivityLogActivityType(rawValue: "admin_deletion")
     public static let adminDeprovisioned = ActivityLogActivityType(rawValue: "admin_deprovisioned")
     public static let adminImpersonationEnd = ActivityLogActivityType(rawValue: "admin_impersonation_end")
     public static let adminImpersonationStart = ActivityLogActivityType(rawValue: "admin_impersonation_start")
-    public static let adminImpersonationConsentApproved = ActivityLogActivityType(rawValue: "admin_impersonation_consent_approved")
-    public static let adminImpersonationConsentRevoked = ActivityLogActivityType(rawValue: "admin_impersonation_consent_revoked")
+    public static let adminImpersonationConsentApproved =
+        ActivityLogActivityType(rawValue: "admin_impersonation_consent_approved")
+    public static let adminImpersonationConsentRevoked =
+        ActivityLogActivityType(rawValue: "admin_impersonation_consent_revoked")
     public static let adminInviteChange = ActivityLogActivityType(rawValue: "admin_invite_change")
     public static let adminInviteCreation = ActivityLogActivityType(rawValue: "admin_invite_creation")
     public static let adminInviteDeletion = ActivityLogActivityType(rawValue: "admin_invite_deletion")
@@ -119,13 +139,16 @@ public struct ActivityLogActivityType: RawRepresentable, Hashable, Codable, Send
     public static let adminPermissionChange = ActivityLogActivityType(rawValue: "admin_permission_change")
     public static let adminProvisioned = ActivityLogActivityType(rawValue: "admin_provisioned")
     public static let adminTwoFactorAuthChange = ActivityLogActivityType(rawValue: "admin_two_factor_auth_change")
-    public static let adminUnauthorizedSignInMethod = ActivityLogActivityType(rawValue: "admin_unauthorized_sign_in_method")
+    public static let adminUnauthorizedSignInMethod =
+        ActivityLogActivityType(rawValue: "admin_unauthorized_sign_in_method")
     public static let appAdminJoin = ActivityLogActivityType(rawValue: "app_admin_join")
-    public static let appAuthenticationMethodChange = ActivityLogActivityType(rawValue: "app_authentication_method_change")
+    public static let appAuthenticationMethodChange =
+        ActivityLogActivityType(rawValue: "app_authentication_method_change")
     public static let appDataDeletion = ActivityLogActivityType(rawValue: "app_data_deletion")
     public static let appDataExport = ActivityLogActivityType(rawValue: "app_data_export")
     public static let appGoogleSsoDomainChange = ActivityLogActivityType(rawValue: "app_google_sso_domain_change")
-    public static let appIdentityVerificationChange = ActivityLogActivityType(rawValue: "app_identity_verification_change")
+    public static let appIdentityVerificationChange =
+        ActivityLogActivityType(rawValue: "app_identity_verification_change")
     public static let appNameChange = ActivityLogActivityType(rawValue: "app_name_change")
     public static let appOutboundAddressChange = ActivityLogActivityType(rawValue: "app_outbound_address_change")
     public static let appPackageInstallation = ActivityLogActivityType(rawValue: "app_package_installation")
@@ -133,31 +156,41 @@ public struct ActivityLogActivityType: RawRepresentable, Hashable, Codable, Send
     public static let appPackageUninstallation = ActivityLogActivityType(rawValue: "app_package_uninstallation")
     public static let appTeamCreation = ActivityLogActivityType(rawValue: "app_team_creation")
     public static let appTeamDeletion = ActivityLogActivityType(rawValue: "app_team_deletion")
-    public static let appTeamMembershipModification = ActivityLogActivityType(rawValue: "app_team_membership_modification")
+    public static let appTeamMembershipModification =
+        ActivityLogActivityType(rawValue: "app_team_membership_modification")
     public static let appTimezoneChange = ActivityLogActivityType(rawValue: "app_timezone_change")
     public static let appWebhookCreation = ActivityLogActivityType(rawValue: "app_webhook_creation")
     public static let appWebhookDeletion = ActivityLogActivityType(rawValue: "app_webhook_deletion")
-    public static let articlesInMessengerEnabledChange = ActivityLogActivityType(rawValue: "articles_in_messenger_enabled_change")
-    public static let automaticAwayModeSettingChange = ActivityLogActivityType(rawValue: "automatic_away_mode_setting_change")
+    public static let articlesInMessengerEnabledChange =
+        ActivityLogActivityType(rawValue: "articles_in_messenger_enabled_change")
+    public static let automaticAwayModeSettingChange =
+        ActivityLogActivityType(rawValue: "automatic_away_mode_setting_change")
     public static let bulkDelete = ActivityLogActivityType(rawValue: "bulk_delete")
     public static let bulkExport = ActivityLogActivityType(rawValue: "bulk_export")
     public static let campaignDeletion = ActivityLogActivityType(rawValue: "campaign_deletion")
     public static let campaignStateChange = ActivityLogActivityType(rawValue: "campaign_state_change")
-    public static let conversationDeletionScheduleCreation = ActivityLogActivityType(rawValue: "conversation_deletion_schedule_creation")
-    public static let conversationDeletionScheduleDeletion = ActivityLogActivityType(rawValue: "conversation_deletion_schedule_deletion")
-    public static let conversationDeletionScheduleStateChange = ActivityLogActivityType(rawValue: "conversation_deletion_schedule_state_change")
-    public static let conversationDeletionScheduleUpdate = ActivityLogActivityType(rawValue: "conversation_deletion_schedule_update")
+    public static let conversationDeletionScheduleCreation =
+        ActivityLogActivityType(rawValue: "conversation_deletion_schedule_creation")
+    public static let conversationDeletionScheduleDeletion =
+        ActivityLogActivityType(rawValue: "conversation_deletion_schedule_deletion")
+    public static let conversationDeletionScheduleStateChange =
+        ActivityLogActivityType(rawValue: "conversation_deletion_schedule_state_change")
+    public static let conversationDeletionScheduleUpdate =
+        ActivityLogActivityType(rawValue: "conversation_deletion_schedule_update")
     public static let conversationPartDeletion = ActivityLogActivityType(rawValue: "conversation_part_deletion")
     public static let conversationPdfExport = ActivityLogActivityType(rawValue: "conversation_pdf_export")
     public static let conversationTopicChange = ActivityLogActivityType(rawValue: "conversation_topic_change")
     public static let conversationTopicCreation = ActivityLogActivityType(rawValue: "conversation_topic_creation")
     public static let conversationTopicDeletion = ActivityLogActivityType(rawValue: "conversation_topic_deletion")
-    public static let contentRedactionRuleCreation = ActivityLogActivityType(rawValue: "content_redaction_rule_creation")
-    public static let contentRedactionRuleDeletion = ActivityLogActivityType(rawValue: "content_redaction_rule_deletion")
+    public static let contentRedactionRuleCreation =
+        ActivityLogActivityType(rawValue: "content_redaction_rule_creation")
+    public static let contentRedactionRuleDeletion =
+        ActivityLogActivityType(rawValue: "content_redaction_rule_deletion")
     public static let contentRedactionRuleUpdate = ActivityLogActivityType(rawValue: "content_redaction_rule_update")
     public static let csvImportCompletion = ActivityLogActivityType(rawValue: "csv_import_completion")
     public static let csvImportCreation = ActivityLogActivityType(rawValue: "csv_import_creation")
-    public static let customAuthenticationTokenCreation = ActivityLogActivityType(rawValue: "custom_authentication_token_creation")
+    public static let customAuthenticationTokenCreation =
+        ActivityLogActivityType(rawValue: "custom_authentication_token_creation")
     public static let helpCenterSettingsChange = ActivityLogActivityType(rawValue: "help_center_settings_change")
     public static let inboundConversationsChange = ActivityLogActivityType(rawValue: "inbound_conversations_change")
     public static let inboxAccessChange = ActivityLogActivityType(rawValue: "inbox_access_change")
@@ -166,20 +199,23 @@ public struct ActivityLogActivityType: RawRepresentable, Hashable, Codable, Send
     public static let macroDeletion = ActivityLogActivityType(rawValue: "macro_deletion")
     public static let macroUpdate = ActivityLogActivityType(rawValue: "macro_update")
     public static let macroUsageExport = ActivityLogActivityType(rawValue: "macro_usage_export")
-    public static let maliciousDomainsSettingChange = ActivityLogActivityType(rawValue: "malicious_domains_setting_change")
+    public static let maliciousDomainsSettingChange =
+        ActivityLogActivityType(rawValue: "malicious_domains_setting_change")
     public static let messageDeletion = ActivityLogActivityType(rawValue: "message_deletion")
     public static let messageStateChange = ActivityLogActivityType(rawValue: "message_state_change")
     public static let messengerApiSecretCreation = ActivityLogActivityType(rawValue: "messenger_api_secret_creation")
     public static let messengerApiSecretDeletion = ActivityLogActivityType(rawValue: "messenger_api_secret_deletion")
     public static let messengerLookAndFeelChange = ActivityLogActivityType(rawValue: "messenger_look_and_feel_change")
-    public static let messengerSearchRequiredChange = ActivityLogActivityType(rawValue: "messenger_search_required_change")
+    public static let messengerSearchRequiredChange =
+        ActivityLogActivityType(rawValue: "messenger_search_required_change")
     public static let messengerSpacesChange = ActivityLogActivityType(rawValue: "messenger_spaces_change")
     public static let oauthTokenRevocation = ActivityLogActivityType(rawValue: "oauth_token_revocation")
     public static let officeHoursChange = ActivityLogActivityType(rawValue: "office_hours_change")
     public static let roleChange = ActivityLogActivityType(rawValue: "role_change")
     public static let roleCreation = ActivityLogActivityType(rawValue: "role_creation")
     public static let roleDeletion = ActivityLogActivityType(rawValue: "role_deletion")
-    public static let rulesetActivationTitlePreview = ActivityLogActivityType(rawValue: "ruleset_activation_title_preview")
+    public static let rulesetActivationTitlePreview =
+        ActivityLogActivityType(rawValue: "ruleset_activation_title_preview")
     public static let rulesetCreation = ActivityLogActivityType(rawValue: "ruleset_creation")
     public static let rulesetDeletion = ActivityLogActivityType(rawValue: "ruleset_deletion")
     public static let searchBrowseEnabledChange = ActivityLogActivityType(rawValue: "search_browse_enabled_change")
@@ -192,29 +228,40 @@ public struct ActivityLogActivityType: RawRepresentable, Hashable, Codable, Send
     public static let seriesSettingsUpdate = ActivityLogActivityType(rawValue: "series_settings_update")
     public static let seriesStatusChange = ActivityLogActivityType(rawValue: "series_status_change")
     public static let seriesUpdate = ActivityLogActivityType(rawValue: "series_update")
-    public static let stripInboundEmailLinksChange = ActivityLogActivityType(rawValue: "strip_inbound_email_links_change")
+    public static let stripInboundEmailLinksChange =
+        ActivityLogActivityType(rawValue: "strip_inbound_email_links_change")
     public static let temporaryExpectationChange = ActivityLogActivityType(rawValue: "temporary_expectation_change")
     public static let teamAssignmentLimitChange = ActivityLogActivityType(rawValue: "team_assignment_limit_change")
     public static let trustedDomainsSettingChange = ActivityLogActivityType(rawValue: "trusted_domains_setting_change")
-    public static let unassignUnsnoozedAtCapacitySettingChange = ActivityLogActivityType(rawValue: "unassign_unsnoozed_at_capacity_setting_change")
-    public static let unassignUnsnoozedWhenAwaySettingChange = ActivityLogActivityType(rawValue: "unassign_unsnoozed_when_away_setting_change")
-    public static let upfrontEmailCollectionChange = ActivityLogActivityType(rawValue: "upfront_email_collection_change")
-    public static let allowedAttachmentFiletypesSettingChange = ActivityLogActivityType(rawValue: "allowed_attachment_filetypes_setting_change")
-    public static let attachUploadsInlineSettingChange = ActivityLogActivityType(rawValue: "attach_uploads_inline_setting_change")
+    public static let unassignUnsnoozedAtCapacitySettingChange =
+        ActivityLogActivityType(rawValue: "unassign_unsnoozed_at_capacity_setting_change")
+    public static let unassignUnsnoozedWhenAwaySettingChange =
+        ActivityLogActivityType(rawValue: "unassign_unsnoozed_when_away_setting_change")
+    public static let upfrontEmailCollectionChange =
+        ActivityLogActivityType(rawValue: "upfront_email_collection_change")
+    public static let allowedAttachmentFiletypesSettingChange =
+        ActivityLogActivityType(rawValue: "allowed_attachment_filetypes_setting_change")
+    public static let attachUploadsInlineSettingChange =
+        ActivityLogActivityType(rawValue: "attach_uploads_inline_setting_change")
     public static let teammateGifsSettingChange = ActivityLogActivityType(rawValue: "teammate_gifs_setting_change")
-    public static let userCameraAttachmentsSettingChange = ActivityLogActivityType(rawValue: "user_camera_attachments_setting_change")
-    public static let userConversationAttachmentsSettingChange = ActivityLogActivityType(rawValue: "user_conversation_attachments_setting_change")
-    public static let userFileAttachmentsSettingChange = ActivityLogActivityType(rawValue: "user_file_attachments_setting_change")
+    public static let userCameraAttachmentsSettingChange =
+        ActivityLogActivityType(rawValue: "user_camera_attachments_setting_change")
+    public static let userConversationAttachmentsSettingChange =
+        ActivityLogActivityType(rawValue: "user_conversation_attachments_setting_change")
+    public static let userFileAttachmentsSettingChange =
+        ActivityLogActivityType(rawValue: "user_file_attachments_setting_change")
     public static let userGifsSettingChange = ActivityLogActivityType(rawValue: "user_gifs_setting_change")
-    public static let userMediaAttachmentsSettingChange = ActivityLogActivityType(rawValue: "user_media_attachments_setting_change")
+    public static let userMediaAttachmentsSettingChange =
+        ActivityLogActivityType(rawValue: "user_media_attachments_setting_change")
     public static let userVoiceNotesSettingChange = ActivityLogActivityType(rawValue: "user_voice_notes_setting_change")
     public static let welcomeMessageChange = ActivityLogActivityType(rawValue: "welcome_message_change")
     public static let workspaceDeletionRequest = ActivityLogActivityType(rawValue: "workspace_deletion_request")
-    public static let hideCsatFromAgentsSettingChange = ActivityLogActivityType(rawValue: "hide_csat_from_agents_setting_change")
+    public static let hideCsatFromAgentsSettingChange =
+        ActivityLogActivityType(rawValue: "hide_csat_from_agents_setting_change")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

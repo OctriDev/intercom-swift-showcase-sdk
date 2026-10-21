@@ -6,10 +6,13 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ContactsMethods {
-    /// Lists the contacts merged into a given contact, with results returned in pages. Use `cursor` to continue from a previous response and `per_page` and `order` to control the results. Merge history is available only for contacts with the `user` role.
+public extension ContactsMethods {
+    /// Lists the contacts merged into a given contact, with results returned in pages. Use `cursor` to continue from a
+    /// previous response and `per_page` and `order` to control the results. Merge history is available only for
+    /// contacts with the `user` role.
     ///
-    /// Retrieve the paginated list of contacts that have been merged into a given contact. Only available for contacts with a `user` role. Returns a `404` if the contact is not found or has a `lead` role.
+    /// Retrieve the paginated list of contacts that have been merged into a given contact. Only available for contacts
+    /// with a `user` role. Returns a `404` if the contact is not found or has a `lead` role.
     ///
     /// - Parameters:
     /// - id: The id of the contact to fetch merge history for.
@@ -17,23 +20,44 @@ extension ContactsMethods {
     ///   previous response to fetch the next page.
     /// - perPage: The number of results to return per page (default 50, max 150).
     /// - order: The order to return results in. Defaults to descending.
-    public static func listContactMergeHistory(config: ClientConfig, id: String, cursor: String? = nil, perPage: Int? = nil, order: ListContactMergeHistoryParameter? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> MergeHistoryList {
-        if let perPage = perPage {
+    static func listContactMergeHistory(
+        config: ClientConfig,
+        id: String,
+        cursor: String? = nil,
+        perPage: Int? = nil,
+        order: ListContactMergeHistoryParameter? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> MergeHistoryList {
+        if let perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 150)
         }
 
-        return try (await sdkRequest("GET", ["/contacts/", sdkEncodePathSegment(sdkWireString(id)), "/merge_history"].joined(), config: config, query: [
-            SdkQueryParameter("cursor", value: cursor),
-            SdkQueryParameter("per_page", value: perPage),
-            SdkQueryParameter("order", value: order),
-        ], decoder: .json, operationId: "ListContactMergeHistory", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/contacts/", sdkEncodePathSegment(sdkWireString(id)), "/merge_history"].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("cursor", value: cursor),
+                SdkQueryParameter("per_page", value: perPage),
+                SdkQueryParameter("order", value: order),
+            ],
+            decoder: .json,
+            operationId: "ListContactMergeHistory",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).data
     }
 
-    /// Lists the contacts merged into a given contact, with results returned in pages. Use `cursor` to continue from a previous response and `per_page` and `order` to control the results. Merge history is available only for contacts with the `user` role.
+    /// Lists the contacts merged into a given contact, with results returned in pages. Use `cursor` to continue from a
+    /// previous response and `per_page` and `order` to control the results. Merge history is available only for
+    /// contacts with the `user` role.
     ///
-    /// Retrieve the paginated list of contacts that have been merged into a given contact. Only available for contacts with a `user` role. Returns a `404` if the contact is not found or has a `lead` role.
+    /// Retrieve the paginated list of contacts that have been merged into a given contact. Only available for contacts
+    /// with a `user` role. Returns a `404` if the contact is not found or has a `lead` role.
     ///
     /// - Parameters:
     /// - id: The id of the contact to fetch merge history for.
@@ -41,18 +65,45 @@ extension ContactsMethods {
     ///   previous response to fetch the next page.
     /// - perPage: The number of results to return per page (default 50, max 150).
     /// - order: The order to return results in. Defaults to descending.
-    public static func listContactMergeHistoryPaginated(config: ClientConfig, id: String, cursor: String? = nil, perPage: Int? = nil, order: ListContactMergeHistoryParameter? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<MergeHistoryItem, Swift.Error> {
-        return AsyncThrowingStream<MergeHistoryItem, Swift.Error> { (continuation: AsyncThrowingStream<MergeHistoryItem, Swift.Error>.Continuation) in
+    static func listContactMergeHistoryPaginated(
+        config: ClientConfig,
+        id: String,
+        cursor: String? = nil,
+        perPage: Int? = nil,
+        order: ListContactMergeHistoryParameter? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) -> AsyncThrowingStream<MergeHistoryItem, Swift.Error> {
+        AsyncThrowingStream<MergeHistoryItem, Swift.Error> { (continuation: AsyncThrowingStream<
+            MergeHistoryItem,
+            Swift.Error
+        >.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageCursor = cursor
                     while true {
-                        let pageResponse = try await listContactMergeHistory(config: config, id: id, cursor: pageCursor, perPage: perPage, order: order, intercomVersion: intercomVersion, requestOptions: requestOptions)
+                        let pageResponse = try await listContactMergeHistory(
+                            config: config,
+                            id: id,
+                            cursor: pageCursor,
+                            perPage: perPage,
+                            order: order,
+                            intercomVersion: intercomVersion,
+                            requestOptions: requestOptions
+                        )
                         let pageItems = (pageResponse.data ?? [])
-                        if pageItems.isEmpty { break }
-                        for item in pageItems { continuation.yield(item) }
-                        if !(pageResponse.hasMore ?? false) { break }
-                        guard let nextCursor = pageResponse.nextCursor else { break }
+                        if pageItems.isEmpty {
+                            break
+                        }
+                        for item in pageItems {
+                            continuation.yield(item)
+                        }
+                        if !(pageResponse.hasMore ?? false) {
+                            break
+                        }
+                        guard let nextCursor = pageResponse.nextCursor else {
+                            break
+                        }
                         pageCursor = nextCursor
                     }
                 } catch {
@@ -65,25 +116,54 @@ extension ContactsMethods {
         }
     }
 
-    public struct ListContactMergeHistoryPage {
+    struct ListContactMergeHistoryPage {
         public let data: MergeHistoryList
         public let items: [MergeHistoryItem]
         public let hasMore: Bool
     }
 
-    public static func listContactMergeHistoryPages(config: ClientConfig, id: String, cursor: String? = nil, perPage: Int? = nil, order: ListContactMergeHistoryParameter? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<ListContactMergeHistoryPage, Swift.Error> {
-        return AsyncThrowingStream<ListContactMergeHistoryPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<ListContactMergeHistoryPage, Swift.Error>.Continuation) in
+    static func listContactMergeHistoryPages(
+        config: ClientConfig,
+        id: String,
+        cursor: String? = nil,
+        perPage: Int? = nil,
+        order: ListContactMergeHistoryParameter? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) -> AsyncThrowingStream<ListContactMergeHistoryPage, Swift.Error> {
+        AsyncThrowingStream<ListContactMergeHistoryPage, Swift.Error> { (pageContinuation: AsyncThrowingStream<
+            ListContactMergeHistoryPage,
+            Swift.Error
+        >.Continuation) in
             let task = _Concurrency.Task {
                 do {
                     var pageCursor = cursor
                     while true {
-                        let pageResponse = try await listContactMergeHistory(config: config, id: id, cursor: pageCursor, perPage: perPage, order: order, intercomVersion: intercomVersion, requestOptions: requestOptions)
+                        let pageResponse = try await listContactMergeHistory(
+                            config: config,
+                            id: id,
+                            cursor: pageCursor,
+                            perPage: perPage,
+                            order: order,
+                            intercomVersion: intercomVersion,
+                            requestOptions: requestOptions
+                        )
                         let pageItems = (pageResponse.data ?? [])
-                        if pageItems.isEmpty { break }
+                        if pageItems.isEmpty {
+                            break
+                        }
                         let hasMore = (pageResponse.hasMore ?? false) && pageResponse.nextCursor != nil
-                        pageContinuation.yield(ListContactMergeHistoryPage(data: pageResponse, items: pageItems, hasMore: hasMore))
-                        if !hasMore { break }
-                        guard let nextCursor = pageResponse.nextCursor else { break }
+                        pageContinuation.yield(ListContactMergeHistoryPage(
+                            data: pageResponse,
+                            items: pageItems,
+                            hasMore: hasMore
+                        ))
+                        if !hasMore {
+                            break
+                        }
+                        guard let nextCursor = pageResponse.nextCursor else {
+                            break
+                        }
                         pageCursor = nextCursor
                     }
                 } catch {

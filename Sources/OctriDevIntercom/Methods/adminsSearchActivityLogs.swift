@@ -6,10 +6,13 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AdminsMethods {
-    /// Searches admin activity logs by time range and optional event type filters. Supply `created_at_after` and use `event_types` to restrict results to selected event types; retrieve valid event types from the activity log event types endpoint. Use `page` and `per_page` to paginate the results.
+public extension AdminsMethods {
+    /// Searches admin activity logs by time range and optional event type filters. Supply `created_at_after` and use
+    /// `event_types` to restrict results to selected event types; retrieve valid event types from the activity log
+    /// event types endpoint. Use `page` and `per_page` to paginate the results.
     ///
-    /// Search and filter admin activity logs using a POST request with event type filter in the request body. You can find more details about the available event types in the List all activity log event types endpoint.
+    /// Search and filter admin activity logs using a POST request with event type filter in the request body. You can
+    /// find more details about the available event types in the List all activity log event types endpoint.
     ///
     /// - Parameters:
     /// - createdAtAfter: The start date that you request data for. It must be
@@ -21,15 +24,40 @@ extension AdminsMethods {
     ///   values.
     /// - page: The page number of results to return.
     /// - perPage: The number of results per page. Must be between 1 and 250.
-    public static func searchActivityLogs(config: ClientConfig, createdAtAfter: Int, intercomVersion: IntercomVersion? = nil, createdAtBefore: Int? = nil, eventTypes: [String]? = nil, page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ActivityLogList {
-        if let perPage = perPage {
+    static func searchActivityLogs(
+        config: ClientConfig,
+        createdAtAfter: Int,
+        intercomVersion: IntercomVersion? = nil,
+        createdAtBefore: Int? = nil,
+        eventTypes: [String]? = nil,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ActivityLogList {
+        if let perPage {
             try validateRange("per_page", Double(perPage), min: 1, max: 250)
         }
 
-        let requestBody = SearchActivityLogsRequestBody(createdAtAfter: createdAtAfter, createdAtBefore: createdAtBefore, eventTypes: eventTypes, page: page, perPage: perPage)
+        let requestBody = SearchActivityLogsRequestBody(
+            createdAtAfter: createdAtAfter,
+            createdAtBefore: createdAtBefore,
+            eventTypes: eventTypes,
+            page: page,
+            perPage: perPage
+        )
 
-        return try (await sdkRequest("POST", "/admins/activity_logs/search", config: config, body: requestBody, decoder: .json, operationId: "searchActivityLogs", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/admins/activity_logs/search",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "searchActivityLogs",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self]
+        )).data
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Banners domain models
+/// Banners domain models
 /// A list of banners a contact currently matches.
 public struct BannerList: Codable {
     /// String representing the object's type. Always has the value `list`.
@@ -18,20 +18,20 @@ public struct BannerList: Codable {
     }
 
     init() {
-        (self.type, self.data) = (nil, nil)
+        (type, data) = (nil, nil)
     }
 }
 
-extension BannerList {
-    public init(from decoder: Decoder) throws {
+public extension BannerList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        type = try container.sdkDecodeIfPresent(.type)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension BannerList {
-    public init(type: String? = nil, data: [Banner]? = nil) {
+public extension BannerList {
+    init(type: String? = nil, data: [Banner]? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
     }

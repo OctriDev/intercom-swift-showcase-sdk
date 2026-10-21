@@ -6,8 +6,10 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension CallsMethods {
-    /// Register a Fin Voice call with Intercom. This endpoint creates an external reference that links an external call identifier to an Intercom call and conversation. The call can be from different sources: - AWS Connect (default) - Five9 - Zoom Phone
+public extension CallsMethods {
+    /// Register a Fin Voice call with Intercom. This endpoint creates an external reference that links an external call
+    /// identifier to an Intercom call and conversation. The call can be from different sources: - AWS Connect (default)
+    /// - Five9 - Zoom Phone
     ///
     /// - Parameters:
     /// - phoneNumber: Phone number in E.164 format for the call
@@ -15,25 +17,70 @@ extension CallsMethods {
     /// - source: Source of the call. Can be "five9", "zoom_phone", or defaults to
     ///   "aws_connect"
     /// - data: Additional metadata about the call
-    public static func registerFinVoiceCall(config: ClientConfig, phoneNumber: String, callId: String, source: RegisterFinVoiceCallRequestSource? = nil, data: SdkOptional<[String: JSONValue]>? = nil, requestOptions: RequestOptions? = nil) async throws -> AiCallResponse {
-        let requestBody = RegisterFinVoiceCallRequestBody(phoneNumber: phoneNumber, callId: callId, source: source, data: data)
+    static func registerFinVoiceCall(
+        config: ClientConfig,
+        phoneNumber: String,
+        callId: String,
+        source: RegisterFinVoiceCallRequestSource? = nil,
+        data: SdkOptional<[String: JSONValue]>? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AiCallResponse {
+        let requestBody = RegisterFinVoiceCallRequestBody(
+            phoneNumber: phoneNumber,
+            callId: callId,
+            source: source,
+            data: data
+        )
 
-        return try (await sdkRequest("POST", "/fin_voice/register", config: config, body: requestBody, decoder: .json, operationId: "registerFinVoiceCall", options: requestOptions, errors: ["400": Error2.self, "409": Error2.self, "default": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/fin_voice/register",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "registerFinVoiceCall",
+            options: requestOptions,
+            errors: ["400": Error2.self, "409": Error2.self, "default": Error2.self]
+        )).data
     }
 
     /// Retrieve information about a Fin Voice call using the external reference ID.
     ///
     /// - Parameters:
     /// - id: The external reference ID
-    public static func collectFinVoiceCallById(config: ClientConfig, id: Int, requestOptions: RequestOptions? = nil) async throws -> AiCallResponse {
-        return try (await sdkRequest("GET", ["/fin_voice/collect/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "collectFinVoiceCallById", options: requestOptions, errors: ["404": Error2.self, "default": Error2.self])).data
+    static func collectFinVoiceCallById(
+        config: ClientConfig,
+        id: Int,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AiCallResponse {
+        try await (sdkRequest(
+            "GET",
+            ["/fin_voice/collect/", sdkEncodePathSegment(sdkWireString(id))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "collectFinVoiceCallById",
+            options: requestOptions,
+            errors: ["404": Error2.self, "default": Error2.self]
+        )).data
     }
 
     /// Retrieve information about a Fin Voice call using the external call identifier.
     ///
     /// - Parameters:
     /// - externalId: The external call identifier from the call provider
-    public static func collectFinVoiceCallByExternalId(config: ClientConfig, externalId: String, requestOptions: RequestOptions? = nil) async throws -> AiCallResponse {
-        return try (await sdkRequest("GET", ["/fin_voice/external_id/", sdkEncodePathSegment(sdkWireString(externalId))].joined(), config: config, decoder: .json, operationId: "collectFinVoiceCallByExternalId", options: requestOptions, errors: ["404": Error2.self, "default": Error2.self])).data
+    static func collectFinVoiceCallByExternalId(
+        config: ClientConfig,
+        externalId: String,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AiCallResponse {
+        try await (sdkRequest(
+            "GET",
+            ["/fin_voice/external_id/", sdkEncodePathSegment(sdkWireString(externalId))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "collectFinVoiceCallByExternalId",
+            options: requestOptions,
+            errors: ["404": Error2.self, "default": Error2.self]
+        )).data
     }
 }

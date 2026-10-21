@@ -3,26 +3,34 @@
 
 import Foundation
 
-// Conversations domain models
-extension QuickReplyOption {
-    public init(from decoder: Decoder) throws {
+/// Conversations domain models
+public extension QuickReplyOption {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.text) else {
-            throw SdkValidationError(field: "text", code: "required", message: "Validation failed for 'text': value is required")
+            throw SdkValidationError(
+                field: "text",
+                code: "required",
+                message: "Validation failed for 'text': value is required"
+            )
         }
         guard container.contains(.uuid) else {
-            throw SdkValidationError(field: "uuid", code: "required", message: "Validation failed for 'uuid': value is required")
+            throw SdkValidationError(
+                field: "uuid",
+                code: "required",
+                message: "Validation failed for 'uuid': value is required"
+            )
         }
-        self.text = try container.sdkDecodeRequired(.text)
-        self.uuid = try container.sdkDecodeRequired(.uuid)
-            try sdkValidateUuid("uuid", self.uuid)
+        text = try container.sdkDecodeRequired(.text)
+        uuid = try container.sdkDecodeRequired(.uuid)
+        try sdkValidateUuid("uuid", uuid)
     }
 }
 
-extension QuickReplyOption {
-    public init(text: String, uuid: String) throws {
+public extension QuickReplyOption {
+    init(text: String, uuid: String) throws {
         (self.text, self.uuid) = (text, uuid)
-            try sdkValidateUuid("uuid", self.uuid)
+        try sdkValidateUuid("uuid", self.uuid)
     }
 }
 
@@ -58,40 +66,67 @@ public struct ContactReplyEmailRequest: Codable {
         case attachmentFiles = "attachment_files"
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension ContactReplyEmailRequest {
-    public init(from decoder: Decoder) throws {
+public extension ContactReplyEmailRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.messageType) else {
-            throw SdkValidationError(field: "message_type", code: "required", message: "Validation failed for 'message_type': value is required")
+            throw SdkValidationError(
+                field: "message_type",
+                code: "required",
+                message: "Validation failed for 'message_type': value is required"
+            )
         }
         guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
         }
         guard container.contains(.body) else {
-            throw SdkValidationError(field: "body", code: "required", message: "Validation failed for 'body': value is required")
+            throw SdkValidationError(
+                field: "body",
+                code: "required",
+                message: "Validation failed for 'body': value is required"
+            )
         }
         guard container.contains(.email) else {
-            throw SdkValidationError(field: "email", code: "required", message: "Validation failed for 'email': value is required")
+            throw SdkValidationError(
+                field: "email",
+                code: "required",
+                message: "Validation failed for 'email': value is required"
+            )
         }
-        self.messageType = try container.sdkDecodeRequired(.messageType)
-        self.type = try container.sdkDecodeRequired(.type)
-        self.body = try container.sdkDecodeRequired(.body)
-        self.email = try container.sdkDecodeRequired(.email)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.attachmentUrls = try container.sdkDecodeIfPresent(.attachmentUrls)
-        self.replyOptions = try container.sdkDecodeIfPresent(.replyOptions)
-        self.attachmentFiles = try container.sdkDecodeIfPresent(.attachmentFiles)
-        if let value = self.attachmentUrls {
+        messageType = try container.sdkDecodeRequired(.messageType)
+        type = try container.sdkDecodeRequired(.type)
+        body = try container.sdkDecodeRequired(.body)
+        email = try container.sdkDecodeRequired(.email)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        attachmentUrls = try container.sdkDecodeIfPresent(.attachmentUrls)
+        replyOptions = try container.sdkDecodeIfPresent(.replyOptions)
+        attachmentFiles = try container.sdkDecodeIfPresent(.attachmentFiles)
+        if let value = attachmentUrls {
             try validateItems("attachment_urls", value, min: nil, max: 10)
         }
     }
 }
 
-extension ContactReplyEmailRequest {
-    public init(messageType: ContactReplyEmailRequestMessageType, type: ContactReplyEmailRequestType, body: String, email: String, createdAt: Int? = nil, attachmentUrls: [String]? = nil, replyOptions: [ContactReplyEmailRequestReplyOptionsItem]? = nil, attachmentFiles: [ConversationAttachmentFiles]? = nil) throws {
+public extension ContactReplyEmailRequest {
+    init(
+        messageType: ContactReplyEmailRequestMessageType,
+        type: ContactReplyEmailRequestType,
+        body: String,
+        email: String,
+        createdAt: Int? = nil,
+        attachmentUrls: [String]? = nil,
+        replyOptions: [ContactReplyEmailRequestReplyOptionsItem]? = nil,
+        attachmentFiles: [ConversationAttachmentFiles]? = nil
+    ) throws {
         (self.messageType, self.type) = (messageType, type)
         (self.body, self.email) = (body, email)
         (self.createdAt, self.attachmentUrls) = (createdAt, attachmentUrls)
@@ -103,15 +138,19 @@ extension ContactReplyEmailRequest {
 }
 
 /// Required enumerated value serialized in the `message_type` wire field.
-public struct ContactReplyIntercomUserIdRequestMessageType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct ContactReplyIntercomUserIdRequestMessageType: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let comment = ContactReplyIntercomUserIdRequestMessageType(rawValue: "comment")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -121,17 +160,21 @@ public struct ContactReplyIntercomUserIdRequestMessageType: RawRepresentable, Ha
 }
 
 /// Required enumerated value serialized in the `message_type` wire field.
-public struct AdminReplyConversationRequestMessageType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct AdminReplyConversationRequestMessageType: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let comment = AdminReplyConversationRequestMessageType(rawValue: "comment")
     public static let note = AdminReplyConversationRequestMessageType(rawValue: "note")
     public static let quickReply = AdminReplyConversationRequestMessageType(rawValue: "quick_reply")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -144,12 +187,15 @@ public struct AdminReplyConversationRequestMessageType: RawRepresentable, Hashab
 public struct ContactReplyUserIdRequestType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let user = ContactReplyUserIdRequestType(rawValue: "user")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -162,12 +208,15 @@ public struct ContactReplyUserIdRequestType: RawRepresentable, Hashable, Codable
 public struct ContactReplyUserIdRequestMessageType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let comment = ContactReplyUserIdRequestMessageType(rawValue: "comment")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -180,12 +229,15 @@ public struct ContactReplyUserIdRequestMessageType: RawRepresentable, Hashable, 
 public struct ContactReplyEmailRequestMessageType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let comment = ContactReplyEmailRequestMessageType(rawValue: "comment")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -198,12 +250,15 @@ public struct ContactReplyEmailRequestMessageType: RawRepresentable, Hashable, C
 public struct ContactReplyIntercomUserIdRequestType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let user = ContactReplyIntercomUserIdRequestType(rawValue: "user")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -216,12 +271,15 @@ public struct ContactReplyIntercomUserIdRequestType: RawRepresentable, Hashable,
 public struct ContactReplyEmailRequestType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let user = ContactReplyEmailRequestType(rawValue: "user")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -234,12 +292,15 @@ public struct ContactReplyEmailRequestType: RawRepresentable, Hashable, Codable,
 public struct AdminReplyConversationRequestType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let admin = AdminReplyConversationRequestType(rawValue: "admin")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

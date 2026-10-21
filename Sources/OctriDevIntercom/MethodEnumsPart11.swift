@@ -18,25 +18,25 @@ struct CreateNewsItemRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.title, forKey: SdkCodingKey("title"))
-        try keyedContainer.encode(self.senderId, forKey: SdkCodingKey("sender_id"))
-        try keyedContainer.encodeIfPresent(self.body, forKey: SdkCodingKey("body"))
-        try keyedContainer.encodeIfPresent(self.state, forKey: SdkCodingKey("state"))
-        try keyedContainer.encodeIfPresent(self.deliverSilently, forKey: SdkCodingKey("deliver_silently"))
-        try keyedContainer.encodeIfPresent(self.labels, forKey: SdkCodingKey("labels"))
-        try keyedContainer.encodeIfPresent(self.reactions, forKey: SdkCodingKey("reactions"))
-        try keyedContainer.encodeIfPresent(self.newsfeedAssignments, forKey: SdkCodingKey("newsfeed_assignments"))
+        try keyedContainer.encode(title, forKey: SdkCodingKey("title"))
+        try keyedContainer.encode(senderId, forKey: SdkCodingKey("sender_id"))
+        try keyedContainer.encodeIfPresent(body, forKey: SdkCodingKey("body"))
+        try keyedContainer.encodeIfPresent(state, forKey: SdkCodingKey("state"))
+        try keyedContainer.encodeIfPresent(deliverSilently, forKey: SdkCodingKey("deliver_silently"))
+        try keyedContainer.encodeIfPresent(labels, forKey: SdkCodingKey("labels"))
+        try keyedContainer.encodeIfPresent(reactions, forKey: SdkCodingKey("reactions"))
+        try keyedContainer.encodeIfPresent(newsfeedAssignments, forKey: SdkCodingKey("newsfeed_assignments"))
     }
 
     init(options: NewsMethods.CreateNewsItemOptions) {
-        self.title = options.title
-        self.senderId = options.senderId
-        self.body = options.body
-        self.state = options.state
-        self.deliverSilently = options.deliverSilently
-        self.labels = options.labels
-        self.reactions = options.reactions
-        self.newsfeedAssignments = options.newsfeedAssignments
+        title = options.title
+        senderId = options.senderId
+        body = options.body
+        state = options.state
+        deliverSilently = options.deliverSilently
+        labels = options.labels
+        reactions = options.reactions
+        newsfeedAssignments = options.newsfeedAssignments
     }
 }
 
@@ -52,25 +52,25 @@ struct UpdateNewsItemRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.title, forKey: SdkCodingKey("title"))
-        try keyedContainer.encode(self.senderId, forKey: SdkCodingKey("sender_id"))
-        try keyedContainer.encodeIfPresent(self.body, forKey: SdkCodingKey("body"))
-        try keyedContainer.encodeIfPresent(self.state, forKey: SdkCodingKey("state"))
-        try keyedContainer.encodeIfPresent(self.deliverSilently, forKey: SdkCodingKey("deliver_silently"))
-        try keyedContainer.encodeIfPresent(self.labels, forKey: SdkCodingKey("labels"))
-        try keyedContainer.encodeIfPresent(self.reactions, forKey: SdkCodingKey("reactions"))
-        try keyedContainer.encodeIfPresent(self.newsfeedAssignments, forKey: SdkCodingKey("newsfeed_assignments"))
+        try keyedContainer.encode(title, forKey: SdkCodingKey("title"))
+        try keyedContainer.encode(senderId, forKey: SdkCodingKey("sender_id"))
+        try keyedContainer.encodeIfPresent(body, forKey: SdkCodingKey("body"))
+        try keyedContainer.encodeIfPresent(state, forKey: SdkCodingKey("state"))
+        try keyedContainer.encodeIfPresent(deliverSilently, forKey: SdkCodingKey("deliver_silently"))
+        try keyedContainer.encodeIfPresent(labels, forKey: SdkCodingKey("labels"))
+        try keyedContainer.encodeIfPresent(reactions, forKey: SdkCodingKey("reactions"))
+        try keyedContainer.encodeIfPresent(newsfeedAssignments, forKey: SdkCodingKey("newsfeed_assignments"))
     }
 
     init(options: NewsMethods.UpdateNewsItemOptions) {
-        self.title = options.title
-        self.senderId = options.senderId
-        self.body = options.body
-        self.state = options.state
-        self.deliverSilently = options.deliverSilently
-        self.labels = options.labels
-        self.reactions = options.reactions
-        self.newsfeedAssignments = options.newsfeedAssignments
+        title = options.title
+        senderId = options.senderId
+        body = options.body
+        state = options.state
+        deliverSilently = options.deliverSilently
+        labels = options.labels
+        reactions = options.reactions
+        newsfeedAssignments = options.newsfeedAssignments
     }
 }
 
@@ -80,8 +80,8 @@ struct CreatePhoneSwitchRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.phone, forKey: SdkCodingKey("phone"))
-        try keyedContainer.encodeIfPresent(self.customAttributes, forKey: SdkCodingKey("custom_attributes"))
+        try keyedContainer.encode(phone, forKey: SdkCodingKey("phone"))
+        try keyedContainer.encodeIfPresent(customAttributes, forKey: SdkCodingKey("custom_attributes"))
     }
 }
 
@@ -90,7 +90,7 @@ struct ListCallsWithTranscriptsRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.conversationIds, forKey: SdkCodingKey("conversation_ids"))
+        try keyedContainer.encode(conversationIds, forKey: SdkCodingKey("conversation_ids"))
     }
 }
 
@@ -102,10 +102,10 @@ struct RegisterFinVoiceCallRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.phoneNumber, forKey: SdkCodingKey("phone_number"))
-        try keyedContainer.encode(self.callId, forKey: SdkCodingKey("call_id"))
-        try keyedContainer.encodeIfPresent(self.source, forKey: SdkCodingKey("source"))
-        try keyedContainer.encodeIfPresent(self.data, forKey: SdkCodingKey("data"))
+        try keyedContainer.encode(phoneNumber, forKey: SdkCodingKey("phone_number"))
+        try keyedContainer.encode(callId, forKey: SdkCodingKey("call_id"))
+        try keyedContainer.encodeIfPresent(source, forKey: SdkCodingKey("source"))
+        try keyedContainer.encodeIfPresent(data, forKey: SdkCodingKey("data"))
     }
 }
 
@@ -123,29 +123,32 @@ struct CreateTicketTypeAttributeRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encode(self.description, forKey: SdkCodingKey("description"))
-        try keyedContainer.encode(self.dataType, forKey: SdkCodingKey("data_type"))
-        try keyedContainer.encodeIfPresent(self.requiredToCreate, forKey: SdkCodingKey("required_to_create"))
-        try keyedContainer.encodeIfPresent(self.requiredToCreateForContacts, forKey: SdkCodingKey("required_to_create_for_contacts"))
-        try keyedContainer.encodeIfPresent(self.visibleOnCreate, forKey: SdkCodingKey("visible_on_create"))
-        try keyedContainer.encodeIfPresent(self.visibleToContacts, forKey: SdkCodingKey("visible_to_contacts"))
-        try keyedContainer.encodeIfPresent(self.multiline, forKey: SdkCodingKey("multiline"))
-        try keyedContainer.encodeIfPresent(self.listItems, forKey: SdkCodingKey("list_items"))
-        try keyedContainer.encodeIfPresent(self.allowMultipleValues, forKey: SdkCodingKey("allow_multiple_values"))
+        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encode(description, forKey: SdkCodingKey("description"))
+        try keyedContainer.encode(dataType, forKey: SdkCodingKey("data_type"))
+        try keyedContainer.encodeIfPresent(requiredToCreate, forKey: SdkCodingKey("required_to_create"))
+        try keyedContainer.encodeIfPresent(
+            requiredToCreateForContacts,
+            forKey: SdkCodingKey("required_to_create_for_contacts")
+        )
+        try keyedContainer.encodeIfPresent(visibleOnCreate, forKey: SdkCodingKey("visible_on_create"))
+        try keyedContainer.encodeIfPresent(visibleToContacts, forKey: SdkCodingKey("visible_to_contacts"))
+        try keyedContainer.encodeIfPresent(multiline, forKey: SdkCodingKey("multiline"))
+        try keyedContainer.encodeIfPresent(listItems, forKey: SdkCodingKey("list_items"))
+        try keyedContainer.encodeIfPresent(allowMultipleValues, forKey: SdkCodingKey("allow_multiple_values"))
     }
 
     init(options: TicketTypeAttributesMethods.CreateTicketTypeAttributeOptions) {
-        self.name = options.name
-        self.description = options.description
-        self.dataType = options.dataType
-        self.requiredToCreate = options.requiredToCreate
-        self.requiredToCreateForContacts = options.requiredToCreateForContacts
-        self.visibleOnCreate = options.visibleOnCreate
-        self.visibleToContacts = options.visibleToContacts
-        self.multiline = options.multiline
-        self.listItems = options.listItems
-        self.allowMultipleValues = options.allowMultipleValues
+        name = options.name
+        description = options.description
+        dataType = options.dataType
+        requiredToCreate = options.requiredToCreate
+        requiredToCreateForContacts = options.requiredToCreateForContacts
+        visibleOnCreate = options.visibleOnCreate
+        visibleToContacts = options.visibleToContacts
+        multiline = options.multiline
+        listItems = options.listItems
+        allowMultipleValues = options.allowMultipleValues
     }
 }
 
@@ -163,29 +166,32 @@ struct UpdateTicketTypeAttributeRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(self.description, forKey: SdkCodingKey("description"))
-        try keyedContainer.encodeIfPresent(self.requiredToCreate, forKey: SdkCodingKey("required_to_create"))
-        try keyedContainer.encodeIfPresent(self.requiredToCreateForContacts, forKey: SdkCodingKey("required_to_create_for_contacts"))
-        try keyedContainer.encodeIfPresent(self.visibleOnCreate, forKey: SdkCodingKey("visible_on_create"))
-        try keyedContainer.encodeIfPresent(self.visibleToContacts, forKey: SdkCodingKey("visible_to_contacts"))
-        try keyedContainer.encodeIfPresent(self.multiline, forKey: SdkCodingKey("multiline"))
-        try keyedContainer.encodeIfPresent(self.listItems, forKey: SdkCodingKey("list_items"))
-        try keyedContainer.encodeIfPresent(self.allowMultipleValues, forKey: SdkCodingKey("allow_multiple_values"))
-        try keyedContainer.encodeIfPresent(self.archived, forKey: SdkCodingKey("archived"))
+        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(description, forKey: SdkCodingKey("description"))
+        try keyedContainer.encodeIfPresent(requiredToCreate, forKey: SdkCodingKey("required_to_create"))
+        try keyedContainer.encodeIfPresent(
+            requiredToCreateForContacts,
+            forKey: SdkCodingKey("required_to_create_for_contacts")
+        )
+        try keyedContainer.encodeIfPresent(visibleOnCreate, forKey: SdkCodingKey("visible_on_create"))
+        try keyedContainer.encodeIfPresent(visibleToContacts, forKey: SdkCodingKey("visible_to_contacts"))
+        try keyedContainer.encodeIfPresent(multiline, forKey: SdkCodingKey("multiline"))
+        try keyedContainer.encodeIfPresent(listItems, forKey: SdkCodingKey("list_items"))
+        try keyedContainer.encodeIfPresent(allowMultipleValues, forKey: SdkCodingKey("allow_multiple_values"))
+        try keyedContainer.encodeIfPresent(archived, forKey: SdkCodingKey("archived"))
     }
 
     init(options: TicketTypeAttributesMethods.UpdateTicketTypeAttributeOptions) {
-        self.name = options.name
-        self.description = options.description
-        self.requiredToCreate = options.requiredToCreate
-        self.requiredToCreateForContacts = options.requiredToCreateForContacts
-        self.visibleOnCreate = options.visibleOnCreate
-        self.visibleToContacts = options.visibleToContacts
-        self.multiline = options.multiline
-        self.listItems = options.listItems
-        self.allowMultipleValues = options.allowMultipleValues
-        self.archived = options.archived
+        name = options.name
+        description = options.description
+        requiredToCreate = options.requiredToCreate
+        requiredToCreateForContacts = options.requiredToCreateForContacts
+        visibleOnCreate = options.visibleOnCreate
+        visibleToContacts = options.visibleToContacts
+        multiline = options.multiline
+        listItems = options.listItems
+        allowMultipleValues = options.allowMultipleValues
+        archived = options.archived
     }
 }
 
@@ -198,10 +204,10 @@ struct CreateTicketTypeRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(self.description, forKey: SdkCodingKey("description"))
-        try keyedContainer.encodeIfPresent(self.category, forKey: SdkCodingKey("category"))
-        try keyedContainer.encodeIfPresent(self.icon, forKey: SdkCodingKey("icon"))
-        try keyedContainer.encodeIfPresent(self.isInternal, forKey: SdkCodingKey("is_internal"))
+        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(description, forKey: SdkCodingKey("description"))
+        try keyedContainer.encodeIfPresent(category, forKey: SdkCodingKey("category"))
+        try keyedContainer.encodeIfPresent(icon, forKey: SdkCodingKey("icon"))
+        try keyedContainer.encodeIfPresent(isInternal, forKey: SdkCodingKey("is_internal"))
     }
 }

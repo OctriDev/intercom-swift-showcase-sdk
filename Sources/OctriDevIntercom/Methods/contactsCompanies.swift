@@ -6,17 +6,32 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ContactsMethods {
-    /// Lists the companies associated with a specific contact. Use the contact identifier to retrieve its attached companies; the response includes pagination metadata.
+public extension ContactsMethods {
+    /// Lists the companies associated with a specific contact. Use the contact identifier to retrieve its attached
+    /// companies; the response includes pagination metadata.
     ///
     /// You can fetch a list of companies that are associated to a contact.
     ///
     /// - Parameters:
     /// - contactId: The unique identifier for the contact which is given by
     ///   Intercom
-    public static func listContactsCompanies(config: ClientConfig, contactId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ContactAttachedCompanies {
-        return try (await sdkRequest("GET", ["/contacts/", sdkEncodePathSegment(sdkWireString(contactId)), "/companies"].joined(), config: config, decoder: .json, operationId: "listContactsCompanies", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
+    static func listContactsCompanies(
+        config: ClientConfig,
+        contactId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContactAttachedCompanies {
+        try await (sdkRequest(
+            "GET",
+            ["/contacts/", sdkEncodePathSegment(sdkWireString(contactId)), "/companies"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "listContactsCompanies",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).data
     }
 }

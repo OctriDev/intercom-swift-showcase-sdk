@@ -3,7 +3,7 @@
 
 import Foundation
 
-// TaggedModelsDataConnectors domain models
+/// TaggedModelsDataConnectors domain models
 /// A data connector allows you to make HTTP requests to external APIs from Intercom workflows and AI agents.
 public struct DataConnector: Codable {
     /// The type of object - `data_connector`.
@@ -58,38 +58,51 @@ public struct DataConnector: Codable {
     }
 
     init() {
-        (self.type, self.id, self.name, self.description, self.state) = (nil, nil, nil, nil, nil)
-        (self.httpMethod, self.directFinUsage, self.createdByAdminId, self.updatedByAdminId, self.createdAt) = (nil, nil, nil, nil, nil)
-        (self.updatedAt, self.executionResultsUrl) = (nil, nil)
+        (type, id, name, description, state) = (nil, nil, nil, nil, nil)
+        (httpMethod, directFinUsage, createdByAdminId, updatedByAdminId, createdAt) = (nil, nil, nil, nil, nil)
+        (updatedAt, executionResultsUrl) = (nil, nil)
     }
 }
 
-extension DataConnector {
-    public init(from decoder: Decoder) throws {
+public extension DataConnector {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.state = try container.sdkDecodeIfPresent(.state)
-        self.httpMethod = try container.sdkDecodeIfPresent(.httpMethod)
-        self.directFinUsage = try container.sdkDecodeIfPresent(.directFinUsage)
-        self.createdByAdminId = try container.sdkDecodeIfPresent(.createdByAdminId)
-        self.updatedByAdminId = try container.sdkDecodeIfPresent(.updatedByAdminId)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.executionResultsUrl = try container.sdkDecodeIfPresent(.executionResultsUrl)
-        if let value = self.createdAt {
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        description = try container.sdkDecodeIfPresent(.description)
+        state = try container.sdkDecodeIfPresent(.state)
+        httpMethod = try container.sdkDecodeIfPresent(.httpMethod)
+        directFinUsage = try container.sdkDecodeIfPresent(.directFinUsage)
+        createdByAdminId = try container.sdkDecodeIfPresent(.createdByAdminId)
+        updatedByAdminId = try container.sdkDecodeIfPresent(.updatedByAdminId)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        executionResultsUrl = try container.sdkDecodeIfPresent(.executionResultsUrl)
+        if let value = createdAt {
             try sdkValidateDateTime("created_at", sdkWireString(value))
         }
-        if let value = self.updatedAt {
+        if let value = updatedAt {
             try sdkValidateDateTime("updated_at", sdkWireString(value))
         }
     }
 }
 
-extension DataConnector {
-    public init(type: DataConnectorType? = nil, id: String? = nil, name: String? = nil, description: String? = nil, state: DataConnectorState? = nil, httpMethod: DataConnectorHttpMethod? = nil, directFinUsage: Bool? = nil, createdByAdminId: String? = nil, updatedByAdminId: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, executionResultsUrl: String? = nil) throws {
+public extension DataConnector {
+    init(
+        type: DataConnectorType? = nil,
+        id: String? = nil,
+        name: String? = nil,
+        description: String? = nil,
+        state: DataConnectorState? = nil,
+        httpMethod: DataConnectorHttpMethod? = nil,
+        directFinUsage: Bool? = nil,
+        createdByAdminId: String? = nil,
+        updatedByAdminId: String? = nil,
+        createdAt: Date? = nil,
+        updatedAt: Date? = nil,
+        executionResultsUrl: String? = nil
+    ) throws {
         self.init()
         (self.type, self.id) = (type, id)
         (self.name, self.description) = (name, description)
@@ -110,7 +123,10 @@ extension DataConnector {
 public struct DataConnectorHttpMethod: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let get = DataConnectorHttpMethod(rawValue: "get")
     public static let post = DataConnectorHttpMethod(rawValue: "post")
     public static let put = DataConnectorHttpMethod(rawValue: "put")
@@ -119,7 +135,7 @@ public struct DataConnectorHttpMethod: RawRepresentable, Hashable, Codable, Send
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -132,12 +148,15 @@ public struct DataConnectorHttpMethod: RawRepresentable, Hashable, Codable, Send
 public struct DataConnectorType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let dataConnector = DataConnectorType(rawValue: "data_connector")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -150,13 +169,16 @@ public struct DataConnectorType: RawRepresentable, Hashable, Codable, Sendable, 
 public struct DataConnectorState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let draft = DataConnectorState(rawValue: "draft")
     public static let live = DataConnectorState(rawValue: "live")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

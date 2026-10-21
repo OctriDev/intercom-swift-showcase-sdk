@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Tickets domain models
+/// Tickets domain models
 /// deleted ticket object
 public struct TicketDeleted: Codable {
     /// The unique identifier for the ticket.
@@ -23,21 +23,21 @@ public struct TicketDeleted: Codable {
     }
 
     init() {
-        (self.id, self.object, self.deleted) = (nil, nil, nil)
+        (id, object, deleted) = (nil, nil, nil)
     }
 }
 
-extension TicketDeleted {
-    public init(from decoder: Decoder) throws {
+public extension TicketDeleted {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.deleted = try container.sdkDecodeIfPresent(.deleted)
+        id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
+        deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-extension TicketDeleted {
-    public init(id: String? = nil, object: TicketDeletedObject? = nil, deleted: Bool? = nil) {
+public extension TicketDeleted {
+    init(id: String? = nil, object: TicketDeletedObject? = nil, deleted: Bool? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
         self.deleted = deleted
@@ -48,12 +48,15 @@ extension TicketDeleted {
 public struct TicketDeletedObject: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let ticket = TicketDeletedObject(rawValue: "ticket")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

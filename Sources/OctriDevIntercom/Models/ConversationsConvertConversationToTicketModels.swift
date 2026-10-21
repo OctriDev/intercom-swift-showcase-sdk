@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Conversations domain models
+/// Conversations domain models
 /// You can convert a Conversation to a Ticket
 public struct ConvertConversationToTicketRequest: Codable {
     /// The ID of the type of ticket you want to convert the conversation to
@@ -25,23 +25,29 @@ public struct ConvertConversationToTicketRequest: Codable {
         case attributes
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ConvertConversationToTicketRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.ticketTypeId) else {
-            throw SdkValidationError(field: "ticket_type_id", code: "required", message: "Validation failed for 'ticket_type_id': value is required")
-        }
-        self.ticketTypeId = try container.sdkDecodeRequired(.ticketTypeId)
-        self.ticketStateId = try container.sdkDecodeIfPresent(.ticketStateId)
-        self.attributes = try container.sdkDecodeIfPresent(.attributes)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ConvertConversationToTicketRequest {
-    public init(ticketTypeId: String, ticketStateId: String? = nil, attributes: TicketRequestCustomAttributes? = nil) {
+public extension ConvertConversationToTicketRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.ticketTypeId) else {
+            throw SdkValidationError(
+                field: "ticket_type_id",
+                code: "required",
+                message: "Validation failed for 'ticket_type_id': value is required"
+            )
+        }
+        ticketTypeId = try container.sdkDecodeRequired(.ticketTypeId)
+        ticketStateId = try container.sdkDecodeIfPresent(.ticketStateId)
+        attributes = try container.sdkDecodeIfPresent(.attributes)
+    }
+}
+
+public extension ConvertConversationToTicketRequest {
+    init(ticketTypeId: String, ticketStateId: String? = nil, attributes: TicketRequestCustomAttributes? = nil) {
         (self.ticketTypeId, self.ticketStateId) = (ticketTypeId, ticketStateId)
         self.attributes = attributes
     }

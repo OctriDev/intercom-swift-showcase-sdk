@@ -6,16 +6,50 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ConversationsMethods {
-    /// Lists human-in-the-loop events from Fin consultations on a conversation, ordered from oldest to newest. Use the events to review consultation steps and their associated data; a consultation appears only after it has ended. Access requires the `read_conversations` OAuth scope and permission to access the conversation.
+public extension ConversationsMethods {
+    /// Lists human-in-the-loop events from Fin consultations on a conversation, ordered from oldest to newest. Use the
+    /// events to review consultation steps and their associated data; a consultation appears only after it has ended.
+    /// Access requires the `read_conversations` OAuth scope and permission to access the conversation.
     ///
-    /// List the human-in-the-loop (HITL) events for a conversation. When Fin is unsure of an answer it can consult a teammate before replying, proposing a draft that the teammate approves, steers with free-text feedback, or takes over. Each consultation is returned as a series of events, oldest first, across every consultation on the conversation. Requires the `read_conversations` OAuth scope, and the caller must be able to access the conversation. Events are only recorded once a consultation has ended, so a consultation still awaiting a teammate does not appear. Which fields appear in `data` depends on `event_type`: | `event_type` | `data` fields | |---|---| | `fin_consultation_started` | `channel`, `rule_threshold_percent`, `confidence_percent`, `sharp_ask`, `ask_rationale`, `issue_summary`, `customer_question` | | `fin_draft_proposed` | `draft` | | `fin_teammate_input_received` | `round_index`, `teammate_input`, `reviewer_admin_id`, `regeneration_outcome` | | `fin_draft_revised` | `round_index`, `revised_draft`, `regeneration_outcome` | | `fin_consultation_finished` | `outcome`, `approved_draft_type`, `final_draft`, `sent_text`, `reviewer_admin_id`, `duration_seconds`, `rounds_count`, `payload_truncated` | A consultation always produces a `fin_consultation_started` and a `fin_consultation_finished` event. `fin_draft_proposed` appears when Fin proposed a draft. `fin_teammate_input_received` appears once per round of teammate feedback, and `fin_draft_revised` once per round where Fin produced a revised draft in response. Notes on interpreting the response: - `hitl_cycle_id` identifies the consultation, so it is the same on every event of one consultation. It is not unique per event. A conversation can hold several consultations — a consultation that replaces an outstanding one finishes with an `outcome` of `superseded`. - `conversation_part_id` links an event to a conversation part where one exists. It is `null` in ordinary cases: teammate feedback given through the…
+    /// List the human-in-the-loop (HITL) events for a conversation. When Fin is unsure of an answer it can consult a
+    /// teammate before replying, proposing a draft that the teammate approves, steers with free-text feedback, or takes
+    /// over. Each consultation is returned as a series of events, oldest first, across every consultation on the
+    /// conversation. Requires the `read_conversations` OAuth scope, and the caller must be able to access the
+    /// conversation. Events are only recorded once a consultation has ended, so a consultation still awaiting a
+    /// teammate does not appear. Which fields appear in `data` depends on `event_type`: | `event_type` | `data` fields
+    /// | |---|---| | `fin_consultation_started` | `channel`, `rule_threshold_percent`, `confidence_percent`,
+    /// `sharp_ask`, `ask_rationale`, `issue_summary`, `customer_question` | | `fin_draft_proposed` | `draft` | |
+    /// `fin_teammate_input_received` | `round_index`, `teammate_input`, `reviewer_admin_id`, `regeneration_outcome` | |
+    /// `fin_draft_revised` | `round_index`, `revised_draft`, `regeneration_outcome` | | `fin_consultation_finished` |
+    /// `outcome`, `approved_draft_type`, `final_draft`, `sent_text`, `reviewer_admin_id`, `duration_seconds`,
+    /// `rounds_count`, `payload_truncated` | A consultation always produces a `fin_consultation_started` and a
+    /// `fin_consultation_finished` event. `fin_draft_proposed` appears when Fin proposed a draft.
+    /// `fin_teammate_input_received` appears once per round of teammate feedback, and `fin_draft_revised` once per
+    /// round where Fin produced a revised draft in response. Notes on interpreting the response: - `hitl_cycle_id`
+    /// identifies the consultation, so it is the same on every event of one consultation. It is not unique per event. A
+    /// conversation can hold several consultations — a consultation that replaces an outstanding one finishes with an
+    /// `outcome` of `superseded`. - `conversation_part_id` links an event to a conversation part where one exists. It
+    /// is `null` in ordinary cases: teammate feedback given through the…
     ///
     /// - Parameters:
     /// - id: The identifier for the conversation as given by Intercom.
-    public static func listHitlEvents(config: ClientConfig, id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> HitlEventList {
-        return try (await sdkRequest("GET", ["/conversations/", sdkEncodePathSegment(sdkWireString(id)), "/hitl_events"].joined(), config: config, decoder: .json, operationId: "listHitlEvents", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
+    static func listHitlEvents(
+        config: ClientConfig,
+        id: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> HitlEventList {
+        try await (sdkRequest(
+            "GET",
+            ["/conversations/", sdkEncodePathSegment(sdkWireString(id)), "/hitl_events"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "listHitlEvents",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).data
     }
 }

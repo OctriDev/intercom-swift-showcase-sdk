@@ -6,16 +6,31 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ContentSnippetsMethods {
-    /// Deletes a content snippet by its unique identifier. Use this operation to remove a snippet that is no longer needed; deletion is unavailable while the snippet has procedure dependencies.
+public extension ContentSnippetsMethods {
+    /// Deletes a content snippet by its unique identifier. Use this operation to remove a snippet that is no longer
+    /// needed; deletion is unavailable while the snippet has procedure dependencies.
     ///
     /// You can delete a single content snippet by its id.
     ///
     /// - Parameters:
     /// - id: The unique identifier for the content snippet.
-    public static func deleteContentSnippet(config: ClientConfig, id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try (await sdkRequest("DELETE", ["/content_snippets/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .empty, operationId: "deleteContentSnippet", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["404": Error2.self, "422": Error2.self])).data
+    static func deleteContentSnippet(
+        config: ClientConfig,
+        id: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await (sdkRequest(
+            "DELETE",
+            ["/content_snippets/", sdkEncodePathSegment(sdkWireString(id))].joined(),
+            config: config,
+            decoder: .empty,
+            operationId: "deleteContentSnippet",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["404": Error2.self, "422": Error2.self]
+        )).data
     }
 }

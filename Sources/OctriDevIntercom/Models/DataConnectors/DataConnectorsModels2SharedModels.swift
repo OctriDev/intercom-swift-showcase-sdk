@@ -3,10 +3,12 @@
 
 import Foundation
 
-// TaggedModelsDataConnectors domain models
-public typealias DataConnectorVersionDefinitionObjectMappingsItemAttributeMappingsList = [DataConnectorVersionDefinitionObjectMappingsItemAttributeMappingsItem]
+/// TaggedModelsDataConnectors domain models
+public typealias DataConnectorVersionDefinitionObjectMappingsItemAttributeMappingsList =
+    [DataConnectorVersionDefinitionObjectMappingsItemAttributeMappingsItem]
 
-public typealias DataConnectorVersionDefinitionObjectMappingsItemReferenceMappingsList = [DataConnectorVersionDefinitionObjectMappingsItemReferenceMappingsItem]
+public typealias DataConnectorVersionDefinitionObjectMappingsItemReferenceMappingsList =
+    [DataConnectorVersionDefinitionObjectMappingsItemReferenceMappingsItem]
 
 /// Required object value serialized in the `object_mappings[]` wire field.
 public struct DataConnectorVersionDefinitionObjectMappingsItem: Codable {
@@ -27,22 +29,27 @@ public struct DataConnectorVersionDefinitionObjectMappingsItem: Codable {
     }
 
     init() {
-        (self.responseObjectPath, self.intercomObjectType, self.attributeMappings, self.referenceMappings) = (nil, nil, nil, nil)
+        (responseObjectPath, intercomObjectType, attributeMappings, referenceMappings) = (nil, nil, nil, nil)
     }
 }
 
-extension DataConnectorVersionDefinitionObjectMappingsItem {
-    public init(from decoder: Decoder) throws {
+public extension DataConnectorVersionDefinitionObjectMappingsItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.responseObjectPath = try container.sdkDecodeIfPresent(.responseObjectPath)
-        self.intercomObjectType = try container.sdkDecodeIfPresent(.intercomObjectType)
-        self.attributeMappings = try container.sdkDecodeIfPresent(.attributeMappings)
-        self.referenceMappings = try container.sdkDecodeIfPresent(.referenceMappings)
+        responseObjectPath = try container.sdkDecodeIfPresent(.responseObjectPath)
+        intercomObjectType = try container.sdkDecodeIfPresent(.intercomObjectType)
+        attributeMappings = try container.sdkDecodeIfPresent(.attributeMappings)
+        referenceMappings = try container.sdkDecodeIfPresent(.referenceMappings)
     }
 }
 
-extension DataConnectorVersionDefinitionObjectMappingsItem {
-    public init(responseObjectPath: String? = nil, intercomObjectType: String? = nil, attributeMappings: DataConnectorVersionDefinitionObjectMappingsItemAttributeMappingsList? = nil, referenceMappings: DataConnectorVersionDefinitionObjectMappingsItemReferenceMappingsList? = nil) {
+public extension DataConnectorVersionDefinitionObjectMappingsItem {
+    init(
+        responseObjectPath: String? = nil,
+        intercomObjectType: String? = nil,
+        attributeMappings: DataConnectorVersionDefinitionObjectMappingsItemAttributeMappingsList? = nil,
+        referenceMappings: DataConnectorVersionDefinitionObjectMappingsItemReferenceMappingsList? = nil
+    ) {
         self.init()
         (self.responseObjectPath, self.intercomObjectType) = (responseObjectPath, intercomObjectType)
         (self.attributeMappings, self.referenceMappings) = (attributeMappings, referenceMappings)
@@ -65,21 +72,21 @@ public struct DataConnectorVersionDefinitionObjectMappingsItemAttributeMappingsI
     }
 
     init() {
-        (self.responseAttributePath, self.intercomAttributeIdentifier, self.mappingType) = (nil, nil, nil)
+        (responseAttributePath, intercomAttributeIdentifier, mappingType) = (nil, nil, nil)
     }
 }
 
-extension DataConnectorVersionDefinitionObjectMappingsItemAttributeMappingsItem {
-    public init(from decoder: Decoder) throws {
+public extension DataConnectorVersionDefinitionObjectMappingsItemAttributeMappingsItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.responseAttributePath = try container.sdkDecodeIfPresent(.responseAttributePath)
-        self.intercomAttributeIdentifier = try container.sdkDecodeIfPresent(.intercomAttributeIdentifier)
-        self.mappingType = try container.sdkDecodeIfPresent(.mappingType)
+        responseAttributePath = try container.sdkDecodeIfPresent(.responseAttributePath)
+        intercomAttributeIdentifier = try container.sdkDecodeIfPresent(.intercomAttributeIdentifier)
+        mappingType = try container.sdkDecodeIfPresent(.mappingType)
     }
 }
 
-extension DataConnectorVersionDefinitionObjectMappingsItemAttributeMappingsItem {
-    public init(responseAttributePath: String? = nil, intercomAttributeIdentifier: String? = nil, mappingType: String? = nil) {
+public extension DataConnectorVersionDefinitionObjectMappingsItemAttributeMappingsItem {
+    init(responseAttributePath: String? = nil, intercomAttributeIdentifier: String? = nil, mappingType: String? = nil) {
         self.init()
         self.responseAttributePath = responseAttributePath
         (self.intercomAttributeIdentifier, self.mappingType) = (intercomAttributeIdentifier, mappingType)
@@ -105,22 +112,27 @@ public struct DataConnectorDetailObjectMappingsItem: Codable {
     }
 
     init() {
-        (self.responseObjectPath, self.intercomObjectType, self.attributeMappings, self.referenceMappings) = (nil, nil, nil, nil)
+        (responseObjectPath, intercomObjectType, attributeMappings, referenceMappings) = (nil, nil, nil, nil)
     }
 }
 
-extension DataConnectorDetailObjectMappingsItem {
-    public init(from decoder: Decoder) throws {
+public extension DataConnectorDetailObjectMappingsItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.responseObjectPath = try container.sdkDecodeIfPresent(.responseObjectPath)
-        self.intercomObjectType = try container.sdkDecodeIfPresent(.intercomObjectType)
-        self.attributeMappings = try container.sdkDecodeIfPresent(.attributeMappings)
-        self.referenceMappings = try container.sdkDecodeIfPresent(.referenceMappings)
+        responseObjectPath = try container.sdkDecodeIfPresent(.responseObjectPath)
+        intercomObjectType = try container.sdkDecodeIfPresent(.intercomObjectType)
+        attributeMappings = try container.sdkDecodeIfPresent(.attributeMappings)
+        referenceMappings = try container.sdkDecodeIfPresent(.referenceMappings)
     }
 }
 
-extension DataConnectorDetailObjectMappingsItem {
-    public init(responseObjectPath: String? = nil, intercomObjectType: DataConnectorDetailObjectMappingsItemIntercomObjectType? = nil, attributeMappings: [DataConnectorDetailObjectMappingsItemAttributeMappingsItem]? = nil, referenceMappings: [DataConnectorDetailObjectMappingsItemReferenceMappingsItem]? = nil) {
+public extension DataConnectorDetailObjectMappingsItem {
+    init(
+        responseObjectPath: String? = nil,
+        intercomObjectType: DataConnectorDetailObjectMappingsItemIntercomObjectType? = nil,
+        attributeMappings: [DataConnectorDetailObjectMappingsItemAttributeMappingsItem]? = nil,
+        referenceMappings: [DataConnectorDetailObjectMappingsItemReferenceMappingsItem]? = nil
+    ) {
         self.init()
         (self.responseObjectPath, self.intercomObjectType) = (responseObjectPath, intercomObjectType)
         (self.attributeMappings, self.referenceMappings) = (attributeMappings, referenceMappings)
@@ -208,45 +220,81 @@ public struct DataConnectorVersionDefinition: Codable {
     }
 
     init() {
-        (self.name, self.description, self.internalDescription, self.state, self.url) = (nil, nil, nil, nil, nil)
-        (self.body, self.headers, self.httpMethod, self.directFinUsage, self.audiences) = (nil, nil, nil, nil, nil)
-        (self.executionType, self.configurationResponseType, self.dataTransformationType, self.clientFunctionName, self.clientFunctionTimeoutMs) = (nil, nil, nil, nil, nil)
-        (self.dataInputs, self.responseFields, self.objectMappings, self.tokenIds, self.customerAuthentication) = (nil, nil, nil, nil, nil)
-        (self.bypassAuthentication, self.enforceAuth, self.validateMissingAttributes) = (nil, nil, nil)
+        (name, description, internalDescription, state, url) = (nil, nil, nil, nil, nil)
+        (body, headers, httpMethod, directFinUsage, audiences) = (nil, nil, nil, nil, nil)
+        (
+            executionType,
+            configurationResponseType,
+            dataTransformationType,
+            clientFunctionName,
+            clientFunctionTimeoutMs
+        ) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        (dataInputs, responseFields, objectMappings, tokenIds, customerAuthentication) = (nil, nil, nil, nil, nil)
+        (bypassAuthentication, enforceAuth, validateMissingAttributes) = (nil, nil, nil)
     }
 }
 
-extension DataConnectorVersionDefinition {
-    public init(from decoder: Decoder) throws {
+public extension DataConnectorVersionDefinition {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.internalDescription = try container.sdkDecodeIfPresent(.internalDescription)
-        self.state = try container.sdkDecodeIfPresent(.state)
-        self.url = try container.sdkDecodeIfPresent(.url)
-        self.body = try container.sdkDecodeIfPresent(.body)
-        self.headers = try container.sdkDecodeIfPresent(.headers)
-        self.httpMethod = try container.sdkDecodeIfPresent(.httpMethod)
-        self.directFinUsage = try container.sdkDecodeIfPresent(.directFinUsage)
-        self.audiences = try container.sdkDecodeIfPresent(.audiences)
-        self.executionType = try container.sdkDecodeIfPresent(.executionType)
-        self.configurationResponseType = try container.sdkDecodeIfPresent(.configurationResponseType)
-        self.dataTransformationType = try container.sdkDecodeIfPresent(.dataTransformationType)
-        self.clientFunctionName = try container.sdkDecodeIfPresent(.clientFunctionName)
-        self.clientFunctionTimeoutMs = try container.sdkDecodeIfPresent(.clientFunctionTimeoutMs)
-        self.dataInputs = try container.sdkDecodeIfPresent(.dataInputs)
-        self.responseFields = try container.sdkDecodeIfPresent(.responseFields)
-        self.objectMappings = try container.sdkDecodeIfPresent(.objectMappings)
-        self.tokenIds = try container.sdkDecodeIfPresent(.tokenIds)
-        self.customerAuthentication = try container.sdkDecodeIfPresent(.customerAuthentication)
-        self.bypassAuthentication = try container.sdkDecodeIfPresent(.bypassAuthentication)
-        self.enforceAuth = try container.sdkDecodeIfPresent(.enforceAuth)
-        self.validateMissingAttributes = try container.sdkDecodeIfPresent(.validateMissingAttributes)
+        name = try container.sdkDecodeIfPresent(.name)
+        description = try container.sdkDecodeIfPresent(.description)
+        internalDescription = try container.sdkDecodeIfPresent(.internalDescription)
+        state = try container.sdkDecodeIfPresent(.state)
+        url = try container.sdkDecodeIfPresent(.url)
+        body = try container.sdkDecodeIfPresent(.body)
+        headers = try container.sdkDecodeIfPresent(.headers)
+        httpMethod = try container.sdkDecodeIfPresent(.httpMethod)
+        directFinUsage = try container.sdkDecodeIfPresent(.directFinUsage)
+        audiences = try container.sdkDecodeIfPresent(.audiences)
+        executionType = try container.sdkDecodeIfPresent(.executionType)
+        configurationResponseType = try container.sdkDecodeIfPresent(.configurationResponseType)
+        dataTransformationType = try container.sdkDecodeIfPresent(.dataTransformationType)
+        clientFunctionName = try container.sdkDecodeIfPresent(.clientFunctionName)
+        clientFunctionTimeoutMs = try container.sdkDecodeIfPresent(.clientFunctionTimeoutMs)
+        dataInputs = try container.sdkDecodeIfPresent(.dataInputs)
+        responseFields = try container.sdkDecodeIfPresent(.responseFields)
+        objectMappings = try container.sdkDecodeIfPresent(.objectMappings)
+        tokenIds = try container.sdkDecodeIfPresent(.tokenIds)
+        customerAuthentication = try container.sdkDecodeIfPresent(.customerAuthentication)
+        bypassAuthentication = try container.sdkDecodeIfPresent(.bypassAuthentication)
+        enforceAuth = try container.sdkDecodeIfPresent(.enforceAuth)
+        validateMissingAttributes = try container.sdkDecodeIfPresent(.validateMissingAttributes)
     }
 }
 
-extension DataConnectorVersionDefinition {
-    public init(name: String? = nil, description: String? = nil, internalDescription: String? = nil, state: String? = nil, url: String? = nil, body: String? = nil, headers: [DataConnectorVersionDefinitionHeadersItem]? = nil, httpMethod: String? = nil, directFinUsage: Bool? = nil, audiences: [String]? = nil, executionType: String? = nil, configurationResponseType: String? = nil, dataTransformationType: String? = nil, clientFunctionName: String? = nil, clientFunctionTimeoutMs: Int? = nil, dataInputs: [DataConnectorVersionDefinitionDataInputsItem]? = nil, responseFields: [DataConnectorVersionDefinitionResponseFieldsItem]? = nil, objectMappings: [DataConnectorVersionDefinitionObjectMappingsItem]? = nil, tokenIds: [String]? = nil, customerAuthentication: Bool? = nil, bypassAuthentication: Bool? = nil, enforceAuth: Bool? = nil, validateMissingAttributes: Bool? = nil) {
+public extension DataConnectorVersionDefinition {
+    init(
+        name: String? = nil,
+        description: String? = nil,
+        internalDescription: String? = nil,
+        state: String? = nil,
+        url: String? = nil,
+        body: String? = nil,
+        headers: [DataConnectorVersionDefinitionHeadersItem]? = nil,
+        httpMethod: String? = nil,
+        directFinUsage: Bool? = nil,
+        audiences: [String]? = nil,
+        executionType: String? = nil,
+        configurationResponseType: String? = nil,
+        dataTransformationType: String? = nil,
+        clientFunctionName: String? = nil,
+        clientFunctionTimeoutMs: Int? = nil,
+        dataInputs: [DataConnectorVersionDefinitionDataInputsItem]? = nil,
+        responseFields: [DataConnectorVersionDefinitionResponseFieldsItem]? = nil,
+        objectMappings: [DataConnectorVersionDefinitionObjectMappingsItem]? = nil,
+        tokenIds: [String]? = nil,
+        customerAuthentication: Bool? = nil,
+        bypassAuthentication: Bool? = nil,
+        enforceAuth: Bool? = nil,
+        validateMissingAttributes: Bool? = nil
+    ) {
         self.init()
         (self.name, self.description) = (name, description)
         (self.internalDescription, self.state) = (internalDescription, state)
@@ -277,20 +325,23 @@ public struct DataConnectorDetailObjectMappingsItemReferenceMappingsItem: Codabl
     }
 
     init() {
-        (self.intercomObjectType, self.intercomAttributeIdentifier) = (nil, nil)
+        (intercomObjectType, intercomAttributeIdentifier) = (nil, nil)
     }
 }
 
-extension DataConnectorDetailObjectMappingsItemReferenceMappingsItem {
-    public init(from decoder: Decoder) throws {
+public extension DataConnectorDetailObjectMappingsItemReferenceMappingsItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.intercomObjectType = try container.sdkDecodeIfPresent(.intercomObjectType)
-        self.intercomAttributeIdentifier = try container.sdkDecodeIfPresent(.intercomAttributeIdentifier)
+        intercomObjectType = try container.sdkDecodeIfPresent(.intercomObjectType)
+        intercomAttributeIdentifier = try container.sdkDecodeIfPresent(.intercomAttributeIdentifier)
     }
 }
 
-extension DataConnectorDetailObjectMappingsItemReferenceMappingsItem {
-    public init(intercomObjectType: DataConnectorDetailObjectMappingsItemReferenceMappingsItemIntX0d45ccbc22? = nil, intercomAttributeIdentifier: String? = nil) {
+public extension DataConnectorDetailObjectMappingsItemReferenceMappingsItem {
+    init(
+        intercomObjectType: DataConnectorDetailObjectMappingsItemReferenceMappingsItemIntX0d45ccbc22? = nil,
+        intercomAttributeIdentifier: String? = nil
+    ) {
         self.init()
         self.intercomObjectType = intercomObjectType
         self.intercomAttributeIdentifier = intercomAttributeIdentifier
@@ -316,22 +367,22 @@ public struct DataConnectorVersionDefinitionResponseFieldsItem: Codable {
     }
 
     init() {
-        (self.path, self.type, self.exampleValue, self.redacted) = (nil, nil, nil, nil)
+        (path, type, exampleValue, redacted) = (nil, nil, nil, nil)
     }
 }
 
-extension DataConnectorVersionDefinitionResponseFieldsItem {
-    public init(from decoder: Decoder) throws {
+public extension DataConnectorVersionDefinitionResponseFieldsItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.path = try container.sdkDecodeIfPresent(.path)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.exampleValue = try container.sdkDecodeIfPresent(.exampleValue)
-        self.redacted = try container.sdkDecodeIfPresent(.redacted)
+        path = try container.sdkDecodeIfPresent(.path)
+        type = try container.sdkDecodeIfPresent(.type)
+        exampleValue = try container.sdkDecodeIfPresent(.exampleValue)
+        redacted = try container.sdkDecodeIfPresent(.redacted)
     }
 }
 
-extension DataConnectorVersionDefinitionResponseFieldsItem {
-    public init(path: String? = nil, type: String? = nil, exampleValue: JSONValue? = nil, redacted: Bool? = nil) {
+public extension DataConnectorVersionDefinitionResponseFieldsItem {
+    init(path: String? = nil, type: String? = nil, exampleValue: JSONValue? = nil, redacted: Bool? = nil) {
         self.init()
         (self.path, self.type) = (path, type)
         (self.exampleValue, self.redacted) = (exampleValue, redacted)
@@ -354,21 +405,25 @@ public struct DataConnectorDetailObjectMappingsItemAttributeMappingsItem: Codabl
     }
 
     init() {
-        (self.responseAttributePath, self.intercomAttributeIdentifier, self.mappingType) = (nil, nil, nil)
+        (responseAttributePath, intercomAttributeIdentifier, mappingType) = (nil, nil, nil)
     }
 }
 
-extension DataConnectorDetailObjectMappingsItemAttributeMappingsItem {
-    public init(from decoder: Decoder) throws {
+public extension DataConnectorDetailObjectMappingsItemAttributeMappingsItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.responseAttributePath = try container.sdkDecodeIfPresent(.responseAttributePath)
-        self.intercomAttributeIdentifier = try container.sdkDecodeIfPresent(.intercomAttributeIdentifier)
-        self.mappingType = try container.sdkDecodeIfPresent(.mappingType)
+        responseAttributePath = try container.sdkDecodeIfPresent(.responseAttributePath)
+        intercomAttributeIdentifier = try container.sdkDecodeIfPresent(.intercomAttributeIdentifier)
+        mappingType = try container.sdkDecodeIfPresent(.mappingType)
     }
 }
 
-extension DataConnectorDetailObjectMappingsItemAttributeMappingsItem {
-    public init(responseAttributePath: String? = nil, intercomAttributeIdentifier: String? = nil, mappingType: DataConnectorDetailObjectMappingsItemAttributeMappingsItemMappingType? = nil) {
+public extension DataConnectorDetailObjectMappingsItemAttributeMappingsItem {
+    init(
+        responseAttributePath: String? = nil,
+        intercomAttributeIdentifier: String? = nil,
+        mappingType: DataConnectorDetailObjectMappingsItemAttributeMappingsItemMappingType? = nil
+    ) {
         self.init()
         self.responseAttributePath = responseAttributePath
         (self.intercomAttributeIdentifier, self.mappingType) = (intercomAttributeIdentifier, mappingType)
@@ -390,20 +445,20 @@ public struct DataConnectorVersionDefinitionHeadersItem: Codable {
     }
 
     init() {
-        (self.name, self.value) = (nil, nil)
+        (name, value) = (nil, nil)
     }
 }
 
-extension DataConnectorVersionDefinitionHeadersItem {
-    public init(from decoder: Decoder) throws {
+public extension DataConnectorVersionDefinitionHeadersItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.value = try container.sdkDecodeIfPresent(.value)
+        name = try container.sdkDecodeIfPresent(.name)
+        value = try container.sdkDecodeIfPresent(.value)
     }
 }
 
-extension DataConnectorVersionDefinitionHeadersItem {
-    public init(name: String? = nil, value: String? = nil) {
+public extension DataConnectorVersionDefinitionHeadersItem {
+    init(name: String? = nil, value: String? = nil) {
         self.init()
         (self.name, self.value) = (name, value)
     }
@@ -431,22 +486,27 @@ public struct DataConnectorDetailResponseFieldsItem: Codable {
     }
 
     init() {
-        (self.path, self.type, self.exampleValue, self.redacted) = (nil, nil, nil, nil)
+        (path, type, exampleValue, redacted) = (nil, nil, nil, nil)
     }
 }
 
-extension DataConnectorDetailResponseFieldsItem {
-    public init(from decoder: Decoder) throws {
+public extension DataConnectorDetailResponseFieldsItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.path = try container.sdkDecodeIfPresent(.path)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.exampleValue = try container.sdkDecodeIfPresent(.exampleValue)
-        self.redacted = try container.sdkDecodeIfPresent(.redacted)
+        path = try container.sdkDecodeIfPresent(.path)
+        type = try container.sdkDecodeIfPresent(.type)
+        exampleValue = try container.sdkDecodeIfPresent(.exampleValue)
+        redacted = try container.sdkDecodeIfPresent(.redacted)
     }
 }
 
-extension DataConnectorDetailResponseFieldsItem {
-    public init(path: String? = nil, type: DataConnectorDetailResponseFieldsItemType? = nil, exampleValue: JSONValue? = nil, redacted: Bool? = nil) {
+public extension DataConnectorDetailResponseFieldsItem {
+    init(
+        path: String? = nil,
+        type: DataConnectorDetailResponseFieldsItemType? = nil,
+        exampleValue: JSONValue? = nil,
+        redacted: Bool? = nil
+    ) {
         self.init()
         (self.path, self.type) = (path, type)
         (self.exampleValue, self.redacted) = (exampleValue, redacted)
@@ -468,20 +528,20 @@ public struct DataConnectorVersionAuthor: Codable {
     }
 
     init() {
-        (self.id, self.name) = (nil, nil)
+        (id, name) = (nil, nil)
     }
 }
 
-extension DataConnectorVersionAuthor {
-    public init(from decoder: Decoder) throws {
+public extension DataConnectorVersionAuthor {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension DataConnectorVersionAuthor {
-    public init(id: Int? = nil, name: String? = nil) {
+public extension DataConnectorVersionAuthor {
+    init(id: Int? = nil, name: String? = nil) {
         self.init()
         (self.id, self.name) = (id, name)
     }
@@ -500,20 +560,20 @@ public struct DataConnectorVersionDefinitionObjectMappingsItemReferenceMappingsI
     }
 
     init() {
-        (self.intercomObjectType, self.intercomAttributeIdentifier) = (nil, nil)
+        (intercomObjectType, intercomAttributeIdentifier) = (nil, nil)
     }
 }
 
-extension DataConnectorVersionDefinitionObjectMappingsItemReferenceMappingsItem {
-    public init(from decoder: Decoder) throws {
+public extension DataConnectorVersionDefinitionObjectMappingsItemReferenceMappingsItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.intercomObjectType = try container.sdkDecodeIfPresent(.intercomObjectType)
-        self.intercomAttributeIdentifier = try container.sdkDecodeIfPresent(.intercomAttributeIdentifier)
+        intercomObjectType = try container.sdkDecodeIfPresent(.intercomObjectType)
+        intercomAttributeIdentifier = try container.sdkDecodeIfPresent(.intercomAttributeIdentifier)
     }
 }
 
-extension DataConnectorVersionDefinitionObjectMappingsItemReferenceMappingsItem {
-    public init(intercomObjectType: String? = nil, intercomAttributeIdentifier: String? = nil) {
+public extension DataConnectorVersionDefinitionObjectMappingsItemReferenceMappingsItem {
+    init(intercomObjectType: String? = nil, intercomAttributeIdentifier: String? = nil) {
         self.init()
         self.intercomObjectType = intercomObjectType
         self.intercomAttributeIdentifier = intercomAttributeIdentifier

@@ -6,8 +6,9 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AdminsMethods {
-    /// Lists activity logs for admins in the app within a requested time range. Provide `created_at_after` as the start of the range and optionally use `created_at_before` to set its end. Results are paginated.
+public extension AdminsMethods {
+    /// Lists activity logs for admins in the app within a requested time range. Provide `created_at_after` as the start
+    /// of the range and optionally use `created_at_before` to set its end. Results are paginated.
     ///
     /// You can get a log of activities by all admins in an app.
     ///
@@ -16,8 +17,14 @@ extension AdminsMethods {
     ///   formatted as a UNIX timestamp.
     /// - createdAtBefore: The end date that you request data for. It must be
     ///   formatted as a UNIX timestamp.
-    public static func listActivityLogs(config: ClientConfig, createdAtAfter: String, createdAtBefore: String? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ActivityLogList {
-        return try (await sdkRequest("GET", "/admins/activity_logs", config: config, query: [
+    static func listActivityLogs(
+        config: ClientConfig,
+        createdAtAfter: String,
+        createdAtBefore: String? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ActivityLogList {
+        try await (sdkRequest("GET", "/admins/activity_logs", config: config, query: [
             SdkQueryParameter("created_at_after", value: createdAtAfter),
             SdkQueryParameter("created_at_before", value: createdAtBefore),
         ], decoder: .json, operationId: "listActivityLogs", extraHeaders: sdkHeaders([

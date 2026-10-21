@@ -6,24 +6,36 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension MessagesMethods {
-    /// Retrieves the delivery status and conversation details for a specific WhatsApp message. Supply the message's `message_id` to check whether it was sent, delivered, read, or failed. The response includes error details when delivery fails.
+public extension MessagesMethods {
+    /// Retrieves the delivery status and conversation details for a specific WhatsApp message. Supply the message's
+    /// `message_id` to check whether it was sent, delivered, read, or failed. The response includes error details when
+    /// delivery fails.
     ///
-    /// Retrieves the delivery status of a specific WhatsApp message by its message ID. Returns the current status, conversation details, and any error information if the message failed to deliver.
+    /// Retrieves the delivery status of a specific WhatsApp message by its message ID. Returns the current status,
+    /// conversation details, and any error information if the message failed to deliver.
     ///
     /// - Parameters:
     /// - messageId: The WhatsApp message ID to check status for
-    public static func retrieveWhatsAppMessageStatus(config: ClientConfig, messageId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> WhatsappMessageStatus {
-        return try (await sdkRequest("GET", "/messages/whatsapp/status", config: config, query: [
+    static func retrieveWhatsAppMessageStatus(
+        config: ClientConfig,
+        messageId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> WhatsappMessageStatus {
+        try await (sdkRequest("GET", "/messages/whatsapp/status", config: config, query: [
             SdkQueryParameter("message_id", value: messageId),
         ], decoder: .json, operationId: "RetrieveWhatsAppMessageStatus", extraHeaders: sdkHeaders([
             ("Intercom-Version", sdkHeaderValue(intercomVersion)),
         ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self])).data
     }
 
-    /// Lists paginated status events for WhatsApp messages sent through the Outbound module. Use `ruleset_id` to select the set of messages and `per_page` and `starting_after` to paginate the results. The API plan must allow access to this operation.
+    /// Lists paginated status events for WhatsApp messages sent through the Outbound module. Use `ruleset_id` to select
+    /// the set of messages and `per_page` and `starting_after` to paginate the results. The API plan must allow access
+    /// to this operation.
     ///
-    /// Retrieves statuses of messages sent from the Outbound module. Currently, this API only supports WhatsApp messages. This endpoint returns paginated status events for WhatsApp messages sent via the Outbound module, providing information about delivery state and related message details.
+    /// Retrieves statuses of messages sent from the Outbound module. Currently, this API only supports WhatsApp
+    /// messages. This endpoint returns paginated status events for WhatsApp messages sent via the Outbound module,
+    /// providing information about delivery state and related message details.
     ///
     /// - Parameters:
     /// - rulesetId: The unique identifier for the set of messages to check status
@@ -31,17 +43,34 @@ extension MessagesMethods {
     /// - perPage: Number of results per page (default 50, max 100)
     /// - startingAfter: Cursor for pagination, used to fetch the next page of
     ///   results
-    public static func getWhatsAppMessageStatus(config: ClientConfig, rulesetId: String, perPage: Int? = nil, startingAfter: String? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> WhatsappMessageStatusList {
-        if let perPage = perPage {
+    static func getWhatsAppMessageStatus(
+        config: ClientConfig,
+        rulesetId: String,
+        perPage: Int? = nil,
+        startingAfter: String? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> WhatsappMessageStatusList {
+        if let perPage {
             try validateRange("per_page", Double(perPage), max: 100)
         }
 
-        return try (await sdkRequest("GET", "/messages/status", config: config, query: [
-            SdkQueryParameter("ruleset_id", value: rulesetId),
-            SdkQueryParameter("per_page", value: perPage),
-            SdkQueryParameter("starting_after", value: startingAfter),
-        ], decoder: .json, operationId: "getWhatsAppMessageStatus", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "403": Error2.self, "500": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            "/messages/status",
+            config: config,
+            query: [
+                SdkQueryParameter("ruleset_id", value: rulesetId),
+                SdkQueryParameter("per_page", value: perPage),
+                SdkQueryParameter("starting_after", value: startingAfter),
+            ],
+            decoder: .json,
+            operationId: "getWhatsAppMessageStatus",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["400": Error2.self, "401": Error2.self, "403": Error2.self, "500": Error2.self]
+        )).data
     }
 }

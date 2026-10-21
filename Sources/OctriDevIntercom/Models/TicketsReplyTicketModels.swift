@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Tickets domain models
+/// Tickets domain models
 public indirect enum ContactReplyTicketRequest {
     case contactReplyTicketIntercomUserIdRequest(ContactReplyTicketIntercomUserIdRequest)
     case contactReplyTicketUserIdRequest(ContactReplyTicketUserIdRequest)
@@ -11,24 +11,35 @@ public indirect enum ContactReplyTicketRequest {
 }
 
 extension ContactReplyTicketRequest: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
+            if let value = Self.decodeLossless1(from: container, raw) {
+                self = value; return
+            }
         }
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for ContactReplyTicketRequest")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for ContactReplyTicketRequest"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension ContactReplyTicketRequest {
     static func decodeLossless1(from container: SingleValueDecodingContainer, _ raw: JSONValue) -> Self? {
-        if let value = try? container.decode(ContactReplyTicketIntercomUserIdRequest.self), sdkKeepsEveryKey(value, of: raw) {
+        if let value = try? container.decode(ContactReplyTicketIntercomUserIdRequest.self), sdkKeepsEveryKey(
+            value,
+            of: raw
+        ) {
             return .contactReplyTicketIntercomUserIdRequest(value)
         }
         if let value = try? container.decode(ContactReplyTicketUserIdRequest.self), sdkKeepsEveryKey(value, of: raw) {
@@ -46,10 +57,16 @@ extension ContactReplyTicketRequest {
         if let value = try? container.decode(
             ContactReplyTicketIntercomUserIdRequest.self
         ) {
-            return             .contactReplyTicketIntercomUserIdRequest(value)
+            return .contactReplyTicketIntercomUserIdRequest(value)
         }
-        if let value = try? container.decode(ContactReplyTicketUserIdRequest.self) { return .contactReplyTicketUserIdRequest(value) }
-        if let value = try? container.decode(ContactReplyTicketEmailRequest.self) { return .contactReplyTicketEmailRequest(value) }
+        if let value = try? container
+            .decode(ContactReplyTicketUserIdRequest.self) {
+            return .contactReplyTicketUserIdRequest(value)
+        }
+        if let value = try? container
+            .decode(ContactReplyTicketEmailRequest.self) {
+            return .contactReplyTicketEmailRequest(value)
+        }
         return nil
     }
 }
@@ -94,39 +111,65 @@ public struct ContactReplyTicketUserIdRequest: Codable {
         case replyOptions = "reply_options"
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension ContactReplyTicketUserIdRequest {
-    public init(from decoder: Decoder) throws {
+public extension ContactReplyTicketUserIdRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.messageType) else {
-            throw SdkValidationError(field: "message_type", code: "required", message: "Validation failed for 'message_type': value is required")
+            throw SdkValidationError(
+                field: "message_type",
+                code: "required",
+                message: "Validation failed for 'message_type': value is required"
+            )
         }
         guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
         }
         guard container.contains(.body) else {
-            throw SdkValidationError(field: "body", code: "required", message: "Validation failed for 'body': value is required")
+            throw SdkValidationError(
+                field: "body",
+                code: "required",
+                message: "Validation failed for 'body': value is required"
+            )
         }
         guard container.contains(.userId) else {
-            throw SdkValidationError(field: "user_id", code: "required", message: "Validation failed for 'user_id': value is required")
+            throw SdkValidationError(
+                field: "user_id",
+                code: "required",
+                message: "Validation failed for 'user_id': value is required"
+            )
         }
-        self.messageType = try container.sdkDecodeRequired(.messageType)
-        self.type = try container.sdkDecodeRequired(.type)
-        self.body = try container.sdkDecodeRequired(.body)
-        self.userId = try container.sdkDecodeRequired(.userId)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.attachmentUrls = try container.sdkDecodeIfPresent(.attachmentUrls)
-        self.replyOptions = try container.sdkDecodeIfPresent(.replyOptions)
-        if let value = self.attachmentUrls {
+        messageType = try container.sdkDecodeRequired(.messageType)
+        type = try container.sdkDecodeRequired(.type)
+        body = try container.sdkDecodeRequired(.body)
+        userId = try container.sdkDecodeRequired(.userId)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        attachmentUrls = try container.sdkDecodeIfPresent(.attachmentUrls)
+        replyOptions = try container.sdkDecodeIfPresent(.replyOptions)
+        if let value = attachmentUrls {
             try validateItems("attachment_urls", value, min: nil, max: 10)
         }
     }
 }
 
-extension ContactReplyTicketUserIdRequest {
-    public init(messageType: ContactReplyTicketUserIdRequestMessageType, type: ContactReplyTicketUserIdRequestType, body: String, userId: String, createdAt: Int? = nil, attachmentUrls: [String]? = nil, replyOptions: [ContactReplyTicketUserIdRequestReplyOptionsItem]? = nil) throws {
+public extension ContactReplyTicketUserIdRequest {
+    init(
+        messageType: ContactReplyTicketUserIdRequestMessageType,
+        type: ContactReplyTicketUserIdRequestType,
+        body: String,
+        userId: String,
+        createdAt: Int? = nil,
+        attachmentUrls: [String]? = nil,
+        replyOptions: [ContactReplyTicketUserIdRequestReplyOptionsItem]? = nil
+    ) throws {
         (self.messageType, self.type) = (messageType, type)
         (self.body, self.userId) = (body, userId)
         (self.createdAt, self.attachmentUrls) = (createdAt, attachmentUrls)
@@ -166,39 +209,65 @@ public struct ContactReplyTicketIntercomUserIdRequest: Codable {
         case replyOptions = "reply_options"
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }
 
-extension ContactReplyTicketIntercomUserIdRequest {
-    public init(from decoder: Decoder) throws {
+public extension ContactReplyTicketIntercomUserIdRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.messageType) else {
-            throw SdkValidationError(field: "message_type", code: "required", message: "Validation failed for 'message_type': value is required")
+            throw SdkValidationError(
+                field: "message_type",
+                code: "required",
+                message: "Validation failed for 'message_type': value is required"
+            )
         }
         guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
         }
         guard container.contains(.body) else {
-            throw SdkValidationError(field: "body", code: "required", message: "Validation failed for 'body': value is required")
+            throw SdkValidationError(
+                field: "body",
+                code: "required",
+                message: "Validation failed for 'body': value is required"
+            )
         }
         guard container.contains(.intercomUserId) else {
-            throw SdkValidationError(field: "intercom_user_id", code: "required", message: "Validation failed for 'intercom_user_id': value is required")
+            throw SdkValidationError(
+                field: "intercom_user_id",
+                code: "required",
+                message: "Validation failed for 'intercom_user_id': value is required"
+            )
         }
-        self.messageType = try container.sdkDecodeRequired(.messageType)
-        self.type = try container.sdkDecodeRequired(.type)
-        self.body = try container.sdkDecodeRequired(.body)
-        self.intercomUserId = try container.sdkDecodeRequired(.intercomUserId)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.attachmentUrls = try container.sdkDecodeIfPresent(.attachmentUrls)
-        self.replyOptions = try container.sdkDecodeIfPresent(.replyOptions)
-        if let value = self.attachmentUrls {
+        messageType = try container.sdkDecodeRequired(.messageType)
+        type = try container.sdkDecodeRequired(.type)
+        body = try container.sdkDecodeRequired(.body)
+        intercomUserId = try container.sdkDecodeRequired(.intercomUserId)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        attachmentUrls = try container.sdkDecodeIfPresent(.attachmentUrls)
+        replyOptions = try container.sdkDecodeIfPresent(.replyOptions)
+        if let value = attachmentUrls {
             try validateItems("attachment_urls", value, min: nil, max: 10)
         }
     }
 }
 
-extension ContactReplyTicketIntercomUserIdRequest {
-    public init(messageType: ContactReplyTicketIntercomUserIdRequestMessageType, type: ContactReplyTicketIntercomUserIdRequestType, body: String, intercomUserId: String, createdAt: Int? = nil, attachmentUrls: [String]? = nil, replyOptions: [ContactReplyTicketIntercomUserIdRequestReplyOptionsItem]? = nil) throws {
+public extension ContactReplyTicketIntercomUserIdRequest {
+    init(
+        messageType: ContactReplyTicketIntercomUserIdRequestMessageType,
+        type: ContactReplyTicketIntercomUserIdRequestType,
+        body: String,
+        intercomUserId: String,
+        createdAt: Int? = nil,
+        attachmentUrls: [String]? = nil,
+        replyOptions: [ContactReplyTicketIntercomUserIdRequestReplyOptionsItem]? = nil
+    ) throws {
         (self.messageType, self.type) = (messageType, type)
         (self.body, self.intercomUserId) = (body, intercomUserId)
         (self.createdAt, self.attachmentUrls) = (createdAt, attachmentUrls)
@@ -221,28 +290,38 @@ public struct ContactReplyTicketIntercomUserIdRequestReplyOptionsItem: Codable {
         case uuid
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ContactReplyTicketIntercomUserIdRequestReplyOptionsItem {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.text) else {
-            throw SdkValidationError(field: "text", code: "required", message: "Validation failed for 'text': value is required")
-        }
-        guard container.contains(.uuid) else {
-            throw SdkValidationError(field: "uuid", code: "required", message: "Validation failed for 'uuid': value is required")
-        }
-        self.text = try container.sdkDecodeRequired(.text)
-        self.uuid = try container.sdkDecodeRequired(.uuid)
-            try sdkValidateUuid("uuid", self.uuid)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ContactReplyTicketIntercomUserIdRequestReplyOptionsItem {
-    public init(text: String, uuid: String) throws {
+public extension ContactReplyTicketIntercomUserIdRequestReplyOptionsItem {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.text) else {
+            throw SdkValidationError(
+                field: "text",
+                code: "required",
+                message: "Validation failed for 'text': value is required"
+            )
+        }
+        guard container.contains(.uuid) else {
+            throw SdkValidationError(
+                field: "uuid",
+                code: "required",
+                message: "Validation failed for 'uuid': value is required"
+            )
+        }
+        text = try container.sdkDecodeRequired(.text)
+        uuid = try container.sdkDecodeRequired(.uuid)
+        try sdkValidateUuid("uuid", uuid)
+    }
+}
+
+public extension ContactReplyTicketIntercomUserIdRequestReplyOptionsItem {
+    init(text: String, uuid: String) throws {
         (self.text, self.uuid) = (text, uuid)
-            try sdkValidateUuid("uuid", self.uuid)
+        try sdkValidateUuid("uuid", self.uuid)
     }
 }
 
@@ -258,28 +337,38 @@ public struct ContactReplyTicketEmailRequestReplyOptionsItem: Codable {
         case uuid
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ContactReplyTicketEmailRequestReplyOptionsItem {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.text) else {
-            throw SdkValidationError(field: "text", code: "required", message: "Validation failed for 'text': value is required")
-        }
-        guard container.contains(.uuid) else {
-            throw SdkValidationError(field: "uuid", code: "required", message: "Validation failed for 'uuid': value is required")
-        }
-        self.text = try container.sdkDecodeRequired(.text)
-        self.uuid = try container.sdkDecodeRequired(.uuid)
-            try sdkValidateUuid("uuid", self.uuid)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ContactReplyTicketEmailRequestReplyOptionsItem {
-    public init(text: String, uuid: String) throws {
+public extension ContactReplyTicketEmailRequestReplyOptionsItem {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.text) else {
+            throw SdkValidationError(
+                field: "text",
+                code: "required",
+                message: "Validation failed for 'text': value is required"
+            )
+        }
+        guard container.contains(.uuid) else {
+            throw SdkValidationError(
+                field: "uuid",
+                code: "required",
+                message: "Validation failed for 'uuid': value is required"
+            )
+        }
+        text = try container.sdkDecodeRequired(.text)
+        uuid = try container.sdkDecodeRequired(.uuid)
+        try sdkValidateUuid("uuid", uuid)
+    }
+}
+
+public extension ContactReplyTicketEmailRequestReplyOptionsItem {
+    init(text: String, uuid: String) throws {
         (self.text, self.uuid) = (text, uuid)
-            try sdkValidateUuid("uuid", self.uuid)
+        try sdkValidateUuid("uuid", self.uuid)
     }
 }
 
@@ -329,29 +418,40 @@ public struct TicketReply: Codable {
     }
 
     init() {
-        (self.type, self.id, self.partType, self.body, self.createdAt) = (nil, nil, nil, nil, nil)
-        (self.updatedAt, self.author, self.attachments, self.redacted, self.translations) = (nil, nil, nil, nil, nil)
+        (type, id, partType, body, createdAt) = (nil, nil, nil, nil, nil)
+        (updatedAt, author, attachments, redacted, translations) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension TicketReply {
-    public init(from decoder: Decoder) throws {
+public extension TicketReply {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.partType = try container.sdkDecodeIfPresent(.partType)
-        self.body = try container.sdkDecodeIfPresent(.body)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.author = try container.sdkDecodeIfPresent(.author)
-        self.attachments = try container.sdkDecodeIfPresent(.attachments)
-        self.redacted = try container.sdkDecodeIfPresent(.redacted)
-        self.translations = try container.sdkDecodeIfPresent(.translations)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        partType = try container.sdkDecodeIfPresent(.partType)
+        body = try container.sdkDecodeIfPresent(.body)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        author = try container.sdkDecodeIfPresent(.author)
+        attachments = try container.sdkDecodeIfPresent(.attachments)
+        redacted = try container.sdkDecodeIfPresent(.redacted)
+        translations = try container.sdkDecodeIfPresent(.translations)
     }
 }
 
-extension TicketReply {
-    public init(type: TicketReplyType? = nil, id: String? = nil, partType: TicketReplyPartType? = nil, body: String? = nil, createdAt: Int? = nil, updatedAt: Int? = nil, author: TicketPartAuthor? = nil, attachments: [PartAttachment]? = nil, redacted: Bool? = nil, translations: TicketReplyTranslations? = nil) {
+public extension TicketReply {
+    init(
+        type: TicketReplyType? = nil,
+        id: String? = nil,
+        partType: TicketReplyPartType? = nil,
+        body: String? = nil,
+        createdAt: Int? = nil,
+        updatedAt: Int? = nil,
+        author: TicketPartAuthor? = nil,
+        attachments: [PartAttachment]? = nil,
+        redacted: Bool? = nil,
+        translations: TicketReplyTranslations? = nil
+    ) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.partType, self.body) = (partType, body)
@@ -374,28 +474,38 @@ public struct AdminReplyTicketRequestReplyOptionsItem: Codable {
         case uuid
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AdminReplyTicketRequestReplyOptionsItem {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.text) else {
-            throw SdkValidationError(field: "text", code: "required", message: "Validation failed for 'text': value is required")
-        }
-        guard container.contains(.uuid) else {
-            throw SdkValidationError(field: "uuid", code: "required", message: "Validation failed for 'uuid': value is required")
-        }
-        self.text = try container.sdkDecodeRequired(.text)
-        self.uuid = try container.sdkDecodeRequired(.uuid)
-            try sdkValidateUuid("uuid", self.uuid)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AdminReplyTicketRequestReplyOptionsItem {
-    public init(text: String, uuid: String) throws {
+public extension AdminReplyTicketRequestReplyOptionsItem {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.text) else {
+            throw SdkValidationError(
+                field: "text",
+                code: "required",
+                message: "Validation failed for 'text': value is required"
+            )
+        }
+        guard container.contains(.uuid) else {
+            throw SdkValidationError(
+                field: "uuid",
+                code: "required",
+                message: "Validation failed for 'uuid': value is required"
+            )
+        }
+        text = try container.sdkDecodeRequired(.text)
+        uuid = try container.sdkDecodeRequired(.uuid)
+        try sdkValidateUuid("uuid", uuid)
+    }
+}
+
+public extension AdminReplyTicketRequestReplyOptionsItem {
+    init(text: String, uuid: String) throws {
         (self.text, self.uuid) = (text, uuid)
-            try sdkValidateUuid("uuid", self.uuid)
+        try sdkValidateUuid("uuid", self.uuid)
     }
 }
 
@@ -411,28 +521,38 @@ public struct ContactReplyTicketUserIdRequestReplyOptionsItem: Codable {
         case uuid
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ContactReplyTicketUserIdRequestReplyOptionsItem {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.text) else {
-            throw SdkValidationError(field: "text", code: "required", message: "Validation failed for 'text': value is required")
-        }
-        guard container.contains(.uuid) else {
-            throw SdkValidationError(field: "uuid", code: "required", message: "Validation failed for 'uuid': value is required")
-        }
-        self.text = try container.sdkDecodeRequired(.text)
-        self.uuid = try container.sdkDecodeRequired(.uuid)
-            try sdkValidateUuid("uuid", self.uuid)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ContactReplyTicketUserIdRequestReplyOptionsItem {
-    public init(text: String, uuid: String) throws {
+public extension ContactReplyTicketUserIdRequestReplyOptionsItem {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.text) else {
+            throw SdkValidationError(
+                field: "text",
+                code: "required",
+                message: "Validation failed for 'text': value is required"
+            )
+        }
+        guard container.contains(.uuid) else {
+            throw SdkValidationError(
+                field: "uuid",
+                code: "required",
+                message: "Validation failed for 'uuid': value is required"
+            )
+        }
+        text = try container.sdkDecodeRequired(.text)
+        uuid = try container.sdkDecodeRequired(.uuid)
+        try sdkValidateUuid("uuid", uuid)
+    }
+}
+
+public extension ContactReplyTicketUserIdRequestReplyOptionsItem {
+    init(text: String, uuid: String) throws {
         (self.text, self.uuid) = (text, uuid)
-            try sdkValidateUuid("uuid", self.uuid)
+        try sdkValidateUuid("uuid", self.uuid)
     }
 }
 
@@ -479,5 +599,7 @@ public struct AdminReplyTicketRequest: Codable {
         case crossPost = "cross_post"
     }
 
-    private init(sdkCopy value: Self) { self = value }
+    private init(sdkCopy value: Self) {
+        self = value
+    }
 }

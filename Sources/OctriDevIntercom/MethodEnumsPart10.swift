@@ -24,37 +24,40 @@ struct CreateDataConnectorRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(self.description, forKey: SdkCodingKey("description"))
-        try keyedContainer.encodeIfPresent(self.httpMethod, forKey: SdkCodingKey("http_method"))
-        try keyedContainer.encodeIfPresent(self.url, forKey: SdkCodingKey("url"))
-        try keyedContainer.encodeIfPresent(self.body, forKey: SdkCodingKey("body"))
-        try keyedContainer.encodeIfPresent(self.directFinUsage, forKey: SdkCodingKey("direct_fin_usage"))
-        try keyedContainer.encodeIfPresent(self.audiences, forKey: SdkCodingKey("audiences"))
-        try keyedContainer.encodeIfPresent(self.headers, forKey: SdkCodingKey("headers"))
-        try keyedContainer.encodeIfPresent(self.dataInputs, forKey: SdkCodingKey("data_inputs"))
-        try keyedContainer.encodeIfPresent(self.customerAuthentication, forKey: SdkCodingKey("customer_authentication"))
-        try keyedContainer.encodeIfPresent(self.bypassAuthentication, forKey: SdkCodingKey("bypass_authentication"))
-        try keyedContainer.encodeIfPresent(self.validateMissingAttributes, forKey: SdkCodingKey("validate_missing_attributes"))
-        try keyedContainer.encodeIfPresent(self.mockResponse, forKey: SdkCodingKey("mock_response"))
-        try keyedContainer.encodeIfPresent(self.tokenIds, forKey: SdkCodingKey("token_ids"))
+        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(description, forKey: SdkCodingKey("description"))
+        try keyedContainer.encodeIfPresent(httpMethod, forKey: SdkCodingKey("http_method"))
+        try keyedContainer.encodeIfPresent(url, forKey: SdkCodingKey("url"))
+        try keyedContainer.encodeIfPresent(body, forKey: SdkCodingKey("body"))
+        try keyedContainer.encodeIfPresent(directFinUsage, forKey: SdkCodingKey("direct_fin_usage"))
+        try keyedContainer.encodeIfPresent(audiences, forKey: SdkCodingKey("audiences"))
+        try keyedContainer.encodeIfPresent(headers, forKey: SdkCodingKey("headers"))
+        try keyedContainer.encodeIfPresent(dataInputs, forKey: SdkCodingKey("data_inputs"))
+        try keyedContainer.encodeIfPresent(customerAuthentication, forKey: SdkCodingKey("customer_authentication"))
+        try keyedContainer.encodeIfPresent(bypassAuthentication, forKey: SdkCodingKey("bypass_authentication"))
+        try keyedContainer.encodeIfPresent(
+            validateMissingAttributes,
+            forKey: SdkCodingKey("validate_missing_attributes")
+        )
+        try keyedContainer.encodeIfPresent(mockResponse, forKey: SdkCodingKey("mock_response"))
+        try keyedContainer.encodeIfPresent(tokenIds, forKey: SdkCodingKey("token_ids"))
     }
 
     init(options: DataConnectorsMethods.CreateDataConnectorOptions) {
-        self.name = options.name
-        self.description = options.description
-        self.httpMethod = options.httpMethod
-        self.url = options.url
-        self.body = options.body
-        self.directFinUsage = options.directFinUsage
-        self.audiences = options.audiences
-        self.headers = options.headers
-        self.dataInputs = options.dataInputs
-        self.customerAuthentication = options.customerAuthentication
-        self.bypassAuthentication = options.bypassAuthentication
-        self.validateMissingAttributes = options.validateMissingAttributes
-        self.mockResponse = options.mockResponse
-        self.tokenIds = options.tokenIds
+        name = options.name
+        description = options.description
+        httpMethod = options.httpMethod
+        url = options.url
+        body = options.body
+        directFinUsage = options.directFinUsage
+        audiences = options.audiences
+        headers = options.headers
+        dataInputs = options.dataInputs
+        customerAuthentication = options.customerAuthentication
+        bypassAuthentication = options.bypassAuthentication
+        validateMissingAttributes = options.validateMissingAttributes
+        mockResponse = options.mockResponse
+        tokenIds = options.tokenIds
     }
 }
 
@@ -77,39 +80,42 @@ struct UpdateDataConnectorRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(self.description, forKey: SdkCodingKey("description"))
-        try keyedContainer.encodeIfPresent(self.state, forKey: SdkCodingKey("state"))
-        try keyedContainer.encodeIfPresent(self.httpMethod, forKey: SdkCodingKey("http_method"))
-        try keyedContainer.encodeIfPresent(self.url, forKey: SdkCodingKey("url"))
-        try keyedContainer.encodeIfPresent(self.body, forKey: SdkCodingKey("body"))
-        try keyedContainer.encodeIfPresent(self.directFinUsage, forKey: SdkCodingKey("direct_fin_usage"))
-        try keyedContainer.encodeIfPresent(self.audiences, forKey: SdkCodingKey("audiences"))
-        try keyedContainer.encodeIfPresent(self.headers, forKey: SdkCodingKey("headers"))
-        try keyedContainer.encodeIfPresent(self.dataInputs, forKey: SdkCodingKey("data_inputs"))
-        try keyedContainer.encodeIfPresent(self.customerAuthentication, forKey: SdkCodingKey("customer_authentication"))
-        try keyedContainer.encodeIfPresent(self.bypassAuthentication, forKey: SdkCodingKey("bypass_authentication"))
-        try keyedContainer.encodeIfPresent(self.validateMissingAttributes, forKey: SdkCodingKey("validate_missing_attributes"))
-        try keyedContainer.encodeIfPresent(self.mockResponse, forKey: SdkCodingKey("mock_response"))
-        try keyedContainer.encodeIfPresent(self.tokenIds, forKey: SdkCodingKey("token_ids"))
+        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(description, forKey: SdkCodingKey("description"))
+        try keyedContainer.encodeIfPresent(state, forKey: SdkCodingKey("state"))
+        try keyedContainer.encodeIfPresent(httpMethod, forKey: SdkCodingKey("http_method"))
+        try keyedContainer.encodeIfPresent(url, forKey: SdkCodingKey("url"))
+        try keyedContainer.encodeIfPresent(body, forKey: SdkCodingKey("body"))
+        try keyedContainer.encodeIfPresent(directFinUsage, forKey: SdkCodingKey("direct_fin_usage"))
+        try keyedContainer.encodeIfPresent(audiences, forKey: SdkCodingKey("audiences"))
+        try keyedContainer.encodeIfPresent(headers, forKey: SdkCodingKey("headers"))
+        try keyedContainer.encodeIfPresent(dataInputs, forKey: SdkCodingKey("data_inputs"))
+        try keyedContainer.encodeIfPresent(customerAuthentication, forKey: SdkCodingKey("customer_authentication"))
+        try keyedContainer.encodeIfPresent(bypassAuthentication, forKey: SdkCodingKey("bypass_authentication"))
+        try keyedContainer.encodeIfPresent(
+            validateMissingAttributes,
+            forKey: SdkCodingKey("validate_missing_attributes")
+        )
+        try keyedContainer.encodeIfPresent(mockResponse, forKey: SdkCodingKey("mock_response"))
+        try keyedContainer.encodeIfPresent(tokenIds, forKey: SdkCodingKey("token_ids"))
     }
 
     init(options: DataConnectorsMethods.UpdateDataConnectorOptions) {
-        self.name = options.name
-        self.description = options.description
-        self.state = options.state
-        self.httpMethod = options.httpMethod
-        self.url = options.url
-        self.body = options.body
-        self.directFinUsage = options.directFinUsage
-        self.audiences = options.audiences
-        self.headers = options.headers
-        self.dataInputs = options.dataInputs
-        self.customerAuthentication = options.customerAuthentication
-        self.bypassAuthentication = options.bypassAuthentication
-        self.validateMissingAttributes = options.validateMissingAttributes
-        self.mockResponse = options.mockResponse
-        self.tokenIds = options.tokenIds
+        name = options.name
+        description = options.description
+        state = options.state
+        httpMethod = options.httpMethod
+        url = options.url
+        body = options.body
+        directFinUsage = options.directFinUsage
+        audiences = options.audiences
+        headers = options.headers
+        dataInputs = options.dataInputs
+        customerAuthentication = options.customerAuthentication
+        bypassAuthentication = options.bypassAuthentication
+        validateMissingAttributes = options.validateMissingAttributes
+        mockResponse = options.mockResponse
+        tokenIds = options.tokenIds
     }
 }
 
@@ -118,7 +124,7 @@ struct UpdateDataConnectorVersionRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.note, forKey: SdkCodingKey("note"))
+        try keyedContainer.encode(note, forKey: SdkCodingKey("note"))
     }
 }
 
@@ -132,12 +138,12 @@ struct CreateDataEventRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(self.eventName, forKey: SdkCodingKey("event_name"))
-        try keyedContainer.encodeIfPresent(self.createdAt, forKey: SdkCodingKey("created_at"))
-        try keyedContainer.encodeIfPresent(self.userId, forKey: SdkCodingKey("user_id"))
-        try keyedContainer.encodeIfPresent(self.id, forKey: SdkCodingKey("id"))
-        try keyedContainer.encodeIfPresent(self.email, forKey: SdkCodingKey("email"))
-        try keyedContainer.encodeIfPresent(self.metadata, forKey: SdkCodingKey("metadata"))
+        try keyedContainer.encodeIfPresent(eventName, forKey: SdkCodingKey("event_name"))
+        try keyedContainer.encodeIfPresent(createdAt, forKey: SdkCodingKey("created_at"))
+        try keyedContainer.encodeIfPresent(userId, forKey: SdkCodingKey("user_id"))
+        try keyedContainer.encodeIfPresent(id, forKey: SdkCodingKey("id"))
+        try keyedContainer.encodeIfPresent(email, forKey: SdkCodingKey("email"))
+        try keyedContainer.encodeIfPresent(metadata, forKey: SdkCodingKey("metadata"))
     }
 }
 
@@ -147,8 +153,8 @@ struct DataEventSummariesRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(self.userId, forKey: SdkCodingKey("user_id"))
-        try keyedContainer.encodeIfPresent(self.eventSummaries, forKey: SdkCodingKey("event_summaries"))
+        try keyedContainer.encodeIfPresent(userId, forKey: SdkCodingKey("user_id"))
+        try keyedContainer.encodeIfPresent(eventSummaries, forKey: SdkCodingKey("event_summaries"))
     }
 }
 
@@ -158,8 +164,8 @@ struct CreateDataExportRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.createdAtAfter, forKey: SdkCodingKey("created_at_after"))
-        try keyedContainer.encode(self.createdAtBefore, forKey: SdkCodingKey("created_at_before"))
+        try keyedContainer.encode(createdAtAfter, forKey: SdkCodingKey("created_at_after"))
+        try keyedContainer.encode(createdAtBefore, forKey: SdkCodingKey("created_at_before"))
     }
 }
 
@@ -177,28 +183,31 @@ struct CreateMessageRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(self.messageType, forKey: SdkCodingKey("message_type"))
-        try keyedContainer.encodeIfPresent(self.subject, forKey: SdkCodingKey("subject"))
-        try keyedContainer.encodeIfPresent(self.body, forKey: SdkCodingKey("body"))
-        try keyedContainer.encodeIfPresent(self.template, forKey: SdkCodingKey("template"))
-        try keyedContainer.encodeIfPresent(self.from, forKey: SdkCodingKey("from"))
-        try keyedContainer.encodeIfPresent(self.to, forKey: SdkCodingKey("to"))
-        try keyedContainer.encodeIfPresent(self.cc, forKey: SdkCodingKey("cc"))
-        try keyedContainer.encodeIfPresent(self.bcc, forKey: SdkCodingKey("bcc"))
-        try keyedContainer.encodeIfPresent(self.createdAt, forKey: SdkCodingKey("created_at"))
-        try keyedContainer.encodeIfPresent(self.createConversationWithoutContactReply, forKey: SdkCodingKey("create_conversation_without_contact_reply"))
+        try keyedContainer.encodeIfPresent(messageType, forKey: SdkCodingKey("message_type"))
+        try keyedContainer.encodeIfPresent(subject, forKey: SdkCodingKey("subject"))
+        try keyedContainer.encodeIfPresent(body, forKey: SdkCodingKey("body"))
+        try keyedContainer.encodeIfPresent(template, forKey: SdkCodingKey("template"))
+        try keyedContainer.encodeIfPresent(from, forKey: SdkCodingKey("from"))
+        try keyedContainer.encodeIfPresent(to, forKey: SdkCodingKey("to"))
+        try keyedContainer.encodeIfPresent(cc, forKey: SdkCodingKey("cc"))
+        try keyedContainer.encodeIfPresent(bcc, forKey: SdkCodingKey("bcc"))
+        try keyedContainer.encodeIfPresent(createdAt, forKey: SdkCodingKey("created_at"))
+        try keyedContainer.encodeIfPresent(
+            createConversationWithoutContactReply,
+            forKey: SdkCodingKey("create_conversation_without_contact_reply")
+        )
     }
 
     init(options: MessagesMethods.CreateMessageOptions) {
-        self.messageType = options.messageType
-        self.subject = options.subject
-        self.body = options.body
-        self.template = options.template
-        self.from = options.from
-        self.to = options.to
-        self.cc = options.cc
-        self.bcc = options.bcc
-        self.createdAt = options.createdAt
-        self.createConversationWithoutContactReply = options.createConversationWithoutContactReply
+        messageType = options.messageType
+        subject = options.subject
+        body = options.body
+        template = options.template
+        from = options.from
+        to = options.to
+        cc = options.cc
+        bcc = options.bcc
+        createdAt = options.createdAt
+        createConversationWithoutContactReply = options.createConversationWithoutContactReply
     }
 }

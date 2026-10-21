@@ -3,7 +3,7 @@
 
 import Foundation
 
-// TaggedModelsEmails domain models
+/// TaggedModelsEmails domain models
 /// Represents a sender email address configuration
 public struct EmailSetting: Codable {
     /// The type of object
@@ -51,29 +51,40 @@ public struct EmailSetting: Codable {
     }
 
     init() {
-        (self.type, self.id, self.email, self.verified, self.domain) = (nil, nil, nil, nil, nil)
-        (self.brandId, self.forwardingEnabled, self.forwardedEmailLastReceivedAt, self.createdAt, self.updatedAt) = (nil, nil, nil, nil, nil)
+        (type, id, email, verified, domain) = (nil, nil, nil, nil, nil)
+        (brandId, forwardingEnabled, forwardedEmailLastReceivedAt, createdAt, updatedAt) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension EmailSetting {
-    public init(from decoder: Decoder) throws {
+public extension EmailSetting {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.email = try container.sdkDecodeIfPresent(.email)
-        self.verified = try container.sdkDecodeIfPresent(.verified)
-        self.domain = try container.sdkDecodeIfPresent(.domain)
-        self.brandId = try container.sdkDecodeIfPresent(.brandId)
-        self.forwardingEnabled = try container.sdkDecodeIfPresent(.forwardingEnabled)
-        self.forwardedEmailLastReceivedAt = try container.sdkDecodeIfPresent(.forwardedEmailLastReceivedAt)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        email = try container.sdkDecodeIfPresent(.email)
+        verified = try container.sdkDecodeIfPresent(.verified)
+        domain = try container.sdkDecodeIfPresent(.domain)
+        brandId = try container.sdkDecodeIfPresent(.brandId)
+        forwardingEnabled = try container.sdkDecodeIfPresent(.forwardingEnabled)
+        forwardedEmailLastReceivedAt = try container.sdkDecodeIfPresent(.forwardedEmailLastReceivedAt)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
     }
 }
 
-extension EmailSetting {
-    public init(type: String? = nil, id: String? = nil, email: String? = nil, verified: Bool? = nil, domain: String? = nil, brandId: String? = nil, forwardingEnabled: Bool? = nil, forwardedEmailLastReceivedAt: Int? = nil, createdAt: Int? = nil, updatedAt: Int? = nil) {
+public extension EmailSetting {
+    init(
+        type: String? = nil,
+        id: String? = nil,
+        email: String? = nil,
+        verified: Bool? = nil,
+        domain: String? = nil,
+        brandId: String? = nil,
+        forwardingEnabled: Bool? = nil,
+        forwardedEmailLastReceivedAt: Int? = nil,
+        createdAt: Int? = nil,
+        updatedAt: Int? = nil
+    ) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.email, self.verified) = (email, verified)
@@ -98,20 +109,20 @@ public struct EmailList: Codable {
     }
 
     init() {
-        (self.type, self.data) = (nil, nil)
+        (type, data) = (nil, nil)
     }
 }
 
-extension EmailList {
-    public init(from decoder: Decoder) throws {
+public extension EmailList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        type = try container.sdkDecodeIfPresent(.type)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension EmailList {
-    public init(type: String? = nil, data: [EmailSetting]? = nil) {
+public extension EmailList {
+    init(type: String? = nil, data: [EmailSetting]? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
     }

@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ContentMethods {
-    public struct SearchContentOptions: Codable {
+public extension ContentMethods {
+    struct SearchContentOptions: Codable {
         public var query: String?
         public var page: Int?
         public var perPage: Int?
@@ -33,9 +33,15 @@ extension ContentMethods {
         public init() {}
     }
 
-    /// Searches Knowledge Hub content, including articles, snippets, external pages, uploaded files, and internal articles. Supply `query` to search titles and body text, or omit it to retrieve the most recent content items; use the filters to narrow the results. Use `page` and `per_page` to paginate the results.
+    /// Searches Knowledge Hub content, including articles, snippets, external pages, uploaded files, and internal
+    /// articles. Supply `query` to search titles and body text, or omit it to retrieve the most recent content items;
+    /// use the filters to narrow the results. Use `page` and `per_page` to paginate the results.
     ///
-    /// Search the knowledge base contents — articles, snippets, external pages, uploaded files, and internal articles — using a keyword query. Each result row has a `type` discriminator. Most types (`content_snippet`, `external_content`, `file_source_content`, `internal_article`) return a flat `{ type, id, title }` shape. Help center articles return a nested shape with a `contents[]` array, one entry per locale. Requires the `read_content` OAuth scope.
+    /// Search the knowledge base contents — articles, snippets, external pages, uploaded files, and internal articles —
+    /// using a keyword query. Each result row has a `type` discriminator. Most types (`content_snippet`,
+    /// `external_content`, `file_source_content`, `internal_article`) return a flat `{ type, id, title }` shape. Help
+    /// center articles return a nested shape with a `contents[]` array, one entry per locale. Requires the
+    /// `read_content` OAuth scope.
     ///
     /// - Parameters:
     /// - query: A free-text search term matched against the title and body of each
@@ -78,7 +84,11 @@ extension ContentMethods {
     ///   epoch seconds.
     /// - updatedAtBefore: Return content last updated at or before this time. Unix
     ///   epoch seconds.
-    public static func searchContent(config: ClientConfig, options: SearchContentOptions, requestOptions: RequestOptions? = nil) async throws -> ContentSearchResponse {
+    static func searchContent(
+        config: ClientConfig,
+        options: SearchContentOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContentSearchResponse {
         if let query = options.query {
             try validateLength("query", query, max: 500)
         }
@@ -91,7 +101,7 @@ extension ContentMethods {
             try validateRange("per_page", Double(perPage), min: 1, max: 50)
         }
 
-        return try (await sdkRequest("GET", "/content/search", config: config, query: [
+        return try await (sdkRequest("GET", "/content/search", config: config, query: [
             SdkQueryParameter("query", value: options.query),
             SdkQueryParameter("page", value: options.page),
             SdkQueryParameter("per_page", value: options.perPage),

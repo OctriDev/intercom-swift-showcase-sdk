@@ -3,7 +3,7 @@
 
 import Foundation
 
-// TaggedModelsArticles domain models
+/// TaggedModelsArticles domain models
 /// An instance of highlighted summary text.
 public struct ArticleSearchHighlightsHighlightedSummaryItemItem: Codable {
     /// The type of text - `highlight` or `plain`.
@@ -19,20 +19,20 @@ public struct ArticleSearchHighlightsHighlightedSummaryItemItem: Codable {
     }
 
     init() {
-        (self.type, self.text) = (nil, nil)
+        (type, text) = (nil, nil)
     }
 }
 
-extension ArticleSearchHighlightsHighlightedSummaryItemItem {
-    public init(from decoder: Decoder) throws {
+public extension ArticleSearchHighlightsHighlightedSummaryItemItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.text = try container.sdkDecodeIfPresent(.text)
+        type = try container.sdkDecodeIfPresent(.type)
+        text = try container.sdkDecodeIfPresent(.text)
     }
 }
 
-extension ArticleSearchHighlightsHighlightedSummaryItemItem {
-    public init(type: ArticleSearchHighlightsHighlightedSummaryItemItemType? = nil, text: String? = nil) {
+public extension ArticleSearchHighlightsHighlightedSummaryItemItem {
+    init(type: ArticleSearchHighlightsHighlightedSummaryItemItemType? = nil, text: String? = nil) {
         self.init()
         (self.type, self.text) = (type, text)
     }
@@ -61,22 +61,27 @@ public struct ArticleSearchResponse: Codable {
     }
 
     init() {
-        (self.type, self.totalCount, self.data, self.pages) = (nil, nil, nil, nil)
+        (type, totalCount, data, pages) = (nil, nil, nil, nil)
     }
 }
 
-extension ArticleSearchResponse {
-    public init(from decoder: Decoder) throws {
+public extension ArticleSearchResponse {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        self.data = try container.sdkDecodeIfPresent(.data)
-        self.pages = try container.sdkDecodeIfPresent(.pages)
+        type = try container.sdkDecodeIfPresent(.type)
+        totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        data = try container.sdkDecodeIfPresent(.data)
+        pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-extension ArticleSearchResponse {
-    public init(type: ArticleSearchResponseType? = nil, totalCount: Int? = nil, data: ArticleSearchResponseData? = nil, pages: CursorPages? = nil) {
+public extension ArticleSearchResponse {
+    init(
+        type: ArticleSearchResponseType? = nil,
+        totalCount: Int? = nil,
+        data: ArticleSearchResponseData? = nil,
+        pages: CursorPages? = nil
+    ) {
         self.init()
         (self.type, self.totalCount) = (type, totalCount)
         (self.data, self.pages) = (data, pages)
@@ -98,20 +103,20 @@ public struct ArticleSearchHighlightsHighlightedTitleItem: Codable {
     }
 
     init() {
-        (self.type, self.text) = (nil, nil)
+        (type, text) = (nil, nil)
     }
 }
 
-extension ArticleSearchHighlightsHighlightedTitleItem {
-    public init(from decoder: Decoder) throws {
+public extension ArticleSearchHighlightsHighlightedTitleItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.text = try container.sdkDecodeIfPresent(.text)
+        type = try container.sdkDecodeIfPresent(.type)
+        text = try container.sdkDecodeIfPresent(.text)
     }
 }
 
-extension ArticleSearchHighlightsHighlightedTitleItem {
-    public init(type: ArticleSearchHighlightsHighlightedTitleItemType? = nil, text: String? = nil) {
+public extension ArticleSearchHighlightsHighlightedTitleItem {
+    init(type: ArticleSearchHighlightsHighlightedTitleItemType? = nil, text: String? = nil) {
         self.init()
         (self.type, self.text) = (type, text)
     }
@@ -134,21 +139,25 @@ public struct ArticleSearchHighlights: Codable {
     }
 
     init() {
-        (self.articleId, self.highlightedTitle, self.highlightedSummary) = (nil, nil, nil)
+        (articleId, highlightedTitle, highlightedSummary) = (nil, nil, nil)
     }
 }
 
-extension ArticleSearchHighlights {
-    public init(from decoder: Decoder) throws {
+public extension ArticleSearchHighlights {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.articleId = try container.sdkDecodeIfPresent(.articleId)
-        self.highlightedTitle = try container.sdkDecodeIfPresent(.highlightedTitle)
-        self.highlightedSummary = try container.sdkDecodeIfPresent(.highlightedSummary)
+        articleId = try container.sdkDecodeIfPresent(.articleId)
+        highlightedTitle = try container.sdkDecodeIfPresent(.highlightedTitle)
+        highlightedSummary = try container.sdkDecodeIfPresent(.highlightedSummary)
     }
 }
 
-extension ArticleSearchHighlights {
-    public init(articleId: String? = nil, highlightedTitle: [ArticleSearchHighlightsHighlightedTitleItem]? = nil, highlightedSummary: [[ArticleSearchHighlightsHighlightedSummaryItemItem]]? = nil) {
+public extension ArticleSearchHighlights {
+    init(
+        articleId: String? = nil,
+        highlightedTitle: [ArticleSearchHighlightsHighlightedTitleItem]? = nil,
+        highlightedSummary: [[ArticleSearchHighlightsHighlightedSummaryItemItem]]? = nil
+    ) {
         self.init()
         (self.articleId, self.highlightedTitle) = (articleId, highlightedTitle)
         self.highlightedSummary = highlightedSummary
@@ -168,36 +177,40 @@ public struct ArticleSearchResponseData: Codable {
     }
 
     init() {
-        (self.articles, self.highlights) = (nil, nil)
+        (articles, highlights) = (nil, nil)
     }
 }
 
-extension ArticleSearchResponseData {
-    public init(from decoder: Decoder) throws {
+public extension ArticleSearchResponseData {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.articles = try container.sdkDecodeIfPresent(.articles)
-        self.highlights = try container.sdkDecodeIfPresent(.highlights)
+        articles = try container.sdkDecodeIfPresent(.articles)
+        highlights = try container.sdkDecodeIfPresent(.highlights)
     }
 }
 
-extension ArticleSearchResponseData {
-    public init(articles: [Article]? = nil, highlights: [ArticleSearchHighlights]? = nil) {
+public extension ArticleSearchResponseData {
+    init(articles: [Article]? = nil, highlights: [ArticleSearchHighlights]? = nil) {
         self.init()
         (self.articles, self.highlights) = (articles, highlights)
     }
 }
 
 /// The type of text - `highlight` or `plain`.
-public struct ArticleSearchHighlightsHighlightedSummaryItemItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct ArticleSearchHighlightsHighlightedSummaryItemItemType: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let highlight = ArticleSearchHighlightsHighlightedSummaryItemItemType(rawValue: "highlight")
     public static let plain = ArticleSearchHighlightsHighlightedSummaryItemItemType(rawValue: "plain")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -210,12 +223,15 @@ public struct ArticleSearchHighlightsHighlightedSummaryItemItemType: RawRepresen
 public struct ArticleSearchResponseType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let list = ArticleSearchResponseType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -225,16 +241,20 @@ public struct ArticleSearchResponseType: RawRepresentable, Hashable, Codable, Se
 }
 
 /// The type of text - `highlight` or `plain`.
-public struct ArticleSearchHighlightsHighlightedTitleItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct ArticleSearchHighlightsHighlightedTitleItemType: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let highlight = ArticleSearchHighlightsHighlightedTitleItemType(rawValue: "highlight")
     public static let plain = ArticleSearchHighlightsHighlightedTitleItemType(rawValue: "plain")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
