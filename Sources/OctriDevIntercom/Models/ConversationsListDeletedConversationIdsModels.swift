@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Conversations domain models
+/// Conversations domain models
 /// A paginated list of deleted conversation IDs.
 public struct DeletedConversationList: Codable {
     /// String representing the object's type. Always has the value `conversations.list`.
@@ -28,22 +28,27 @@ public struct DeletedConversationList: Codable {
     }
 
     init() {
-        (self.type, self.conversations, self.totalCount, self.pages) = (nil, nil, nil, nil)
+        (type, conversations, totalCount, pages) = (nil, nil, nil, nil)
     }
 }
 
-extension DeletedConversationList {
-    public init(from decoder: Decoder) throws {
+public extension DeletedConversationList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.conversations = try container.sdkDecodeIfPresent(.conversations)
-        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        self.pages = try container.sdkDecodeIfPresent(.pages)
+        type = try container.sdkDecodeIfPresent(.type)
+        conversations = try container.sdkDecodeIfPresent(.conversations)
+        totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-extension DeletedConversationList {
-    public init(type: String? = nil, conversations: [DeletedConversationItem]? = nil, totalCount: Int? = nil, pages: PagesLink? = nil) {
+public extension DeletedConversationList {
+    init(
+        type: String? = nil,
+        conversations: [DeletedConversationItem]? = nil,
+        totalCount: Int? = nil,
+        pages: PagesLink? = nil
+    ) {
         self.init()
         (self.type, self.conversations) = (type, conversations)
         (self.totalCount, self.pages) = (totalCount, pages)

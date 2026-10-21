@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Articles domain models
+/// Articles domain models
 /// Optional body for publishing a staged article draft. On a single-language workspace the body can be omitted. On
 /// a multilingual workspace, `locales` is required and lists which locales' drafts to publish.
 public struct PublishArticleDraftRequest: Codable {
@@ -17,19 +17,19 @@ public struct PublishArticleDraftRequest: Codable {
     }
 
     init() {
-        self.locales = nil
+        locales = nil
     }
 }
 
-extension PublishArticleDraftRequest {
-    public init(from decoder: Decoder) throws {
+public extension PublishArticleDraftRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.locales = try container.sdkDecodeIfPresent(.locales)
+        locales = try container.sdkDecodeIfPresent(.locales)
     }
 }
 
-extension PublishArticleDraftRequest {
-    public init(locales: [String]? = nil) {
+public extension PublishArticleDraftRequest {
+    init(locales: [String]? = nil) {
         self.init()
         self.locales = locales
     }

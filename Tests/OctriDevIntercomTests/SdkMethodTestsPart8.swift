@@ -17,9 +17,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.notes.delete(
-            noteId: decoded("1"),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                noteId: decoded("1"),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -66,10 +66,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.officeHours.deleteException(
-            officeHoursScheduleId: decoded("\"123\""),
-            id: decoded("\"456\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                officeHoursScheduleId: decoded("\"123\""),
+                id: decoded("\"456\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -115,9 +115,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.officeHours.deleteSchedule(
-            id: decoded("\"123\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                id: decoded("\"123\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -156,9 +156,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.tags.delete(
-            tagId: decoded("\"123\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                tagId: decoded("\"123\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -204,9 +204,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.tickets.delete(
-            ticketId: decoded("\"ticket-1\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                ticketId: decoded("\"ticket-1\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -253,10 +253,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.articles.detachTag(
-            articleId: decoded("123"),
-            id: decoded("\"7522907\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                articleId: decoded("123"),
+                id: decoded("\"7522907\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -303,10 +303,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.companies.detachContact(
-            contactId: decoded("\"58a430d35458202d41b1e65b\""),
-            companyId: decoded("\"58a430d35458202d41b1e65b\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                contactId: decoded("\"58a430d35458202d41b1e65b\""),
+                companyId: decoded("\"58a430d35458202d41b1e65b\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -353,10 +353,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.contentSnippets.detachTag(
-            contentSnippetId: decoded("\"123\""),
-            id: decoded("\"7522907\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                contentSnippetId: decoded("\"123\""),
+                id: decoded("\"7522907\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -404,11 +404,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.conversations.detachContact(
-            conversationId: decoded("\"123\""),
-            contactId: decoded("\"123\""),
-            adminId: decoded("\"5017690\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                conversationId: decoded("\"123\""),
+                contactId: decoded("\"123\""),
+                adminId: decoded("\"5017690\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -455,10 +455,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.internalArticles.detachTag(
-            internalArticleId: decoded("123"),
-            id: decoded("\"7522907\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                internalArticleId: decoded("123"),
+                id: decoded("\"7522907\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -494,7 +494,8 @@ extension SdkMethodTests {
         )
     }
 
-    func testDetachSubscriptionTypeToContactDetachSubscriptionTypeToContact401ReachesMockAndDecodesResponse() async throws {
+    func testDetachSubscriptionTypeToContactDetachSubscriptionTypeToContact401ReachesMockAndDecodesResponse(
+    ) async throws {
         guard let client = configuredClient(statusPrefix: "/__mockStatus/401") else {
             return
         }
@@ -505,10 +506,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.subscriptionTypes.detachToContact(
-            contactId: decoded("\"63a07ddf05a32042dffac965\""),
-            subscriptionId: decoded("\"37846\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                contactId: decoded("\"63a07ddf05a32042dffac965\""),
+                subscriptionId: decoded("\"37846\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -555,10 +556,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.tags.detachFromContact(
-            contactId: decoded("\"63a07ddf05a32042dffac965\""),
-            tagId: decoded("\"7522907\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                contactId: decoded("\"63a07ddf05a32042dffac965\""),
+                tagId: decoded("\"7522907\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

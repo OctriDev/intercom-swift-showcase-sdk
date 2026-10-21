@@ -6,10 +6,29 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ConversationsMethods {
-    /// Searches conversations using filters on searchable conversation attributes. Provide a `query` filter expression and use pagination to control result size; pages default to 20 results and can contain up to 150. Use the `starting_after` cursor from the response to fetch subsequent pages.
+public extension ConversationsMethods {
+    /// Searches conversations using filters on searchable conversation attributes. Provide a `query` filter expression
+    /// and use pagination to control result size; pages default to 20 results and can contain up to 150. Use the
+    /// `starting_after` cursor from the response to fetch subsequent pages.
     ///
-    /// You can search for multiple conversations by the value of their attributes in order to fetch exactly which ones you want. To search for conversations, you need to send a `POST` request to `https://api.intercom.io/conversations/search`. This will accept a query object in the body which will define your filters in order to search for conversations. {% admonition type="warning" name="Optimizing search queries" %} Search queries can be complex, so optimizing them can help the performance of your search. Use the `AND` and `OR` operators to combine multiple filters to get the exact results you need and utilize pagination to limit the number of results returned. The default is `20` results per page and maximum is `150`. See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#example-search-conversations-request) for more details on how to use the `starting_after` param. {% /admonition %} ### Nesting & Limitations You can nest these filters in order to get even more granular insights that pinpoint exactly what you need. Example: (1 OR 2) AND (3 OR 4). There are some limitations to the amount of multiple's there can be: - There's a limit of max 2 nested filters - There's a limit of max 15 filters for each AND or OR group ### Accepted Fields Most keys listed in the conversation model are searchable, whether writeable or not. The value you search for has to match the accepted type, otherwise the query will fail (ie. as `created_at` accepts a date, the `value` cannot be a string such as `"foorbar"`). The `source.body` field is unique as the search will not be performed against the entire value, but instead against every element of the value separately. For example, when searching for a conversation with a `"I need support"` body - the query should contain a `=` operator with the value `"support"` for such conversation to be returned. A query with a `=` operator and a `"need support"` value will not yield a result.…
+    /// You can search for multiple conversations by the value of their attributes in order to fetch exactly which ones
+    /// you want. To search for conversations, you need to send a `POST` request to
+    /// `https://api.intercom.io/conversations/search`. This will accept a query object in the body which will define
+    /// your filters in order to search for conversations. {% admonition type="warning" name="Optimizing search queries"
+    /// %} Search queries can be complex, so optimizing them can help the performance of your search. Use the `AND` and
+    /// `OR` operators to combine multiple filters to get the exact results you need and utilize pagination to limit the
+    /// number of results returned. The default is `20` results per page and maximum is `150`. See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#example-search-conversations-request)
+    /// for more details on how to use the `starting_after` param. {% /admonition %} ### Nesting & Limitations You can
+    /// nest these filters in order to get even more granular insights that pinpoint exactly what you need. Example: (1
+    /// OR 2) AND (3 OR 4). There are some limitations to the amount of multiple's there can be: - There's a limit of
+    /// max 2 nested filters - There's a limit of max 15 filters for each AND or OR group ### Accepted Fields Most keys
+    /// listed in the conversation model are searchable, whether writeable or not. The value you search for has to match
+    /// the accepted type, otherwise the query will fail (ie. as `created_at` accepts a date, the `value` cannot be a
+    /// string such as `"foorbar"`). The `source.body` field is unique as the search will not be performed against the
+    /// entire value, but instead against every element of the value separately. For example, when searching for a
+    /// conversation with a `"I need support"` body - the query should contain a `=` operator with the value `"support"`
+    /// for such conversation to be returned. A query with a `=` operator and a `"need support"` value will not yield a
+    /// result.…
     ///
     /// - Parameters:
     /// - query: Required API value serialized in the `query` wire field.
@@ -20,10 +39,18 @@ extension ConversationsMethods {
     ///   `scorecards` array on each conversation with any QA scorecard results.
     /// - pagination: Optional object value serialized in the `pagination` wire
     ///   field.
-    public static func searchConversations(config: ClientConfig, query: SearchRequestQuery, includeMonitors: Bool? = nil, includeScorecards: Bool? = nil, intercomVersion: IntercomVersion? = nil, pagination: SdkOptional<StartingAfterPaging>? = nil, requestOptions: RequestOptions? = nil) async throws -> ConversationList {
+    static func searchConversations(
+        config: ClientConfig,
+        query: SearchRequestQuery,
+        includeMonitors: Bool? = nil,
+        includeScorecards: Bool? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        pagination: SdkOptional<StartingAfterPaging>? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ConversationList {
         let requestBody = SearchConversationsRequestBody(query: query, pagination: pagination)
 
-        return try (await sdkRequest("POST", "/conversations/search", config: config, query: [
+        return try await (sdkRequest("POST", "/conversations/search", config: config, query: [
             SdkQueryParameter("include_monitors", value: includeMonitors),
             SdkQueryParameter("include_scorecards", value: includeScorecards),
         ], body: requestBody, decoder: .json, operationId: "searchConversations", extraHeaders: sdkHeaders([

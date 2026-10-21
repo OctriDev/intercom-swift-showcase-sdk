@@ -10,7 +10,10 @@ import Foundation
 public struct RunFinProcedureResponseStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let thinking = RunFinProcedureResponseStatus(rawValue: "thinking")
     public static let replying = RunFinProcedureResponseStatus(rawValue: "replying")
     public static let awaitingUserReply = RunFinProcedureResponseStatus(rawValue: "awaiting_user_reply")
@@ -20,7 +23,7 @@ public struct RunFinProcedureResponseStatus: RawRepresentable, Hashable, Codable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -32,12 +35,15 @@ public struct RunFinProcedureResponseStatus: RawRepresentable, Hashable, Codable
 public struct ListFoldersResponseType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let list = ListFoldersResponseType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -49,13 +55,16 @@ public struct ListFoldersResponseType: RawRepresentable, Hashable, Codable, Send
 public struct SearchContentParameterX28a083b3: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let on = SearchContentParameterX28a083b3(rawValue: "on")
     public static let off = SearchContentParameterX28a083b3(rawValue: "off")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -67,13 +76,16 @@ public struct SearchContentParameterX28a083b3: RawRepresentable, Hashable, Codab
 public struct ListDataAttributesParameter: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let contact = ListDataAttributesParameter(rawValue: "contact")
     public static let company = ListDataAttributesParameter(rawValue: "company")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -86,7 +98,10 @@ public struct ListDataAttributesParameter: RawRepresentable, Hashable, Codable, 
 public struct CreateConversationResponseMessageType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let email = CreateConversationResponseMessageType(rawValue: "email")
     public static let inapp = CreateConversationResponseMessageType(rawValue: "inapp")
     public static let facebook = CreateConversationResponseMessageType(rawValue: "facebook")
@@ -94,7 +109,7 @@ public struct CreateConversationResponseMessageType: RawRepresentable, Hashable,
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -106,13 +121,16 @@ public struct CreateConversationResponseMessageType: RawRepresentable, Hashable,
 public struct SearchContentParameterItemX9f0c020a: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let published = SearchContentParameterItemX9f0c020a(rawValue: "published")
     public static let draft = SearchContentParameterItemX9f0c020a(rawValue: "draft")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -124,13 +142,16 @@ public struct SearchContentParameterItemX9f0c020a: RawRepresentable, Hashable, C
 public struct SearchContentParameterX0db47119: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let `in` = SearchContentParameterX0db47119(rawValue: "IN")
     public static let nin = SearchContentParameterX0db47119(rawValue: "NIN")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -139,25 +160,41 @@ public struct SearchContentParameterX0db47119: RawRepresentable, Hashable, Codab
     }
 }
 
-public struct ListDataConnectorExecutionResultsParameterXdaa02e1e: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
+public struct ListDataConnectorExecutionResultsParameterXdaa02e1e: RawRepresentable, Hashable, Codable, Sendable,
+    SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
-    public static let requestConfigurationError = ListDataConnectorExecutionResultsParameterXdaa02e1e(rawValue: "request_configuration_error")
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static let requestConfigurationError =
+        ListDataConnectorExecutionResultsParameterXdaa02e1e(rawValue: "request_configuration_error")
     public static let faradayError = ListDataConnectorExecutionResultsParameterXdaa02e1e(rawValue: "faraday_error")
-    public static let value3rdPartyError = ListDataConnectorExecutionResultsParameterXdaa02e1e(rawValue: "3rd_party_error")
-    public static let responseMappingError = ListDataConnectorExecutionResultsParameterXdaa02e1e(rawValue: "response_mapping_error")
-    public static let tokenRefreshError = ListDataConnectorExecutionResultsParameterXdaa02e1e(rawValue: "token_refresh_error")
-    public static let finActionResponseFormattingError = ListDataConnectorExecutionResultsParameterXdaa02e1e(rawValue: "fin_action_response_formatting_error")
-    public static let finActionIdentityVerificationError = ListDataConnectorExecutionResultsParameterXdaa02e1e(rawValue: "fin_action_identity_verification_error")
-    public static let emailVerificationError = ListDataConnectorExecutionResultsParameterXdaa02e1e(rawValue: "email_verification_error")
-    public static let nonFinStandaloneActionIdentityVerificationError = ListDataConnectorExecutionResultsParameterXdaa02e1e(rawValue: "non_fin_standalone_action_identity_verification_error")
-    public static let requestValidationError = ListDataConnectorExecutionResultsParameterXdaa02e1e(rawValue: "request_validation_error")
-    public static let clientSideActionError = ListDataConnectorExecutionResultsParameterXdaa02e1e(rawValue: "client_side_action_error")
+    public static let value3rdPartyError =
+        ListDataConnectorExecutionResultsParameterXdaa02e1e(rawValue: "3rd_party_error")
+    public static let responseMappingError =
+        ListDataConnectorExecutionResultsParameterXdaa02e1e(rawValue: "response_mapping_error")
+    public static let tokenRefreshError =
+        ListDataConnectorExecutionResultsParameterXdaa02e1e(rawValue: "token_refresh_error")
+    public static let finActionResponseFormattingError =
+        ListDataConnectorExecutionResultsParameterXdaa02e1e(rawValue: "fin_action_response_formatting_error")
+    public static let finActionIdentityVerificationError =
+        ListDataConnectorExecutionResultsParameterXdaa02e1e(rawValue: "fin_action_identity_verification_error")
+    public static let emailVerificationError =
+        ListDataConnectorExecutionResultsParameterXdaa02e1e(rawValue: "email_verification_error")
+    public static let nonFinStandaloneActionIdentityVerificationError =
+        ListDataConnectorExecutionResultsParameterXdaa02e1e(
+            rawValue: "non_fin_standalone_action_identity_verification_error"
+        )
+    public static let requestValidationError =
+        ListDataConnectorExecutionResultsParameterXdaa02e1e(rawValue: "request_validation_error")
+    public static let clientSideActionError =
+        ListDataConnectorExecutionResultsParameterXdaa02e1e(rawValue: "client_side_action_error")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -170,12 +207,15 @@ public struct ListDataConnectorExecutionResultsParameterXdaa02e1e: RawRepresenta
 public struct EscalateFinConversationResponseStatus: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let escalated = EscalateFinConversationResponseStatus(rawValue: "escalated")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -188,7 +228,10 @@ public struct EscalateFinConversationResponseStatus: RawRepresentable, Hashable,
 public struct SubmitFinCsatResponseRating: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let terrible = SubmitFinCsatResponseRating(rawValue: "terrible")
     public static let bad = SubmitFinCsatResponseRating(rawValue: "bad")
     public static let ok = SubmitFinCsatResponseRating(rawValue: "ok")
@@ -197,7 +240,7 @@ public struct SubmitFinCsatResponseRating: RawRepresentable, Hashable, Codable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -6,10 +6,20 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension FinAgentMethods {
-    /// Submits a single, self-contained question to Fin and starts a non-conversational request. Fin returns its answer asynchronously through the `fin_replied` event and completes the conversation without an `awaiting_user_reply` cycle.
+public extension FinAgentMethods {
+    /// Submits a single, self-contained question to Fin and starts a non-conversational request. Fin returns its answer
+    /// asynchronously through the `fin_replied` event and completes the conversation without an `awaiting_user_reply`
+    /// cycle.
     ///
-    /// Ask Fin a single, self-contained question and receive one informational answer. Unlike a conversation, `/fin/ask` is non-conversational: Fin will not ask follow-up questions, will not run procedures, and will not escalate to a human on its own. You can still escalate one yourself with `POST /fin/escalate`; the ask conversation is already closed after its one-shot answer, and escalation leaves it closed while routing the handoff separately. Fin's answer is delivered asynchronously via the `fin_replied` event. The conversation ends with a `complete` status — there is no `awaiting_user_reply` cycle. {% admonition type="warning" %} To request access to the Fin Agent API, go to **Settings > Integrations > Fin Agent API** in your workspace and tell us about your use case. Once access is granted, **Fin Agent API** appears under **Fin AI Agent > Deploy**. {% /admonition %}
+    /// Ask Fin a single, self-contained question and receive one informational answer. Unlike a conversation,
+    /// `/fin/ask` is non-conversational: Fin will not ask follow-up questions, will not run procedures, and will not
+    /// escalate to a human on its own. You can still escalate one yourself with `POST /fin/escalate`; the ask
+    /// conversation is already closed after its one-shot answer, and escalation leaves it closed while routing the
+    /// handoff separately. Fin's answer is delivered asynchronously via the `fin_replied` event. The conversation ends
+    /// with a `complete` status — there is no `awaiting_user_reply` cycle. {% admonition type="warning" %} To request
+    /// access to the Fin Agent API, go to **Settings > Integrations > Fin Agent API** in your workspace and tell us
+    /// about your use case. Once access is granted, **Fin Agent API** appears under **Fin AI Agent > Deploy**. {%
+    /// /admonition %}
     ///
     /// - Parameters:
     /// - conversationId: Your external conversation ID. Fin creates a conversation
@@ -26,15 +36,42 @@ extension FinAgentMethods {
     ///   as `messenger_environment` in your Messenger installation. Defaults to the
     ///   workspace's default environment; an identifier that matches no environment
     ///   is rejected.
-    public static func askFin(config: ClientConfig, conversationId: String, message: FinAgentMessage, user: FinAgentUser, intercomVersion: IntercomVersion? = nil, conversationMetadata: FinAgentConversationMetadata? = nil, attachments: [FinAgentAttachment]? = nil, environment: String? = nil, requestOptions: RequestOptions? = nil) async throws -> AskFinResponse {
-        if let attachments = attachments {
+    static func askFin(
+        config: ClientConfig,
+        conversationId: String,
+        message: FinAgentMessage,
+        user: FinAgentUser,
+        intercomVersion: IntercomVersion? = nil,
+        conversationMetadata: FinAgentConversationMetadata? = nil,
+        attachments: [FinAgentAttachment]? = nil,
+        environment: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AskFinResponse {
+        if let attachments {
             try validateItems("attachments", attachments, max: 10)
         }
 
-        let requestBody = AskFinRequestBody(conversationId: conversationId, message: message, user: user, conversationMetadata: conversationMetadata, attachments: attachments, environment: environment)
+        let requestBody = AskFinRequestBody(
+            conversationId: conversationId,
+            message: message,
+            user: user,
+            conversationMetadata: conversationMetadata,
+            attachments: attachments,
+            environment: environment
+        )
 
-        return try (await sdkRequest("POST", "/fin/ask", config: config, body: requestBody, decoder: .json, operationId: "askFin", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/fin/ask",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "askFin",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["400": Error2.self, "401": Error2.self]
+        )).data
     }
 }

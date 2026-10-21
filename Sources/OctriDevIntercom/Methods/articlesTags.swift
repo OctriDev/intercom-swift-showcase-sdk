@@ -6,10 +6,14 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ArticlesMethods {
-    /// Applies an existing workspace tag to an article. Provide the tag's `id` in the request body and use `article_id` to identify the article. The authenticated teammate needs the `manage_knowledge_base_content` permission and the `read_write_articles_scope` OAuth scope.
+public extension ArticlesMethods {
+    /// Applies an existing workspace tag to an article. Provide the tag's `id` in the request body and use `article_id`
+    /// to identify the article. The authenticated teammate needs the `manage_knowledge_base_content` permission and the
+    /// `read_write_articles_scope` OAuth scope.
     ///
-    /// Apply an existing tag to an article. Returns the tag that was applied. The tag must already exist in the workspace (create tags with the Tags API), and the authenticating teammate must have the `manage_knowledge_base_content` permission. Requires the `read_write_articles_scope` OAuth scope.
+    /// Apply an existing tag to an article. Returns the tag that was applied. The tag must already exist in the
+    /// workspace (create tags with the Tags API), and the authenticating teammate must have the
+    /// `manage_knowledge_base_content` permission. Requires the `read_write_articles_scope` OAuth scope.
     ///
     /// - Parameters:
     /// - articleId: The unique identifier for the article which is given by
@@ -17,25 +21,66 @@ extension ArticlesMethods {
     /// - id: The unique identifier of the tag to apply, as given by Intercom.
     /// - adminId: Optional id of the teammate to attribute the tagging to. Defaults
     ///   to the authenticating teammate. Does not affect authorization.
-    public static func attachArticlesTag(config: ClientConfig, articleId: Int, id: String, intercomVersion: IntercomVersion? = nil, adminId: SdkOptional<String>? = nil, requestOptions: RequestOptions? = nil) async throws -> Tag {
+    static func attachArticlesTag(
+        config: ClientConfig,
+        articleId: Int,
+        id: String,
+        intercomVersion: IntercomVersion? = nil,
+        adminId: SdkOptional<String>? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Tag {
         let requestBody = AttachArticlesTagRequestBody(id: id, adminId: adminId)
 
-        return try (await sdkRequest("POST", ["/articles/", sdkEncodePathSegment(sdkWireString(articleId)), "/tags"].joined(), config: config, body: requestBody, decoder: .json, operationId: "attachArticlesTag", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/articles/", sdkEncodePathSegment(sdkWireString(articleId)), "/tags"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "attachArticlesTag",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self]
+        )).data
     }
 
-    /// Removes a tag from an article. Use the `article_id` and `id` path parameters to identify the article and tag to detach. The authenticated teammate needs the `manage_knowledge_base_content` permission and the `read_write_articles_scope` OAuth scope.
+    /// Removes a tag from an article. Use the `article_id` and `id` path parameters to identify the article and tag to
+    /// detach. The authenticated teammate needs the `manage_knowledge_base_content` permission and the
+    /// `read_write_articles_scope` OAuth scope.
     ///
-    /// Remove a tag from an article. Returns the tag that was removed, with null `applied_at` and `applied_by`. The authenticating teammate must have the `manage_knowledge_base_content` permission. Requires the `read_write_articles_scope` OAuth scope.
+    /// Remove a tag from an article. Returns the tag that was removed, with null `applied_at` and `applied_by`. The
+    /// authenticating teammate must have the `manage_knowledge_base_content` permission. Requires the
+    /// `read_write_articles_scope` OAuth scope.
     ///
     /// - Parameters:
     /// - articleId: The unique identifier for the article which is given by
     ///   Intercom.
     /// - id: The unique identifier of the tag to remove, as given by Intercom.
-    public static func detachArticlesTag(config: ClientConfig, articleId: Int, id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Tag {
-        return try (await sdkRequest("DELETE", ["/articles/", sdkEncodePathSegment(sdkWireString(articleId)), "/tags/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "detachArticlesTag", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self])).data
+    static func detachArticlesTag(
+        config: ClientConfig,
+        articleId: Int,
+        id: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Tag {
+        try await (sdkRequest(
+            "DELETE",
+            [
+                "/articles/",
+                sdkEncodePathSegment(sdkWireString(articleId)),
+                "/tags/",
+                sdkEncodePathSegment(sdkWireString(id)),
+            ].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "detachArticlesTag",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self]
+        )).data
     }
 }

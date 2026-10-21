@@ -3,7 +3,7 @@
 
 import Foundation
 
-// TaggedModelsContacts domain models
+/// TaggedModelsContacts domain models
 /// A bulk job for updating contacts asynchronously. Track the job status using the `state` field.
 public struct ContactsBulkJob: Codable {
     /// The unique identifier for the bulk job.
@@ -42,27 +42,36 @@ public struct ContactsBulkJob: Codable {
     }
 
     init() {
-        (self.id, self.type, self.state, self.createdAt, self.updatedAt) = (nil, nil, nil, nil, nil)
-        (self.completedAt, self.tasks, self.url) = (nil, nil, nil)
+        (id, type, state, createdAt, updatedAt) = (nil, nil, nil, nil, nil)
+        (completedAt, tasks, url) = (nil, nil, nil)
     }
 }
 
-extension ContactsBulkJob {
-    public init(from decoder: Decoder) throws {
+public extension ContactsBulkJob {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.state = try container.sdkDecodeIfPresent(.state)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.completedAt = try container.sdkDecodeIfPresent(.completedAt)
-        self.tasks = try container.sdkDecodeIfPresent(.tasks)
-        self.url = try container.sdkDecodeIfPresent(.url)
+        id = try container.sdkDecodeIfPresent(.id)
+        type = try container.sdkDecodeIfPresent(.type)
+        state = try container.sdkDecodeIfPresent(.state)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        completedAt = try container.sdkDecodeIfPresent(.completedAt)
+        tasks = try container.sdkDecodeIfPresent(.tasks)
+        url = try container.sdkDecodeIfPresent(.url)
     }
 }
 
-extension ContactsBulkJob {
-    public init(id: String? = nil, type: ContactsBulkJobType? = nil, state: ContactsBulkJobState? = nil, createdAt: Int? = nil, updatedAt: Int? = nil, completedAt: Int? = nil, tasks: [ContactsBulkJobTasksItem]? = nil, url: String? = nil) {
+public extension ContactsBulkJob {
+    init(
+        id: String? = nil,
+        type: ContactsBulkJobType? = nil,
+        state: ContactsBulkJobState? = nil,
+        createdAt: Int? = nil,
+        updatedAt: Int? = nil,
+        completedAt: Int? = nil,
+        tasks: [ContactsBulkJobTasksItem]? = nil,
+        url: String? = nil
+    ) {
         self.init()
         (self.id, self.type) = (id, type)
         (self.state, self.createdAt) = (state, createdAt)
@@ -75,12 +84,15 @@ extension ContactsBulkJob {
 public struct ContactsBulkJobType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let contactsBulkJob = ContactsBulkJobType(rawValue: "contacts.bulk.job")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -93,7 +105,10 @@ public struct ContactsBulkJobType: RawRepresentable, Hashable, Codable, Sendable
 public struct ContactsBulkJobState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let pending = ContactsBulkJobState(rawValue: "pending")
     public static let running = ContactsBulkJobState(rawValue: "running")
     public static let completed = ContactsBulkJobState(rawValue: "completed")
@@ -101,7 +116,7 @@ public struct ContactsBulkJobState: RawRepresentable, Hashable, Codable, Sendabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -114,7 +129,10 @@ public struct ContactsBulkJobState: RawRepresentable, Hashable, Codable, Sendabl
 public struct ContactsBulkJobTasksItemState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let pending = ContactsBulkJobTasksItemState(rawValue: "pending")
     public static let running = ContactsBulkJobTasksItemState(rawValue: "running")
     public static let completed = ContactsBulkJobTasksItemState(rawValue: "completed")
@@ -122,7 +140,7 @@ public struct ContactsBulkJobTasksItemState: RawRepresentable, Hashable, Codable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

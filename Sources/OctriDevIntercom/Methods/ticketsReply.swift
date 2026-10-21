@@ -6,19 +6,38 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension TicketsMethods {
-    /// Submits a reply or note on a ticket, either on behalf of an admin or a contact. For an admin reply, set `message_type` and provide the fields required for that reply type; for a contact reply, identify the contact using one of the supported identifiers. Use the ticket object's internal `id`, not the ticket number shown in the Inbox.
+public extension TicketsMethods {
+    /// Submits a reply or note on a ticket, either on behalf of an admin or a contact. For an admin reply, set
+    /// `message_type` and provide the fields required for that reply type; for a contact reply, identify the contact
+    /// using one of the supported identifiers. Use the ticket object's internal `id`, not the ticket number shown in
+    /// the Inbox.
     ///
     /// You can reply to a ticket with a message from an admin or on behalf of a contact, or with a note for admins.
     ///
     /// - Parameters:
     /// - skipNotifications: Option to disable notifications when replying to a
     ///   Ticket.
-    public static func replyTicket(config: ClientConfig, ticketId: String, intercomVersion: IntercomVersion? = nil, skipNotifications: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> TicketReply {
+    static func replyTicket(
+        config: ClientConfig,
+        ticketId: String,
+        intercomVersion: IntercomVersion? = nil,
+        skipNotifications: Bool? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> TicketReply {
         let requestBody = ReplyTicketRequestBody(skipNotifications: skipNotifications)
 
-        return try (await sdkRequest("POST", ["/tickets/", sdkEncodePathSegment(sdkWireString(ticketId)), "/reply"].joined(), config: config, body: requestBody, decoder: .json, operationId: "replyTicket", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/tickets/", sdkEncodePathSegment(sdkWireString(ticketId)), "/reply"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "replyTicket",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self]
+        )).data
     }
 }

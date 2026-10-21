@@ -6,16 +6,33 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ContactsMethods {
-    /// Retrieves the status of an asynchronous bulk contact job. Supply the job's `id` to view its overall state, task details, and timestamps. Use the state to determine whether processing is pending, running, completed, or completed with errors.
+public extension ContactsMethods {
+    /// Retrieves the status of an asynchronous bulk contact job. Supply the job's `id` to view its overall state, task
+    /// details, and timestamps. Use the state to determine whether processing is pending, running, completed, or
+    /// completed with errors.
     ///
-    /// You can check the status of a bulk contact update job. The `state` field indicates the overall job progress: `pending`, `running`, `completed`, or `completed_with_errors`.
+    /// You can check the status of a bulk contact update job. The `state` field indicates the overall job progress:
+    /// `pending`, `running`, `completed`, or `completed_with_errors`.
     ///
     /// - Parameters:
     /// - id: The unique identifier for the bulk job.
-    public static func showBulkUpdateContactsJob(config: ClientConfig, id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ContactsBulkJob {
-        return try (await sdkRequest("GET", ["/contacts/bulk/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "ShowBulkUpdateContactsJob", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self])).data
+    static func showBulkUpdateContactsJob(
+        config: ClientConfig,
+        id: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContactsBulkJob {
+        try await (sdkRequest(
+            "GET",
+            ["/contacts/bulk/", sdkEncodePathSegment(sdkWireString(id))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "ShowBulkUpdateContactsJob",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self]
+        )).data
     }
 }

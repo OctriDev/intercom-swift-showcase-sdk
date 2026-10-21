@@ -6,10 +6,21 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ConversationsMethods {
-    /// Updates a conversation's read state, title, custom attributes, or associated company. Supply only the fields you want to change; use the reply or manage endpoints for replies and actions such as assignment, opening, closing, or snoozing. The response returns the updated conversation.
+public extension ConversationsMethods {
+    /// Updates a conversation's read state, title, custom attributes, or associated company. Supply only the fields you
+    /// want to change; use the reply or manage endpoints for replies and actions such as assignment, opening, closing,
+    /// or snoozing. The response returns the updated conversation.
     ///
-    /// You can update an existing conversation. {% admonition type="info" name="Replying and other actions" %} If you want to reply to a coveration or take an action such as assign, unassign, open, close or snooze, take a look at the reply and manage endpoints. {% /admonition %} {% admonition type="info" %} This endpoint handles both **conversation updates** and **custom object associations**. See _`update a conversation with an association to a custom object instance`_ in the request/response examples to see the custom object association format. {% /admonition %} {% admonition type="danger" name="Breaking change: duplicate custom attribute names" %} The `PUT /conversations/{id}` endpoint now returns a `400 INVALID_PARAMETER` error when the request includes `custom_attributes` and your workspace contains multiple non-archived conversation custom attributes with the same name. Previously, the update would silently apply to a non-deterministic attribute. To resolve, rename or archive the duplicate attribute in your workspace settings, then retry the request. {% /admonition %}
+    /// You can update an existing conversation. {% admonition type="info" name="Replying and other actions" %} If you
+    /// want to reply to a coveration or take an action such as assign, unassign, open, close or snooze, take a look at
+    /// the reply and manage endpoints. {% /admonition %} {% admonition type="info" %} This endpoint handles both
+    /// **conversation updates** and **custom object associations**. See _`update a conversation with an association to
+    /// a custom object instance`_ in the request/response examples to see the custom object association format. {%
+    /// /admonition %} {% admonition type="danger" name="Breaking change: duplicate custom attribute names" %} The `PUT
+    /// /conversations/{id}` endpoint now returns a `400 INVALID_PARAMETER` error when the request includes
+    /// `custom_attributes` and your workspace contains multiple non-archived conversation custom attributes with the
+    /// same name. Previously, the update would silently apply to a non-deterministic attribute. To resolve, rename or
+    /// archive the duplicate attribute in your workspace settings, then retry the request. {% /admonition %}
     ///
     /// - Parameters:
     /// - conversationId: The id of the conversation to target
@@ -26,13 +37,39 @@ extension ConversationsMethods {
     /// - companyId: The ID of the company that the conversation is associated with.
     ///   The unique identifier for the company which is given by Intercom. Set to nil
     ///   to remove company.
-    public static func updateConversation(config: ClientConfig, conversationId: Int, displayAs: String? = nil, intercomVersion: IntercomVersion? = nil, read: Bool? = nil, title: String? = nil, customAttributes: CustomAttributesRequest? = nil, companyId: String? = nil, requestOptions: RequestOptions? = nil) async throws -> Conversation {
-        let requestBody = UpdateConversationRequestBody(read: read, title: title, customAttributes: customAttributes, companyId: companyId)
+    static func updateConversation(
+        config: ClientConfig,
+        conversationId: Int,
+        displayAs: String? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        read: Bool? = nil,
+        title: String? = nil,
+        customAttributes: CustomAttributesRequest? = nil,
+        companyId: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Conversation {
+        let requestBody = UpdateConversationRequestBody(
+            read: read,
+            title: title,
+            customAttributes: customAttributes,
+            companyId: companyId
+        )
 
-        return try (await sdkRequest("PUT", ["/conversations/", sdkEncodePathSegment(sdkWireString(conversationId))].joined(), config: config, query: [
-            SdkQueryParameter("display_as", value: displayAs),
-        ], body: requestBody, decoder: .json, operationId: "updateConversation", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            ["/conversations/", sdkEncodePathSegment(sdkWireString(conversationId))].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("display_as", value: displayAs),
+            ],
+            body: requestBody,
+            decoder: .json,
+            operationId: "updateConversation",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self]
+        )).data
     }
 }

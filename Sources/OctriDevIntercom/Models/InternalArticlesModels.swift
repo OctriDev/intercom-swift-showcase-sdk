@@ -3,7 +3,7 @@
 
 import Foundation
 
-// InternalArticles domain models
+/// InternalArticles domain models
 /// You can Update an Internal Article
 public struct UpdateInternalArticleRequest: Codable {
     /// The title of the article.
@@ -53,29 +53,46 @@ public struct UpdateInternalArticleRequest: Codable {
     }
 
     init() {
-        (self.title, self.body, self.bodyMarkdown, self.authorId, self.ownerId) = (nil, nil, nil, nil, nil)
-        (self.folderId, self.audienceIds, self.aiChatbotAvailability, self.aiCopilotAvailability, self.aiSalesAgentAvailability) = (nil, nil, nil, nil, nil)
+        (title, body, bodyMarkdown, authorId, ownerId) = (nil, nil, nil, nil, nil)
+        (folderId, audienceIds, aiChatbotAvailability, aiCopilotAvailability, aiSalesAgentAvailability) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
     }
 }
 
-extension UpdateInternalArticleRequest {
-    public init(from decoder: Decoder) throws {
+public extension UpdateInternalArticleRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.title = try container.sdkDecodeIfPresent(.title)
-        self.body = try container.sdkDecodeIfPresent(.body)
-        self.bodyMarkdown = try container.sdkDecodeIfPresent(.bodyMarkdown)
-        self.authorId = try container.sdkDecodeIfPresent(.authorId)
-        self.ownerId = try container.sdkDecodeIfPresent(.ownerId)
-        self.folderId = try container.sdkDecodeIfPresent(.folderId)
-        self.audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
-        self.aiChatbotAvailability = try container.sdkDecodeIfPresent(.aiChatbotAvailability)
-        self.aiCopilotAvailability = try container.sdkDecodeIfPresent(.aiCopilotAvailability)
-        self.aiSalesAgentAvailability = try container.sdkDecodeIfPresent(.aiSalesAgentAvailability)
+        title = try container.sdkDecodeIfPresent(.title)
+        body = try container.sdkDecodeIfPresent(.body)
+        bodyMarkdown = try container.sdkDecodeIfPresent(.bodyMarkdown)
+        authorId = try container.sdkDecodeIfPresent(.authorId)
+        ownerId = try container.sdkDecodeIfPresent(.ownerId)
+        folderId = try container.sdkDecodeIfPresent(.folderId)
+        audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
+        aiChatbotAvailability = try container.sdkDecodeIfPresent(.aiChatbotAvailability)
+        aiCopilotAvailability = try container.sdkDecodeIfPresent(.aiCopilotAvailability)
+        aiSalesAgentAvailability = try container.sdkDecodeIfPresent(.aiSalesAgentAvailability)
     }
 }
 
-extension UpdateInternalArticleRequest {
-    public init(title: String? = nil, body: String? = nil, bodyMarkdown: String? = nil, authorId: Int? = nil, ownerId: Int? = nil, folderId: Int? = nil, audienceIds: [Int]? = nil, aiChatbotAvailability: Bool? = nil, aiCopilotAvailability: Bool? = nil, aiSalesAgentAvailability: Bool? = nil) {
+public extension UpdateInternalArticleRequest {
+    init(
+        title: String? = nil,
+        body: String? = nil,
+        bodyMarkdown: String? = nil,
+        authorId: Int? = nil,
+        ownerId: Int? = nil,
+        folderId: Int? = nil,
+        audienceIds: [Int]? = nil,
+        aiChatbotAvailability: Bool? = nil,
+        aiCopilotAvailability: Bool? = nil,
+        aiSalesAgentAvailability: Bool? = nil
+    ) {
         self.init()
         (self.title, self.body) = (title, body)
         (self.bodyMarkdown, self.authorId) = (bodyMarkdown, authorId)
@@ -109,22 +126,27 @@ public struct InternalArticleList: Codable {
     }
 
     init() {
-        (self.type, self.pages, self.totalCount, self.data) = (nil, nil, nil, nil)
+        (type, pages, totalCount, data) = (nil, nil, nil, nil)
     }
 }
 
-extension InternalArticleList {
-    public init(from decoder: Decoder) throws {
+public extension InternalArticleList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.pages = try container.sdkDecodeIfPresent(.pages)
-        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        type = try container.sdkDecodeIfPresent(.type)
+        pages = try container.sdkDecodeIfPresent(.pages)
+        totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension InternalArticleList {
-    public init(type: InternalArticleListType? = nil, pages: CursorPages? = nil, totalCount: Int? = nil, data: [InternalArticleListItem]? = nil) {
+public extension InternalArticleList {
+    init(
+        type: InternalArticleListType? = nil,
+        pages: CursorPages? = nil,
+        totalCount: Int? = nil,
+        data: [InternalArticleListItem]? = nil
+    ) {
         self.init()
         (self.type, self.pages) = (type, pages)
         (self.totalCount, self.data) = (totalCount, data)
@@ -179,36 +201,61 @@ public struct CreateInternalArticleRequest: Codable {
         case aiSalesAgentAvailability = "ai_sales_agent_availability"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateInternalArticleRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.title) else {
-            throw SdkValidationError(field: "title", code: "required", message: "Validation failed for 'title': value is required")
-        }
-        guard container.contains(.authorId) else {
-            throw SdkValidationError(field: "author_id", code: "required", message: "Validation failed for 'author_id': value is required")
-        }
-        guard container.contains(.ownerId) else {
-            throw SdkValidationError(field: "owner_id", code: "required", message: "Validation failed for 'owner_id': value is required")
-        }
-        self.title = try container.sdkDecodeRequired(.title)
-        self.authorId = try container.sdkDecodeRequired(.authorId)
-        self.ownerId = try container.sdkDecodeRequired(.ownerId)
-        self.body = try container.sdkDecodeIfPresent(.body)
-        self.bodyMarkdown = try container.sdkDecodeIfPresent(.bodyMarkdown)
-        self.folderId = try container.sdkDecodeIfPresent(.folderId)
-        self.audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
-        self.aiChatbotAvailability = try container.sdkDecodeIfPresent(.aiChatbotAvailability)
-        self.aiCopilotAvailability = try container.sdkDecodeIfPresent(.aiCopilotAvailability)
-        self.aiSalesAgentAvailability = try container.sdkDecodeIfPresent(.aiSalesAgentAvailability)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateInternalArticleRequest {
-    public init(title: String, authorId: Int, ownerId: Int, body: String? = nil, bodyMarkdown: String? = nil, folderId: Int? = nil, audienceIds: [Int]? = nil, aiChatbotAvailability: Bool? = nil, aiCopilotAvailability: Bool? = nil, aiSalesAgentAvailability: Bool? = nil) {
+public extension CreateInternalArticleRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.title) else {
+            throw SdkValidationError(
+                field: "title",
+                code: "required",
+                message: "Validation failed for 'title': value is required"
+            )
+        }
+        guard container.contains(.authorId) else {
+            throw SdkValidationError(
+                field: "author_id",
+                code: "required",
+                message: "Validation failed for 'author_id': value is required"
+            )
+        }
+        guard container.contains(.ownerId) else {
+            throw SdkValidationError(
+                field: "owner_id",
+                code: "required",
+                message: "Validation failed for 'owner_id': value is required"
+            )
+        }
+        title = try container.sdkDecodeRequired(.title)
+        authorId = try container.sdkDecodeRequired(.authorId)
+        ownerId = try container.sdkDecodeRequired(.ownerId)
+        body = try container.sdkDecodeIfPresent(.body)
+        bodyMarkdown = try container.sdkDecodeIfPresent(.bodyMarkdown)
+        folderId = try container.sdkDecodeIfPresent(.folderId)
+        audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
+        aiChatbotAvailability = try container.sdkDecodeIfPresent(.aiChatbotAvailability)
+        aiCopilotAvailability = try container.sdkDecodeIfPresent(.aiCopilotAvailability)
+        aiSalesAgentAvailability = try container.sdkDecodeIfPresent(.aiSalesAgentAvailability)
+    }
+}
+
+public extension CreateInternalArticleRequest {
+    init(
+        title: String,
+        authorId: Int,
+        ownerId: Int,
+        body: String? = nil,
+        bodyMarkdown: String? = nil,
+        folderId: Int? = nil,
+        audienceIds: [Int]? = nil,
+        aiChatbotAvailability: Bool? = nil,
+        aiCopilotAvailability: Bool? = nil,
+        aiSalesAgentAvailability: Bool? = nil
+    ) {
         (self.title, self.authorId) = (title, authorId)
         (self.ownerId, self.body) = (ownerId, body)
         (self.bodyMarkdown, self.folderId) = (bodyMarkdown, folderId)
@@ -237,21 +284,21 @@ public struct DeletedInternalArticleObject: Codable {
     }
 
     init() {
-        (self.id, self.object, self.deleted) = (nil, nil, nil)
+        (id, object, deleted) = (nil, nil, nil)
     }
 }
 
-extension DeletedInternalArticleObject {
-    public init(from decoder: Decoder) throws {
+public extension DeletedInternalArticleObject {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.object = try container.sdkDecodeIfPresent(.object)
-        self.deleted = try container.sdkDecodeIfPresent(.deleted)
+        id = try container.sdkDecodeIfPresent(.id)
+        object = try container.sdkDecodeIfPresent(.object)
+        deleted = try container.sdkDecodeIfPresent(.deleted)
     }
 }
 
-extension DeletedInternalArticleObject {
-    public init(id: String? = nil, object: DeletedInternalArticleObjectObject? = nil, deleted: Bool? = nil) {
+public extension DeletedInternalArticleObject {
+    init(id: String? = nil, object: DeletedInternalArticleObjectObject? = nil, deleted: Bool? = nil) {
         self.init()
         (self.id, self.object) = (id, object)
         self.deleted = deleted
@@ -262,12 +309,15 @@ extension DeletedInternalArticleObject {
 public struct DeletedInternalArticleObjectObject: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let internalArticle = DeletedInternalArticleObjectObject(rawValue: "internal_article")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -280,12 +330,15 @@ public struct DeletedInternalArticleObjectObject: RawRepresentable, Hashable, Co
 public struct InternalArticleListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let list = InternalArticleListType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// DataExport domain models
+/// DataExport domain models
 /// A CSV output file
 public struct DataExportCsv: Codable {
     /// The user_id of the user who was sent the message.
@@ -104,49 +104,82 @@ public struct DataExportCsv: Codable {
     }
 
     init() {
-        (self.userId, self.userExternalId, self.companyId, self.email, self.name) = (nil, nil, nil, nil, nil)
-        (self.rulesetId, self.contentId, self.contentType, self.contentTitle, self.rulesetVersionId) = (nil, nil, nil, nil, nil)
-        (self.receiptId, self.receivedAt, self.seriesId, self.seriesTitle, self.nodeId) = (nil, nil, nil, nil, nil)
-        (self.firstReply, self.firstCompletion, self.firstSeriesCompletion, self.firstSeriesDisengagement, self.firstSeriesExit) = (nil, nil, nil, nil, nil)
-        (self.firstGoalSuccess, self.firstOpen, self.firstClick, self.firstDismisall, self.firstUnsubscribe) = (nil, nil, nil, nil, nil)
-        self.firstHardBounce = nil
+        (userId, userExternalId, companyId, email, name) = (nil, nil, nil, nil, nil)
+        (rulesetId, contentId, contentType, contentTitle, rulesetVersionId) = (nil, nil, nil, nil, nil)
+        (receiptId, receivedAt, seriesId, seriesTitle, nodeId) = (nil, nil, nil, nil, nil)
+        (firstReply, firstCompletion, firstSeriesCompletion, firstSeriesDisengagement, firstSeriesExit) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        (firstGoalSuccess, firstOpen, firstClick, firstDismisall, firstUnsubscribe) = (nil, nil, nil, nil, nil)
+        firstHardBounce = nil
     }
 }
 
-extension DataExportCsv {
-    public init(from decoder: Decoder) throws {
+public extension DataExportCsv {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.userId = try container.sdkDecodeIfPresent(.userId)
-        self.userExternalId = try container.sdkDecodeIfPresent(.userExternalId)
-        self.companyId = try container.sdkDecodeIfPresent(.companyId)
-        self.email = try container.sdkDecodeIfPresent(.email)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.rulesetId = try container.sdkDecodeIfPresent(.rulesetId)
-        self.contentId = try container.sdkDecodeIfPresent(.contentId)
-        self.contentType = try container.sdkDecodeIfPresent(.contentType)
-        self.contentTitle = try container.sdkDecodeIfPresent(.contentTitle)
-        self.rulesetVersionId = try container.sdkDecodeIfPresent(.rulesetVersionId)
-        self.receiptId = try container.sdkDecodeIfPresent(.receiptId)
-        self.receivedAt = try container.sdkDecodeIfPresent(.receivedAt)
-        self.seriesId = try container.sdkDecodeIfPresent(.seriesId)
-        self.seriesTitle = try container.sdkDecodeIfPresent(.seriesTitle)
-        self.nodeId = try container.sdkDecodeIfPresent(.nodeId)
-        self.firstReply = try container.sdkDecodeIfPresent(.firstReply)
-        self.firstCompletion = try container.sdkDecodeIfPresent(.firstCompletion)
-        self.firstSeriesCompletion = try container.sdkDecodeIfPresent(.firstSeriesCompletion)
-        self.firstSeriesDisengagement = try container.sdkDecodeIfPresent(.firstSeriesDisengagement)
-        self.firstSeriesExit = try container.sdkDecodeIfPresent(.firstSeriesExit)
-        self.firstGoalSuccess = try container.sdkDecodeIfPresent(.firstGoalSuccess)
-        self.firstOpen = try container.sdkDecodeIfPresent(.firstOpen)
-        self.firstClick = try container.sdkDecodeIfPresent(.firstClick)
-        self.firstDismisall = try container.sdkDecodeIfPresent(.firstDismisall)
-        self.firstUnsubscribe = try container.sdkDecodeIfPresent(.firstUnsubscribe)
-        self.firstHardBounce = try container.sdkDecodeIfPresent(.firstHardBounce)
+        userId = try container.sdkDecodeIfPresent(.userId)
+        userExternalId = try container.sdkDecodeIfPresent(.userExternalId)
+        companyId = try container.sdkDecodeIfPresent(.companyId)
+        email = try container.sdkDecodeIfPresent(.email)
+        name = try container.sdkDecodeIfPresent(.name)
+        rulesetId = try container.sdkDecodeIfPresent(.rulesetId)
+        contentId = try container.sdkDecodeIfPresent(.contentId)
+        contentType = try container.sdkDecodeIfPresent(.contentType)
+        contentTitle = try container.sdkDecodeIfPresent(.contentTitle)
+        rulesetVersionId = try container.sdkDecodeIfPresent(.rulesetVersionId)
+        receiptId = try container.sdkDecodeIfPresent(.receiptId)
+        receivedAt = try container.sdkDecodeIfPresent(.receivedAt)
+        seriesId = try container.sdkDecodeIfPresent(.seriesId)
+        seriesTitle = try container.sdkDecodeIfPresent(.seriesTitle)
+        nodeId = try container.sdkDecodeIfPresent(.nodeId)
+        firstReply = try container.sdkDecodeIfPresent(.firstReply)
+        firstCompletion = try container.sdkDecodeIfPresent(.firstCompletion)
+        firstSeriesCompletion = try container.sdkDecodeIfPresent(.firstSeriesCompletion)
+        firstSeriesDisengagement = try container.sdkDecodeIfPresent(.firstSeriesDisengagement)
+        firstSeriesExit = try container.sdkDecodeIfPresent(.firstSeriesExit)
+        firstGoalSuccess = try container.sdkDecodeIfPresent(.firstGoalSuccess)
+        firstOpen = try container.sdkDecodeIfPresent(.firstOpen)
+        firstClick = try container.sdkDecodeIfPresent(.firstClick)
+        firstDismisall = try container.sdkDecodeIfPresent(.firstDismisall)
+        firstUnsubscribe = try container.sdkDecodeIfPresent(.firstUnsubscribe)
+        firstHardBounce = try container.sdkDecodeIfPresent(.firstHardBounce)
     }
 }
 
-extension DataExportCsv {
-    public init(userId: String? = nil, userExternalId: String? = nil, companyId: String? = nil, email: String? = nil, name: String? = nil, rulesetId: String? = nil, contentId: String? = nil, contentType: String? = nil, contentTitle: String? = nil, rulesetVersionId: String? = nil, receiptId: String? = nil, receivedAt: Int? = nil, seriesId: String? = nil, seriesTitle: String? = nil, nodeId: String? = nil, firstReply: Int? = nil, firstCompletion: Int? = nil, firstSeriesCompletion: Int? = nil, firstSeriesDisengagement: Int? = nil, firstSeriesExit: Int? = nil, firstGoalSuccess: Int? = nil, firstOpen: Int? = nil, firstClick: Int? = nil, firstDismisall: Int? = nil, firstUnsubscribe: Int? = nil, firstHardBounce: Int? = nil) {
+public extension DataExportCsv {
+    init(
+        userId: String? = nil,
+        userExternalId: String? = nil,
+        companyId: String? = nil,
+        email: String? = nil,
+        name: String? = nil,
+        rulesetId: String? = nil,
+        contentId: String? = nil,
+        contentType: String? = nil,
+        contentTitle: String? = nil,
+        rulesetVersionId: String? = nil,
+        receiptId: String? = nil,
+        receivedAt: Int? = nil,
+        seriesId: String? = nil,
+        seriesTitle: String? = nil,
+        nodeId: String? = nil,
+        firstReply: Int? = nil,
+        firstCompletion: Int? = nil,
+        firstSeriesCompletion: Int? = nil,
+        firstSeriesDisengagement: Int? = nil,
+        firstSeriesExit: Int? = nil,
+        firstGoalSuccess: Int? = nil,
+        firstOpen: Int? = nil,
+        firstClick: Int? = nil,
+        firstDismisall: Int? = nil,
+        firstUnsubscribe: Int? = nil,
+        firstHardBounce: Int? = nil
+    ) {
         self.init()
         (self.userId, self.userExternalId) = (userId, userExternalId)
         (self.companyId, self.email) = (companyId, email)
@@ -178,25 +211,35 @@ public struct CreateDataExportsRequest: Codable {
         case createdAtBefore = "created_at_before"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CreateDataExportsRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.createdAtAfter) else {
-            throw SdkValidationError(field: "created_at_after", code: "required", message: "Validation failed for 'created_at_after': value is required")
-        }
-        guard container.contains(.createdAtBefore) else {
-            throw SdkValidationError(field: "created_at_before", code: "required", message: "Validation failed for 'created_at_before': value is required")
-        }
-        self.createdAtAfter = try container.sdkDecodeRequired(.createdAtAfter)
-        self.createdAtBefore = try container.sdkDecodeRequired(.createdAtBefore)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CreateDataExportsRequest {
-    public init(createdAtAfter: Int, createdAtBefore: Int) {
+public extension CreateDataExportsRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.createdAtAfter) else {
+            throw SdkValidationError(
+                field: "created_at_after",
+                code: "required",
+                message: "Validation failed for 'created_at_after': value is required"
+            )
+        }
+        guard container.contains(.createdAtBefore) else {
+            throw SdkValidationError(
+                field: "created_at_before",
+                code: "required",
+                message: "Validation failed for 'created_at_before': value is required"
+            )
+        }
+        createdAtAfter = try container.sdkDecodeRequired(.createdAtAfter)
+        createdAtBefore = try container.sdkDecodeRequired(.createdAtBefore)
+    }
+}
+
+public extension CreateDataExportsRequest {
+    init(createdAtAfter: Int, createdAtBefore: Int) {
         (self.createdAtAfter, self.createdAtBefore) = (createdAtAfter, createdAtBefore)
     }
 }

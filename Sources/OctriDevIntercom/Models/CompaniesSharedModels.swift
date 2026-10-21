@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Companies domain models
+/// Companies domain models
 /// This will return a list of companies for the App.
 public struct CompanyList: Codable {
     /// The type of object - `list`.
@@ -27,22 +27,22 @@ public struct CompanyList: Codable {
     }
 
     init() {
-        (self.type, self.pages, self.totalCount, self.data) = (nil, nil, nil, nil)
+        (type, pages, totalCount, data) = (nil, nil, nil, nil)
     }
 }
 
-extension CompanyList {
-    public init(from decoder: Decoder) throws {
+public extension CompanyList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.pages = try container.sdkDecodeIfPresent(.pages)
-        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        type = try container.sdkDecodeIfPresent(.type)
+        pages = try container.sdkDecodeIfPresent(.pages)
+        totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension CompanyList {
-    public init(type: CompanyListType? = nil, pages: CursorPages? = nil, totalCount: Int? = nil, data: [Company]? = nil) {
+public extension CompanyList {
+    init(type: CompanyListType? = nil, pages: CursorPages? = nil, totalCount: Int? = nil, data: [Company]? = nil) {
         self.init()
         (self.type, self.pages) = (type, pages)
         (self.totalCount, self.data) = (totalCount, data)
@@ -53,12 +53,15 @@ extension CompanyList {
 public struct CompanyListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let list = CompanyListType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

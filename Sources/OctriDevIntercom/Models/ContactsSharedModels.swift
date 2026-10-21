@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Contacts domain models
+/// Contacts domain models
 /// Contacts are your users in Intercom.
 public struct ContactList: Codable {
     /// Always list
@@ -27,22 +27,22 @@ public struct ContactList: Codable {
     }
 
     init() {
-        (self.type, self.data, self.totalCount, self.pages) = (nil, nil, nil, nil)
+        (type, data, totalCount, pages) = (nil, nil, nil, nil)
     }
 }
 
-extension ContactList {
-    public init(from decoder: Decoder) throws {
+public extension ContactList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.data = try container.sdkDecodeIfPresent(.data)
-        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        self.pages = try container.sdkDecodeIfPresent(.pages)
+        type = try container.sdkDecodeIfPresent(.type)
+        data = try container.sdkDecodeIfPresent(.data)
+        totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-extension ContactList {
-    public init(type: ContactListType? = nil, data: [Contact]? = nil, totalCount: Int? = nil, pages: CursorPages? = nil) {
+public extension ContactList {
+    init(type: ContactListType? = nil, data: [Contact]? = nil, totalCount: Int? = nil, pages: CursorPages? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
         (self.totalCount, self.pages) = (totalCount, pages)
@@ -53,12 +53,15 @@ extension ContactList {
 public struct ContactListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let list = ContactListType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

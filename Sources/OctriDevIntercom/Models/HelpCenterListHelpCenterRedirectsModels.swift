@@ -3,7 +3,7 @@
 
 import Foundation
 
-// HelpCenter domain models
+/// HelpCenter domain models
 /// This will return a list of redirects for the help center.
 public struct HelpCenterRedirectList: Codable {
     /// The type of the object - `list`.
@@ -27,22 +27,27 @@ public struct HelpCenterRedirectList: Codable {
     }
 
     init() {
-        (self.type, self.pages, self.totalCount, self.data) = (nil, nil, nil, nil)
+        (type, pages, totalCount, data) = (nil, nil, nil, nil)
     }
 }
 
-extension HelpCenterRedirectList {
-    public init(from decoder: Decoder) throws {
+public extension HelpCenterRedirectList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.pages = try container.sdkDecodeIfPresent(.pages)
-        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        type = try container.sdkDecodeIfPresent(.type)
+        pages = try container.sdkDecodeIfPresent(.pages)
+        totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension HelpCenterRedirectList {
-    public init(type: HelpCenterRedirectListType? = nil, pages: CursorPages? = nil, totalCount: Int? = nil, data: [HelpCenterRedirect]? = nil) {
+public extension HelpCenterRedirectList {
+    init(
+        type: HelpCenterRedirectListType? = nil,
+        pages: CursorPages? = nil,
+        totalCount: Int? = nil,
+        data: [HelpCenterRedirect]? = nil
+    ) {
         self.init()
         (self.type, self.pages) = (type, pages)
         (self.totalCount, self.data) = (totalCount, data)
@@ -53,12 +58,15 @@ extension HelpCenterRedirectList {
 public struct HelpCenterRedirectListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let list = HelpCenterRedirectListType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

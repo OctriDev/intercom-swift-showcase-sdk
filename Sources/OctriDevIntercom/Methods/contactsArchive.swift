@@ -6,16 +6,30 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ContactsMethods {
-    /// Archives a single contact. Supply the `contact_id` of the contact to archive. The response includes the contact reference and an `archived` flag.
+public extension ContactsMethods {
+    /// Archives a single contact. Supply the `contact_id` of the contact to archive. The response includes the contact
+    /// reference and an `archived` flag.
     ///
     /// You can archive a single contact.
     ///
     /// - Parameters:
     /// - contactId: contact_id
-    public static func archiveContact(config: ClientConfig, contactId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ContactArchived {
-        return try (await sdkRequest("POST", ["/contacts/", sdkEncodePathSegment(sdkWireString(contactId)), "/archive"].joined(), config: config, decoder: .json, operationId: "ArchiveContact", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions)).data
+    static func archiveContact(
+        config: ClientConfig,
+        contactId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContactArchived {
+        try await (sdkRequest(
+            "POST",
+            ["/contacts/", sdkEncodePathSegment(sdkWireString(contactId)), "/archive"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "ArchiveContact",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions
+        )).data
     }
 }

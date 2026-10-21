@@ -6,18 +6,41 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ConversationsAttributesMethods {
-    /// Archives an option on a list-type conversation attribute without removing it. Use `id` and `option_id` to identify the attribute and option; the response retains the option with `archived: true` and includes the updated options array.
+public extension ConversationsAttributesMethods {
+    /// Archives an option on a list-type conversation attribute without removing it. Use `id` and `option_id` to
+    /// identify the attribute and option; the response retains the option with `archived: true` and includes the
+    /// updated options array.
     ///
-    /// Archive a single option on a list-type conversation attribute (soft delete). The option remains in the response with `archived: true`. Returns the full attribute with the updated options array.
+    /// Archive a single option on a list-type conversation attribute (soft delete). The option remains in the response
+    /// with `archived: true`. Returns the full attribute with the updated options array.
     ///
     /// - Parameters:
     /// - id: The conversation attribute id
     /// - optionId: The UUID of the list option to archive (from the `id` field in
     ///   the options array)
-    public static func deleteConversationAttributeOption(config: ClientConfig, id: Int, optionId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ConversationAttribute {
-        return try (await sdkRequest("DELETE", ["/conversations/attributes/", sdkEncodePathSegment(sdkWireString(id)), "/options/", sdkEncodePathSegment(sdkWireString(optionId))].joined(), config: config, decoder: .json, operationId: "deleteConversationAttributeOption", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "422": Error2.self])).data
+    static func deleteConversationAttributeOption(
+        config: ClientConfig,
+        id: Int,
+        optionId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ConversationAttribute {
+        try await (sdkRequest(
+            "DELETE",
+            [
+                "/conversations/attributes/",
+                sdkEncodePathSegment(sdkWireString(id)),
+                "/options/",
+                sdkEncodePathSegment(sdkWireString(optionId)),
+            ].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "deleteConversationAttributeOption",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self, "422": Error2.self]
+        )).data
     }
 }

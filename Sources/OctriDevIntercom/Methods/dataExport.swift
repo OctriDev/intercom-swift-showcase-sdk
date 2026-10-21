@@ -8,33 +8,83 @@ import Foundation
 #endif
 public enum DataExportMethods {}
 
-extension DataExportMethods {
-    /// Creates an asynchronous export job for message delivery and engagement data about outbound content. Provide `created_at_after` and `created_at_before` as Unix timestamps; the inclusive date range selects messages by when they were sent, not when they were updated. Only one export job can be active per workspace.
+public extension DataExportMethods {
+    /// Creates an asynchronous export job for message delivery and engagement data about outbound content. Provide
+    /// `created_at_after` and `created_at_before` as Unix timestamps; the inclusive date range selects messages by when
+    /// they were sent, not when they were updated. Only one export job can be active per workspace.
     ///
-    /// To create your export job, you need to send a `POST` request to the export endpoint `https://api.intercom.io/export/content/data`. This endpoint exports **message delivery and engagement data** for outbound content (Emails, Posts, Custom Bots, Surveys, Tours, Series, and more). The exported data includes who received each message, when they received it, and how they engaged with it (opens, clicks, replies, completions, dismissals, unsubscribes, and bounces). It does not export raw message or conversation content. The only parameters you need to provide are the range of dates that you want exported. >🚧 Limit of one active job > > You can only have one active job per workspace. You will receive a HTTP status code of 429 with the message Exceeded rate limit of 1 pending message data export jobs if you attempt to create a second concurrent job. >❗️ Updated_at not included > > It should be noted that the timeframe only includes messages sent during the time period and not messages that were only updated during this period. For example, if a message was updated yesterday but sent two days ago, you would need to set the created_at_after date before the message was sent to include that in your retrieval job. >📘 Date ranges are inclusive > > Requesting data for 2018-06-01 until 2018-06-30 will get all data for those days including those specified - e.g. 2018-06-01 00:00:00 until 2018-06-30 23:59:99.
+    /// To create your export job, you need to send a `POST` request to the export endpoint
+    /// `https://api.intercom.io/export/content/data`. This endpoint exports **message delivery and engagement data**
+    /// for outbound content (Emails, Posts, Custom Bots, Surveys, Tours, Series, and more). The exported data includes
+    /// who received each message, when they received it, and how they engaged with it (opens, clicks, replies,
+    /// completions, dismissals, unsubscribes, and bounces). It does not export raw message or conversation content. The
+    /// only parameters you need to provide are the range of dates that you want exported. >🚧 Limit of one active job >
+    /// > You can only have one active job per workspace. You will receive a HTTP status code of 429 with the message
+    /// Exceeded rate limit of 1 pending message data export jobs if you attempt to create a second concurrent job. >❗️
+    /// Updated_at not included > > It should be noted that the timeframe only includes messages sent during the time
+    /// period and not messages that were only updated during this period. For example, if a message was updated
+    /// yesterday but sent two days ago, you would need to set the created_at_after date before the message was sent to
+    /// include that in your retrieval job. >📘 Date ranges are inclusive > > Requesting data for 2018-06-01 until
+    /// 2018-06-30 will get all data for those days including those specified - e.g. 2018-06-01 00:00:00 until
+    /// 2018-06-30 23:59:99.
     ///
     /// - Parameters:
     /// - createdAtAfter: The start date that you request data for. It must be
     ///   formatted as a unix timestamp.
     /// - createdAtBefore: The end date that you request data for. It must be
     ///   formatted as a unix timestamp.
-    public static func createDataExport(config: ClientConfig, createdAtAfter: Int, createdAtBefore: Int, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DataExport {
+    static func createDataExport(
+        config: ClientConfig,
+        createdAtAfter: Int,
+        createdAtBefore: Int,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DataExport {
         let requestBody = CreateDataExportRequestBody(createdAtAfter: createdAtAfter, createdAtBefore: createdAtBefore)
 
-        return try (await sdkRequest("POST", "/export/content/data", config: config, body: requestBody, decoder: .json, operationId: "createDataExport", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions)).data
+        return try await (sdkRequest(
+            "POST",
+            "/export/content/data",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "createDataExport",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions
+        )).data
     }
 
-    /// Retrieves the status and download details for a content data export job. Use the `job_identifier` returned when you created the job to check its progress. Completed export data is available for two days after processing finishes.
+    /// Retrieves the status and download details for a content data export job. Use the `job_identifier` returned when
+    /// you created the job to check its progress. Completed export data is available for two days after processing
+    /// finishes.
     ///
-    /// You can view the status of your job by sending a `GET` request to the URL `https://api.intercom.io/export/content/data/{job_identifier}` - the `{job_identifier}` is the value returned in the response when you first created the export job. More on it can be seen in the Export Job Model. > 🚧 Jobs expire after two days > All jobs that have completed processing (and are thus available to download from the provided URL) will have an expiry limit of two days from when the export ob completed. After this, the data will no longer be available.
+    /// You can view the status of your job by sending a `GET` request to the URL
+    /// `https://api.intercom.io/export/content/data/{job_identifier}` - the `{job_identifier}` is the value returned in
+    /// the response when you first created the export job. More on it can be seen in the Export Job Model. > 🚧 Jobs
+    /// expire after two days > All jobs that have completed processing (and are thus available to download from the
+    /// provided URL) will have an expiry limit of two days from when the export ob completed. After this, the data will
+    /// no longer be available.
     ///
     /// - Parameters:
     /// - jobIdentifier: job_identifier
-    public static func getDataExport(config: ClientConfig, jobIdentifier: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DataExport {
-        return try (await sdkRequest("GET", ["/export/content/data/", sdkEncodePathSegment(sdkWireString(jobIdentifier))].joined(), config: config, decoder: .json, operationId: "getDataExport", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions)).data
+    static func getDataExport(
+        config: ClientConfig,
+        jobIdentifier: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DataExport {
+        try await (sdkRequest(
+            "GET",
+            ["/export/content/data/", sdkEncodePathSegment(sdkWireString(jobIdentifier))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "getDataExport",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions
+        )).data
     }
 }

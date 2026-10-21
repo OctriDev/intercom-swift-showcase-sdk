@@ -6,20 +6,41 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ContactsMethods {
-    /// Retrieves a user contact by its external ID; this lookup does not support leads. Set `include_merge_history` to request merge history for the contact. If the contact has been merged, the response provides a link to the canonical contact.
+public extension ContactsMethods {
+    /// Retrieves a user contact by its external ID; this lookup does not support leads. Set `include_merge_history` to
+    /// request merge history for the contact. If the contact has been merged, the response provides a link to the
+    /// canonical contact.
     ///
-    /// You can fetch the details of a single contact by external ID. Note that this endpoint only supports users and not leads. {% admonition type="info" name="Merged contacts return 410 Gone" %} If the contact with this external ID has been merged into another contact, the API returns **HTTP 410 Gone** with a `Link` header pointing to the canonical (merged-into) contact. See `GET /contacts/{id}` for details on the response format. {% /admonition %}
+    /// You can fetch the details of a single contact by external ID. Note that this endpoint only supports users and
+    /// not leads. {% admonition type="info" name="Merged contacts return 410 Gone" %} If the contact with this external
+    /// ID has been merged into another contact, the API returns **HTTP 410 Gone** with a `Link` header pointing to the
+    /// canonical (merged-into) contact. See `GET /contacts/{id}` for details on the response format. {% /admonition %}
     ///
     /// - Parameters:
     /// - externalId: The external ID of the user that you want to retrieve
     /// - includeMergeHistory: Pass `true` to include the contact's merge history in
     ///   the response. Only returned for contacts with a `user` role.
-    public static func showContactByExternalId(config: ClientConfig, externalId: String, includeMergeHistory: Bool? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ShowContactByExternalIdResponse {
-        return try (await sdkRequest("GET", ["/contacts/find_by_external_id/", sdkEncodePathSegment(sdkWireString(externalId))].joined(), config: config, query: [
-            SdkQueryParameter("include_merge_history", value: includeMergeHistory),
-        ], decoder: .json, operationId: "ShowContactByExternalId", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "410": Error2.self])).data
+    static func showContactByExternalId(
+        config: ClientConfig,
+        externalId: String,
+        includeMergeHistory: Bool? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ShowContactByExternalIdResponse {
+        try await (sdkRequest(
+            "GET",
+            ["/contacts/find_by_external_id/", sdkEncodePathSegment(sdkWireString(externalId))].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("include_merge_history", value: includeMergeHistory),
+            ],
+            decoder: .json,
+            operationId: "ShowContactByExternalId",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "410": Error2.self]
+        )).data
     }
 }

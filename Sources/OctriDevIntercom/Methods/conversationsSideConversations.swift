@@ -6,25 +6,45 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ConversationsMethods {
-    /// Lists internal side conversations and their conversation parts for a given conversation. Use `page` and `per_page` to paginate the results. Access requires the `read_conversations` OAuth scope.
+public extension ConversationsMethods {
+    /// Lists internal side conversations and their conversation parts for a given conversation. Use `page` and
+    /// `per_page` to paginate the results. Access requires the `read_conversations` OAuth scope.
     ///
-    /// List side conversations for a given conversation. Side conversations are internal threads created by teammates from within a conversation. Each side conversation includes its conversation parts (messages). Results are paginated. Requires the `read_conversations` OAuth scope.
+    /// List side conversations for a given conversation. Side conversations are internal threads created by teammates
+    /// from within a conversation. Each side conversation includes its conversation parts (messages). Results are
+    /// paginated. Requires the `read_conversations` OAuth scope.
     ///
     /// - Parameters:
     /// - id: The identifier for the conversation as given by Intercom.
     /// - page: The page number of results to return (starting from 1).
     /// - perPage: The number of side conversations to return per page (max 50).
-    public static func listSideConversations(config: ClientConfig, id: String, page: Int? = nil, perPage: Int? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> SideConversationList {
-        if let perPage = perPage {
+    static func listSideConversations(
+        config: ClientConfig,
+        id: String,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SideConversationList {
+        if let perPage {
             try validateRange("per_page", Double(perPage), max: 50)
         }
 
-        return try (await sdkRequest("GET", ["/conversations/", sdkEncodePathSegment(sdkWireString(id)), "/side_conversations"].joined(), config: config, query: [
-            SdkQueryParameter("page", value: page),
-            SdkQueryParameter("per_page", value: perPage),
-        ], decoder: .json, operationId: "listSideConversations", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
+        return try await (sdkRequest(
+            "GET",
+            ["/conversations/", sdkEncodePathSegment(sdkWireString(id)), "/side_conversations"].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("page", value: page),
+                SdkQueryParameter("per_page", value: perPage),
+            ],
+            decoder: .json,
+            operationId: "listSideConversations",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).data
     }
 }

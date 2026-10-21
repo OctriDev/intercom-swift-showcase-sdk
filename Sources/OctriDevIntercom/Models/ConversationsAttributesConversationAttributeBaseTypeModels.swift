@@ -3,17 +3,20 @@
 
 import Foundation
 
-// ConversationsAttributes domain models
+/// ConversationsAttributes domain models
 /// Value is `conversation_attribute`.
 public struct ConversationAttributeBaseType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let conversationAttribute = ConversationAttributeBaseType(rawValue: "conversation_attribute")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -6,36 +6,83 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension TicketsMethods {
-    /// Links a conversation or customer ticket to an existing tracker ticket. Supply the tracker's `ticket_id` and the `conversation_id` to link; the tracker ticket can have up to 2,500 linked conversations. This operation requires the `write_tickets` OAuth scope.
+public extension TicketsMethods {
+    /// Links a conversation or customer ticket to an existing tracker ticket. Supply the tracker's `ticket_id` and the
+    /// `conversation_id` to link; the tracker ticket can have up to 2,500 linked conversations. This operation requires
+    /// the `write_tickets` OAuth scope.
     ///
-    /// Link a conversation to an existing tracker ticket. The conversation can be a regular conversation or one that has been converted into a customer ticket. Use this when related conversations surface after a tracker ticket has already been created. The ticket in the path must be a tracker ticket, and `conversation_id` in the body is the conversation (or customer ticket) to link to it. This returns the linked conversation. A tracker ticket can have up to 2,500 linked conversations; once that limit is reached, further requests return `linked_conversation_limit_exceeded`. Requires the `write_tickets` OAuth scope.
+    /// Link a conversation to an existing tracker ticket. The conversation can be a regular conversation or one that
+    /// has been converted into a customer ticket. Use this when related conversations surface after a tracker ticket
+    /// has already been created. The ticket in the path must be a tracker ticket, and `conversation_id` in the body is
+    /// the conversation (or customer ticket) to link to it. This returns the linked conversation. A tracker ticket can
+    /// have up to 2,500 linked conversations; once that limit is reached, further requests return
+    /// `linked_conversation_limit_exceeded`. Requires the `write_tickets` OAuth scope.
     ///
     /// - Parameters:
     /// - ticketId: The unique identifier for the tracker ticket which is given by
     ///   Intercom.
     /// - conversationId: The unique identifier (given by Intercom) for the
     ///   conversation or customer ticket to link to the tracker ticket.
-    public static func linkTicketsConversation(config: ClientConfig, ticketId: String, conversationId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Conversation {
+    static func linkTicketsConversation(
+        config: ClientConfig,
+        ticketId: String,
+        conversationId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Conversation {
         let requestBody = LinkTicketsConversationRequestBody(conversationId: conversationId)
 
-        return try (await sdkRequest("POST", ["/tickets/", sdkEncodePathSegment(sdkWireString(ticketId)), "/linked_conversations"].joined(), config: config, body: requestBody, decoder: .json, operationId: "linkTicketsConversation", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/tickets/", sdkEncodePathSegment(sdkWireString(ticketId)), "/linked_conversations"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "linkTicketsConversation",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self]
+        )).data
     }
 
-    /// Unlinks a conversation or converted customer ticket from the tracker ticket it is linked to. Supply the tracker ticket identifier and the identifier of the linked conversation or customer ticket. This operation requires the `write_tickets` OAuth scope.
+    /// Unlinks a conversation or converted customer ticket from the tracker ticket it is linked to. Supply the tracker
+    /// ticket identifier and the identifier of the linked conversation or customer ticket. This operation requires the
+    /// `write_tickets` OAuth scope.
     ///
-    /// Unlink a conversation (or converted customer ticket) from a tracker ticket it is currently linked to. The ticket in the path must be a tracker ticket. This returns the conversation that was unlinked. Requires the `write_tickets` OAuth scope.
+    /// Unlink a conversation (or converted customer ticket) from a tracker ticket it is currently linked to. The ticket
+    /// in the path must be a tracker ticket. This returns the conversation that was unlinked. Requires the
+    /// `write_tickets` OAuth scope.
     ///
     /// - Parameters:
     /// - ticketId: The unique identifier for the tracker ticket which is given by
     ///   Intercom.
     /// - id: The unique identifier (given by Intercom) for the linked conversation
     ///   or customer ticket to unlink.
-    public static func unlinkTicketConversation(config: ClientConfig, ticketId: String, id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Conversation {
-        return try (await sdkRequest("DELETE", ["/tickets/", sdkEncodePathSegment(sdkWireString(ticketId)), "/linked_conversations/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "unlinkTicketConversation", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self])).data
+    static func unlinkTicketConversation(
+        config: ClientConfig,
+        ticketId: String,
+        id: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Conversation {
+        try await (sdkRequest(
+            "DELETE",
+            [
+                "/tickets/",
+                sdkEncodePathSegment(sdkWireString(ticketId)),
+                "/linked_conversations/",
+                sdkEncodePathSegment(sdkWireString(id)),
+            ].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "unlinkTicketConversation",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self]
+        )).data
     }
 }

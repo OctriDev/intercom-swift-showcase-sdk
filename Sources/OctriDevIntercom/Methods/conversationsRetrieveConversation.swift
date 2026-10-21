@@ -6,10 +6,17 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ConversationsMethods {
-    /// Retrieves a single conversation with its conversation parts. Use `display_as` to request plain-text messages, `include_translations` to request translated parts, or the QA parameters to include monitor and scorecard results. The response includes at most the 500 most recent conversation parts.
+public extension ConversationsMethods {
+    /// Retrieves a single conversation with its conversation parts. Use `display_as` to request plain-text messages,
+    /// `include_translations` to request translated parts, or the QA parameters to include monitor and scorecard
+    /// results. The response includes at most the 500 most recent conversation parts.
     ///
-    /// You can fetch the details of a single conversation. This will return a single Conversation model with all its conversation parts. {% admonition type="warning" name="Hard limit of 500 parts" %} The maximum number of conversation parts that can be returned via the API is 500. If you have more than that we will return the 500 most recent conversation parts. {% /admonition %} For AI agent conversation metadata, please note that you need to have the agent enabled in your workspace, which is a [paid feature](https://www.intercom.com/help/en/articles/8205718-fin-resolutions#h_97f8c2e671).
+    /// You can fetch the details of a single conversation. This will return a single Conversation model with all its
+    /// conversation parts. {% admonition type="warning" name="Hard limit of 500 parts" %} The maximum number of
+    /// conversation parts that can be returned via the API is 500. If you have more than that we will return the 500
+    /// most recent conversation parts. {% /admonition %} For AI agent conversation metadata, please note that you need
+    /// to have the agent enabled in your workspace, which is a [paid
+    /// feature](https://www.intercom.com/help/en/articles/8205718-fin-resolutions#h_97f8c2e671).
     ///
     /// - Parameters:
     /// - conversationId: The id of the conversation to target
@@ -24,14 +31,33 @@ extension ConversationsMethods {
     ///   conversation.
     /// - includeScorecards: If set to true, the response will include a
     ///   `scorecards` array with any QA scorecard results for this conversation.
-    public static func retrieveConversation(config: ClientConfig, conversationId: Int, displayAs: String? = nil, includeTranslations: Bool? = nil, includeMonitors: Bool? = nil, includeScorecards: Bool? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Conversation {
-        return try (await sdkRequest("GET", ["/conversations/", sdkEncodePathSegment(sdkWireString(conversationId))].joined(), config: config, query: [
-            SdkQueryParameter("display_as", value: displayAs),
-            SdkQueryParameter("include_translations", value: includeTranslations),
-            SdkQueryParameter("include_monitors", value: includeMonitors),
-            SdkQueryParameter("include_scorecards", value: includeScorecards),
-        ], decoder: .json, operationId: "retrieveConversation", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self])).data
+    static func retrieveConversation(
+        config: ClientConfig,
+        conversationId: Int,
+        displayAs: String? = nil,
+        includeTranslations: Bool? = nil,
+        includeMonitors: Bool? = nil,
+        includeScorecards: Bool? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Conversation {
+        try await (sdkRequest(
+            "GET",
+            ["/conversations/", sdkEncodePathSegment(sdkWireString(conversationId))].joined(),
+            config: config,
+            query: [
+                SdkQueryParameter("display_as", value: displayAs),
+                SdkQueryParameter("include_translations", value: includeTranslations),
+                SdkQueryParameter("include_monitors", value: includeMonitors),
+                SdkQueryParameter("include_scorecards", value: includeScorecards),
+            ],
+            decoder: .json,
+            operationId: "retrieveConversation",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "403": Error2.self, "404": Error2.self]
+        )).data
     }
 }

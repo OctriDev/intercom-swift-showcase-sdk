@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Admins domain models
+/// Admins domain models
 /// App is a workspace on Intercom
 public struct App: Codable {
     /// Optional `string` value serialized in the `type` wire field.
@@ -38,26 +38,34 @@ public struct App: Codable {
     }
 
     init() {
-        (self.type, self.idCode, self.name, self.region, self.timezone) = (nil, nil, nil, nil, nil)
-        (self.createdAt, self.identityVerification) = (nil, nil)
+        (type, idCode, name, region, timezone) = (nil, nil, nil, nil, nil)
+        (createdAt, identityVerification) = (nil, nil)
     }
 }
 
-extension App {
-    public init(from decoder: Decoder) throws {
+public extension App {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.idCode = try container.sdkDecodeIfPresent(.idCode)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.region = try container.sdkDecodeIfPresent(.region)
-        self.timezone = try container.sdkDecodeIfPresent(.timezone)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.identityVerification = try container.sdkDecodeIfPresent(.identityVerification)
+        type = try container.sdkDecodeIfPresent(.type)
+        idCode = try container.sdkDecodeIfPresent(.idCode)
+        name = try container.sdkDecodeIfPresent(.name)
+        region = try container.sdkDecodeIfPresent(.region)
+        timezone = try container.sdkDecodeIfPresent(.timezone)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        identityVerification = try container.sdkDecodeIfPresent(.identityVerification)
     }
 }
 
-extension App {
-    public init(type: String? = nil, idCode: String? = nil, name: String? = nil, region: String? = nil, timezone: String? = nil, createdAt: Int? = nil, identityVerification: Bool? = nil) {
+public extension App {
+    init(
+        type: String? = nil,
+        idCode: String? = nil,
+        name: String? = nil,
+        region: String? = nil,
+        timezone: String? = nil,
+        createdAt: Int? = nil,
+        identityVerification: Bool? = nil
+    ) {
         self.init()
         (self.type, self.idCode) = (type, idCode)
         (self.name, self.region) = (name, region)
@@ -81,23 +89,23 @@ public struct AdminWithAppAvatar: Codable {
     }
 
     init() {
-        (self.type, self.imageUrl) = (nil, nil)
+        (type, imageUrl) = (nil, nil)
     }
 }
 
-extension AdminWithAppAvatar {
-    public init(from decoder: Decoder) throws {
+public extension AdminWithAppAvatar {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.imageUrl = try container.sdkDecodeIfPresent(.imageUrl)
-        if let value = self.imageUrl {
+        type = try container.sdkDecodeIfPresent(.type)
+        imageUrl = try container.sdkDecodeIfPresent(.imageUrl)
+        if let value = imageUrl {
             try sdkValidateUri("image_url", value)
         }
     }
 }
 
-extension AdminWithAppAvatar {
-    public init(type: String? = nil, imageUrl: String? = nil) throws {
+public extension AdminWithAppAvatar {
+    init(type: String? = nil, imageUrl: String? = nil) throws {
         self.init()
         (self.type, self.imageUrl) = (type, imageUrl)
         if let value = self.imageUrl {
@@ -157,32 +165,45 @@ public struct AdminWithApp: Codable {
     }
 
     init() {
-        (self.type, self.id, self.name, self.email, self.jobTitle) = (nil, nil, nil, nil, nil)
-        (self.awayModeEnabled, self.awayModeReassign, self.hasInboxSeat, self.teamIds, self.avatar) = (nil, nil, nil, nil, nil)
-        (self.emailVerified, self.app) = (nil, nil)
+        (type, id, name, email, jobTitle) = (nil, nil, nil, nil, nil)
+        (awayModeEnabled, awayModeReassign, hasInboxSeat, teamIds, avatar) = (nil, nil, nil, nil, nil)
+        (emailVerified, app) = (nil, nil)
     }
 }
 
-extension AdminWithApp {
-    public init(from decoder: Decoder) throws {
+public extension AdminWithApp {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.email = try container.sdkDecodeIfPresent(.email)
-        self.jobTitle = try container.sdkDecodeIfPresent(.jobTitle)
-        self.awayModeEnabled = try container.sdkDecodeIfPresent(.awayModeEnabled)
-        self.awayModeReassign = try container.sdkDecodeIfPresent(.awayModeReassign)
-        self.hasInboxSeat = try container.sdkDecodeIfPresent(.hasInboxSeat)
-        self.teamIds = try container.sdkDecodeIfPresent(.teamIds)
-        self.avatar = try container.sdkDecodeIfPresent(.avatar)
-        self.emailVerified = try container.sdkDecodeIfPresent(.emailVerified)
-        self.app = try container.sdkDecodeIfPresent(.app)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        name = try container.sdkDecodeIfPresent(.name)
+        email = try container.sdkDecodeIfPresent(.email)
+        jobTitle = try container.sdkDecodeIfPresent(.jobTitle)
+        awayModeEnabled = try container.sdkDecodeIfPresent(.awayModeEnabled)
+        awayModeReassign = try container.sdkDecodeIfPresent(.awayModeReassign)
+        hasInboxSeat = try container.sdkDecodeIfPresent(.hasInboxSeat)
+        teamIds = try container.sdkDecodeIfPresent(.teamIds)
+        avatar = try container.sdkDecodeIfPresent(.avatar)
+        emailVerified = try container.sdkDecodeIfPresent(.emailVerified)
+        app = try container.sdkDecodeIfPresent(.app)
     }
 }
 
-extension AdminWithApp {
-    public init(type: String? = nil, id: String? = nil, name: String? = nil, email: String? = nil, jobTitle: String? = nil, awayModeEnabled: Bool? = nil, awayModeReassign: Bool? = nil, hasInboxSeat: Bool? = nil, teamIds: [Int]? = nil, avatar: AdminWithAppAvatar? = nil, emailVerified: Bool? = nil, app: App? = nil) {
+public extension AdminWithApp {
+    init(
+        type: String? = nil,
+        id: String? = nil,
+        name: String? = nil,
+        email: String? = nil,
+        jobTitle: String? = nil,
+        awayModeEnabled: Bool? = nil,
+        awayModeReassign: Bool? = nil,
+        hasInboxSeat: Bool? = nil,
+        teamIds: [Int]? = nil,
+        avatar: AdminWithAppAvatar? = nil,
+        emailVerified: Bool? = nil,
+        app: App? = nil
+    ) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.name, self.email) = (name, email)

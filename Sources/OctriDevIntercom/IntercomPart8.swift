@@ -9,76 +9,203 @@ public class TagsNamespace {
         self.config = config
     }
 
-/// Adds a tag to a contact. Supply the tag's `id` in the request body to identify which tag to apply; the response returns the applied tag.
+    /// Adds a tag to a contact. Supply the tag's `id` in the request body to identify which tag to apply; the response
+    /// returns the applied tag.
     ///
     /// You can tag a specific contact. This will return a tag object for the tag that was added to the contact.
-    public func attachToContact(contactId: String, id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Tag {
-        return try await TagsMethods.attachTagToContact(config: config, contactId: contactId, id: id, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func attachToContact(
+        contactId: String,
+        id: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Tag {
+        try await TagsMethods.attachTagToContact(
+            config: config,
+            contactId: contactId,
+            id: id,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Removes a tag from a contact. Identify the contact and tag with the `contact_id` and `tag_id` path parameters; the response returns the removed tag.
+    /// Removes a tag from a contact. Identify the contact and tag with the `contact_id` and `tag_id` path parameters;
+    /// the response returns the removed tag.
     ///
-    /// You can remove tag from a specific contact. This will return a tag object for the tag that was removed from the contact.
-    public func detachFromContact(contactId: String, tagId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Tag {
-        return try await TagsMethods.detachTagFromContact(config: config, contactId: contactId, tagId: tagId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// You can remove tag from a specific contact. This will return a tag object for the tag that was removed from the
+    /// contact.
+    public func detachFromContact(
+        contactId: String,
+        tagId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Tag {
+        try await TagsMethods.detachTagFromContact(
+            config: config,
+            contactId: contactId,
+            tagId: tagId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Adds a tag to a specific conversation. Provide the tag identifier and the admin identifier in the request body to apply the tag. The response includes the tag that was added.
+    /// Adds a tag to a specific conversation. Provide the tag identifier and the admin identifier in the request body
+    /// to apply the tag. The response includes the tag that was added.
     ///
-    /// You can tag a specific conversation. This will return a tag object for the tag that was added to the conversation.
-    public func attachToConversation(conversationId: String, id: String, adminId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Tag {
-        return try await TagsMethods.attachTagToConversation(config: config, conversationId: conversationId, id: id, adminId: adminId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// You can tag a specific conversation. This will return a tag object for the tag that was added to the
+    /// conversation.
+    public func attachToConversation(
+        conversationId: String,
+        id: String,
+        adminId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Tag {
+        try await TagsMethods.attachTagToConversation(
+            config: config,
+            conversationId: conversationId,
+            id: id,
+            adminId: adminId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Removes a tag from a specific conversation. Identify the conversation and tag in the path, and provide the admin identifier in the request body. The response includes the tag that was removed.
+    /// Removes a tag from a specific conversation. Identify the conversation and tag in the path, and provide the admin
+    /// identifier in the request body. The response includes the tag that was removed.
     ///
-    /// You can remove tag from a specific conversation. This will return a tag object for the tag that was removed from the conversation.
-    public func detachFromConversation(conversationId: String, tagId: String, adminId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Tag {
-        return try await TagsMethods.detachTagFromConversation(config: config, conversationId: conversationId, tagId: tagId, adminId: adminId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// You can remove tag from a specific conversation. This will return a tag object for the tag that was removed from
+    /// the conversation.
+    public func detachFromConversation(
+        conversationId: String,
+        tagId: String,
+        adminId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Tag {
+        try await TagsMethods.detachTagFromConversation(
+            config: config,
+            conversationId: conversationId,
+            tagId: tagId,
+            adminId: adminId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists tags in the workspace. Use this endpoint to retrieve the tags available for labeling contacts, companies, and conversations.
+    /// Lists tags in the workspace. Use this endpoint to retrieve the tags available for labeling contacts, companies,
+    /// and conversations.
     ///
     /// You can fetch a list of all tags for a given workspace.
-    public func list(intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> TagList {
-        return try await TagsMethods.listTags(config: config, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func list(
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> TagList {
+        try await TagsMethods.listTags(config: config, intercomVersion: intercomVersion, requestOptions: requestOptions)
     }
 
-/// Creates or updates a tag, or applies or removes a tag from companies or users. Supply the fields for the operation you want to perform; each operation returns a tag object.
+    /// Creates or updates a tag, or applies or removes a tag from companies or users. Supply the fields for the
+    /// operation you want to perform; each operation returns a tag object.
     ///
-    /// You can use this endpoint to perform the following operations: **1. Create a new tag:** You can create a new tag by passing in the tag name as specified in "Create or Update Tag Request Payload" described below. **2. Update an existing tag:** You can update an existing tag by passing the id of the tag as specified in "Create or Update Tag Request Payload" described below. **3. Tag Companies:** You can tag single company or a list of companies. You can tag a company by passing in the tag name and the company details as specified in "Tag Company Request Payload" described below. Also, if the tag doesn't exist then a new one will be created automatically. **4. Untag Companies:** You can untag a single company or a list of companies. You can untag a company by passing in the tag id and the company details as specified in "Untag Company Request Payload" described below. **5. Tag Multiple Users:** You can tag a list of users. You can tag the users by passing in the tag name and the user details as specified in "Tag Users Request Payload" described below. Each operation will return a tag object.
-    public func create(intercomVersion: IntercomVersion? = nil, body: CreateTagRequestBody? = nil, requestOptions: RequestOptions? = nil) async throws -> TagCreateResponse {
-        return try await TagsMethods.createTag(config: config, intercomVersion: intercomVersion, body: body, requestOptions: requestOptions)
+    /// You can use this endpoint to perform the following operations: **1. Create a new tag:** You can create a new tag
+    /// by passing in the tag name as specified in "Create or Update Tag Request Payload" described below. **2. Update
+    /// an existing tag:** You can update an existing tag by passing the id of the tag as specified in "Create or Update
+    /// Tag Request Payload" described below. **3. Tag Companies:** You can tag single company or a list of companies.
+    /// You can tag a company by passing in the tag name and the company details as specified in "Tag Company Request
+    /// Payload" described below. Also, if the tag doesn't exist then a new one will be created automatically. **4.
+    /// Untag Companies:** You can untag a single company or a list of companies. You can untag a company by passing in
+    /// the tag id and the company details as specified in "Untag Company Request Payload" described below. **5. Tag
+    /// Multiple Users:** You can tag a list of users. You can tag the users by passing in the tag name and the user
+    /// details as specified in "Tag Users Request Payload" described below. Each operation will return a tag object.
+    public func create(
+        intercomVersion: IntercomVersion? = nil,
+        body: CreateTagRequestBody? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> TagCreateResponse {
+        try await TagsMethods.createTag(
+            config: config,
+            intercomVersion: intercomVersion,
+            body: body,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieves a tag by its identifier from the workspace. Use the `tag_id` path parameter to specify which tag to retrieve.
+    /// Retrieves a tag by its identifier from the workspace. Use the `tag_id` path parameter to specify which tag to
+    /// retrieve.
     ///
     /// You can fetch the details of tags that are on the workspace by their id. This will return a tag object.
-    public func find(tagId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> TagBasic {
-        return try await TagsMethods.findTag(config: config, tagId: tagId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func find(
+        tagId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> TagBasic {
+        try await TagsMethods.findTag(
+            config: config,
+            tagId: tagId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Deletes a tag from the workspace. Use the `tag_id` path parameter to identify the tag to delete; a tag with dependent objects cannot be deleted.
+    /// Deletes a tag from the workspace. Use the `tag_id` path parameter to identify the tag to delete; a tag with
+    /// dependent objects cannot be deleted.
     ///
     /// You can delete the details of tags that are on the workspace by passing in the id.
-    public func delete(tagId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try await TagsMethods.deleteTag(config: config, tagId: tagId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func delete(
+        tagId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await TagsMethods.deleteTag(
+            config: config,
+            tagId: tagId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 }
 
-extension TagsNamespace {
-/// Attaches an existing tag to a ticket. Supply the tag's `id` and the `admin_id` of the admin applying it. The response contains the tag object returned for the tagging operation.
+public extension TagsNamespace {
+    /// Attaches an existing tag to a ticket. Supply the tag's `id` and the `admin_id` of the admin applying it. The
+    /// response contains the tag object returned for the tagging operation.
     ///
     /// You can tag a specific ticket. This will return a tag object for the tag that was added to the ticket.
-    public func attachToTicket(ticketId: String, id: String, adminId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Tag {
-        return try await TagsMethods.attachTagToTicket(config: config, ticketId: ticketId, id: id, adminId: adminId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    func attachToTicket(
+        ticketId: String,
+        id: String,
+        adminId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Tag {
+        try await TagsMethods.attachTagToTicket(
+            config: config,
+            ticketId: ticketId,
+            id: id,
+            adminId: adminId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Removes a tag from a ticket. Supply the ticket and tag identifiers and the `admin_id` of the admin performing the removal. The response contains the tag object returned for the removal operation.
+    /// Removes a tag from a ticket. Supply the ticket and tag identifiers and the `admin_id` of the admin performing
+    /// the removal. The response contains the tag object returned for the removal operation.
     ///
-    /// You can remove tag from a specific ticket. This will return a tag object for the tag that was removed from the ticket.
-    public func detachFromTicket(ticketId: String, tagId: String, adminId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Tag {
-        return try await TagsMethods.detachTagFromTicket(config: config, ticketId: ticketId, tagId: tagId, adminId: adminId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// You can remove tag from a specific ticket. This will return a tag object for the tag that was removed from the
+    /// ticket.
+    func detachFromTicket(
+        ticketId: String,
+        tagId: String,
+        adminId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Tag {
+        try await TagsMethods.detachTagFromTicket(
+            config: config,
+            ticketId: ticketId,
+            tagId: tagId,
+            adminId: adminId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 }
 
@@ -88,18 +215,48 @@ public class BannersNamespace {
         self.config = config
     }
 
-/// Lists the banners that a contact currently matches so you can display them outside the Messenger. Call this endpoint when you are about to show the banners, because requesting them records an impression for each returned banner. Use each banner's `view_id` with the dismiss endpoint to record a dismissal.
+    /// Lists the banners that a contact currently matches so you can display them outside the Messenger. Call this
+    /// endpoint when you are about to show the banners, because requesting them records an impression for each returned
+    /// banner. Use each banner's `view_id` with the dismiss endpoint to record a dismissal.
     ///
-    /// Returns the banners a contact currently matches, so you can display them on surfaces outside the Messenger (native mobile apps, kiosks, embedded tools). Each banner in the response includes a `view_id`. Use it to record a dismissal with the dismiss endpoint. A returned banner is treated as shown: requesting this endpoint records an impression for each banner returned, so call it at the point you are about to display the banners, not speculatively.
-    public func list(id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> BannerList {
-        return try await BannersMethods.listContactBanners(config: config, id: id, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// Returns the banners a contact currently matches, so you can display them on surfaces outside the Messenger
+    /// (native mobile apps, kiosks, embedded tools). Each banner in the response includes a `view_id`. Use it to record
+    /// a dismissal with the dismiss endpoint. A returned banner is treated as shown: requesting this endpoint records
+    /// an impression for each banner returned, so call it at the point you are about to display the banners, not
+    /// speculatively.
+    public func list(
+        id: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> BannerList {
+        try await BannersMethods.listContactBanners(
+            config: config,
+            id: id,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Records that a contact has dismissed a banner, with dismissals shared across surfaces for that contact. Supply the banner's `view_id` from the list banners response. Dismissing a banner that is already dismissed succeeds and returns the same response.
+    /// Records that a contact has dismissed a banner, with dismissals shared across surfaces for that contact. Supply
+    /// the banner's `view_id` from the list banners response. Dismissing a banner that is already dismissed succeeds
+    /// and returns the same response.
     ///
-    /// Records that a contact has dismissed a banner. Dismissals are shared across surfaces, so a banner dismissed through this endpoint will also stop appearing in the web Messenger for that contact, and vice versa. The request is idempotent: dismissing an already-dismissed banner succeeds and returns the same response.
-    public func dismiss(id: String, viewId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> BannerDismiss {
-        return try await BannersMethods.dismissContactBanner(config: config, id: id, viewId: viewId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// Records that a contact has dismissed a banner. Dismissals are shared across surfaces, so a banner dismissed
+    /// through this endpoint will also stop appearing in the web Messenger for that contact, and vice versa. The
+    /// request is idempotent: dismissing an already-dismissed banner succeeds and returns the same response.
+    public func dismiss(
+        id: String,
+        viewId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> BannerDismiss {
+        try await BannersMethods.dismissContactBanner(
+            config: config,
+            id: id,
+            viewId: viewId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 }
 
@@ -109,18 +266,57 @@ public class ContentNamespace {
         self.config = config
     }
 
-/// Applies an asynchronous bulk action to up to 1,000 Knowledge Hub content items. Choose an action and provide content IDs of supported types; actions can publish, unpublish, delete, change availability or audience, or update tags. The request is enqueued for background processing, and items with unsupported types for the selected action may be silently dropped.
+    /// Applies an asynchronous bulk action to up to 1,000 Knowledge Hub content items. Choose an action and provide
+    /// content IDs of supported types; actions can publish, unpublish, delete, change availability or audience, or
+    /// update tags. The request is enqueued for background processing, and items with unsupported types for the
+    /// selected action may be silently dropped.
     ///
-    /// Asynchronously run a bulk action over up to 1,000 Knowledge Hub content items. Six actions are supported: * `publish` and `unpublish` — apply to `article_content` only. * `delete` — permanently delete content (excludes synced sources and `external_content`). * `set_availability` — toggle Fin AI Agent, Copilot, and Sales Agent availability flags. * `set_audience` — manage segment membership on content. * `update_tags` — apply and/or remove existing tags on content. Unlike the other actions, `update_tags` addresses articles by the parent `article` id, not `article_content`. Tags must already exist and not be archived; supply at least one of `add_tag_ids` / `remove_tag_ids`. The endpoint validates the request, enqueues background work, and returns 202 with a placeholder envelope. Items whose `type` is not in the action's allowlist are silently dropped before processing. Articles imported from synced sources (Confluence, Notion, Zendesk, Salesforce Knowledge, etc.) are silently skipped on `delete` — they can only be removed by disconnecting the underlying import source. Requires the `write_content` OAuth scope.
-    public func bulkActions(action: ContentBulkActionRequestAction, contentIds: [ContentBulkActionRequestContentIdsItem], intercomVersion: IntercomVersion? = nil, availability: ContentBulkActionRequestAvailability? = nil, audience: ContentBulkActionRequestAudience? = nil, tags: ContentBulkActionRequestTags? = nil, requestOptions: RequestOptions? = nil) async throws -> ContentBulkActionResponse {
-        return try await ContentMethods.bulkContentActions(config: config, action: action, contentIds: contentIds, intercomVersion: intercomVersion, availability: availability, audience: audience, tags: tags, requestOptions: requestOptions)
+    /// Asynchronously run a bulk action over up to 1,000 Knowledge Hub content items. Six actions are supported: *
+    /// `publish` and `unpublish` — apply to `article_content` only. * `delete` — permanently delete content (excludes
+    /// synced sources and `external_content`). * `set_availability` — toggle Fin AI Agent, Copilot, and Sales Agent
+    /// availability flags. * `set_audience` — manage segment membership on content. * `update_tags` — apply and/or
+    /// remove existing tags on content. Unlike the other actions, `update_tags` addresses articles by the parent
+    /// `article` id, not `article_content`. Tags must already exist and not be archived; supply at least one of
+    /// `add_tag_ids` / `remove_tag_ids`. The endpoint validates the request, enqueues background work, and returns 202
+    /// with a placeholder envelope. Items whose `type` is not in the action's allowlist are silently dropped before
+    /// processing. Articles imported from synced sources (Confluence, Notion, Zendesk, Salesforce Knowledge, etc.) are
+    /// silently skipped on `delete` — they can only be removed by disconnecting the underlying import source. Requires
+    /// the `write_content` OAuth scope.
+    public func bulkActions(
+        action: ContentBulkActionRequestAction,
+        contentIds: [ContentBulkActionRequestContentIdsItem],
+        intercomVersion: IntercomVersion? = nil,
+        availability: ContentBulkActionRequestAvailability? = nil,
+        audience: ContentBulkActionRequestAudience? = nil,
+        tags: ContentBulkActionRequestTags? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContentBulkActionResponse {
+        try await ContentMethods.bulkContentActions(
+            config: config,
+            action: action,
+            contentIds: contentIds,
+            intercomVersion: intercomVersion,
+            availability: availability,
+            audience: audience,
+            tags: tags,
+            requestOptions: requestOptions
+        )
     }
 
-/// Searches Knowledge Hub content, including articles, snippets, external pages, uploaded files, and internal articles. Supply `query` to search titles and body text, or omit it to retrieve the most recent content items; use the filters to narrow the results. Use `page` and `per_page` to paginate the results.
+    /// Searches Knowledge Hub content, including articles, snippets, external pages, uploaded files, and internal
+    /// articles. Supply `query` to search titles and body text, or omit it to retrieve the most recent content items;
+    /// use the filters to narrow the results. Use `page` and `per_page` to paginate the results.
     ///
-    /// Search the knowledge base contents — articles, snippets, external pages, uploaded files, and internal articles — using a keyword query. Each result row has a `type` discriminator. Most types (`content_snippet`, `external_content`, `file_source_content`, `internal_article`) return a flat `{ type, id, title }` shape. Help center articles return a nested shape with a `contents[]` array, one entry per locale. Requires the `read_content` OAuth scope.
-    public func search(options: ContentMethods.SearchContentOptions, requestOptions: RequestOptions? = nil) async throws -> ContentSearchResponse {
-        return try await ContentMethods.searchContent(config: config, options: options, requestOptions: requestOptions)
+    /// Search the knowledge base contents — articles, snippets, external pages, uploaded files, and internal articles —
+    /// using a keyword query. Each result row has a `type` discriminator. Most types (`content_snippet`,
+    /// `external_content`, `file_source_content`, `internal_article`) return a flat `{ type, id, title }` shape. Help
+    /// center articles return a nested shape with a `contents[]` array, one entry per locale. Requires the
+    /// `read_content` OAuth scope.
+    public func search(
+        options: ContentMethods.SearchContentOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContentSearchResponse {
+        try await ContentMethods.searchContent(config: config, options: options, requestOptions: requestOptions)
     }
 }
 
@@ -130,59 +326,153 @@ public class ContentSnippetsNamespace {
         self.config = config
     }
 
-/// Lists content snippets in a workspace. Use `page` and `per_page` to paginate the results; each page includes snippet objects and pagination metadata.
+    /// Lists content snippets in a workspace. Use `page` and `per_page` to paginate the results; each page includes
+    /// snippet objects and pagination metadata.
     ///
     /// You can fetch a list of all content snippets for a workspace.
-    public func list(page: Int? = nil, perPage: Int? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ContentSnippetList {
-        return try await ContentSnippetsMethods.listContentSnippets(config: config, page: page, perPage: perPage, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func list(
+        page: Int? = nil,
+        perPage: Int? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContentSnippetList {
+        try await ContentSnippetsMethods.listContentSnippets(
+            config: config,
+            page: page,
+            perPage: perPage,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists content snippets in a workspace. Use `page` and `per_page` to paginate the results; each page includes snippet objects and pagination metadata.
+    /// Lists content snippets in a workspace. Use `page` and `per_page` to paginate the results; each page includes
+    /// snippet objects and pagination metadata.
     ///
     /// You can fetch a list of all content snippets for a workspace.
-    public func listPaginated(page: Int? = nil, perPage: Int? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<ContentSnippet, Swift.Error> {
-        return ContentSnippetsMethods.listContentSnippetsPaginated(config: config, page: page, perPage: perPage, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func listPaginated(
+        page: Int? = nil,
+        perPage: Int? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) -> AsyncThrowingStream<ContentSnippet, Swift.Error> {
+        ContentSnippetsMethods.listContentSnippetsPaginated(
+            config: config,
+            page: page,
+            perPage: perPage,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Creates a content snippet for reuse by the AI agent and Copilot. Provide a `title` and the snippet content as either `json_blocks` or `body_markdown`; these content formats are mutually exclusive. Audience targeting and availability flags are optional.
+    /// Creates a content snippet for reuse by the AI agent and Copilot. Provide a `title` and the snippet content as
+    /// either `json_blocks` or `body_markdown`; these content formats are mutually exclusive. Audience targeting and
+    /// availability flags are optional.
     ///
     /// You can create a new content snippet.
-    public func create(options: ContentSnippetsMethods.CreateContentSnippetOptions, requestOptions: RequestOptions? = nil) async throws -> ContentSnippet {
-        return try await ContentSnippetsMethods.createContentSnippet(config: config, options: options, requestOptions: requestOptions)
+    public func create(
+        options: ContentSnippetsMethods.CreateContentSnippetOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContentSnippet {
+        try await ContentSnippetsMethods.createContentSnippet(
+            config: config,
+            options: options,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieves a content snippet by its unique identifier. Use this operation when you need the snippet's content, locale, availability settings, or audience targeting.
+    /// Retrieves a content snippet by its unique identifier. Use this operation when you need the snippet's content,
+    /// locale, availability settings, or audience targeting.
     ///
     /// You can fetch a single content snippet by its id.
-    public func get(id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ContentSnippet {
-        return try await ContentSnippetsMethods.getContentSnippet(config: config, id: id, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func get(
+        id: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContentSnippet {
+        try await ContentSnippetsMethods.getContentSnippet(
+            config: config,
+            id: id,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Replaces the supplied fields on an existing content snippet while leaving omitted fields unchanged. Provide only the fields you want to update, and use either `json_blocks` or `body_markdown` for the content, not both. Pass an empty `audience_ids` array to clear audience targeting.
+    /// Replaces the supplied fields on an existing content snippet while leaving omitted fields unchanged. Provide only
+    /// the fields you want to update, and use either `json_blocks` or `body_markdown` for the content, not both. Pass
+    /// an empty `audience_ids` array to clear audience targeting.
     ///
     /// You can update an existing content snippet.
-    public func update(options: ContentSnippetsMethods.UpdateContentSnippetOptions, requestOptions: RequestOptions? = nil) async throws -> ContentSnippet {
-        return try await ContentSnippetsMethods.updateContentSnippet(config: config, options: options, requestOptions: requestOptions)
+    public func update(
+        options: ContentSnippetsMethods.UpdateContentSnippetOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContentSnippet {
+        try await ContentSnippetsMethods.updateContentSnippet(
+            config: config,
+            options: options,
+            requestOptions: requestOptions
+        )
     }
 
-/// Deletes a content snippet by its unique identifier. Use this operation to remove a snippet that is no longer needed; deletion is unavailable while the snippet has procedure dependencies.
+    /// Deletes a content snippet by its unique identifier. Use this operation to remove a snippet that is no longer
+    /// needed; deletion is unavailable while the snippet has procedure dependencies.
     ///
     /// You can delete a single content snippet by its id.
-    public func delete(id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try await ContentSnippetsMethods.deleteContentSnippet(config: config, id: id, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func delete(
+        id: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await ContentSnippetsMethods.deleteContentSnippet(
+            config: config,
+            id: id,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Applies an existing tag to a content snippet and returns the applied tag. The tag must already exist, and the authenticated user must have the `manage_knowledge_base_content` permission. The request requires the `read_write_content_snippets` OAuth scope.
+    /// Applies an existing tag to a content snippet and returns the applied tag. The tag must already exist, and the
+    /// authenticated user must have the `manage_knowledge_base_content` permission. The request requires the
+    /// `read_write_content_snippets` OAuth scope.
     ///
-    /// Apply an existing tag to a content snippet. Returns the tag that was applied. The tag must already exist in the workspace (create tags with the Tags API), and the authenticating teammate must have the `manage_knowledge_base_content` permission. Requires the `read_write_content_snippets` OAuth scope.
-    public func attachTag(contentSnippetId: String, id: String, intercomVersion: IntercomVersion? = nil, adminId: SdkOptional<String>? = nil, requestOptions: RequestOptions? = nil) async throws -> Tag {
-        return try await ContentSnippetsMethods.attachContentSnippetsTag(config: config, contentSnippetId: contentSnippetId, id: id, intercomVersion: intercomVersion, adminId: adminId, requestOptions: requestOptions)
+    /// Apply an existing tag to a content snippet. Returns the tag that was applied. The tag must already exist in the
+    /// workspace (create tags with the Tags API), and the authenticating teammate must have the
+    /// `manage_knowledge_base_content` permission. Requires the `read_write_content_snippets` OAuth scope.
+    public func attachTag(
+        contentSnippetId: String,
+        id: String,
+        intercomVersion: IntercomVersion? = nil,
+        adminId: SdkOptional<String>? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Tag {
+        try await ContentSnippetsMethods.attachContentSnippetsTag(
+            config: config,
+            contentSnippetId: contentSnippetId,
+            id: id,
+            intercomVersion: intercomVersion,
+            adminId: adminId,
+            requestOptions: requestOptions
+        )
     }
 
-/// Removes a tag from a content snippet and returns the removed tag. The authenticated user must have the `manage_knowledge_base_content` permission, and the request requires the `read_write_content_snippets` OAuth scope.
+    /// Removes a tag from a content snippet and returns the removed tag. The authenticated user must have the
+    /// `manage_knowledge_base_content` permission, and the request requires the `read_write_content_snippets` OAuth
+    /// scope.
     ///
-    /// Remove a tag from a content snippet. Returns the tag that was removed, with null `applied_at` and `applied_by`. The authenticating teammate must have the `manage_knowledge_base_content` permission. Requires the `read_write_content_snippets` OAuth scope.
-    public func detachTag(contentSnippetId: String, id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Tag {
-        return try await ContentSnippetsMethods.detachContentSnippetsTag(config: config, contentSnippetId: contentSnippetId, id: id, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// Remove a tag from a content snippet. Returns the tag that was removed, with null `applied_at` and `applied_by`.
+    /// The authenticating teammate must have the `manage_knowledge_base_content` permission. Requires the
+    /// `read_write_content_snippets` OAuth scope.
+    public func detachTag(
+        contentSnippetId: String,
+        id: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Tag {
+        try await ContentSnippetsMethods.detachContentSnippetsTag(
+            config: config,
+            contentSnippetId: contentSnippetId,
+            id: id,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 }

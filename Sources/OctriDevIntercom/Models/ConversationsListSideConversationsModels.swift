@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Conversations domain models
+/// Conversations domain models
 /// Pagination metadata.
 public struct SideConversationListPages: Codable {
     /// Optional enumerated value serialized in the `type` wire field.
@@ -27,22 +27,22 @@ public struct SideConversationListPages: Codable {
     }
 
     init() {
-        (self.type, self.page, self.perPage, self.totalPages) = (nil, nil, nil, nil)
+        (type, page, perPage, totalPages) = (nil, nil, nil, nil)
     }
 }
 
-extension SideConversationListPages {
-    public init(from decoder: Decoder) throws {
+public extension SideConversationListPages {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.page = try container.sdkDecodeIfPresent(.page)
-        self.perPage = try container.sdkDecodeIfPresent(.perPage)
-        self.totalPages = try container.sdkDecodeIfPresent(.totalPages)
+        type = try container.sdkDecodeIfPresent(.type)
+        page = try container.sdkDecodeIfPresent(.page)
+        perPage = try container.sdkDecodeIfPresent(.perPage)
+        totalPages = try container.sdkDecodeIfPresent(.totalPages)
     }
 }
 
-extension SideConversationListPages {
-    public init(type: SideConversationListPagesType? = nil, page: Int? = nil, perPage: Int? = nil, totalPages: Int? = nil) {
+public extension SideConversationListPages {
+    init(type: SideConversationListPagesType? = nil, page: Int? = nil, perPage: Int? = nil, totalPages: Int? = nil) {
         self.init()
         (self.type, self.page) = (type, page)
         (self.perPage, self.totalPages) = (perPage, totalPages)
@@ -70,22 +70,27 @@ public struct SideConversationList: Codable {
     }
 
     init() {
-        (self.type, self.sideConversations, self.totalCount, self.pages) = (nil, nil, nil, nil)
+        (type, sideConversations, totalCount, pages) = (nil, nil, nil, nil)
     }
 }
 
-extension SideConversationList {
-    public init(from decoder: Decoder) throws {
+public extension SideConversationList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.sideConversations = try container.sdkDecodeIfPresent(.sideConversations)
-        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        self.pages = try container.sdkDecodeIfPresent(.pages)
+        type = try container.sdkDecodeIfPresent(.type)
+        sideConversations = try container.sdkDecodeIfPresent(.sideConversations)
+        totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        pages = try container.sdkDecodeIfPresent(.pages)
     }
 }
 
-extension SideConversationList {
-    public init(type: SideConversationListType? = nil, sideConversations: [SideConversationSummary]? = nil, totalCount: Int? = nil, pages: SideConversationListPages? = nil) {
+public extension SideConversationList {
+    init(
+        type: SideConversationListType? = nil,
+        sideConversations: [SideConversationSummary]? = nil,
+        totalCount: Int? = nil,
+        pages: SideConversationListPages? = nil
+    ) {
         self.init()
         (self.type, self.sideConversations) = (type, sideConversations)
         (self.totalCount, self.pages) = (totalCount, pages)
@@ -110,21 +115,21 @@ public struct SideConversationSummary: Codable {
     }
 
     init() {
-        (self.sideConversationId, self.conversationParts, self.totalCount) = (nil, nil, nil)
+        (sideConversationId, conversationParts, totalCount) = (nil, nil, nil)
     }
 }
 
-extension SideConversationSummary {
-    public init(from decoder: Decoder) throws {
+public extension SideConversationSummary {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.sideConversationId = try container.sdkDecodeIfPresent(.sideConversationId)
-        self.conversationParts = try container.sdkDecodeIfPresent(.conversationParts)
-        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        sideConversationId = try container.sdkDecodeIfPresent(.sideConversationId)
+        conversationParts = try container.sdkDecodeIfPresent(.conversationParts)
+        totalCount = try container.sdkDecodeIfPresent(.totalCount)
     }
 }
 
-extension SideConversationSummary {
-    public init(sideConversationId: String? = nil, conversationParts: [ConversationPart]? = nil, totalCount: Int? = nil) {
+public extension SideConversationSummary {
+    init(sideConversationId: String? = nil, conversationParts: [ConversationPart]? = nil, totalCount: Int? = nil) {
         self.init()
         (self.sideConversationId, self.conversationParts) = (sideConversationId, conversationParts)
         self.totalCount = totalCount
@@ -135,12 +140,15 @@ extension SideConversationSummary {
 public struct SideConversationListPagesType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let pages = SideConversationListPagesType(rawValue: "pages")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -153,12 +161,15 @@ public struct SideConversationListPagesType: RawRepresentable, Hashable, Codable
 public struct SideConversationListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let sideConversationList = SideConversationListType(rawValue: "side_conversation.list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

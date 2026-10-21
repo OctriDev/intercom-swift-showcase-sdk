@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Update domain models
+/// Update domain models
 /// You can update a Ticket
 public struct UpdateTicketRequest: Codable {
     /// The attributes set on the ticket.
@@ -45,27 +45,36 @@ public struct UpdateTicketRequest: Codable {
     }
 
     init() {
-        (self.ticketAttributes, self.ticketStateId, self.companyId, self.open, self.isShared) = (nil, nil, nil, nil, nil)
-        (self.snoozedUntil, self.adminId, self.assigneeId) = (nil, nil, nil)
+        (ticketAttributes, ticketStateId, companyId, open, isShared) = (nil, nil, nil, nil, nil)
+        (snoozedUntil, adminId, assigneeId) = (nil, nil, nil)
     }
 }
 
-extension UpdateTicketRequest {
-    public init(from decoder: Decoder) throws {
+public extension UpdateTicketRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.ticketAttributes = try container.sdkDecodeIfPresent(.ticketAttributes)
-        self.ticketStateId = try container.sdkDecodeIfPresent(.ticketStateId)
-        self.companyId = try container.sdkDecodeIfPresent(.companyId)
-        self.open = try container.sdkDecodeIfPresent(.open)
-        self.isShared = try container.sdkDecodeIfPresent(.isShared)
-        self.snoozedUntil = try container.sdkDecodeIfPresent(.snoozedUntil)
-        self.adminId = try container.sdkDecodeIfPresent(.adminId)
-        self.assigneeId = try container.sdkDecodeIfPresent(.assigneeId)
+        ticketAttributes = try container.sdkDecodeIfPresent(.ticketAttributes)
+        ticketStateId = try container.sdkDecodeIfPresent(.ticketStateId)
+        companyId = try container.sdkDecodeIfPresent(.companyId)
+        open = try container.sdkDecodeIfPresent(.open)
+        isShared = try container.sdkDecodeIfPresent(.isShared)
+        snoozedUntil = try container.sdkDecodeIfPresent(.snoozedUntil)
+        adminId = try container.sdkDecodeIfPresent(.adminId)
+        assigneeId = try container.sdkDecodeIfPresent(.assigneeId)
     }
 }
 
-extension UpdateTicketRequest {
-    public init(ticketAttributes: [String: JSONValue]? = nil, ticketStateId: String? = nil, companyId: String? = nil, open: Bool? = nil, isShared: Bool? = nil, snoozedUntil: Int? = nil, adminId: Int? = nil, assigneeId: String? = nil) {
+public extension UpdateTicketRequest {
+    init(
+        ticketAttributes: [String: JSONValue]? = nil,
+        ticketStateId: String? = nil,
+        companyId: String? = nil,
+        open: Bool? = nil,
+        isShared: Bool? = nil,
+        snoozedUntil: Int? = nil,
+        adminId: Int? = nil,
+        assigneeId: String? = nil
+    ) {
         self.init()
         (self.ticketAttributes, self.ticketStateId) = (ticketAttributes, ticketStateId)
         (self.companyId, self.open) = (companyId, open)
@@ -170,43 +179,66 @@ public struct UpdateArticleRequest: Codable {
     }
 
     init() {
-        (self.title, self.description, self.body, self.bodyMarkdown, self.authorId) = (nil, nil, nil, nil, nil)
-        (self.state, self.parentId, self.parentType, self.translatedContent, self.folderId) = (nil, nil, nil, nil, nil)
-        (self.audienceIds, self.aiChatbotAvailability, self.aiCopilotAvailability, self.aiSalesAgentAvailability, self.scheduledPublishAt) = (nil, nil, nil, nil, nil)
-        self.scheduledUnpublishAt = nil
+        (title, description, body, bodyMarkdown, authorId) = (nil, nil, nil, nil, nil)
+        (state, parentId, parentType, translatedContent, folderId) = (nil, nil, nil, nil, nil)
+        (audienceIds, aiChatbotAvailability, aiCopilotAvailability, aiSalesAgentAvailability, scheduledPublishAt) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        scheduledUnpublishAt = nil
     }
 }
 
-extension UpdateArticleRequest {
-    public init(from decoder: Decoder) throws {
+public extension UpdateArticleRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.title = try container.sdkDecodeIfPresent(.title)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.body = try container.sdkDecodeIfPresent(.body)
-        self.bodyMarkdown = try container.sdkDecodeIfPresent(.bodyMarkdown)
-        self.authorId = try container.sdkDecodeIfPresent(.authorId)
-        self.state = try container.sdkDecodeIfPresent(.state)
-        self.parentId = try container.sdkDecodeIfPresent(.parentId)
-        self.parentType = try container.sdkDecodeIfPresent(.parentType)
-        self.translatedContent = try container.sdkDecodeIfPresent(.translatedContent)
-        self.folderId = try container.sdkDecodeIfPresent(.folderId)
-        self.audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
-        self.aiChatbotAvailability = try container.sdkDecodeIfPresent(.aiChatbotAvailability)
-        self.aiCopilotAvailability = try container.sdkDecodeIfPresent(.aiCopilotAvailability)
-        self.aiSalesAgentAvailability = try container.sdkDecodeIfPresent(.aiSalesAgentAvailability)
-        self.scheduledPublishAt = try container.sdkDecodeIfPresent(.scheduledPublishAt)
-        self.scheduledUnpublishAt = try container.sdkDecodeIfPresent(.scheduledUnpublishAt)
-        if let value = self.scheduledPublishAt {
+        title = try container.sdkDecodeIfPresent(.title)
+        description = try container.sdkDecodeIfPresent(.description)
+        body = try container.sdkDecodeIfPresent(.body)
+        bodyMarkdown = try container.sdkDecodeIfPresent(.bodyMarkdown)
+        authorId = try container.sdkDecodeIfPresent(.authorId)
+        state = try container.sdkDecodeIfPresent(.state)
+        parentId = try container.sdkDecodeIfPresent(.parentId)
+        parentType = try container.sdkDecodeIfPresent(.parentType)
+        translatedContent = try container.sdkDecodeIfPresent(.translatedContent)
+        folderId = try container.sdkDecodeIfPresent(.folderId)
+        audienceIds = try container.sdkDecodeIfPresent(.audienceIds)
+        aiChatbotAvailability = try container.sdkDecodeIfPresent(.aiChatbotAvailability)
+        aiCopilotAvailability = try container.sdkDecodeIfPresent(.aiCopilotAvailability)
+        aiSalesAgentAvailability = try container.sdkDecodeIfPresent(.aiSalesAgentAvailability)
+        scheduledPublishAt = try container.sdkDecodeIfPresent(.scheduledPublishAt)
+        scheduledUnpublishAt = try container.sdkDecodeIfPresent(.scheduledUnpublishAt)
+        if let value = scheduledPublishAt {
             try sdkValidateDateTime("scheduled_publish_at", sdkWireString(value))
         }
-        if let value = self.scheduledUnpublishAt {
+        if let value = scheduledUnpublishAt {
             try sdkValidateDateTime("scheduled_unpublish_at", sdkWireString(value))
         }
     }
 }
 
-extension UpdateArticleRequest {
-    public init(title: String? = nil, description: String? = nil, body: String? = nil, bodyMarkdown: String? = nil, authorId: Int? = nil, state: UpdateArticleRequestState? = nil, parentId: String? = nil, parentType: String? = nil, translatedContent: ArticleTranslatedContent? = nil, folderId: Int? = nil, audienceIds: [Int]? = nil, aiChatbotAvailability: Bool? = nil, aiCopilotAvailability: Bool? = nil, aiSalesAgentAvailability: Bool? = nil, scheduledPublishAt: Date? = nil, scheduledUnpublishAt: Date? = nil) throws {
+public extension UpdateArticleRequest {
+    init(
+        title: String? = nil,
+        description: String? = nil,
+        body: String? = nil,
+        bodyMarkdown: String? = nil,
+        authorId: Int? = nil,
+        state: UpdateArticleRequestState? = nil,
+        parentId: String? = nil,
+        parentType: String? = nil,
+        translatedContent: ArticleTranslatedContent? = nil,
+        folderId: Int? = nil,
+        audienceIds: [Int]? = nil,
+        aiChatbotAvailability: Bool? = nil,
+        aiCopilotAvailability: Bool? = nil,
+        aiSalesAgentAvailability: Bool? = nil,
+        scheduledPublishAt: Date? = nil,
+        scheduledUnpublishAt: Date? = nil
+    ) throws {
         self.init()
         (self.title, self.description) = (title, description)
         (self.body, self.bodyMarkdown) = (body, bodyMarkdown)
@@ -234,13 +266,16 @@ extension UpdateArticleRequest {
 public struct UpdateArticleRequestState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let published = UpdateArticleRequestState(rawValue: "published")
     public static let draft = UpdateArticleRequestState(rawValue: "draft")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

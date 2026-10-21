@@ -3,25 +3,33 @@
 
 import Foundation
 
-// Conversations domain models
+/// Conversations domain models
 public indirect enum RedactConversationRequest {
     case redactConversationRequestVariant0(RedactConversationRequestVariant0)
     case redactConversationRequestVariant1(RedactConversationRequestVariant1)
 }
 
 extension RedactConversationRequest: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let raw = try? container.decode(JSONValue.self) {
-            if let value = Self.decodeLossless1(from: container, raw) { self = value; return }
+            if let value = Self.decodeLossless1(from: container, raw) {
+                self = value; return
+            }
         }
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for RedactConversationRequest")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for RedactConversationRequest"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
@@ -39,8 +47,14 @@ extension RedactConversationRequest {
 
 extension RedactConversationRequest {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(RedactConversationRequestVariant0.self) { return .redactConversationRequestVariant0(value) }
-        if let value = try? container.decode(RedactConversationRequestVariant1.self) { return .redactConversationRequestVariant1(value) }
+        if let value = try? container
+            .decode(RedactConversationRequestVariant0.self) {
+            return .redactConversationRequestVariant0(value)
+        }
+        if let value = try? container
+            .decode(RedactConversationRequestVariant1.self) {
+            return .redactConversationRequestVariant1(value)
+        }
         return nil
     }
 }
@@ -73,33 +87,47 @@ public struct RedactConversationRequestVariant0: Codable {
         case conversationPartId = "conversation_part_id"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension RedactConversationRequestVariant0 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.conversationId) else {
-            throw SdkValidationError(field: "conversation_id", code: "required", message: "Validation failed for 'conversation_id': value is required")
-        }
-        guard container.contains(.conversationPartId) else {
-            throw SdkValidationError(field: "conversation_part_id", code: "required", message: "Validation failed for 'conversation_part_id': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.conversationId = try container.sdkDecodeRequired(.conversationId)
-        self.conversationPartId = try container.sdkDecodeRequired(.conversationPartId)
-            try sdkValidateRawEnum("type", self.type, RedactConversationRequestVariant0Type.allCases.map(\.rawValue))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension RedactConversationRequestVariant0 {
-    public init(type: RedactConversationRequestVariant0Type, conversationId: String, conversationPartId: String) throws {
+public extension RedactConversationRequestVariant0 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.conversationId) else {
+            throw SdkValidationError(
+                field: "conversation_id",
+                code: "required",
+                message: "Validation failed for 'conversation_id': value is required"
+            )
+        }
+        guard container.contains(.conversationPartId) else {
+            throw SdkValidationError(
+                field: "conversation_part_id",
+                code: "required",
+                message: "Validation failed for 'conversation_part_id': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        conversationId = try container.sdkDecodeRequired(.conversationId)
+        conversationPartId = try container.sdkDecodeRequired(.conversationPartId)
+        try sdkValidateRawEnum("type", type, RedactConversationRequestVariant0Type.allCases.map(\.rawValue))
+    }
+}
+
+public extension RedactConversationRequestVariant0 {
+    init(type: RedactConversationRequestVariant0Type, conversationId: String, conversationPartId: String) throws {
         (self.type, self.conversationId) = (type, conversationId)
         self.conversationPartId = conversationPartId
-            try sdkValidateRawEnum("type", self.type, RedactConversationRequestVariant0Type.allCases.map(\.rawValue))
+        try sdkValidateRawEnum("type", self.type, RedactConversationRequestVariant0Type.allCases.map(\.rawValue))
     }
 }
 
@@ -121,33 +149,47 @@ public struct RedactConversationRequestVariant1: Codable {
         case sourceId = "source_id"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension RedactConversationRequestVariant1 {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.conversationId) else {
-            throw SdkValidationError(field: "conversation_id", code: "required", message: "Validation failed for 'conversation_id': value is required")
-        }
-        guard container.contains(.sourceId) else {
-            throw SdkValidationError(field: "source_id", code: "required", message: "Validation failed for 'source_id': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.conversationId = try container.sdkDecodeRequired(.conversationId)
-        self.sourceId = try container.sdkDecodeRequired(.sourceId)
-            try sdkValidateRawEnum("type", self.type, RedactConversationRequestVariant1Type.allCases.map(\.rawValue))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension RedactConversationRequestVariant1 {
-    public init(type: RedactConversationRequestVariant1Type, conversationId: String, sourceId: String) throws {
+public extension RedactConversationRequestVariant1 {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.conversationId) else {
+            throw SdkValidationError(
+                field: "conversation_id",
+                code: "required",
+                message: "Validation failed for 'conversation_id': value is required"
+            )
+        }
+        guard container.contains(.sourceId) else {
+            throw SdkValidationError(
+                field: "source_id",
+                code: "required",
+                message: "Validation failed for 'source_id': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        conversationId = try container.sdkDecodeRequired(.conversationId)
+        sourceId = try container.sdkDecodeRequired(.sourceId)
+        try sdkValidateRawEnum("type", type, RedactConversationRequestVariant1Type.allCases.map(\.rawValue))
+    }
+}
+
+public extension RedactConversationRequestVariant1 {
+    init(type: RedactConversationRequestVariant1Type, conversationId: String, sourceId: String) throws {
         (self.type, self.conversationId) = (type, conversationId)
         self.sourceId = sourceId
-            try sdkValidateRawEnum("type", self.type, RedactConversationRequestVariant1Type.allCases.map(\.rawValue))
+        try sdkValidateRawEnum("type", self.type, RedactConversationRequestVariant1Type.allCases.map(\.rawValue))
     }
 }
 

@@ -6,40 +6,84 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ContactsMethods {
-    /// Deletes a single contact from the workspace. Use the contact's ID to identify the record to remove. The response includes a contact reference and indicates whether the contact was deleted.
+public extension ContactsMethods {
+    /// Deletes a single contact from the workspace. Use the contact's ID to identify the record to remove. The response
+    /// includes a contact reference and indicates whether the contact was deleted.
     ///
     /// You can delete a single contact.
     ///
     /// - Parameters:
     /// - contactId: contact_id
-    public static func deleteContact(config: ClientConfig, contactId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ContactDeleted {
-        return try (await sdkRequest("DELETE", ["/contacts/", sdkEncodePathSegment(sdkWireString(contactId))].joined(), config: config, decoder: .json, operationId: "DeleteContact", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self])).data
+    static func deleteContact(
+        config: ClientConfig,
+        contactId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContactDeleted {
+        try await (sdkRequest(
+            "DELETE",
+            ["/contacts/", sdkEncodePathSegment(sdkWireString(contactId))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "DeleteContact",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self]
+        )).data
     }
 
-    /// Lists contacts in the workspace, including users and leads. Contacts merged into other contacts are excluded; only the destination contact remains in the list. Results are paginated, with 10 contacts per page by default and a maximum of 150 per page.
+    /// Lists contacts in the workspace, including users and leads. Contacts merged into other contacts are excluded;
+    /// only the destination contact remains in the list. Results are paginated, with 10 contacts per page by default
+    /// and a maximum of 150 per page.
     ///
-    /// You can fetch a list of all contacts (ie. users or leads) in your workspace. {% admonition type="info" name="Merged contacts" %} Contacts that have been merged (via POST /contacts/merge) will not appear in list results. Only the target contact from the merge remains accessible. {% /admonition %} {% admonition type="warning" name="Pagination" %} You can use pagination to limit the number of results returned. The default is `10` results per page, with a maximum of `150`. See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#pagination-for-list-apis) for more details on how to use the `starting_after` param. {% /admonition %}
+    /// You can fetch a list of all contacts (ie. users or leads) in your workspace. {% admonition type="info"
+    /// name="Merged contacts" %} Contacts that have been merged (via POST /contacts/merge) will not appear in list
+    /// results. Only the target contact from the merge remains accessible. {% /admonition %} {% admonition
+    /// type="warning" name="Pagination" %} You can use pagination to limit the number of results returned. The default
+    /// is `10` results per page, with a maximum of `150`. See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#pagination-for-list-apis)
+    /// for more details on how to use the `starting_after` param. {% /admonition %}
     ///
     /// - Parameters:
     /// - includeMergeHistory: Pass `true` to include a `merge_history` array on
     ///   each contact in the response. Only returned for contacts with a `user` role.
-    public static func listContacts(config: ClientConfig, includeMergeHistory: Bool? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ContactList {
-        return try (await sdkRequest("GET", "/contacts", config: config, query: [
+    static func listContacts(
+        config: ClientConfig,
+        includeMergeHistory: Bool? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContactList {
+        try await (sdkRequest("GET", "/contacts", config: config, query: [
             SdkQueryParameter("include_merge_history", value: includeMergeHistory),
         ], decoder: .json, operationId: "ListContacts", extraHeaders: sdkHeaders([
             ("Intercom-Version", sdkHeaderValue(intercomVersion)),
         ]), options: requestOptions, errors: ["401": Error2.self])).data
     }
 
-    /// Creates a new contact, such as a user or lead. Provide at least one of `email`, `external_id`, or `role` to identify the contact, and include `email` whenever you set `email_verified`. The response contains the created contact object.
+    /// Creates a new contact, such as a user or lead. Provide at least one of `email`, `external_id`, or `role` to
+    /// identify the contact, and include `email` whenever you set `email_verified`. The response contains the created
+    /// contact object.
     ///
     /// You can create a new contact (ie. user or lead).
-    public static func createContact(config: ClientConfig, intercomVersion: IntercomVersion? = nil, body: CreateContactRequestBody? = nil, requestOptions: RequestOptions? = nil) async throws -> CreateContactResponse {
-        return try (await sdkRequest("POST", "/contacts", config: config, rawBody: (try body.map { try sdkEncodeBody($0, contentType: "application/json") }), decoder: .json, operationId: "CreateContact", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self])).data
+    static func createContact(
+        config: ClientConfig,
+        intercomVersion: IntercomVersion? = nil,
+        body: CreateContactRequestBody? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateContactResponse {
+        try await (sdkRequest(
+            "POST",
+            "/contacts",
+            config: config,
+            rawBody: (body.map { try sdkEncodeBody($0, contentType: "application/json") }),
+            decoder: .json,
+            operationId: "CreateContact",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self]
+        )).data
     }
 }

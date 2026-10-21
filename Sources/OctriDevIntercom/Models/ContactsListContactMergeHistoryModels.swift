@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Contacts domain models
+/// Contacts domain models
 /// A paginated list of merge history entries for a contact.
 public struct MergeHistoryList: Codable {
     /// The type of object.
@@ -26,22 +26,27 @@ public struct MergeHistoryList: Codable {
     }
 
     init() {
-        (self.type, self.data, self.nextCursor, self.hasMore) = (nil, nil, nil, nil)
+        (type, data, nextCursor, hasMore) = (nil, nil, nil, nil)
     }
 }
 
-extension MergeHistoryList {
-    public init(from decoder: Decoder) throws {
+public extension MergeHistoryList {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.data = try container.sdkDecodeIfPresent(.data)
-        self.nextCursor = try container.sdkDecodeIfPresent(.nextCursor)
-        self.hasMore = try container.sdkDecodeIfPresent(.hasMore)
+        type = try container.sdkDecodeIfPresent(.type)
+        data = try container.sdkDecodeIfPresent(.data)
+        nextCursor = try container.sdkDecodeIfPresent(.nextCursor)
+        hasMore = try container.sdkDecodeIfPresent(.hasMore)
     }
 }
 
-extension MergeHistoryList {
-    public init(type: MergeHistoryListType? = nil, data: [MergeHistoryItem]? = nil, nextCursor: String? = nil, hasMore: Bool? = nil) {
+public extension MergeHistoryList {
+    init(
+        type: MergeHistoryListType? = nil,
+        data: [MergeHistoryItem]? = nil,
+        nextCursor: String? = nil,
+        hasMore: Bool? = nil
+    ) {
         self.init()
         (self.type, self.data) = (type, data)
         (self.nextCursor, self.hasMore) = (nextCursor, hasMore)
@@ -52,12 +57,15 @@ extension MergeHistoryList {
 public struct MergeHistoryListType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let list = MergeHistoryListType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

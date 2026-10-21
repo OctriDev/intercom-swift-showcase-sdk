@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Contacts domain models
+/// Contacts domain models
 /// blocked contact object
 public struct ContactBlocked: Codable {
     /// always contact
@@ -27,22 +27,22 @@ public struct ContactBlocked: Codable {
     }
 
     init() {
-        (self.type, self.id, self.externalId, self.blocked) = (nil, nil, nil, nil)
+        (type, id, externalId, blocked) = (nil, nil, nil, nil)
     }
 }
 
-extension ContactBlocked {
-    public init(from decoder: Decoder) throws {
+public extension ContactBlocked {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.externalId = try container.sdkDecodeIfPresent(.externalId)
-        self.blocked = try container.sdkDecodeIfPresent(.blocked)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        externalId = try container.sdkDecodeIfPresent(.externalId)
+        blocked = try container.sdkDecodeIfPresent(.blocked)
     }
 }
 
-extension ContactBlocked {
-    public init(type: ContactBlockedType? = nil, id: String? = nil, externalId: String? = nil, blocked: Bool? = nil) {
+public extension ContactBlocked {
+    init(type: ContactBlockedType? = nil, id: String? = nil, externalId: String? = nil, blocked: Bool? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.externalId, self.blocked) = (externalId, blocked)
@@ -53,12 +53,15 @@ extension ContactBlocked {
 public struct ContactBlockedType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let contact = ContactBlockedType(rawValue: "contact")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
