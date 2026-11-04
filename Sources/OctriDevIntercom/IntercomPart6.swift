@@ -9,175 +9,583 @@ public class ContactsNamespace {
         self.config = config
     }
 
-/// Lists the companies associated with a contact identified by `contact_id`. Use this endpoint to inspect the contact's company associations; the response includes company records and pagination metadata.
+    /// Lists the companies associated with a contact identified by `contact_id`. Use this endpoint to inspect the
+    /// contact's company associations; the response includes company records and pagination metadata.
     ///
     /// You can fetch a list of companies that are associated to a contact.
-    public func listCompanies(contactId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ContactAttachedCompanies {
-        return try await ContactsMethods.listContactsCompanies(config: config, contactId: contactId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func listCompanies(
+        contactId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContactAttachedCompanies {
+        try await ContactsMethods.listContactsCompanies(
+            config: config,
+            contactId: contactId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists the segments associated with a specific contact. Use the `contact_id` path parameter to identify the contact whose segments you want to retrieve.
+    /// Lists the segments associated with a specific contact. Use the `contact_id` path parameter to identify the
+    /// contact whose segments you want to retrieve.
     ///
     /// You can fetch a list of segments that are associated to a contact.
-    public func listSegments(contactId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ContactSegments {
-        return try await ContactsMethods.listContactsSegments(config: config, contactId: contactId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func listSegments(
+        contactId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContactSegments {
+        try await ContactsMethods.listContactsSegments(
+            config: config,
+            contactId: contactId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists the subscription types whose preferences a contact has explicitly set. Use the `contact_id` path parameter to retrieve the contact's opt-in and opt-out subscriptions; subscriptions left in their default state are not included.
+    /// Lists the subscription types whose preferences a contact has explicitly set. Use the `contact_id` path parameter
+    /// to retrieve the contact's opt-in and opt-out subscriptions; subscriptions left in their default state are not
+    /// included.
     ///
-    /// You can fetch a list of subscription types that are attached to a contact. These can be subscriptions that a user has 'opted-in' to or has 'opted-out' from, depending on the subscription type. This will return a list of Subscription Type objects that the contact is associated with. The data property will show a combined list of: 1.Opt-out subscription types that the user has opted-out from. 2.Opt-in subscription types that the user has opted-in to receiving. **Note:** This endpoint only returns subscriptions where the contact has explicitly configured their preference. Subscriptions that are in the default state — where the contact has not made an explicit opt-in or opt-out choice — are not included in the response.
-    public func listSubscriptions(contactId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> SubscriptionTypeList {
-        return try await ContactsMethods.listContactsSubscriptions(config: config, contactId: contactId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// You can fetch a list of subscription types that are attached to a contact. These can be subscriptions that a
+    /// user has 'opted-in' to or has 'opted-out' from, depending on the subscription type. This will return a list of
+    /// Subscription Type objects that the contact is associated with. The data property will show a combined list of:
+    /// 1.Opt-out subscription types that the user has opted-out from. 2.Opt-in subscription types that the user has
+    /// opted-in to receiving. **Note:** This endpoint only returns subscriptions where the contact has explicitly
+    /// configured their preference. Subscriptions that are in the default state — where the contact has not made an
+    /// explicit opt-in or opt-out choice — are not included in the response.
+    public func listSubscriptions(
+        contactId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SubscriptionTypeList {
+        try await ContactsMethods.listContactsSubscriptions(
+            config: config,
+            contactId: contactId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists the tags attached to a specific contact. Use the `contact_id` path parameter to retrieve the tags associated with that contact.
+    /// Lists the tags attached to a specific contact. Use the `contact_id` path parameter to retrieve the tags
+    /// associated with that contact.
     ///
     /// You can fetch a list of all tags that are attached to a specific contact.
-    public func listTags(contactId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> TagList {
-        return try await ContactsMethods.listContactsTags(config: config, contactId: contactId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func listTags(
+        contactId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> TagList {
+        try await ContactsMethods.listContactsTags(
+            config: config,
+            contactId: contactId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists contacts in the workspace that are no longer active, with pagination. Use the `page` and `per_page` parameters to retrieve results in pages and locate contacts by their identifiers or contact details. Each result includes a status explaining why the contact is inactive, and merged contacts include `merged_into_id`.
+    /// Lists contacts in the workspace that are no longer active, with pagination. Use the `page` and `per_page`
+    /// parameters to retrieve results in pages and locate contacts by their identifiers or contact details. Each result
+    /// includes a status explaining why the contact is inactive, and merged contacts include `merged_into_id`.
     ///
-    /// Fetch a paginated list of the contacts in your workspace that are no longer active, so you can recover ones whose `id`, `email`, or `external_id` you no longer have and then permanently delete them. Each entry carries a `status` describing why the contact is inactive: `archived`, `blocked`, `merged`, `pending_deletion`, or `permanently_deleted`. `merged_into_id` is present only when `status` is `merged`, and `external_id` and `email` are `null` for `permanently_deleted` contacts.
-    public func listDeleted(perPage: Int? = nil, page: Int? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DeletedContactList {
-        return try await ContactsMethods.listDeletedContacts(config: config, perPage: perPage, page: page, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// Fetch a paginated list of the contacts in your workspace that are no longer active, so you can recover ones
+    /// whose `id`, `email`, or `external_id` you no longer have and then permanently delete them. Each entry carries a
+    /// `status` describing why the contact is inactive: `archived`, `blocked`, `merged`, `pending_deletion`, or
+    /// `permanently_deleted`. `merged_into_id` is present only when `status` is `merged`, and `external_id` and `email`
+    /// are `null` for `permanently_deleted` contacts.
+    public func listDeleted(
+        perPage: Int? = nil,
+        page: Int? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DeletedContactList {
+        try await ContactsMethods.listDeletedContacts(
+            config: config,
+            perPage: perPage,
+            page: page,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Updates an existing contact, including its attributes and associations with custom object instances. Supply only the contact properties or associations you want to change; if you set `email_verified`, include `email` in the same request. Use `include_merge_history` to request merge history for contacts with a `user` role.
+    /// Updates an existing contact, including its attributes and associations with custom object instances. Supply only
+    /// the contact properties or associations you want to change; if you set `email_verified`, include `email` in the
+    /// same request. Use `include_merge_history` to request merge history for contacts with a `user` role.
     ///
-    /// You can update an existing contact (ie. user or lead). {% admonition type="info" %} This endpoint handles both **contact updates** and **custom object associations**. See _`update a contact with an association to a custom object instance`_ in the request/response examples to see the custom object association format. {% /admonition %}
-    public func update(contactId: String, includeMergeHistory: Bool? = nil, intercomVersion: IntercomVersion? = nil, body: UpdateContactRequestBody? = nil, requestOptions: RequestOptions? = nil) async throws -> UpdateContactResponse {
-        return try await ContactsMethods.updateContact(config: config, contactId: contactId, includeMergeHistory: includeMergeHistory, intercomVersion: intercomVersion, body: body, requestOptions: requestOptions)
+    /// You can update an existing contact (ie. user or lead). {% admonition type="info" %} This endpoint handles both
+    /// **contact updates** and **custom object associations**. See _`update a contact with an association to a custom
+    /// object instance`_ in the request/response examples to see the custom object association format. {% /admonition
+    /// %}
+    public func update(
+        contactId: String,
+        includeMergeHistory: Bool? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        body: UpdateContactRequestBody? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> UpdateContactResponse {
+        try await ContactsMethods.updateContact(
+            config: config,
+            contactId: contactId,
+            includeMergeHistory: includeMergeHistory,
+            intercomVersion: intercomVersion,
+            body: body,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieves a contact by its unique identifier. Use `include_merge_history` to request merge history for contacts with a `user` role. If the contact was merged, the response includes a `Link` header pointing to the canonical contact.
+    /// Retrieves a contact by its unique identifier. Use `include_merge_history` to request merge history for contacts
+    /// with a `user` role. If the contact was merged, the response includes a `Link` header pointing to the canonical
+    /// contact.
     ///
-    /// You can fetch the details of a single contact. {% admonition type="info" name="Merged contacts return 410 Gone" %} If a contact has been merged into another contact via the Merge endpoint (`POST /contacts/merge`), requesting it by its original ID will return **HTTP 410 Gone** with a `Link` header pointing to the canonical (merged-into) contact. **Response headers:** ``` Link: </contacts/{canonical_id}>; rel="canonical" ``` **Response body:** ```json { "type": "error.list", "errors": [{ "code": "contact_merged", "message": "This contact has been merged. See the 'Link' header for the canonical contact." }] } ``` The `Link` header contains the path to the final merge target, resolving multi-hop merge chains (up to 3 hops). {% /admonition %}
-    public func show(contactId: String, includeMergeHistory: Bool? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ShowContactResponse {
-        return try await ContactsMethods.showContact(config: config, contactId: contactId, includeMergeHistory: includeMergeHistory, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// You can fetch the details of a single contact. {% admonition type="info" name="Merged contacts return 410 Gone"
+    /// %} If a contact has been merged into another contact via the Merge endpoint (`POST /contacts/merge`), requesting
+    /// it by its original ID will return **HTTP 410 Gone** with a `Link` header pointing to the canonical (merged-into)
+    /// contact. **Response headers:** ``` Link: </contacts/{canonical_id}>; rel="canonical" ``` **Response body:**
+    /// ```json { "type": "error.list", "errors": [{ "code": "contact_merged", "message": "This contact has been merged.
+    /// See the 'Link' header for the canonical contact." }] } ``` The `Link` header contains the path to the final
+    /// merge target, resolving multi-hop merge chains (up to 3 hops). {% /admonition %}
+    public func show(
+        contactId: String,
+        includeMergeHistory: Bool? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ShowContactResponse {
+        try await ContactsMethods.showContact(
+            config: config,
+            contactId: contactId,
+            includeMergeHistory: includeMergeHistory,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Deletes a single contact from the workspace. Use the contact's ID to identify the record to remove. The response includes a contact reference and indicates whether the contact was deleted.
+    /// Deletes a single contact from the workspace. Use the contact's ID to identify the record to remove. The response
+    /// includes a contact reference and indicates whether the contact was deleted.
     ///
     /// You can delete a single contact.
-    public func delete(contactId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ContactDeleted {
-        return try await ContactsMethods.deleteContact(config: config, contactId: contactId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func delete(
+        contactId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContactDeleted {
+        try await ContactsMethods.deleteContact(
+            config: config,
+            contactId: contactId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 }
 
-extension ContactsNamespace {
-/// Merges a lead contact into a user contact. Supply the source contact in `from` and the destination contact in `into`; set `skip_duplicate_validation` to true only when merging contacts that do not share a matching email or phone. After the merge, use the target contact's identifier because the source contact is removed from the active contact list.
+public extension ContactsNamespace {
+    /// Merges a lead contact into a user contact. Supply the source contact in `from` and the destination contact in
+    /// `into`; set `skip_duplicate_validation` to true only when merging contacts that do not share a matching email or
+    /// phone. After the merge, use the target contact's identifier because the source contact is removed from the
+    /// active contact list.
     ///
-    /// You can merge a contact with a `role` of `lead` into a contact with a `role` of `user`. {% admonition type="warning" name="Merged contacts are not retrievable via the API" %} Once a merge is completed, the source contact (`from`) is permanently removed from the active contact list. This means: - **GET /contacts/{id}** — Requesting the source contact by its original ID will return a `404 Not Found` error. - **POST /contacts/search** — The source contact will not appear in search results, including queries filtered by `updated_at`. - **GET /contacts** — The source contact will not appear in list results. Only the target contact (`into`) remains accessible. If your application stores contact IDs, update them to use the target contact's ID after a merge. {% /admonition %}
-    public func merge(from: String, into: String, includeMergeHistory: Bool? = nil, intercomVersion: IntercomVersion? = nil, skipDuplicateValidation: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> MergeContactResponse {
-        return try await ContactsMethods.mergeContact(config: config, from: from, into: into, includeMergeHistory: includeMergeHistory, intercomVersion: intercomVersion, skipDuplicateValidation: skipDuplicateValidation, requestOptions: requestOptions)
+    /// You can merge a contact with a `role` of `lead` into a contact with a `role` of `user`. {% admonition
+    /// type="warning" name="Merged contacts are not retrievable via the API" %} Once a merge is completed, the source
+    /// contact (`from`) is permanently removed from the active contact list. This means: - **GET /contacts/{id}** —
+    /// Requesting the source contact by its original ID will return a `404 Not Found` error. - **POST
+    /// /contacts/search** — The source contact will not appear in search results, including queries filtered by
+    /// `updated_at`. - **GET /contacts** — The source contact will not appear in list results. Only the target contact
+    /// (`into`) remains accessible. If your application stores contact IDs, update them to use the target contact's ID
+    /// after a merge. {% /admonition %}
+    func merge(
+        from: String,
+        into: String,
+        includeMergeHistory: Bool? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        skipDuplicateValidation: Bool? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> MergeContactResponse {
+        try await ContactsMethods.mergeContact(
+            config: config,
+            from: from,
+            into: into,
+            includeMergeHistory: includeMergeHistory,
+            intercomVersion: intercomVersion,
+            skipDuplicateValidation: skipDuplicateValidation,
+            requestOptions: requestOptions
+        )
     }
 
-/// Previews a contact merge without changing any contact data. Supply the source and destination IDs in `from` and `into`, and optionally set `custom_attribute_names` to include selected custom attributes in the preview. The result reports whether the merge is allowed and provides either a summary of changes or reasons it is not allowed.
+    /// Previews a contact merge without changing any contact data. Supply the source and destination IDs in `from` and
+    /// `into`, and optionally set `custom_attribute_names` to include selected custom attributes in the preview. The
+    /// result reports whether the merge is allowed and provides either a summary of changes or reasons it is not
+    /// allowed.
     ///
-    /// Preview the result of merging one contact into another without applying the merge. This is a read-only dry run: it reports whether the merge is allowed and, if so, exactly what would change, **without modifying any data**. Send the same `from` and `into` contact IDs you would pass to Merge two contacts. You can merge a contact with a `role` of `lead` into a contact with a `role` of `user`. You can optionally pass `custom_attribute_names` to include specific custom attributes in the previewed attribute changes. - When `allowed` is `true`, the response contains a `summary`: every attribute change (with the resulting value on the surviving contact) and, for each object type, two counts — `from`, how many are on the source contact and would move to the destination, and `into`, how many the destination already has. Counts are reported for conversations, tickets, phone calls, notes, and tags. `conversations` counts non-ticket conversations only; tickets are reported separately under `tickets`, and `phone_calls` is present only for phone-channel merges. - When `allowed` is `false`, the response contains `reasons`. Each reason has a stable `code` you can branch on and a human-readable `message` you can display. {% admonition type="warning" name="Previewing non-duplicate contacts" %} By default a merge requires the two contacts to share an identifier (email or phone). Set `skip_duplicate_validation` to `true` to preview a merge of contacts that don't, the same rule the merge endpoint enforces. {% /admonition %} When `allowed` is `false`, `reasons[].code` is one of: | code | meaning | | --- | --- | | `source_same_as_target` | The source contact (`from`) and the destination contact (`into`) are the same contact. A contact can't be merged into itself. | | `invalid_merge_role_pair` | The `from`/`into` roles aren't mergeable. `into` must be a user. | | `no_shared_identifier` | The contacts share no email or phone. Set `skip_duplicate_validation` to preview anyway. | |…
-    public func previewMerge(from: String, into: String, intercomVersion: IntercomVersion? = nil, skipDuplicateValidation: Bool? = nil, customAttributeNames: [String]? = nil, requestOptions: RequestOptions? = nil) async throws -> MergePreviewResponse {
-        return try await ContactsMethods.previewMergeContact(config: config, from: from, into: into, intercomVersion: intercomVersion, skipDuplicateValidation: skipDuplicateValidation, customAttributeNames: customAttributeNames, requestOptions: requestOptions)
+    /// Preview the result of merging one contact into another without applying the merge. This is a read-only dry run:
+    /// it reports whether the merge is allowed and, if so, exactly what would change, **without modifying any data**.
+    /// Send the same `from` and `into` contact IDs you would pass to Merge two contacts. You can merge a contact with a
+    /// `role` of `lead` into a contact with a `role` of `user`. You can optionally pass `custom_attribute_names` to
+    /// include specific custom attributes in the previewed attribute changes. - When `allowed` is `true`, the response
+    /// contains a `summary`: every attribute change (with the resulting value on the surviving contact) and, for each
+    /// object type, two counts — `from`, how many are on the source contact and would move to the destination, and
+    /// `into`, how many the destination already has. Counts are reported for conversations, tickets, phone calls,
+    /// notes, and tags. `conversations` counts non-ticket conversations only; tickets are reported separately under
+    /// `tickets`, and `phone_calls` is present only for phone-channel merges. - When `allowed` is `false`, the response
+    /// contains `reasons`. Each reason has a stable `code` you can branch on and a human-readable `message` you can
+    /// display. {% admonition type="warning" name="Previewing non-duplicate contacts" %} By default a merge requires
+    /// the two contacts to share an identifier (email or phone). Set `skip_duplicate_validation` to `true` to preview a
+    /// merge of contacts that don't, the same rule the merge endpoint enforces. {% /admonition %} When `allowed` is
+    /// `false`, `reasons[].code` is one of: | code | meaning | | --- | --- | | `source_same_as_target` | The source
+    /// contact (`from`) and the destination contact (`into`) are the same contact. A contact can't be merged into
+    /// itself. | | `invalid_merge_role_pair` | The `from`/`into` roles aren't mergeable. `into` must be a user. | |
+    /// `no_shared_identifier` | The contacts share no email or phone. Set `skip_duplicate_validation` to preview
+    /// anyway. | |…
+    func previewMerge(
+        from: String,
+        into: String,
+        intercomVersion: IntercomVersion? = nil,
+        skipDuplicateValidation: Bool? = nil,
+        customAttributeNames: [String]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> MergePreviewResponse {
+        try await ContactsMethods.previewMergeContact(
+            config: config,
+            from: from,
+            into: into,
+            intercomVersion: intercomVersion,
+            skipDuplicateValidation: skipDuplicateValidation,
+            customAttributeNames: customAttributeNames,
+            requestOptions: requestOptions
+        )
     }
 
-/// Searches contacts by applying filters to contact attributes. Provide a `query` with one or more filters, and use `pagination` to retrieve subsequent result pages or `sort` to order the matches. Search results exclude merged contacts, and recently created contacts may take a few minutes to become searchable.
+    /// Searches contacts by applying filters to contact attributes. Provide a `query` with one or more filters, and use
+    /// `pagination` to retrieve subsequent result pages or `sort` to order the matches. Search results exclude merged
+    /// contacts, and recently created contacts may take a few minutes to become searchable.
     ///
-    /// You can search for multiple contacts by the value of their attributes in order to fetch exactly who you want. To search for contacts, you need to send a `POST` request to `https://api.intercom.io/contacts/search`. This will accept a query object in the body which will define your filters in order to search for contacts. {% admonition type="warning" name="Optimizing search queries" %} Search queries can be complex, so optimizing them can help the performance of your search. Use the `AND` and `OR` operators to combine multiple filters to get the exact results you need and utilize pagination to limit the number of results returned. The default is `50` results per page. See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#example-search-conversations-request) for more details on how to use the `starting_after` param. {% /admonition %} ### Merged Contacts Contacts that have been merged (via POST /contacts/merge) are excluded from search results. If a contact was recently merged into another, it will no longer appear in queries filtered by `updated_at` or any other field. Only the target contact from the merge remains searchable. ### Contact Creation Delay If a contact has recently been created, there is a possibility that it will not yet be available when searching. This means that it may not appear in the response. This delay can take a few minutes. If you need to be instantly notified it is recommended to use webhooks and iterate to see if they match your search filters. ### Nesting & Limitations You can nest these filters in order to get even more granular insights that pinpoint exactly what you need. Example: (1 OR 2) AND (3 OR 4). There are some limitations to the amount of multiple's there can be: * There's a limit of max 2 nested filters * There's a limit of max 15 filters for each AND or OR group ### Searching for Timestamp Fields Timestamp fields (`created_at`, `updated_at` etc.) and Date custom…
-    public func search(query: ContactSearchRequestQuery, includeMergeHistory: Bool? = nil, intercomVersion: IntercomVersion? = nil, pagination: SdkOptional<StartingAfterPaging>? = nil, sort: ContactSearchRequestSort? = nil, requestOptions: RequestOptions? = nil) async throws -> ContactList {
-        return try await ContactsMethods.searchContacts(config: config, query: query, includeMergeHistory: includeMergeHistory, intercomVersion: intercomVersion, pagination: pagination, sort: sort, requestOptions: requestOptions)
+    /// You can search for multiple contacts by the value of their attributes in order to fetch exactly who you want. To
+    /// search for contacts, you need to send a `POST` request to `https://api.intercom.io/contacts/search`. This will
+    /// accept a query object in the body which will define your filters in order to search for contacts. {% admonition
+    /// type="warning" name="Optimizing search queries" %} Search queries can be complex, so optimizing them can help
+    /// the performance of your search. Use the `AND` and `OR` operators to combine multiple filters to get the exact
+    /// results you need and utilize pagination to limit the number of results returned. The default is `50` results per
+    /// page. See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#example-search-conversations-request)
+    /// for more details on how to use the `starting_after` param. {% /admonition %} ### Merged Contacts Contacts that
+    /// have been merged (via POST /contacts/merge) are excluded from search results. If a contact was recently merged
+    /// into another, it will no longer appear in queries filtered by `updated_at` or any other field. Only the target
+    /// contact from the merge remains searchable. ### Contact Creation Delay If a contact has recently been created,
+    /// there is a possibility that it will not yet be available when searching. This means that it may not appear in
+    /// the response. This delay can take a few minutes. If you need to be instantly notified it is recommended to use
+    /// webhooks and iterate to see if they match your search filters. ### Nesting & Limitations You can nest these
+    /// filters in order to get even more granular insights that pinpoint exactly what you need. Example: (1 OR 2) AND
+    /// (3 OR 4). There are some limitations to the amount of multiple's there can be: * There's a limit of max 2 nested
+    /// filters * There's a limit of max 15 filters for each AND or OR group ### Searching for Timestamp Fields
+    /// Timestamp fields (`created_at`, `updated_at` etc.) and Date custom…
+    func search(
+        query: ContactSearchRequestQuery,
+        includeMergeHistory: Bool? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        pagination: SdkOptional<StartingAfterPaging>? = nil,
+        sort: ContactSearchRequestSort? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContactList {
+        try await ContactsMethods.searchContacts(
+            config: config,
+            query: query,
+            includeMergeHistory: includeMergeHistory,
+            intercomVersion: intercomVersion,
+            pagination: pagination,
+            sort: sort,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists contact activity events for the workspace, including contact creation, role updates, merges, and deletions. Results are ordered from oldest to newest. Use `starting_after` to continue from a previous page and `per_page` to control the page size, from 1 to 150.
+    /// Lists contact activity events for the workspace, including contact creation, role updates, merges, and
+    /// deletions. Results are ordered from oldest to newest. Use `starting_after` to continue from a previous page and
+    /// `per_page` to control the page size, from 1 to 150.
     ///
-    /// You can fetch a list of contact activity events for your workspace, such as when contacts are created, role updated, merged, or deleted. Events are returned oldest first. {% admonition type="warning" name="Pagination" %} You can use pagination to limit the number of results returned. The default is `50` results per page, with a maximum of `150`. See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#pagination-for-list-apis) for more details on how to use the `starting_after` param. {% /admonition %}
-    public func listActivities(perPage: Int? = nil, startingAfter: String? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ContactActivityList {
-        return try await ContactsMethods.listContactActivities(config: config, perPage: perPage, startingAfter: startingAfter, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// You can fetch a list of contact activity events for your workspace, such as when contacts are created, role
+    /// updated, merged, or deleted. Events are returned oldest first. {% admonition type="warning" name="Pagination" %}
+    /// You can use pagination to limit the number of results returned. The default is `50` results per page, with a
+    /// maximum of `150`. See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#pagination-for-list-apis)
+    /// for more details on how to use the `starting_after` param. {% /admonition %}
+    func listActivities(
+        perPage: Int? = nil,
+        startingAfter: String? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContactActivityList {
+        try await ContactsMethods.listContactActivities(
+            config: config,
+            perPage: perPage,
+            startingAfter: startingAfter,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists contacts in your workspace, including users and leads. Use `include_merge_history` to request merge history for contacts with a `user` role. Results exclude contacts that have been merged, and you can paginate through the list with the `starting_after` cursor.
+    /// Lists contacts in your workspace, including users and leads. Use `include_merge_history` to request merge
+    /// history for contacts with a `user` role. Results exclude contacts that have been merged, and you can paginate
+    /// through the list with the `starting_after` cursor.
     ///
-    /// You can fetch a list of all contacts (ie. users or leads) in your workspace. {% admonition type="info" name="Merged contacts" %} Contacts that have been merged (via POST /contacts/merge) will not appear in list results. Only the target contact from the merge remains accessible. {% /admonition %} {% admonition type="warning" name="Pagination" %} You can use pagination to limit the number of results returned. The default is `10` results per page, with a maximum of `150`. See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#pagination-for-list-apis) for more details on how to use the `starting_after` param. {% /admonition %}
-    public func list(includeMergeHistory: Bool? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ContactList {
-        return try await ContactsMethods.listContacts(config: config, includeMergeHistory: includeMergeHistory, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// You can fetch a list of all contacts (ie. users or leads) in your workspace. {% admonition type="info"
+    /// name="Merged contacts" %} Contacts that have been merged (via POST /contacts/merge) will not appear in list
+    /// results. Only the target contact from the merge remains accessible. {% /admonition %} {% admonition
+    /// type="warning" name="Pagination" %} You can use pagination to limit the number of results returned. The default
+    /// is `10` results per page, with a maximum of `150`. See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#pagination-for-list-apis)
+    /// for more details on how to use the `starting_after` param. {% /admonition %}
+    func list(
+        includeMergeHistory: Bool? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContactList {
+        try await ContactsMethods.listContacts(
+            config: config,
+            includeMergeHistory: includeMergeHistory,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Creates a contact in your workspace as a user or lead. Provide at least one of `email`, `external_id`, or `role` to identify the type of contact to create; include `email` when setting `email_verified`. The response contains the created contact and its available details.
+    /// Creates a contact in your workspace as a user or lead. Provide at least one of `email`, `external_id`, or `role`
+    /// to identify the type of contact to create; include `email` when setting `email_verified`. The response contains
+    /// the created contact and its available details.
     ///
     /// You can create a new contact (ie. user or lead).
-    public func create(intercomVersion: IntercomVersion? = nil, body: CreateContactRequestBody? = nil, requestOptions: RequestOptions? = nil) async throws -> CreateContactResponse {
-        return try await ContactsMethods.createContact(config: config, intercomVersion: intercomVersion, body: body, requestOptions: requestOptions)
+    func create(
+        intercomVersion: IntercomVersion? = nil,
+        body: CreateContactRequestBody? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CreateContactResponse {
+        try await ContactsMethods.createContact(
+            config: config,
+            intercomVersion: intercomVersion,
+            body: body,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieves a user contact by its external identifier; this endpoint does not retrieve leads. Use `include_merge_history` to request merge history for the contact. If the user has been merged, the response includes a `Link` header pointing to the canonical contact.
+    /// Retrieves a user contact by its external identifier; this endpoint does not retrieve leads. Use
+    /// `include_merge_history` to request merge history for the contact. If the user has been merged, the response
+    /// includes a `Link` header pointing to the canonical contact.
     ///
-    /// You can fetch the details of a single contact by external ID. Note that this endpoint only supports users and not leads. {% admonition type="info" name="Merged contacts return 410 Gone" %} If the contact with this external ID has been merged into another contact, the API returns **HTTP 410 Gone** with a `Link` header pointing to the canonical (merged-into) contact. See `GET /contacts/{id}` for details on the response format. {% /admonition %}
-    public func showByExternalId(externalId: String, includeMergeHistory: Bool? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ShowContactByExternalIdResponse {
-        return try await ContactsMethods.showContactByExternalId(config: config, externalId: externalId, includeMergeHistory: includeMergeHistory, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// You can fetch the details of a single contact by external ID. Note that this endpoint only supports users and
+    /// not leads. {% admonition type="info" name="Merged contacts return 410 Gone" %} If the contact with this external
+    /// ID has been merged into another contact, the API returns **HTTP 410 Gone** with a `Link` header pointing to the
+    /// canonical (merged-into) contact. See `GET /contacts/{id}` for details on the response format. {% /admonition %}
+    func showByExternalId(
+        externalId: String,
+        includeMergeHistory: Bool? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ShowContactByExternalIdResponse {
+        try await ContactsMethods.showContactByExternalId(
+            config: config,
+            externalId: externalId,
+            includeMergeHistory: includeMergeHistory,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Archives a single contact. Supply the `contact_id` of the contact to archive. The response includes the contact reference and an `archived` flag.
+    /// Archives a single contact. Supply the `contact_id` of the contact to archive. The response includes the contact
+    /// reference and an `archived` flag.
     ///
     /// You can archive a single contact.
-    public func archive(contactId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ContactArchived {
-        return try await ContactsMethods.archiveContact(config: config, contactId: contactId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    func archive(
+        contactId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContactArchived {
+        try await ContactsMethods.archiveContact(
+            config: config,
+            contactId: contactId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 }
 
-extension ContactsNamespace {
-/// Unarchives a single contact. Supply the `contact_id` of the contact to restore from the archived state. The response includes the contact reference and an `archived` flag.
+public extension ContactsNamespace {
+    /// Unarchives a single contact. Supply the `contact_id` of the contact to restore from the archived state. The
+    /// response includes the contact reference and an `archived` flag.
     ///
     /// You can unarchive a single contact.
-    public func unarchive(contactId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ContactUnarchived {
-        return try await ContactsMethods.unarchiveContact(config: config, contactId: contactId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    func unarchive(
+        contactId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContactUnarchived {
+        try await ContactsMethods.unarchiveContact(
+            config: config,
+            contactId: contactId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Blocks a single contact. Supply the `contact_id` of the contact to block. Blocking the contact also archives the contact's conversations.
+    /// Blocks a single contact. Supply the `contact_id` of the contact to block. Blocking the contact also archives the
+    /// contact's conversations.
     ///
-    /// Block a single contact. **Note:** conversations of the contact will also be archived during the process. More details in [FAQ How do I block Inbox spam?](https://www.intercom.com/help/en/articles/8838656-inbox-faqs)
-    public func block(contactId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ContactBlocked {
-        return try await ContactsMethods.blockContact(config: config, contactId: contactId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// Block a single contact. **Note:** conversations of the contact will also be archived during the process. More
+    /// details in [FAQ How do I block Inbox spam?](https://www.intercom.com/help/en/articles/8838656-inbox-faqs)
+    func block(
+        contactId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContactBlocked {
+        try await ContactsMethods.blockContact(
+            config: config,
+            contactId: contactId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists the merge-history entries for a contact, showing contacts merged into that contact. Use `cursor` to fetch subsequent pages and `per_page` to set the page size; only contacts with a `user` role have merge history.
+    /// Lists the merge-history entries for a contact, showing contacts merged into that contact. Use `cursor` to fetch
+    /// subsequent pages and `per_page` to set the page size; only contacts with a `user` role have merge history.
     ///
-    /// Retrieve the paginated list of contacts that have been merged into a given contact. Only available for contacts with a `user` role. Returns a `404` if the contact is not found or has a `lead` role.
-    public func listMergeHistory(id: String, cursor: String? = nil, perPage: Int? = nil, order: ListContactMergeHistoryParameter? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> MergeHistoryList {
-        return try await ContactsMethods.listContactMergeHistory(config: config, id: id, cursor: cursor, perPage: perPage, order: order, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// Retrieve the paginated list of contacts that have been merged into a given contact. Only available for contacts
+    /// with a `user` role. Returns a `404` if the contact is not found or has a `lead` role.
+    func listMergeHistory(
+        id: String,
+        cursor: String? = nil,
+        perPage: Int? = nil,
+        order: ListContactMergeHistoryParameter? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> MergeHistoryList {
+        try await ContactsMethods.listContactMergeHistory(
+            config: config,
+            id: id,
+            cursor: cursor,
+            perPage: perPage,
+            order: order,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists the merge-history entries for a contact, showing contacts merged into that contact. Use `cursor` to fetch subsequent pages and `per_page` to set the page size; only contacts with a `user` role have merge history.
+    /// Lists the merge-history entries for a contact, showing contacts merged into that contact. Use `cursor` to fetch
+    /// subsequent pages and `per_page` to set the page size; only contacts with a `user` role have merge history.
     ///
-    /// Retrieve the paginated list of contacts that have been merged into a given contact. Only available for contacts with a `user` role. Returns a `404` if the contact is not found or has a `lead` role.
-    public func listMergeHistoryPaginated(id: String, cursor: String? = nil, perPage: Int? = nil, order: ListContactMergeHistoryParameter? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) -> AsyncThrowingStream<MergeHistoryItem, Swift.Error> {
-        return ContactsMethods.listContactMergeHistoryPaginated(config: config, id: id, cursor: cursor, perPage: perPage, order: order, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// Retrieve the paginated list of contacts that have been merged into a given contact. Only available for contacts
+    /// with a `user` role. Returns a `404` if the contact is not found or has a `lead` role.
+    func listMergeHistoryPaginated(
+        id: String,
+        cursor: String? = nil,
+        perPage: Int? = nil,
+        order: ListContactMergeHistoryParameter? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) -> AsyncThrowingStream<MergeHistoryItem, Swift.Error> {
+        ContactsMethods.listContactMergeHistoryPaginated(
+            config: config,
+            id: id,
+            cursor: cursor,
+            perPage: perPage,
+            order: order,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Creates multiple contacts without updating contacts that already exist. Submit up to 100 contact objects in `contacts`; duplicate `email` or `external_id` values cause those items to be rejected while other contacts in the batch can still be created. Poll `GET /contacts/bulk/{id}` with the returned job ID to check asynchronous processing; created contact IDs are not included in the job response.
+    /// Creates multiple contacts without updating contacts that already exist. Submit up to 100 contact objects in
+    /// `contacts`; duplicate `email` or `external_id` values cause those items to be rejected while other contacts in
+    /// the batch can still be created. Poll `GET /contacts/bulk/{id}` with the returned job ID to check asynchronous
+    /// processing; created contact IDs are not included in the job response.
     ///
-    /// You can bulk create contacts by submitting an array of contact objects. This is a **strict create** and never updates an existing contact. The endpoint creates an async job that processes the items in the background. Use the returned job ID with `GET /contacts/bulk/{id}` to check the job status. Only the fields listed in the request schema below can be set. Any other fields in a contact object are ignored. {% admonition type="info" name="Handling existing contacts" %} If a contact already exists with the given `external_id` or `email` (including an archived contact), that item is rejected and the job's `state` ends as `completed_with_errors`. New contacts in the same request are still created. The job `state` from `GET /contacts/bulk/{id}` is the signal that one or more items were rejected. Created contacts aren't returned with IDs in the response. Look them up afterwards with Get a contact by External ID or Search contacts. {% /admonition %} {% admonition type="info" name="Limits" %} - Maximum of 100 contacts per request. - You can append tasks to an existing job by including `job.id` in the request body. - Tag application is best-effort and processed asynchronously: unknown tag IDs are skipped, and per-tag results are not returned in the job status. {% /admonition %}
-    public func bulkCreate(contacts: [BulkCreateContactsRequestContactsItem], intercomVersion: IntercomVersion? = nil, job: BulkCreateContactsRequestJob? = nil, requestOptions: RequestOptions? = nil) async throws -> ContactsBulkJob {
-        return try await ContactsMethods.bulkCreateContacts(config: config, contacts: contacts, intercomVersion: intercomVersion, job: job, requestOptions: requestOptions)
+    /// You can bulk create contacts by submitting an array of contact objects. This is a **strict create** and never
+    /// updates an existing contact. The endpoint creates an async job that processes the items in the background. Use
+    /// the returned job ID with `GET /contacts/bulk/{id}` to check the job status. Only the fields listed in the
+    /// request schema below can be set. Any other fields in a contact object are ignored. {% admonition type="info"
+    /// name="Handling existing contacts" %} If a contact already exists with the given `external_id` or `email`
+    /// (including an archived contact), that item is rejected and the job's `state` ends as `completed_with_errors`.
+    /// New contacts in the same request are still created. The job `state` from `GET /contacts/bulk/{id}` is the signal
+    /// that one or more items were rejected. Created contacts aren't returned with IDs in the response. Look them up
+    /// afterwards with Get a contact by External ID or Search contacts. {% /admonition %} {% admonition type="info"
+    /// name="Limits" %} - Maximum of 100 contacts per request. - You can append tasks to an existing job by including
+    /// `job.id` in the request body. - Tag application is best-effort and processed asynchronously: unknown tag IDs are
+    /// skipped, and per-tag results are not returned in the job status. {% /admonition %}
+    func bulkCreate(
+        contacts: [BulkCreateContactsRequestContactsItem],
+        intercomVersion: IntercomVersion? = nil,
+        job: BulkCreateContactsRequestJob? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContactsBulkJob {
+        try await ContactsMethods.bulkCreateContacts(
+            config: config,
+            contacts: contacts,
+            intercomVersion: intercomVersion,
+            job: job,
+            requestOptions: requestOptions
+        )
     }
 
-/// Updates multiple contacts in one asynchronous bulk job. Include each contact's `id` and the fields to change in `contacts`, with no more than 100 contacts per request; tag changes are best-effort, and unknown tag IDs are skipped. Poll `GET /contacts/bulk/{id}` with the returned job ID to check the job status.
+    /// Updates multiple contacts in one asynchronous bulk job. Include each contact's `id` and the fields to change in
+    /// `contacts`, with no more than 100 contacts per request; tag changes are best-effort, and unknown tag IDs are
+    /// skipped. Poll `GET /contacts/bulk/{id}` with the returned job ID to check the job status.
     ///
-    /// You can bulk update contacts by submitting an array of contact objects with the fields to update. Each contact must include an `id` field identifying the contact to update. You can also add or remove tags on each contact by including a `tags` object. Only the fields listed in the request schema below can be set. Any other fields in a contact object are ignored. The endpoint creates an async job that processes the updates in the background. Use the returned job ID with `GET /contacts/bulk/{id}` to check the job status. {% admonition type="info" name="Limits" %} - Maximum of 100 contacts per request. - You can append tasks to an existing job by including `job.id` in the request body. - Tag application is best-effort and processed asynchronously: unknown tag IDs are skipped, and per-tag results are not returned in the job status. {% /admonition %}
-    public func bulkUpdate(contacts: [BulkUpdateContactsRequestContactsItem], intercomVersion: IntercomVersion? = nil, job: BulkUpdateContactsRequestJob? = nil, requestOptions: RequestOptions? = nil) async throws -> ContactsBulkJob {
-        return try await ContactsMethods.bulkUpdateContacts(config: config, contacts: contacts, intercomVersion: intercomVersion, job: job, requestOptions: requestOptions)
+    /// You can bulk update contacts by submitting an array of contact objects with the fields to update. Each contact
+    /// must include an `id` field identifying the contact to update. You can also add or remove tags on each contact by
+    /// including a `tags` object. Only the fields listed in the request schema below can be set. Any other fields in a
+    /// contact object are ignored. The endpoint creates an async job that processes the updates in the background. Use
+    /// the returned job ID with `GET /contacts/bulk/{id}` to check the job status. {% admonition type="info"
+    /// name="Limits" %} - Maximum of 100 contacts per request. - You can append tasks to an existing job by including
+    /// `job.id` in the request body. - Tag application is best-effort and processed asynchronously: unknown tag IDs are
+    /// skipped, and per-tag results are not returned in the job status. {% /admonition %}
+    func bulkUpdate(
+        contacts: [BulkUpdateContactsRequestContactsItem],
+        intercomVersion: IntercomVersion? = nil,
+        job: BulkUpdateContactsRequestJob? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContactsBulkJob {
+        try await ContactsMethods.bulkUpdateContacts(
+            config: config,
+            contacts: contacts,
+            intercomVersion: intercomVersion,
+            job: job,
+            requestOptions: requestOptions
+        )
     }
 
-/// Deletes contacts permanently in a background bulk job. Include up to 100 contact IDs in `contacts`; an item for a contact that does not exist or cannot be deleted fails without stopping the rest of the batch. Poll `GET /contacts/bulk/{id}` with the returned job ID to check the job status. <Callout type="warning">Bulk deletion is permanent.</Callout>
+    /// Deletes contacts permanently in a background bulk job. Include up to 100 contact IDs in `contacts`; an item for
+    /// a contact that does not exist or cannot be deleted fails without stopping the rest of the batch. Poll `GET
+    /// /contacts/bulk/{id}` with the returned job ID to check the job status. <Callout type="warning">Bulk deletion is
+    /// permanent.</Callout>
     ///
-    /// You can delete contacts in bulk by submitting an array of contact `id`s. The endpoint creates an async job that processes the deletes in the background. Use the returned job ID with `GET /contacts/bulk/{id}` to check the job status. {% admonition type="warning" name="Permanent deletion" %} A contact that doesn't exist, or can't be deleted, fails that item and the job's `state` ends as `completed_with_errors` (visible via `GET /contacts/bulk/{id}`) without failing the rest of the batch. {% /admonition %} {% admonition type="info" name="Limits" %} - Maximum of 100 contacts per request. - You can append tasks to an existing job by including `job.id` in the request body. {% /admonition %}
-    public func bulkDelete(contacts: [BulkDeleteContactsRequestContactsItem], intercomVersion: IntercomVersion? = nil, job: BulkDeleteContactsRequestJob? = nil, requestOptions: RequestOptions? = nil) async throws -> ContactsBulkJob {
-        return try await ContactsMethods.bulkDeleteContacts(config: config, contacts: contacts, intercomVersion: intercomVersion, job: job, requestOptions: requestOptions)
+    /// You can delete contacts in bulk by submitting an array of contact `id`s. The endpoint creates an async job that
+    /// processes the deletes in the background. Use the returned job ID with `GET /contacts/bulk/{id}` to check the job
+    /// status. {% admonition type="warning" name="Permanent deletion" %} A contact that doesn't exist, or can't be
+    /// deleted, fails that item and the job's `state` ends as `completed_with_errors` (visible via `GET
+    /// /contacts/bulk/{id}`) without failing the rest of the batch. {% /admonition %} {% admonition type="info"
+    /// name="Limits" %} - Maximum of 100 contacts per request. - You can append tasks to an existing job by including
+    /// `job.id` in the request body. {% /admonition %}
+    func bulkDelete(
+        contacts: [BulkDeleteContactsRequestContactsItem],
+        intercomVersion: IntercomVersion? = nil,
+        job: BulkDeleteContactsRequestJob? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContactsBulkJob {
+        try await ContactsMethods.bulkDeleteContacts(
+            config: config,
+            contacts: contacts,
+            intercomVersion: intercomVersion,
+            job: job,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieves the status of an asynchronous bulk contact job. Supply the job's `id` to view its overall state, task details, and timestamps. Use the state to determine whether processing is pending, running, completed, or completed with errors.
+    /// Retrieves the status of an asynchronous bulk contact job. Supply the job's `id` to view its overall state, task
+    /// details, and timestamps. Use the state to determine whether processing is pending, running, completed, or
+    /// completed with errors.
     ///
-    /// You can check the status of a bulk contact update job. The `state` field indicates the overall job progress: `pending`, `running`, `completed`, or `completed_with_errors`.
-    public func showBulkUpdateJob(id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ContactsBulkJob {
-        return try await ContactsMethods.showBulkUpdateContactsJob(config: config, id: id, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// You can check the status of a bulk contact update job. The `state` field indicates the overall job progress:
+    /// `pending`, `running`, `completed`, or `completed_with_errors`.
+    func showBulkUpdateJob(
+        id: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContactsBulkJob {
+        try await ContactsMethods.showBulkUpdateContactsJob(
+            config: config,
+            id: id,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 }

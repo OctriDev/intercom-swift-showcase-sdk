@@ -6,20 +6,43 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ArticlesMethods {
-    /// Publishes the staged draft for an article, promoting its draft content to live. On a single-language workspace, you can omit the request body; on a multilingual workspace, specify the locales to publish in `locales`. Each requested locale must have pending changes.
+public extension ArticlesMethods {
+    /// Publishes the staged draft for an article, promoting its draft content to live. On a single-language workspace,
+    /// you can omit the request body; on a multilingual workspace, specify the locales to publish in `locales`. Each
+    /// requested locale must have pending changes.
     ///
-    /// Publish a staged draft by making a POST request to `https://api.intercom.io/articles/<id>/draft/publish`, promoting the draft content to live. On a single-language workspace no body is required. On a multilingual workspace you must list which locales to publish via the `locales` array; omitting it returns `422`. Returns `422` when there is no staged draft to publish, or when a requested locale has no pending changes. Requires the `read_write_articles_scope` OAuth scope.
+    /// Publish a staged draft by making a POST request to `https://api.intercom.io/articles/<id>/draft/publish`,
+    /// promoting the draft content to live. On a single-language workspace no body is required. On a multilingual
+    /// workspace you must list which locales to publish via the `locales` array; omitting it returns `422`. Returns
+    /// `422` when there is no staged draft to publish, or when a requested locale has no pending changes. Requires the
+    /// `read_write_articles_scope` OAuth scope.
     ///
     /// - Parameters:
     /// - id: The unique identifier for the article which is given by Intercom.
     /// - locales: The locales whose staged drafts should be published. Required on
     ///   multilingual workspaces; each locale must have a pending draft.
-    public static func publishArticleDraft(config: ClientConfig, id: Int, intercomVersion: IntercomVersion? = nil, locales: [String]? = nil, requestOptions: RequestOptions? = nil) async throws -> Article {
+    static func publishArticleDraft(
+        config: ClientConfig,
+        id: Int,
+        intercomVersion: IntercomVersion? = nil,
+        locales: [String]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Article {
         let requestBody = PublishArticleDraftRequestBody(locales: locales)
 
-        return try (await sdkRequest("POST", ["/articles/", sdkEncodePathSegment(sdkWireString(id)), "/draft/publish"].joined(), config: config, body: requestBody, decoder: .json, operationId: "publishArticleDraft", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "422": Error2.self])).sdkResource()
+        return try await (sdkRequest(
+            "POST",
+            ["/articles/", sdkEncodePathSegment(sdkWireString(id)), "/draft/publish"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "publishArticleDraft",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self, "422": Error2.self]
+        ))
+        .sdkResource()
     }
 }

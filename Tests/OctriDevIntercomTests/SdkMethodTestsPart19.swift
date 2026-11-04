@@ -36,9 +36,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.segments.retrieve(
-            segmentId: decoded("\"123\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                segmentId: decoded("\"123\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -84,9 +84,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.teams.retrieve(
-            teamId: decoded("\"123\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                teamId: decoded("\"123\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -132,9 +132,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.visitors.retrieveWithUserId(
-            userId: decoded("\"user-1\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                userId: decoded("\"user-1\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -180,9 +180,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.messages.retrieveWhatsAppStatus(
-            messageId: decoded("\"message-1\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                messageId: decoded("\"message-1\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -233,14 +233,14 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.finAgent.runFinProcedure(
-            procedureId: decoded("\"12345\""),
-            conversationId: decoded("\"ext-123\""),
-            user: decoded(sdkMethodFixture413Value1),
-            intercomVersion: decoded("\"2.17\""),
-            message: decoded("null"),
-            conversationMetadata: decoded("null"),
-            environment: decoded("null")
-        )
+                procedureId: decoded("\"12345\""),
+                conversationId: decoded("\"ext-123\""),
+                user: decoded(sdkMethodFixture413Value1),
+                intercomVersion: decoded("\"2.17\""),
+                message: decoded("null"),
+                conversationMetadata: decoded("null"),
+                environment: decoded("null")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -286,9 +286,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.companies.scrollOverAll(
-            scrollParam: decoded("\"scroll_param\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                scrollParam: decoded("\"scroll_param\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -338,13 +338,13 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.admins.searchActivityLogs(
-            createdAtAfter: decoded("1677253093"),
-            intercomVersion: decoded("\"2.17\""),
-            createdAtBefore: decoded("1677861493"),
-            eventTypes: decoded("[\"app_name_change\",\"message_state_change\"]"),
-            page: decoded("null"),
-            perPage: decoded("null")
-        )
+                createdAtAfter: decoded("1677253093"),
+                intercomVersion: decoded("\"2.17\""),
+                createdAtBefore: decoded("1677861493"),
+                eventTypes: decoded("[\"app_name_change\",\"message_state_change\"]"),
+                page: decoded("null"),
+                perPage: decoded("null")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -393,12 +393,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.articles.search(
-            phrase: decoded("\"Getting started\""),
-            state: decoded("\"published\""),
-            helpCenterId: decoded("123"),
-            highlight: decoded("false"),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                phrase: decoded("\"Getting started\""),
+                state: decoded("\"published\""),
+                helpCenterId: decoded("123"),
+                highlight: decoded("false"),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -446,11 +446,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.companies.search(
-            query: decoded(sdkMethodFixture421Value1),
-            intercomVersion: decoded("\"2.17\""),
-            pagination: decoded("{\"per_page\":5}"),
-            sort: decoded("{\"field\":\"name\",\"order\":\"ascending\"}")
-        )
+                query: decoded(sdkMethodFixture421Value1),
+                intercomVersion: decoded("\"2.17\""),
+                pagination: decoded("{\"per_page\":5}"),
+                sort: decoded("{\"field\":\"name\",\"order\":\"ascending\"}")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)
@@ -499,12 +499,12 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.contacts.search(
-            query: decoded(sdkMethodFixture423Value1),
-            includeMergeHistory: decoded("false"),
-            intercomVersion: decoded("\"2.17\""),
-            pagination: decoded("{\"per_page\":5}"),
-            sort: decoded("{\"field\":\"created_at\",\"order\":\"ascending\"}")
-        )
+                query: decoded(sdkMethodFixture423Value1),
+                includeMergeHistory: decoded("false"),
+                intercomVersion: decoded("\"2.17\""),
+                pagination: decoded("{\"per_page\":5}"),
+                sort: decoded("{\"field\":\"created_at\",\"order\":\"ascending\"}")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 400)

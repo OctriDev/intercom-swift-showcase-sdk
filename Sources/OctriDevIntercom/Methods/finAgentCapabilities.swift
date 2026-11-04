@@ -6,20 +6,43 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension FinAgentMethods {
-    /// Lists the Fin capabilities available to a specific user so an orchestrating agent can choose which Fin action to call. Supply the user object with its required `id`; Fin matches available procedures to that user and creates or updates the user record using the supplied details. Use the returned capabilities to select an appropriate endpoint for the next action.
+public extension FinAgentMethods {
+    /// Lists the Fin capabilities available to a specific user so an orchestrating agent can choose which Fin action to
+    /// call. Supply the user object with its required `id`; Fin matches available procedures to that user and creates
+    /// or updates the user record using the supplied details. Use the returned capabilities to select an appropriate
+    /// endpoint for the next action.
     ///
-    /// Return a machine-readable, per-user list of what Fin can do for a given end user, so an orchestrating agent can decide which endpoint to call. The response is audience-matched to the supplied user: each live, API-triggerable procedure is checked against that user before being included, alongside the static `reply` and `ask` actions. {% admonition type="warning" %} To request access to the Fin Agent API, go to **Settings > Integrations > Fin Agent API** in your workspace and tell us about your use case. Once access is granted, **Fin Agent API** appears under **Fin AI Agent > Deploy**. {% /admonition %}
+    /// Return a machine-readable, per-user list of what Fin can do for a given end user, so an orchestrating agent can
+    /// decide which endpoint to call. The response is audience-matched to the supplied user: each live, API-triggerable
+    /// procedure is checked against that user before being included, alongside the static `reply` and `ask` actions. {%
+    /// admonition type="warning" %} To request access to the Fin Agent API, go to **Settings > Integrations > Fin Agent
+    /// API** in your workspace and tell us about your use case. Once access is granted, **Fin Agent API** appears under
+    /// **Fin AI Agent > Deploy**. {% /admonition %}
     ///
     /// - Parameters:
     /// - user: The user to list capabilities for. If no user exists for the id, one
     ///   is created from the supplied details; if the user already exists, the
     ///   supplied email and attributes update it.
-    public static func listFinCapabilities(config: ClientConfig, user: FinAgentUser, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ListFinCapabilitiesResponse {
+    static func listFinCapabilities(
+        config: ClientConfig,
+        user: FinAgentUser,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListFinCapabilitiesResponse {
         let requestBody = ListFinCapabilitiesRequestBody(user: user)
 
-        return try (await sdkRequest("POST", "/fin/capabilities", config: config, body: requestBody, decoder: .json, operationId: "listFinCapabilities", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/fin/capabilities",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "listFinCapabilities",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["400": Error2.self, "401": Error2.self]
+        )).data
     }
 }

@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension InternalArticlesMethods {
-    public struct CreateInternalArticleOptions: Codable {
+public extension InternalArticlesMethods {
+    struct CreateInternalArticleOptions: Codable {
         public var title: String
         public var authorId: Int
         public var ownerId: Int
@@ -27,7 +27,9 @@ extension InternalArticlesMethods {
         }
     }
 
-    /// Creates a new internal article with its title, ownership, authorship, and optional content or AI availability settings. Supply `title`, `owner_id`, and `author_id`; provide article content as either HTML in `body` or Markdown in `body_markdown`, but not both. You can target the article to specific audiences with `audience_ids`.
+    /// Creates a new internal article with its title, ownership, authorship, and optional content or AI availability
+    /// settings. Supply `title`, `owner_id`, and `author_id`; provide article content as either HTML in `body` or
+    /// Markdown in `body_markdown`, but not both. You can target the article to specific audiences with `audience_ids`.
     ///
     /// You can create a new internal article by making a POST request to `https://api.intercom.io/internal_articles`.
     ///
@@ -51,11 +53,25 @@ extension InternalArticlesMethods {
     ///   for AI Copilot. Defaults to false.
     /// - aiSalesAgentAvailability: Whether the internal article should be available
     ///   for AI Sales Agent. Defaults to false.
-    public static func createInternalArticle(config: ClientConfig, options: CreateInternalArticleOptions, requestOptions: RequestOptions? = nil) async throws -> InternalArticle {
+    static func createInternalArticle(
+        config: ClientConfig,
+        options: CreateInternalArticleOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> InternalArticle {
         let requestBody = CreateInternalArticleRequestBody(options: options)
 
-        return try (await sdkRequest("POST", "/internal_articles", config: config, body: requestBody, decoder: .json, operationId: "createInternalArticle", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
-        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self])).sdkResource()
+        return try await (sdkRequest(
+            "POST",
+            "/internal_articles",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "createInternalArticle",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["400": Error2.self, "401": Error2.self]
+        )).sdkResource()
     }
 }

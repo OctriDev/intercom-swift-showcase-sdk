@@ -6,36 +6,79 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ConversationsAttributesMethods {
-    /// Adds an option to a list-type conversation attribute and returns the attribute with its updated options. Supply `label` for the new option.
+public extension ConversationsAttributesMethods {
+    /// Adds an option to a list-type conversation attribute and returns the attribute with its updated options. Supply
+    /// `label` for the new option.
     ///
-    /// Add a new option to a list-type conversation attribute. Returns the full attribute with the updated options array.
+    /// Add a new option to a list-type conversation attribute. Returns the full attribute with the updated options
+    /// array.
     ///
     /// - Parameters:
     /// - id: The conversation attribute id
     /// - label: The label for the new option.
-    public static func createConversationAttributeOption(config: ClientConfig, id: Int, label: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ConversationAttribute {
+    static func createConversationAttributeOption(
+        config: ClientConfig,
+        id: Int,
+        label: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ConversationAttribute {
         let requestBody = CreateConversationAttributeOptionRequestBody(label: label)
 
-        return try (await sdkRequest("POST", ["/conversations/attributes/", sdkEncodePathSegment(sdkWireString(id)), "/options"].joined(), config: config, body: requestBody, decoder: .json, operationId: "createConversationAttributeOption", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "422": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/conversations/attributes/", sdkEncodePathSegment(sdkWireString(id)), "/options"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "createConversationAttributeOption",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self, "422": Error2.self]
+        )).data
     }
 
-    /// Updates the label of one option on a list-type conversation attribute. Supply the new `label`; the response includes the full attribute and its updated options array. Use the attribute and option identifiers to target the option to change.
+    /// Updates the label of one option on a list-type conversation attribute. Supply the new `label`; the response
+    /// includes the full attribute and its updated options array. Use the attribute and option identifiers to target
+    /// the option to change.
     ///
-    /// Update the label of a single option on a list-type conversation attribute. Returns the full attribute with the updated options array.
+    /// Update the label of a single option on a list-type conversation attribute. Returns the full attribute with the
+    /// updated options array.
     ///
     /// - Parameters:
     /// - id: The conversation attribute id
     /// - optionId: The UUID of the list option to update (from the `id` field in
     ///   the options array)
     /// - label: The updated label for the option.
-    public static func updateConversationAttributeOption(config: ClientConfig, id: Int, optionId: String, label: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ConversationAttribute {
+    static func updateConversationAttributeOption(
+        config: ClientConfig,
+        id: Int,
+        optionId: String,
+        label: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ConversationAttribute {
         let requestBody = UpdateConversationAttributeOptionRequestBody(label: label)
 
-        return try (await sdkRequest("PUT", ["/conversations/attributes/", sdkEncodePathSegment(sdkWireString(id)), "/options/", sdkEncodePathSegment(sdkWireString(optionId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "updateConversationAttributeOption", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "422": Error2.self])).data
+        return try await (sdkRequest(
+            "PUT",
+            [
+                "/conversations/attributes/",
+                sdkEncodePathSegment(sdkWireString(id)),
+                "/options/",
+                sdkEncodePathSegment(sdkWireString(optionId)),
+            ].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "updateConversationAttributeOption",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self, "422": Error2.self]
+        )).data
     }
 }

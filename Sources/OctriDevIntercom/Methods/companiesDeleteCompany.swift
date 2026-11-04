@@ -6,21 +6,44 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension CompaniesMethods {
-    /// Deletes a company while keeping its record in the workspace and detaching all of its contacts. Contact detachment is permanent, and the contacts themselves are not deleted. Remove or filter the company from any syncing third-party integration before deletion if you want to prevent it from being recreated.
+public extension CompaniesMethods {
+    /// Deletes a company while keeping its record in the workspace and detaching all of its contacts. Contact
+    /// detachment is permanent, and the contacts themselves are not deleted. Remove or filter the company from any
+    /// syncing third-party integration before deletion if you want to prevent it from being recreated.
     ///
-    /// Delete a single company. The company record is kept in your workspace, but all contacts are detached. The contacts themselves are not deleted. Detaching contacts is permanent and can't be reversed. A `company.deleted` webhook is sent when the company is deleted. These changes may take some time to be reflected in your workspace. {% admonition type="warning" %} Third-party integrations that sync companies into Intercom (for example, Salesforce or Chargebee) will recreate any company deleted through this endpoint on their next sync. To prevent recreation, remove or filter the company at the source integration before deleting it via the API. {% /admonition %}
+    /// Delete a single company. The company record is kept in your workspace, but all contacts are detached. The
+    /// contacts themselves are not deleted. Detaching contacts is permanent and can't be reversed. A `company.deleted`
+    /// webhook is sent when the company is deleted. These changes may take some time to be reflected in your workspace.
+    /// {% admonition type="warning" %} Third-party integrations that sync companies into Intercom (for example,
+    /// Salesforce or Chargebee) will recreate any company deleted through this endpoint on their next sync. To prevent
+    /// recreation, remove or filter the company at the source integration before deleting it via the API. {%
+    /// /admonition %}
     ///
     /// - Parameters:
     /// - companyId: The unique identifier for the company which is given by
     ///   Intercom
-    public static func deleteCompany(config: ClientConfig, companyId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DeletedCompanyObject {
-        return try (await sdkRequest("DELETE", ["/companies/", sdkEncodePathSegment(sdkWireString(companyId))].joined(), config: config, decoder: .json, operationId: "deleteCompany", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).sdkResource()
+    static func deleteCompany(
+        config: ClientConfig,
+        companyId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DeletedCompanyObject {
+        try await (sdkRequest(
+            "DELETE",
+            ["/companies/", sdkEncodePathSegment(sdkWireString(companyId))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "deleteCompany",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).sdkResource()
     }
 
-    /// Attaches a company to a contact identified by `contact_id`. Supply the company's Intercom identifier in the body field `id`. The response returns the attached company object.
+    /// Attaches a company to a contact identified by `contact_id`. Supply the company's Intercom identifier in the body
+    /// field `id`. The response returns the attached company object.
     ///
     /// You can attach a company to a single contact.
     ///
@@ -28,11 +51,28 @@ extension CompaniesMethods {
     /// - contactId: The unique identifier for the contact which is given by
     ///   Intercom
     /// - id: The unique identifier for the company which is given by Intercom
-    public static func attachCompaniesContact(config: ClientConfig, contactId: String, id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Company {
+    static func attachCompaniesContact(
+        config: ClientConfig,
+        contactId: String,
+        id: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Company {
         let requestBody = AttachCompaniesContactRequestBody(id: id)
 
-        return try (await sdkRequest("POST", ["/contacts/", sdkEncodePathSegment(sdkWireString(contactId)), "/companies"].joined(), config: config, body: requestBody, decoder: .json, operationId: "attachCompaniesContact", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self])).sdkResource()
+        return try await (sdkRequest(
+            "POST",
+            ["/contacts/", sdkEncodePathSegment(sdkWireString(contactId)), "/companies"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "attachCompaniesContact",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["400": Error2.self, "401": Error2.self, "404": Error2.self]
+        ))
+        .sdkResource()
     }
 }

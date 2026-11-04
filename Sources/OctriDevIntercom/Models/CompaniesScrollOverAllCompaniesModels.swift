@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Companies domain models
+/// Companies domain models
 /// Companies allow you to represent organizations using your product. Each company will have its own description
 /// and be associated with contacts. You can fetch, create, update and list companies.
 public struct CompanyScroll: Codable {
@@ -32,23 +32,29 @@ public struct CompanyScroll: Codable {
     }
 
     init() {
-        (self.type, self.data, self.pages, self.totalCount, self.scrollParam) = (nil, nil, nil, nil, nil)
+        (type, data, pages, totalCount, scrollParam) = (nil, nil, nil, nil, nil)
     }
 }
 
-extension CompanyScroll {
-    public init(from decoder: Decoder) throws {
+public extension CompanyScroll {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.data = try container.sdkDecodeIfPresent(.data)
-        self.pages = try container.sdkDecodeIfPresent(.pages)
-        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
-        self.scrollParam = try container.sdkDecodeIfPresent(.scrollParam)
+        type = try container.sdkDecodeIfPresent(.type)
+        data = try container.sdkDecodeIfPresent(.data)
+        pages = try container.sdkDecodeIfPresent(.pages)
+        totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        scrollParam = try container.sdkDecodeIfPresent(.scrollParam)
     }
 }
 
-extension CompanyScroll {
-    public init(type: CompanyScrollType? = nil, data: [Company]? = nil, pages: CursorPages? = nil, totalCount: Int? = nil, scrollParam: String? = nil) {
+public extension CompanyScroll {
+    init(
+        type: CompanyScrollType? = nil,
+        data: [Company]? = nil,
+        pages: CursorPages? = nil,
+        totalCount: Int? = nil,
+        scrollParam: String? = nil
+    ) {
         self.init()
         (self.type, self.data) = (type, data)
         (self.pages, self.totalCount) = (pages, totalCount)
@@ -60,12 +66,15 @@ extension CompanyScroll {
 public struct CompanyScrollType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let list = CompanyScrollType(rawValue: "list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

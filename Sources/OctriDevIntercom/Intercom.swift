@@ -9,53 +9,144 @@ public class AdminsNamespace {
         self.config = config
     }
 
-/// Retrieves details for the authenticated user and the embedded app workspace. Use this endpoint to identify the admin associated with the active API authorization; the response includes `email_verified` for custom sign-in flows. <Callout type="warning">Do not accept sign-ins from admins whose email address is unverified, because this can create an impersonation risk.</Callout>
+    /// Retrieves details for the authenticated user and the embedded app workspace. Use this endpoint to identify the
+    /// admin associated with the active API authorization; the response includes `email_verified` for custom sign-in
+    /// flows. <Callout type="warning">Do not accept sign-ins from admins whose email address is unverified, because
+    /// this can create an impersonation risk.</Callout>
     ///
-    /// You can view the currently authorised admin along with the embedded app object (a "workspace" in legacy terminology). > 🚧 Single Sign On > > If you are building a custom "Log in with Intercom" flow for your site, and you call the `/me` endpoint to identify the logged-in user, you should not accept any sign-ins from users with unverified email addresses as it poses a potential impersonation security risk.
-    public func identify(intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> AdminWithApp {
-        return try await AdminsMethods.identifyAdmin(config: config, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// You can view the currently authorised admin along with the embedded app object (a "workspace" in legacy
+    /// terminology). > 🚧 Single Sign On > > If you are building a custom "Log in with Intercom" flow for your site, and
+    /// you call the `/me` endpoint to identify the logged-in user, you should not accept any sign-ins from users with
+    /// unverified email addresses as it poses a potential impersonation security risk.
+    public func identify(
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AdminWithApp {
+        try await AdminsMethods.identifyAdmin(
+            config: config,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Sets an admin's away status for the Inbox. Provide `away_mode_enabled` and `away_mode_reassign` to control the admin's status and how new conversation replies are handled; `away_status_reason_id` can identify an away status reason.
+    /// Sets an admin's away status for the Inbox. Provide `away_mode_enabled` and `away_mode_reassign` to control the
+    /// admin's status and how new conversation replies are handled; `away_status_reason_id` can identify an away status
+    /// reason.
     ///
     /// You can set an Admin as away for the Inbox.
-    public func setAway(adminId: Int, awayModeEnabled: Bool, awayModeReassign: Bool, intercomVersion: IntercomVersion? = nil, awayStatusReasonId: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> Admin {
-        return try await AdminsMethods.setAwayAdmin(config: config, adminId: adminId, awayModeEnabled: awayModeEnabled, awayModeReassign: awayModeReassign, intercomVersion: intercomVersion, awayStatusReasonId: awayStatusReasonId, requestOptions: requestOptions)
+    public func setAway(
+        adminId: Int,
+        awayModeEnabled: Bool,
+        awayModeReassign: Bool,
+        intercomVersion: IntercomVersion? = nil,
+        awayStatusReasonId: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Admin {
+        try await AdminsMethods.setAwayAdmin(
+            config: config,
+            adminId: adminId,
+            awayModeEnabled: awayModeEnabled,
+            awayModeReassign: awayModeReassign,
+            intercomVersion: intercomVersion,
+            awayStatusReasonId: awayStatusReasonId,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists activity logs for admins in the app within a requested time range. Provide `created_at_after` as the start of the range and optionally use `created_at_before` to set its end. Results are paginated.
+    /// Lists activity logs for admins in the app within a requested time range. Provide `created_at_after` as the start
+    /// of the range and optionally use `created_at_before` to set its end. Results are paginated.
     ///
     /// You can get a log of activities by all admins in an app.
-    public func listActivityLogs(createdAtAfter: String, createdAtBefore: String? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ActivityLogList {
-        return try await AdminsMethods.listActivityLogs(config: config, createdAtAfter: createdAtAfter, createdAtBefore: createdAtBefore, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func listActivityLogs(
+        createdAtAfter: String,
+        createdAtBefore: String? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ActivityLogList {
+        try await AdminsMethods.listActivityLogs(
+            config: config,
+            createdAtAfter: createdAtAfter,
+            createdAtBefore: createdAtBefore,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Searches admin activity logs by time range and optional event type filters. Supply `created_at_after` and use `event_types` to restrict results to selected event types; retrieve valid event types from the activity log event types endpoint. Use `page` and `per_page` to paginate the results.
+    /// Searches admin activity logs by time range and optional event type filters. Supply `created_at_after` and use
+    /// `event_types` to restrict results to selected event types; retrieve valid event types from the activity log
+    /// event types endpoint. Use `page` and `per_page` to paginate the results.
     ///
-    /// Search and filter admin activity logs using a POST request with event type filter in the request body. You can find more details about the available event types in the List all activity log event types endpoint.
-    public func searchActivityLogs(createdAtAfter: Int, intercomVersion: IntercomVersion? = nil, createdAtBefore: Int? = nil, eventTypes: [String]? = nil, page: Int? = nil, perPage: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ActivityLogList {
-        return try await AdminsMethods.searchActivityLogs(config: config, createdAtAfter: createdAtAfter, intercomVersion: intercomVersion, createdAtBefore: createdAtBefore, eventTypes: eventTypes, page: page, perPage: perPage, requestOptions: requestOptions)
+    /// Search and filter admin activity logs using a POST request with event type filter in the request body. You can
+    /// find more details about the available event types in the List all activity log event types endpoint.
+    public func searchActivityLogs(
+        createdAtAfter: Int,
+        intercomVersion: IntercomVersion? = nil,
+        createdAtBefore: Int? = nil,
+        eventTypes: [String]? = nil,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ActivityLogList {
+        try await AdminsMethods.searchActivityLogs(
+            config: config,
+            createdAtAfter: createdAtAfter,
+            intercomVersion: intercomVersion,
+            createdAtBefore: createdAtBefore,
+            eventTypes: eventTypes,
+            page: page,
+            perPage: perPage,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists the event type values available for filtering admin activity logs. Use the returned values with the `event_types` filter when searching activity logs.
+    /// Lists the event type values available for filtering admin activity logs. Use the returned values with the
+    /// `event_types` filter when searching activity logs.
     ///
-    /// You can get a list of all activity log event types. This is useful for discovering valid values to use with the `event_types` filter on the List all activity logs endpoint.
-    public func listActivityLogEventTypes(intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ActivityLogEventTypeList {
-        return try await AdminsMethods.listActivityLogEventTypes(config: config, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// You can get a list of all activity log event types. This is useful for discovering valid values to use with the
+    /// `event_types` filter on the List all activity logs endpoint.
+    public func listActivityLogEventTypes(
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ActivityLogEventTypeList {
+        try await AdminsMethods.listActivityLogEventTypes(
+            config: config,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists the admins associated with the workspace. Set `display_avatar` to `true` to include each admin's avatar object and image URL; it defaults to `false` when omitted.
+    /// Lists the admins associated with the workspace. Set `display_avatar` to `true` to include each admin's avatar
+    /// object and image URL; it defaults to `false` when omitted.
     ///
     /// You can fetch a list of admins for a given workspace.
-    public func list(displayAvatar: Bool? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> AdminList {
-        return try await AdminsMethods.listAdmins(config: config, displayAvatar: displayAvatar, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func list(
+        displayAvatar: Bool? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> AdminList {
+        try await AdminsMethods.listAdmins(
+            config: config,
+            displayAvatar: displayAvatar,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieves the details of a single admin account. Use this endpoint to inspect the admin's contact details, role, team assignments, and away-mode settings. The response may include role details only when a role is assigned.
+    /// Retrieves the details of a single admin account. Use this endpoint to inspect the admin's contact details, role,
+    /// team assignments, and away-mode settings. The response may include role details only when a role is assigned.
     ///
     /// You can retrieve the details of a single admin.
-    public func retrieve(adminId: Int, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Admin {
-        return try await AdminsMethods.retrieveAdmin(config: config, adminId: adminId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func retrieve(
+        adminId: Int,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Admin {
+        try await AdminsMethods.retrieveAdmin(
+            config: config,
+            adminId: adminId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 }
 
@@ -65,18 +156,55 @@ public class MacrosNamespace {
         self.config = config
     }
 
-/// Retrieves a macro (saved reply) by its ID. The macro is visible only when its `visible_to` setting permits access to the authenticated user, and placeholders in `body` are transformed to an XML-like format.
+    /// Retrieves a macro (saved reply) by its ID. The macro is visible only when its `visible_to` setting permits
+    /// access to the authenticated user, and placeholders in `body` are transformed to an XML-like format.
     ///
-    /// You can fetch a single macro (saved reply) by its ID. The macro will only be returned if it is visible to the authenticated user based on its visibility settings. **Visibility Rules** A macro is returned based on its `visible_to` setting: - `everyone`: Always visible to all team members - `specific_teams`: Only visible if the authenticated user belongs to one of the teams specified in `visible_to_team_ids` If a macro exists but is not visible to the authenticated user, a 404 error is returned. **Placeholder Transformation** The API transforms Intercom placeholders to a more standard XML-like format in the `body` field: - From: `{{user.name | fallback: 'there'}}` - To: `<attribute key="user.name" default="there"/>` Default values in placeholders are HTML-escaped for security.
-    public func get(id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Macro {
-        return try await MacrosMethods.getMacro(config: config, id: id, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// You can fetch a single macro (saved reply) by its ID. The macro will only be returned if it is visible to the
+    /// authenticated user based on its visibility settings. **Visibility Rules** A macro is returned based on its
+    /// `visible_to` setting: - `everyone`: Always visible to all team members - `specific_teams`: Only visible if the
+    /// authenticated user belongs to one of the teams specified in `visible_to_team_ids` If a macro exists but is not
+    /// visible to the authenticated user, a 404 error is returned. **Placeholder Transformation** The API transforms
+    /// Intercom placeholders to a more standard XML-like format in the `body` field: - From: `{{user.name | fallback:
+    /// 'there'}}` - To: `<attribute key="user.name" default="there"/>` Default values in placeholders are HTML-escaped
+    /// for security.
+    public func get(
+        id: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Macro {
+        try await MacrosMethods.getMacro(
+            config: config,
+            id: id,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists macros (saved replies) in the workspace, ordered by `updated_at` from newest to oldest. Use `starting_after` with the cursor from the previous page to continue through the results, and use `updated_since` to filter by update time.
+    /// Lists macros (saved replies) in the workspace, ordered by `updated_at` from newest to oldest. Use
+    /// `starting_after` with the cursor from the previous page to continue through the results, and use `updated_since`
+    /// to filter by update time.
     ///
-    /// You can fetch a list of all macros (saved replies) in your workspace for use in automating responses. The macros are returned in descending order by updated_at. **Pagination** This endpoint uses cursor-based pagination via the `starting_after` parameter. The cursor is a Base64-encoded JSON array containing `[updated_at, id]` of the last item from the previous page. **Placeholder Transformation** The API transforms Intercom placeholders to a more standard XML-like format: - From: `{{user.name | fallback: 'there'}}` - To: `<attribute key="user.name" default="there"/>`
-    public func list(perPage: Int? = nil, startingAfter: String? = nil, updatedSince: Int? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> MacroList {
-        return try await MacrosMethods.listMacros(config: config, perPage: perPage, startingAfter: startingAfter, updatedSince: updatedSince, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// You can fetch a list of all macros (saved replies) in your workspace for use in automating responses. The macros
+    /// are returned in descending order by updated_at. **Pagination** This endpoint uses cursor-based pagination via
+    /// the `starting_after` parameter. The cursor is a Base64-encoded JSON array containing `[updated_at, id]` of the
+    /// last item from the previous page. **Placeholder Transformation** The API transforms Intercom placeholders to a
+    /// more standard XML-like format: - From: `{{user.name | fallback: 'there'}}` - To: `<attribute key="user.name"
+    /// default="there"/>`
+    public func list(
+        perPage: Int? = nil,
+        startingAfter: String? = nil,
+        updatedSince: Int? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> MacroList {
+        try await MacrosMethods.listMacros(
+            config: config,
+            perPage: perPage,
+            startingAfter: startingAfter,
+            updatedSince: updatedSince,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 }
 
@@ -86,76 +214,203 @@ public class OfficeHoursNamespace {
         self.config = config
     }
 
-/// Retrieves a specific office hours exception from an office hours schedule. Use `office_hours_schedule_id` and `id` to identify the schedule and exception. The response includes the exception date, type, and any replacement time intervals.
+    /// Retrieves a specific office hours exception from an office hours schedule. Use `office_hours_schedule_id` and
+    /// `id` to identify the schedule and exception. The response includes the exception date, type, and any replacement
+    /// time intervals.
     ///
     /// You can fetch the details of a single office hours exception.
-    public func getException(officeHoursScheduleId: String, id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> OfficeHoursException {
-        return try await OfficeHoursMethods.getOfficeHoursException(config: config, officeHoursScheduleId: officeHoursScheduleId, id: id, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func getException(
+        officeHoursScheduleId: String,
+        id: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> OfficeHoursException {
+        try await OfficeHoursMethods.getOfficeHoursException(
+            config: config,
+            officeHoursScheduleId: officeHoursScheduleId,
+            id: id,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Updates an existing office hours exception for a schedule. Supply only the fields you want to change; `exception_type` must be `closed` or `custom_hours`, and `time_intervals` is required for `custom_hours` but omitted for `closed`. Use `exception_date` in `YYYY-MM-DD` format to set the date the exception applies to.
+    /// Updates an existing office hours exception for a schedule. Supply only the fields you want to change;
+    /// `exception_type` must be `closed` or `custom_hours`, and `time_intervals` is required for `custom_hours` but
+    /// omitted for `closed`. Use `exception_date` in `YYYY-MM-DD` format to set the date the exception applies to.
     ///
     /// You can update an existing office hours exception.
-    public func updateException(options: OfficeHoursMethods.UpdateOfficeHoursExceptionOptions, requestOptions: RequestOptions? = nil) async throws -> OfficeHoursException {
-        return try await OfficeHoursMethods.updateOfficeHoursException(config: config, options: options, requestOptions: requestOptions)
+    public func updateException(
+        options: OfficeHoursMethods.UpdateOfficeHoursExceptionOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> OfficeHoursException {
+        try await OfficeHoursMethods.updateOfficeHoursException(
+            config: config,
+            options: options,
+            requestOptions: requestOptions
+        )
     }
 
-/// Deletes a specific office hours exception from an office hours schedule. Use `office_hours_schedule_id` and `id` to identify the schedule and exception to remove. The response confirms whether the exception was deleted.
+    /// Deletes a specific office hours exception from an office hours schedule. Use `office_hours_schedule_id` and `id`
+    /// to identify the schedule and exception to remove. The response confirms whether the exception was deleted.
     ///
     /// You can delete a single office hours exception.
-    public func deleteException(officeHoursScheduleId: String, id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DeleteOfficeHoursExceptionResponse {
-        return try await OfficeHoursMethods.deleteOfficeHoursException(config: config, officeHoursScheduleId: officeHoursScheduleId, id: id, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func deleteException(
+        officeHoursScheduleId: String,
+        id: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DeleteOfficeHoursExceptionResponse {
+        try await OfficeHoursMethods.deleteOfficeHoursException(
+            config: config,
+            officeHoursScheduleId: officeHoursScheduleId,
+            id: id,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists the exceptions for an office hours schedule. Use this endpoint to retrieve the dates and exception settings that override the schedule's regular hours. The response includes the exception records in a `data` array.
+    /// Lists the exceptions for an office hours schedule. Use this endpoint to retrieve the dates and exception
+    /// settings that override the schedule's regular hours. The response includes the exception records in a `data`
+    /// array.
     ///
     /// You can fetch a list of all exceptions for an office hours schedule.
-    public func listExceptions(officeHoursScheduleId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> OfficeHoursExceptionList {
-        return try await OfficeHoursMethods.listOfficeHoursExceptions(config: config, officeHoursScheduleId: officeHoursScheduleId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func listExceptions(
+        officeHoursScheduleId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> OfficeHoursExceptionList {
+        try await OfficeHoursMethods.listOfficeHoursExceptions(
+            config: config,
+            officeHoursScheduleId: officeHoursScheduleId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Creates an exception for an office hours schedule that overrides its regular hours on a specific date. Provide `exception_date` and choose `closed` or `custom_hours`; supply `time_intervals` for `custom_hours` and omit it for `closed`. Set `recurring_annually` to repeat the exception on the same date each year.
+    /// Creates an exception for an office hours schedule that overrides its regular hours on a specific date. Provide
+    /// `exception_date` and choose `closed` or `custom_hours`; supply `time_intervals` for `custom_hours` and omit it
+    /// for `closed`. Set `recurring_annually` to repeat the exception on the same date each year.
     ///
-    /// You can create an exception for an office hours schedule. Use `closed` to mark the day closed (omit `time_intervals`) or `custom_hours` to supply replacement intervals.
-    public func createException(officeHoursScheduleId: String, exceptionDate: String, exceptionType: CreateOfficeHoursExceptionRequestRequestExceptionType, intercomVersion: IntercomVersion? = nil, name: String? = nil, timeIntervals: SdkOptional<[OfficeHoursTimeIntervalRequest]>? = nil, recurringAnnually: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> OfficeHoursException {
-        return try await OfficeHoursMethods.createOfficeHoursException(config: config, officeHoursScheduleId: officeHoursScheduleId, exceptionDate: exceptionDate, exceptionType: exceptionType, intercomVersion: intercomVersion, name: name, timeIntervals: timeIntervals, recurringAnnually: recurringAnnually, requestOptions: requestOptions)
+    /// You can create an exception for an office hours schedule. Use `closed` to mark the day closed (omit
+    /// `time_intervals`) or `custom_hours` to supply replacement intervals.
+    public func createException(
+        officeHoursScheduleId: String,
+        exceptionDate: String,
+        exceptionType: CreateOfficeHoursExceptionRequestRequestExceptionType,
+        intercomVersion: IntercomVersion? = nil,
+        name: String? = nil,
+        timeIntervals: SdkOptional<[OfficeHoursTimeIntervalRequest]>? = nil,
+        recurringAnnually: Bool? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> OfficeHoursException {
+        try await OfficeHoursMethods.createOfficeHoursException(
+            config: config,
+            officeHoursScheduleId: officeHoursScheduleId,
+            exceptionDate: exceptionDate,
+            exceptionType: exceptionType,
+            intercomVersion: intercomVersion,
+            name: name,
+            timeIntervals: timeIntervals,
+            recurringAnnually: recurringAnnually,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieves a single office hours schedule and its recurring weekly hours. Use this endpoint to inspect the schedule's name, time zone, and open intervals. The response also indicates whether the schedule is open 24/7.
+    /// Retrieves a single office hours schedule and its recurring weekly hours. Use this endpoint to inspect the
+    /// schedule's name, time zone, and open intervals. The response also indicates whether the schedule is open 24/7.
     ///
     /// You can fetch the details of a single office hours schedule.
-    public func getSchedule(id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> OfficeHoursSchedule {
-        return try await OfficeHoursMethods.getOfficeHoursSchedule(config: config, id: id, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func getSchedule(
+        id: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> OfficeHoursSchedule {
+        try await OfficeHoursMethods.getOfficeHoursSchedule(
+            config: config,
+            id: id,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Updates an existing office hours schedule. Provide only the schedule fields you want to change, such as its name, time zone, or weekly intervals. For each interval, `start_minute` and `end_minute` must fall on a 15-minute boundary.
+    /// Updates an existing office hours schedule. Provide only the schedule fields you want to change, such as its
+    /// name, time zone, or weekly intervals. For each interval, `start_minute` and `end_minute` must fall on a
+    /// 15-minute boundary.
     ///
     /// You can update an existing office hours schedule.
-    public func updateSchedule(id: String, intercomVersion: IntercomVersion? = nil, name: String? = nil, timeZoneName: String? = nil, timeIntervals: [OfficeHoursTimeIntervalRequest]? = nil, requestOptions: RequestOptions? = nil) async throws -> OfficeHoursSchedule {
-        return try await OfficeHoursMethods.updateOfficeHoursSchedule(config: config, id: id, intercomVersion: intercomVersion, name: name, timeZoneName: timeZoneName, timeIntervals: timeIntervals, requestOptions: requestOptions)
+    public func updateSchedule(
+        id: String,
+        intercomVersion: IntercomVersion? = nil,
+        name: String? = nil,
+        timeZoneName: String? = nil,
+        timeIntervals: [OfficeHoursTimeIntervalRequest]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> OfficeHoursSchedule {
+        try await OfficeHoursMethods.updateOfficeHoursSchedule(
+            config: config,
+            id: id,
+            intercomVersion: intercomVersion,
+            name: name,
+            timeZoneName: timeZoneName,
+            timeIntervals: timeIntervals,
+            requestOptions: requestOptions
+        )
     }
 
-/// Deletes an office hours schedule. Use this operation when the schedule is no longer needed for the workspace. The response indicates whether the schedule was deleted and identifies the deleted object.
+    /// Deletes an office hours schedule. Use this operation when the schedule is no longer needed for the workspace.
+    /// The response indicates whether the schedule was deleted and identifies the deleted object.
     ///
     /// You can delete a single office hours schedule.
-    public func deleteSchedule(id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DeleteOfficeHoursScheduleResponse {
-        return try await OfficeHoursMethods.deleteOfficeHoursSchedule(config: config, id: id, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func deleteSchedule(
+        id: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DeleteOfficeHoursScheduleResponse {
+        try await OfficeHoursMethods.deleteOfficeHoursSchedule(
+            config: config,
+            id: id,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 }
 
-extension OfficeHoursNamespace {
-/// Lists the office hours schedules configured for the workspace. Use this endpoint to view the recurring schedules and their weekly hours.
+public extension OfficeHoursNamespace {
+    /// Lists the office hours schedules configured for the workspace. Use this endpoint to view the recurring schedules
+    /// and their weekly hours.
     ///
     /// You can fetch a list of all office hours schedules for the workspace.
-    public func listSchedules(intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> OfficeHoursScheduleList {
-        return try await OfficeHoursMethods.listOfficeHoursSchedules(config: config, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    func listSchedules(
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> OfficeHoursScheduleList {
+        try await OfficeHoursMethods.listOfficeHoursSchedules(
+            config: config,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Creates a new office hours schedule for the workspace. Provide its `name`, `time_zone_name`, and weekly `time_intervals`; interval start and end values must fall on 15-minute boundaries. The response contains the created schedule and its generated identifier.
+    /// Creates a new office hours schedule for the workspace. Provide its `name`, `time_zone_name`, and weekly
+    /// `time_intervals`; interval start and end values must fall on 15-minute boundaries. The response contains the
+    /// created schedule and its generated identifier.
     ///
     /// You can create a new office hours schedule for the workspace.
-    public func createSchedule(name: String, timeZoneName: String, timeIntervals: [OfficeHoursTimeIntervalRequest], intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> OfficeHoursSchedule {
-        return try await OfficeHoursMethods.createOfficeHoursSchedule(config: config, name: name, timeZoneName: timeZoneName, timeIntervals: timeIntervals, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    func createSchedule(
+        name: String,
+        timeZoneName: String,
+        timeIntervals: [OfficeHoursTimeIntervalRequest],
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> OfficeHoursSchedule {
+        try await OfficeHoursMethods.createOfficeHoursSchedule(
+            config: config,
+            name: name,
+            timeZoneName: timeZoneName,
+            timeIntervals: timeIntervals,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 }
 
@@ -165,57 +420,146 @@ public class AiContentNamespace {
         self.config = config
     }
 
-/// Lists the content import sources configured for the workspace. Use the pagination links in the response to navigate through the source list. Each source represents an external source added to the Fin Content Library.
+    /// Lists the content import sources configured for the workspace. Use the pagination links in the response to
+    /// navigate through the source list. Each source represents an external source added to the Fin Content Library.
     ///
     /// You can retrieve a list of all content import sources for a workspace.
-    public func listContentImportSources(intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ContentImportSourcesList {
-        return try await AiContentMethods.listContentImportSources(config: config, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func listContentImportSources(
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContentImportSourcesList {
+        try await AiContentMethods.listContentImportSources(
+            config: config,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Creates a content import source for external pages in your Fin Content Library. Supply `sync_behavior` as `api` and provide the source `url`; you can also set its status and associate audiences.
+    /// Creates a content import source for external pages in your Fin Content Library. Supply `sync_behavior` as `api`
+    /// and provide the source `url`; you can also set its status and associate audiences.
     ///
     /// You can create a new content import source by sending a POST request to this endpoint.
-    public func createContentImportSource(syncBehavior: CreateContentImportSourceRequestSyncBehavior, url: String, intercomVersion: IntercomVersion? = nil, status: CreateContentImportSourceRequestStatus? = nil, audienceIds: SdkOptional<CreateContentImportSourceRequestAudienceIds>? = nil, requestOptions: RequestOptions? = nil) async throws -> ContentImportSource {
-        return try await AiContentMethods.createContentImportSource(config: config, syncBehavior: syncBehavior, url: url, intercomVersion: intercomVersion, status: status, audienceIds: audienceIds, requestOptions: requestOptions)
+    public func createContentImportSource(
+        syncBehavior: CreateContentImportSourceRequestSyncBehavior,
+        url: String,
+        intercomVersion: IntercomVersion? = nil,
+        status: CreateContentImportSourceRequestStatus? = nil,
+        audienceIds: SdkOptional<CreateContentImportSourceRequestAudienceIds>? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContentImportSource {
+        try await AiContentMethods.createContentImportSource(
+            config: config,
+            syncBehavior: syncBehavior,
+            url: url,
+            intercomVersion: intercomVersion,
+            status: status,
+            audienceIds: audienceIds,
+            requestOptions: requestOptions
+        )
     }
 
-/// Deletes a content import source from your Fin Content Library. Deleting the source also deletes all external pages imported from it, so consider the effect on those pages before proceeding.
+    /// Deletes a content import source from your Fin Content Library. Deleting the source also deletes all external
+    /// pages imported from it, so consider the effect on those pages before proceeding.
     ///
-    /// You can delete a content import source by making a DELETE request this endpoint. This will also delete all external pages that were imported from this source.
-    public func deleteContentImportSource(sourceId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try await AiContentMethods.deleteContentImportSource(config: config, sourceId: sourceId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// You can delete a content import source by making a DELETE request this endpoint. This will also delete all
+    /// external pages that were imported from this source.
+    public func deleteContentImportSource(
+        sourceId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await AiContentMethods.deleteContentImportSource(
+            config: config,
+            sourceId: sourceId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Retrieves a content import source from your Fin Content Library by its identifier. Use the source ID to inspect its URL, status, sync behavior, and associated audiences.
-    public func getContentImportSource(sourceId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ContentImportSource {
-        return try await AiContentMethods.getContentImportSource(config: config, sourceId: sourceId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// Retrieves a content import source from your Fin Content Library by its identifier. Use the source ID to inspect
+    /// its URL, status, sync behavior, and associated audiences.
+    public func getContentImportSource(
+        sourceId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContentImportSource {
+        try await AiContentMethods.getContentImportSource(
+            config: config,
+            sourceId: sourceId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Replaces the settings for a content import source in your Fin Content Library. Provide `sync_behavior` and `url`; you can also change its status, update its audiences, and apply an audience to existing external pages.
+    /// Replaces the settings for a content import source in your Fin Content Library. Provide `sync_behavior` and
+    /// `url`; you can also change its status, update its audiences, and apply an audience to existing external pages.
     ///
     /// You can update an existing content import source.
-    public func updateContentImportSource(sourceId: String, syncBehavior: UpdateContentImportSourceRequestSyncBehavior, url: String, intercomVersion: IntercomVersion? = nil, status: UpdateContentImportSourceRequestStatus? = nil, audienceIds: SdkOptional<UpdateContentImportSourceRequestAudienceIds>? = nil, applyAudienceToExistingContent: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> ContentImportSource {
-        return try await AiContentMethods.updateContentImportSource(config: config, sourceId: sourceId, syncBehavior: syncBehavior, url: url, intercomVersion: intercomVersion, status: status, audienceIds: audienceIds, applyAudienceToExistingContent: applyAudienceToExistingContent, requestOptions: requestOptions)
+    public func updateContentImportSource(
+        sourceId: String,
+        syncBehavior: UpdateContentImportSourceRequestSyncBehavior,
+        url: String,
+        intercomVersion: IntercomVersion? = nil,
+        status: UpdateContentImportSourceRequestStatus? = nil,
+        audienceIds: SdkOptional<UpdateContentImportSourceRequestAudienceIds>? = nil,
+        applyAudienceToExistingContent: Bool? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContentImportSource {
+        try await AiContentMethods.updateContentImportSource(
+            config: config,
+            sourceId: sourceId,
+            syncBehavior: syncBehavior,
+            url: url,
+            intercomVersion: intercomVersion,
+            status: status,
+            audienceIds: audienceIds,
+            applyAudienceToExistingContent: applyAudienceToExistingContent,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists external pages in your workspace's Fin Content Library. Use the returned page data to review each page and its source, while the pagination object provides links and details for navigating the results.
+    /// Lists external pages in your workspace's Fin Content Library. Use the returned page data to review each page and
+    /// its source, while the pagination object provides links and details for navigating the results.
     ///
     /// You can retrieve a list of all external pages for a workspace.
-    public func listExternalPages(intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ExternalPagesList {
-        return try await AiContentMethods.listExternalPages(config: config, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func listExternalPages(
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ExternalPagesList {
+        try await AiContentMethods.listExternalPages(
+            config: config,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Creates an external page in your Fin Content Library, or updates the existing page with the same source and external identifiers. Provide the page title, HTML body, locale, source ID, and source-assigned external ID.
+    /// Creates an external page in your Fin Content Library, or updates the existing page with the same source and
+    /// external identifiers. Provide the page title, HTML body, locale, source ID, and source-assigned external ID.
     ///
-    /// You can create a new external page by sending a POST request to this endpoint. If an external page already exists with the specified source_id and external_id, it will be updated instead.
-    public func createExternalPage(options: AiContentMethods.CreateExternalPageOptions, requestOptions: RequestOptions? = nil) async throws -> ExternalPage {
-        return try await AiContentMethods.createExternalPage(config: config, options: options, requestOptions: requestOptions)
+    /// You can create a new external page by sending a POST request to this endpoint. If an external page already
+    /// exists with the specified source_id and external_id, it will be updated instead.
+    public func createExternalPage(
+        options: AiContentMethods.CreateExternalPageOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ExternalPage {
+        try await AiContentMethods.createExternalPage(config: config, options: options, requestOptions: requestOptions)
     }
 
-/// Deletes an external page from your Fin Content Library and removes it from use in AI answers. Use the page identifier to select the external page to remove.
+    /// Deletes an external page from your Fin Content Library and removes it from use in AI answers. Use the page
+    /// identifier to select the external page to remove.
     ///
-    /// Sending a DELETE request for an external page will remove it from the content library UI and from being used for AI answers.
-    public func deleteExternalPage(pageId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ExternalPage {
-        return try await AiContentMethods.deleteExternalPage(config: config, pageId: pageId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// Sending a DELETE request for an external page will remove it from the content library UI and from being used for
+    /// AI answers.
+    public func deleteExternalPage(
+        pageId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ExternalPage {
+        try await AiContentMethods.deleteExternalPage(
+            config: config,
+            pageId: pageId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 }

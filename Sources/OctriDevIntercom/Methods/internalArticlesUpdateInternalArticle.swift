@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension InternalArticlesMethods {
-    public struct UpdateInternalArticleOptions: Codable {
+public extension InternalArticlesMethods {
+    struct UpdateInternalArticleOptions: Codable {
         public var internalArticleId: Int
         public var intercomVersion: IntercomVersion?
         public var title: String?
@@ -26,9 +26,12 @@ extension InternalArticlesMethods {
         }
     }
 
-    /// Updates the details of a specific internal article. Supply the fields you want to change, using either `body` or `body_markdown` for article content. Omit `audience_ids` to keep existing audience memberships, or pass an empty array to clear them.
+    /// Updates the details of a specific internal article. Supply the fields you want to change, using either `body` or
+    /// `body_markdown` for article content. Omit `audience_ids` to keep existing audience memberships, or pass an empty
+    /// array to clear them.
     ///
-    /// You can update the details of a single internal article by making a PUT request to `https://api.intercom.io/internal_articles/<id>`.
+    /// You can update the details of a single internal article by making a PUT request to
+    /// `https://api.intercom.io/internal_articles/<id>`.
     ///
     /// - Parameters:
     /// - internalArticleId: The unique identifier for the internal article which is
@@ -53,11 +56,25 @@ extension InternalArticlesMethods {
     ///   for AI Copilot.
     /// - aiSalesAgentAvailability: Whether the internal article should be available
     ///   for AI Sales Agent.
-    public static func updateInternalArticle(config: ClientConfig, options: UpdateInternalArticleOptions, requestOptions: RequestOptions? = nil) async throws -> InternalArticle {
+    static func updateInternalArticle(
+        config: ClientConfig,
+        options: UpdateInternalArticleOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> InternalArticle {
         let requestBody = UpdateInternalArticleRequestBody(options: options)
 
-        return try (await sdkRequest("PUT", ["/internal_articles/", sdkEncodePathSegment(sdkWireString(options.internalArticleId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "updateInternalArticle", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).sdkResource()
+        return try await (sdkRequest(
+            "PUT",
+            ["/internal_articles/", sdkEncodePathSegment(sdkWireString(options.internalArticleId))].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "updateInternalArticle",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).sdkResource()
     }
 }

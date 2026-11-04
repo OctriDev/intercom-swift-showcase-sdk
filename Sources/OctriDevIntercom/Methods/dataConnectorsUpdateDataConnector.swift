@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DataConnectorsMethods {
-    public struct UpdateDataConnectorOptions: Codable {
+public extension DataConnectorsMethods {
+    struct UpdateDataConnectorOptions: Codable {
         public var id: String
         public var intercomVersion: IntercomVersion?
         public var name: String?
@@ -31,9 +31,12 @@ extension DataConnectorsMethods {
         }
     }
 
-    /// Updates an existing data connector, changing only the fields you provide. Use `state` to set the connector to `draft` or `live`; fields such as `data_inputs` and `token_ids` update their associated configuration. An empty `token_ids` array removes all attached tokens.
+    /// Updates an existing data connector, changing only the fields you provide. Use `state` to set the connector to
+    /// `draft` or `live`; fields such as `data_inputs` and `token_ids` update their associated configuration. An empty
+    /// `token_ids` array removes all attached tokens.
     ///
-    /// Update an existing data connector. Only provided fields are changed. Set `state` to `live` or `draft` to change the connector's state.
+    /// Update an existing data connector. Only provided fields are changed. Set `state` to `live` or `draft` to change
+    /// the connector's state.
     ///
     /// - Parameters:
     /// - id: The unique identifier of the data connector.
@@ -60,11 +63,25 @@ extension DataConnectorsMethods {
     ///   `mock_response_type`.
     /// - tokenIds: IDs of authentication tokens to attach to this data connector.
     ///   An empty array removes all tokens.
-    public static func updateDataConnector(config: ClientConfig, options: UpdateDataConnectorOptions, requestOptions: RequestOptions? = nil) async throws -> DataConnectorDetail {
+    static func updateDataConnector(
+        config: ClientConfig,
+        options: UpdateDataConnectorOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DataConnectorDetail {
         let requestBody = UpdateDataConnectorRequestBody(options: options)
 
-        return try (await sdkRequest("PATCH", ["/data_connectors/", sdkEncodePathSegment(sdkWireString(options.id))].joined(), config: config, body: requestBody, decoder: .json, operationId: "updateDataConnector", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "409": Error2.self, "422": Error2.self])).sdkResource()
+        return try await (sdkRequest(
+            "PATCH",
+            ["/data_connectors/", sdkEncodePathSegment(sdkWireString(options.id))].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "updateDataConnector",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self, "409": Error2.self, "422": Error2.self]
+        )).sdkResource()
     }
 }

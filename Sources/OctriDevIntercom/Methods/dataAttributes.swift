@@ -8,18 +8,29 @@ import Foundation
 #endif
 public enum DataAttributesMethods {}
 
-extension DataAttributesMethods {
-    /// Lists data attributes belonging to the workspace for contacts or companies. Use `model` to select one of those models and `include_archived` to include archived attributes. Conversation attributes are not returned here; retrieve them from `GET /conversations/attributes` instead.
+public extension DataAttributesMethods {
+    /// Lists data attributes belonging to the workspace for contacts or companies. Use `model` to select one of those
+    /// models and `include_archived` to include archived attributes. Conversation attributes are not returned here;
+    /// retrieve them from `GET /conversations/attributes` instead.
     ///
-    /// You can fetch a list of all data attributes belonging to a workspace for contacts or companies. {% admonition type="warning" %} Conversation attributes are no longer returned by this endpoint. Calling without a `model` parameter no longer includes them, and `model=conversation` returns a `422` error. Use `GET /conversations/attributes` instead. {% /admonition %}
+    /// You can fetch a list of all data attributes belonging to a workspace for contacts or companies. {% admonition
+    /// type="warning" %} Conversation attributes are no longer returned by this endpoint. Calling without a `model`
+    /// parameter no longer includes them, and `model=conversation` returns a `422` error. Use `GET
+    /// /conversations/attributes` instead. {% /admonition %}
     ///
     /// - Parameters:
     /// - model: Specify the data attribute model to return. For conversation
     ///   attributes, use GET /conversations/attributes instead.
     /// - includeArchived: Include archived attributes in the list. By default we
     ///   return only non archived data attributes.
-    public static func listDataAttributes(config: ClientConfig, model: ListDataAttributesParameter? = nil, includeArchived: Bool? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DataAttributeList {
-        return try (await sdkRequest("GET", "/data_attributes", config: config, query: [
+    static func listDataAttributes(
+        config: ClientConfig,
+        model: ListDataAttributesParameter? = nil,
+        includeArchived: Bool? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DataAttributeList {
+        try await (sdkRequest("GET", "/data_attributes", config: config, query: [
             SdkQueryParameter("model", value: model),
             SdkQueryParameter("include_archived", value: includeArchived),
         ], decoder: .json, operationId: "listDataAttributes", extraHeaders: sdkHeaders([
@@ -27,7 +38,8 @@ extension DataAttributesMethods {
         ]), options: requestOptions, errors: ["401": Error2.self, "422": Error2.self])).sdkResource()
     }
 
-    /// Creates a data attribute for a contact or company model. Supply `name`, `model`, and `data_type`, and include `options` when creating a list attribute. List attributes require at least two options.
+    /// Creates a data attribute for a contact or company model. Supply `name`, `model`, and `data_type`, and include
+    /// `options` when creating a list attribute. List attributes require at least two options.
     ///
     /// You can create a data attributes for a `contact` or a `company`.
     ///
@@ -36,11 +48,34 @@ extension DataAttributesMethods {
     /// - model: The model that the data attribute belongs to.
     /// - description: The readable description you see in the UI for the attribute.
     /// - messengerWritable: Can this attribute be updated by the Messenger
-    public static func createDataAttribute(config: ClientConfig, name: String, model: CreateDataAttributeRequestModel, intercomVersion: IntercomVersion? = nil, description: String? = nil, messengerWritable: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> DataAttribute {
-        let requestBody = CreateDataAttributeRequestBody(name: name, model: model, description: description, messengerWritable: messengerWritable)
+    static func createDataAttribute(
+        config: ClientConfig,
+        name: String,
+        model: CreateDataAttributeRequestModel,
+        intercomVersion: IntercomVersion? = nil,
+        description: String? = nil,
+        messengerWritable: Bool? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DataAttribute {
+        let requestBody = CreateDataAttributeRequestBody(
+            name: name,
+            model: model,
+            description: description,
+            messengerWritable: messengerWritable
+        )
 
-        return try (await sdkRequest("POST", "/data_attributes", config: config, body: requestBody, decoder: .json, operationId: "createDataAttribute", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self])).sdkResource()
+        return try await (sdkRequest(
+            "POST",
+            "/data_attributes",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "createDataAttribute",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["400": Error2.self, "401": Error2.self]
+        )).sdkResource()
     }
 }

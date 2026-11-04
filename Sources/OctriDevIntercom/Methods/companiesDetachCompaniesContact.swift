@@ -6,8 +6,9 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension CompaniesMethods {
-    /// Removes the association between a contact and a company. Identify both records with `contact_id` and `company_id` to detach the company from the contact. The response returns the company object.
+public extension CompaniesMethods {
+    /// Removes the association between a contact and a company. Identify both records with `contact_id` and
+    /// `company_id` to detach the company from the contact. The response returns the company object.
     ///
     /// You can detach a company from a single contact.
     ///
@@ -16,9 +17,29 @@ extension CompaniesMethods {
     ///   Intercom
     /// - companyId: The unique identifier for the company which is given by
     ///   Intercom
-    public static func detachCompaniesContact(config: ClientConfig, contactId: String, companyId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Company {
-        return try (await sdkRequest("DELETE", ["/contacts/", sdkEncodePathSegment(sdkWireString(contactId)), "/companies/", sdkEncodePathSegment(sdkWireString(companyId))].joined(), config: config, decoder: .json, operationId: "detachCompaniesContact", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).sdkResource()
+    static func detachCompaniesContact(
+        config: ClientConfig,
+        contactId: String,
+        companyId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Company {
+        try await (sdkRequest(
+            "DELETE",
+            [
+                "/contacts/",
+                sdkEncodePathSegment(sdkWireString(contactId)),
+                "/companies/",
+                sdkEncodePathSegment(sdkWireString(companyId)),
+            ].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "detachCompaniesContact",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).sdkResource()
     }
 }

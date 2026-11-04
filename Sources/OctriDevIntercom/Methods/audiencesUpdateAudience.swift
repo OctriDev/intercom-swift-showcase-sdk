@@ -6,10 +6,12 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension AudiencesMethods {
-    /// Replaces the supplied details of an existing audience while leaving omitted fields unchanged. Use `id` to select the audience, and provide any combination of `name`, `predicates`, and `role_predicates` to update.
+public extension AudiencesMethods {
+    /// Replaces the supplied details of an existing audience while leaving omitted fields unchanged. Use `id` to select
+    /// the audience, and provide any combination of `name`, `predicates`, and `role_predicates` to update.
     ///
-    /// You can update the details of a single audience by making a PUT request to `https://api.intercom.io/audiences/{id}`.
+    /// You can update the details of a single audience by making a PUT request to
+    /// `https://api.intercom.io/audiences/{id}`.
     ///
     /// - Parameters:
     /// - id: The unique identifier for the audience.
@@ -18,23 +20,57 @@ extension AudiencesMethods {
     ///   audience.
     /// - rolePredicates: Role-based predicates that further filter audience
     ///   membership by contact role.
-    public static func updateAudience(config: ClientConfig, id: String, intercomVersion: IntercomVersion? = nil, name: String? = nil, predicates: [Predicate]? = nil, rolePredicates: [Predicate]? = nil, requestOptions: RequestOptions? = nil) async throws -> Audience {
+    static func updateAudience(
+        config: ClientConfig,
+        id: String,
+        intercomVersion: IntercomVersion? = nil,
+        name: String? = nil,
+        predicates: [Predicate]? = nil,
+        rolePredicates: [Predicate]? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Audience {
         let requestBody = UpdateAudienceRequestBody(name: name, predicates: predicates, rolePredicates: rolePredicates)
 
-        return try (await sdkRequest("PUT", ["/audiences/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, body: requestBody, decoder: .json, operationId: "updateAudience", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self, "422": Error2.self])).sdkResource()
+        return try await (sdkRequest(
+            "PUT",
+            ["/audiences/", sdkEncodePathSegment(sdkWireString(id))].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "updateAudience",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self, "422": Error2.self]
+        ))
+        .sdkResource()
     }
 
-    /// Deletes a single audience from the workspace. Use `id` to select the audience to remove. The operation does not return an audience representation.
+    /// Deletes a single audience from the workspace. Use `id` to select the audience to remove. The operation does not
+    /// return an audience representation.
     ///
     /// You can delete a single audience by making a DELETE request to `https://api.intercom.io/audiences/{id}`.
     ///
     /// - Parameters:
     /// - id: The unique identifier for the audience.
-    public static func deleteAudience(config: ClientConfig, id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try (await sdkRequest("DELETE", ["/audiences/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .empty, operationId: "deleteAudience", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
+    static func deleteAudience(
+        config: ClientConfig,
+        id: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await (sdkRequest(
+            "DELETE",
+            ["/audiences/", sdkEncodePathSegment(sdkWireString(id))].joined(),
+            config: config,
+            decoder: .empty,
+            operationId: "deleteAudience",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).data
     }
 }

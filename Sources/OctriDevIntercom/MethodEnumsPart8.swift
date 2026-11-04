@@ -12,8 +12,8 @@ struct BulkUpdateContactsRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.contacts, forKey: SdkCodingKey("contacts"))
-        try keyedContainer.encodeIfPresent(self.job, forKey: SdkCodingKey("job"))
+        try keyedContainer.encode(contacts, forKey: SdkCodingKey("contacts"))
+        try keyedContainer.encodeIfPresent(job, forKey: SdkCodingKey("job"))
     }
 }
 
@@ -23,8 +23,8 @@ struct BulkDeleteContactsRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.contacts, forKey: SdkCodingKey("contacts"))
-        try keyedContainer.encodeIfPresent(self.job, forKey: SdkCodingKey("job"))
+        try keyedContainer.encode(contacts, forKey: SdkCodingKey("contacts"))
+        try keyedContainer.encodeIfPresent(job, forKey: SdkCodingKey("job"))
     }
 }
 
@@ -34,8 +34,8 @@ struct AttachSubscriptionTypeToContactRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.id, forKey: SdkCodingKey("id"))
-        try keyedContainer.encode(self.consentType, forKey: SdkCodingKey("consent_type"))
+        try keyedContainer.encode(id, forKey: SdkCodingKey("id"))
+        try keyedContainer.encode(consentType, forKey: SdkCodingKey("consent_type"))
     }
 }
 
@@ -44,7 +44,7 @@ struct AttachTagToContactRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.id, forKey: SdkCodingKey("id"))
+        try keyedContainer.encode(id, forKey: SdkCodingKey("id"))
     }
 }
 
@@ -54,8 +54,8 @@ struct AttachTagToConversationRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.id, forKey: SdkCodingKey("id"))
-        try keyedContainer.encode(self.adminId, forKey: SdkCodingKey("admin_id"))
+        try keyedContainer.encode(id, forKey: SdkCodingKey("id"))
+        try keyedContainer.encode(adminId, forKey: SdkCodingKey("admin_id"))
     }
 }
 
@@ -64,7 +64,7 @@ struct DetachTagFromConversationRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.adminId, forKey: SdkCodingKey("admin_id"))
+        try keyedContainer.encode(adminId, forKey: SdkCodingKey("admin_id"))
     }
 }
 
@@ -74,8 +74,8 @@ struct AttachTagToTicketRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.id, forKey: SdkCodingKey("id"))
-        try keyedContainer.encode(self.adminId, forKey: SdkCodingKey("admin_id"))
+        try keyedContainer.encode(id, forKey: SdkCodingKey("id"))
+        try keyedContainer.encode(adminId, forKey: SdkCodingKey("admin_id"))
     }
 }
 
@@ -84,7 +84,7 @@ struct DetachTagFromTicketRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.adminId, forKey: SdkCodingKey("admin_id"))
+        try keyedContainer.encode(adminId, forKey: SdkCodingKey("admin_id"))
     }
 }
 
@@ -97,11 +97,11 @@ struct BulkContentActionsRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.action, forKey: SdkCodingKey("action"))
-        try keyedContainer.encode(self.contentIds, forKey: SdkCodingKey("content_ids"))
-        try keyedContainer.encodeIfPresent(self.availability, forKey: SdkCodingKey("availability"))
-        try keyedContainer.encodeIfPresent(self.audience, forKey: SdkCodingKey("audience"))
-        try keyedContainer.encodeIfPresent(self.tags, forKey: SdkCodingKey("tags"))
+        try keyedContainer.encode(action, forKey: SdkCodingKey("action"))
+        try keyedContainer.encode(contentIds, forKey: SdkCodingKey("content_ids"))
+        try keyedContainer.encodeIfPresent(availability, forKey: SdkCodingKey("availability"))
+        try keyedContainer.encodeIfPresent(audience, forKey: SdkCodingKey("audience"))
+        try keyedContainer.encodeIfPresent(tags, forKey: SdkCodingKey("tags"))
     }
 }
 
@@ -117,25 +117,28 @@ struct CreateContentSnippetRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.title, forKey: SdkCodingKey("title"))
-        try keyedContainer.encodeIfPresent(self.jsonBlocks, forKey: SdkCodingKey("json_blocks"))
-        try keyedContainer.encodeIfPresent(self.bodyMarkdown, forKey: SdkCodingKey("body_markdown"))
-        try keyedContainer.encodeIfPresent(self.locale, forKey: SdkCodingKey("locale"))
-        try keyedContainer.encodeIfPresent(self.audienceIds, forKey: SdkCodingKey("audience_ids"))
-        try keyedContainer.encodeIfPresent(self.aiChatbotAvailability, forKey: SdkCodingKey("ai_chatbot_availability"))
-        try keyedContainer.encodeIfPresent(self.aiCopilotAvailability, forKey: SdkCodingKey("ai_copilot_availability"))
-        try keyedContainer.encodeIfPresent(self.aiSalesAgentAvailability, forKey: SdkCodingKey("ai_sales_agent_availability"))
+        try keyedContainer.encode(title, forKey: SdkCodingKey("title"))
+        try keyedContainer.encodeIfPresent(jsonBlocks, forKey: SdkCodingKey("json_blocks"))
+        try keyedContainer.encodeIfPresent(bodyMarkdown, forKey: SdkCodingKey("body_markdown"))
+        try keyedContainer.encodeIfPresent(locale, forKey: SdkCodingKey("locale"))
+        try keyedContainer.encodeIfPresent(audienceIds, forKey: SdkCodingKey("audience_ids"))
+        try keyedContainer.encodeIfPresent(aiChatbotAvailability, forKey: SdkCodingKey("ai_chatbot_availability"))
+        try keyedContainer.encodeIfPresent(aiCopilotAvailability, forKey: SdkCodingKey("ai_copilot_availability"))
+        try keyedContainer.encodeIfPresent(
+            aiSalesAgentAvailability,
+            forKey: SdkCodingKey("ai_sales_agent_availability")
+        )
     }
 
     init(options: ContentSnippetsMethods.CreateContentSnippetOptions) {
-        self.title = options.title
-        self.jsonBlocks = options.jsonBlocks
-        self.bodyMarkdown = options.bodyMarkdown
-        self.locale = options.locale
-        self.audienceIds = options.audienceIds
-        self.aiChatbotAvailability = options.aiChatbotAvailability
-        self.aiCopilotAvailability = options.aiCopilotAvailability
-        self.aiSalesAgentAvailability = options.aiSalesAgentAvailability
+        title = options.title
+        jsonBlocks = options.jsonBlocks
+        bodyMarkdown = options.bodyMarkdown
+        locale = options.locale
+        audienceIds = options.audienceIds
+        aiChatbotAvailability = options.aiChatbotAvailability
+        aiCopilotAvailability = options.aiCopilotAvailability
+        aiSalesAgentAvailability = options.aiSalesAgentAvailability
     }
 }
 
@@ -151,25 +154,28 @@ struct UpdateContentSnippetRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(self.title, forKey: SdkCodingKey("title"))
-        try keyedContainer.encodeIfPresent(self.jsonBlocks, forKey: SdkCodingKey("json_blocks"))
-        try keyedContainer.encodeIfPresent(self.bodyMarkdown, forKey: SdkCodingKey("body_markdown"))
-        try keyedContainer.encodeIfPresent(self.locale, forKey: SdkCodingKey("locale"))
-        try keyedContainer.encodeIfPresent(self.audienceIds, forKey: SdkCodingKey("audience_ids"))
-        try keyedContainer.encodeIfPresent(self.aiChatbotAvailability, forKey: SdkCodingKey("ai_chatbot_availability"))
-        try keyedContainer.encodeIfPresent(self.aiCopilotAvailability, forKey: SdkCodingKey("ai_copilot_availability"))
-        try keyedContainer.encodeIfPresent(self.aiSalesAgentAvailability, forKey: SdkCodingKey("ai_sales_agent_availability"))
+        try keyedContainer.encodeIfPresent(title, forKey: SdkCodingKey("title"))
+        try keyedContainer.encodeIfPresent(jsonBlocks, forKey: SdkCodingKey("json_blocks"))
+        try keyedContainer.encodeIfPresent(bodyMarkdown, forKey: SdkCodingKey("body_markdown"))
+        try keyedContainer.encodeIfPresent(locale, forKey: SdkCodingKey("locale"))
+        try keyedContainer.encodeIfPresent(audienceIds, forKey: SdkCodingKey("audience_ids"))
+        try keyedContainer.encodeIfPresent(aiChatbotAvailability, forKey: SdkCodingKey("ai_chatbot_availability"))
+        try keyedContainer.encodeIfPresent(aiCopilotAvailability, forKey: SdkCodingKey("ai_copilot_availability"))
+        try keyedContainer.encodeIfPresent(
+            aiSalesAgentAvailability,
+            forKey: SdkCodingKey("ai_sales_agent_availability")
+        )
     }
 
     init(options: ContentSnippetsMethods.UpdateContentSnippetOptions) {
-        self.title = options.title
-        self.jsonBlocks = options.jsonBlocks
-        self.bodyMarkdown = options.bodyMarkdown
-        self.locale = options.locale
-        self.audienceIds = options.audienceIds
-        self.aiChatbotAvailability = options.aiChatbotAvailability
-        self.aiCopilotAvailability = options.aiCopilotAvailability
-        self.aiSalesAgentAvailability = options.aiSalesAgentAvailability
+        title = options.title
+        jsonBlocks = options.jsonBlocks
+        bodyMarkdown = options.bodyMarkdown
+        locale = options.locale
+        audienceIds = options.audienceIds
+        aiChatbotAvailability = options.aiChatbotAvailability
+        aiCopilotAvailability = options.aiCopilotAvailability
+        aiSalesAgentAvailability = options.aiSalesAgentAvailability
     }
 }
 
@@ -179,8 +185,8 @@ struct AttachContentSnippetsTagRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.id, forKey: SdkCodingKey("id"))
-        try keyedContainer.encodeIfPresent(self.adminId, forKey: SdkCodingKey("admin_id"))
+        try keyedContainer.encode(id, forKey: SdkCodingKey("id"))
+        try keyedContainer.encodeIfPresent(adminId, forKey: SdkCodingKey("admin_id"))
     }
 }
 
@@ -192,10 +198,10 @@ struct CreateDynamicContentRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encode(self.name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encode(self.contentType, forKey: SdkCodingKey("content_type"))
-        try keyedContainer.encode(self.defaultLocale, forKey: SdkCodingKey("default_locale"))
-        try keyedContainer.encode(self.variations, forKey: SdkCodingKey("variations"))
+        try keyedContainer.encode(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encode(contentType, forKey: SdkCodingKey("content_type"))
+        try keyedContainer.encode(defaultLocale, forKey: SdkCodingKey("default_locale"))
+        try keyedContainer.encode(variations, forKey: SdkCodingKey("variations"))
     }
 }
 
@@ -206,8 +212,8 @@ struct UpdateDynamicContentRequestBody: Encodable {
 
     func encode(to encoder: Encoder) throws {
         var keyedContainer = encoder.container(keyedBy: SdkCodingKey.self)
-        try keyedContainer.encodeIfPresent(self.name, forKey: SdkCodingKey("name"))
-        try keyedContainer.encodeIfPresent(self.defaultLocale, forKey: SdkCodingKey("default_locale"))
-        try keyedContainer.encodeIfPresent(self.variations, forKey: SdkCodingKey("variations"))
+        try keyedContainer.encodeIfPresent(name, forKey: SdkCodingKey("name"))
+        try keyedContainer.encodeIfPresent(defaultLocale, forKey: SdkCodingKey("default_locale"))
+        try keyedContainer.encodeIfPresent(variations, forKey: SdkCodingKey("variations"))
     }
 }

@@ -7,9 +7,13 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum SwitchMethods {
-    /// Triggers a phone call redirect by sending an SMS with a Messenger link to the specified phone number. Supply `phone` in E.164 format; you can also include `custom_attributes` to add caller-set attributes to the contact or lead. The SMS directs the recipient to continue the conversation in Messenger.
+    /// Triggers a phone call redirect by sending an SMS with a Messenger link to the specified phone number. Supply
+    /// `phone` in E.164 format; you can also include `custom_attributes` to add caller-set attributes to the contact or
+    /// lead. The SMS directs the recipient to continue the conversation in Messenger.
     ///
-    /// You can use the API to deflect phone calls to the Intercom Messenger. Calling this endpoint will send an SMS with a link to the Messenger to the phone number specified. If custom attributes are specified, they will be added to the user or lead's custom data attributes.
+    /// You can use the API to deflect phone calls to the Intercom Messenger. Calling this endpoint will send an SMS
+    /// with a link to the Messenger to the phone number specified. If custom attributes are specified, they will be
+    /// added to the user or lead's custom data attributes.
     ///
     /// - Parameters:
     /// - phone: Phone number in E.164 format, that will receive the SMS to continue
@@ -18,11 +22,27 @@ public enum SwitchMethods {
     ///   key-value pairs. For relationship attributes the value should be a list of
     ///   custom object instance models. Only attributes a caller may set are accepted
     ///   here — attributes Intercom generates are returned in responses only.
-    public static func createPhoneSwitch(config: ClientConfig, phone: String, intercomVersion: IntercomVersion? = nil, customAttributes: CustomAttributesRequest? = nil, requestOptions: RequestOptions? = nil) async throws -> PhoneSwitch {
+    public static func createPhoneSwitch(
+        config: ClientConfig,
+        phone: String,
+        intercomVersion: IntercomVersion? = nil,
+        customAttributes: CustomAttributesRequest? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> PhoneSwitch {
         let requestBody = CreatePhoneSwitchRequestBody(phone: phone, customAttributes: customAttributes)
 
-        return try (await sdkRequest("POST", "/phone_call_redirects", config: config, body: requestBody, decoder: .json, operationId: "createPhoneSwitch", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/phone_call_redirects",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "createPhoneSwitch",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self]
+        )).data
     }
 }

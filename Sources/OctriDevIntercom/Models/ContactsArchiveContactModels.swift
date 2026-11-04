@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Contacts domain models
+/// Contacts domain models
 /// archived contact object
 public struct ContactArchived: Codable, SdkResource {
     /// always contact
@@ -28,22 +28,22 @@ public struct ContactArchived: Codable, SdkResource {
     }
 
     init() {
-        (self.type, self.id, self.externalId, self.archived) = (nil, nil, nil, nil)
+        (type, id, externalId, archived) = (nil, nil, nil, nil)
     }
 }
 
-extension ContactArchived {
-    public init(from decoder: Decoder) throws {
+public extension ContactArchived {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.externalId = try container.sdkDecodeIfPresent(.externalId)
-        self.archived = try container.sdkDecodeIfPresent(.archived)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        externalId = try container.sdkDecodeIfPresent(.externalId)
+        archived = try container.sdkDecodeIfPresent(.archived)
     }
 }
 
-extension ContactArchived {
-    public init(type: ContactArchivedType? = nil, id: String? = nil, externalId: String? = nil, archived: Bool? = nil) {
+public extension ContactArchived {
+    init(type: ContactArchivedType? = nil, id: String? = nil, externalId: String? = nil, archived: Bool? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.externalId, self.archived) = (externalId, archived)
@@ -54,12 +54,15 @@ extension ContactArchived {
 public struct ContactArchivedType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let contact = ContactArchivedType(rawValue: "contact")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -6,10 +6,15 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension CompaniesMethods {
-    /// Lists companies or retrieves a company matching the supplied filters. Use `company_id` or `name` to look up a single company, or use `tag_id` or `segment_id` to filter the company list. Use `page` and `per_page` to paginate the results.
+public extension CompaniesMethods {
+    /// Lists companies or retrieves a company matching the supplied filters. Use `company_id` or `name` to look up a
+    /// single company, or use `tag_id` or `segment_id` to filter the company list. Use `page` and `per_page` to
+    /// paginate the results.
     ///
-    /// You can fetch a single company by passing in `company_id` or `name`. `https://api.intercom.io/companies?name={name}` `https://api.intercom.io/companies?company_id={company_id}` You can fetch all companies and filter by `segment_id` or `tag_id` as a query parameter. `https://api.intercom.io/companies?tag_id={tag_id}` `https://api.intercom.io/companies?segment_id={segment_id}`
+    /// You can fetch a single company by passing in `company_id` or `name`.
+    /// `https://api.intercom.io/companies?name={name}` `https://api.intercom.io/companies?company_id={company_id}` You
+    /// can fetch all companies and filter by `segment_id` or `tag_id` as a query parameter.
+    /// `https://api.intercom.io/companies?tag_id={tag_id}` `https://api.intercom.io/companies?segment_id={segment_id}`
     ///
     /// - Parameters:
     /// - name: The `name` of the company to filter by.
@@ -18,8 +23,18 @@ extension CompaniesMethods {
     /// - segmentId: The `segment_id` of the company to filter by.
     /// - page: The page of results to fetch. Defaults to first page
     /// - perPage: How many results to display per page. Defaults to 15
-    public static func retrieveCompany(config: ClientConfig, name: String? = nil, companyId: String? = nil, tagId: String? = nil, segmentId: String? = nil, page: Int? = nil, perPage: Int? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> CompanyList {
-        return try (await sdkRequest("GET", "/companies", config: config, query: [
+    static func retrieveCompany(
+        config: ClientConfig,
+        name: String? = nil,
+        companyId: String? = nil,
+        tagId: String? = nil,
+        segmentId: String? = nil,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CompanyList {
+        try await (sdkRequest("GET", "/companies", config: config, query: [
             SdkQueryParameter("name", value: name),
             SdkQueryParameter("company_id", value: companyId),
             SdkQueryParameter("tag_id", value: tagId),
@@ -31,16 +46,32 @@ extension CompaniesMethods {
         ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).sdkResource()
     }
 
-    /// Retrieves a company by its Intercom-provisioned identifier. Use `company_id` to identify the company whose details you need. The response includes company information such as its name, custom attributes, plan, and associated segments.
+    /// Retrieves a company by its Intercom-provisioned identifier. Use `company_id` to identify the company whose
+    /// details you need. The response includes company information such as its name, custom attributes, plan, and
+    /// associated segments.
     ///
     /// You can fetch a single company.
     ///
     /// - Parameters:
     /// - companyId: The unique identifier for the company which is given by
     ///   Intercom
-    public static func retrieveCompaniesById(config: ClientConfig, companyId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Company {
-        return try (await sdkRequest("GET", ["/companies/", sdkEncodePathSegment(sdkWireString(companyId))].joined(), config: config, decoder: .json, operationId: "retrieveCompaniesById", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).sdkResource()
+    static func retrieveCompaniesById(
+        config: ClientConfig,
+        companyId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Company {
+        try await (sdkRequest(
+            "GET",
+            ["/companies/", sdkEncodePathSegment(sdkWireString(companyId))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "retrieveCompaniesById",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).sdkResource()
     }
 }

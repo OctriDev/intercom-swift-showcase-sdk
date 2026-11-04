@@ -6,22 +6,32 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ConversationsMethods {
-    /// Lists deleted conversation IDs, with deletion timestamps and whether metrics were retained. Use `page` and `per_page` to paginate the results; `order` controls the sort direction and defaults to descending.
+public extension ConversationsMethods {
+    /// Lists deleted conversation IDs, with deletion timestamps and whether metrics were retained. Use `page` and
+    /// `per_page` to paginate the results; `order` controls the sort direction and defaults to descending.
     ///
-    /// List all deleted conversation IDs. {% admonition type="warning" name="Pagination" %} You can use pagination to limit the number of results returned. The default is `20` results per page. You can navigate to next pages using the `page` param. {% /admonition %}
+    /// List all deleted conversation IDs. {% admonition type="warning" name="Pagination" %} You can use pagination to
+    /// limit the number of results returned. The default is `20` results per page. You can navigate to next pages using
+    /// the `page` param. {% /admonition %}
     ///
     /// - Parameters:
     /// - page: The page of results to fetch. Defaults to first page
     /// - perPage: How many results per page
     /// - order: `asc` or `desc`. Returns the conversation IDs in ascending or
     ///   descending order. Defaults to desc
-    public static func listDeletedConversationIds(config: ClientConfig, page: Int? = nil, perPage: Int? = nil, order: String? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DeletedConversationList {
-        if let perPage = perPage {
+    static func listDeletedConversationIds(
+        config: ClientConfig,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        order: String? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DeletedConversationList {
+        if let perPage {
             try validateRange("per_page", Double(perPage), max: 60)
         }
 
-        return try (await sdkRequest("GET", "/conversations/deleted", config: config, query: [
+        return try await (sdkRequest("GET", "/conversations/deleted", config: config, query: [
             SdkQueryParameter("page", value: page),
             SdkQueryParameter("per_page", value: perPage),
             SdkQueryParameter("order", value: order),

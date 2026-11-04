@@ -6,8 +6,9 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension CustomObjectInstancesMethods {
-    /// Deletes a custom object instance by its Intercom-defined ID. Supply the custom object type identifier and instance ID to identify the record to remove. The response confirms whether the instance was deleted.
+public extension CustomObjectInstancesMethods {
+    /// Deletes a custom object instance by its Intercom-defined ID. Supply the custom object type identifier and
+    /// instance ID to identify the record to remove. The response confirms whether the instance was deleted.
     ///
     /// Delete a single Custom Object instance using the Intercom defined id.
     ///
@@ -16,9 +17,29 @@ extension CustomObjectInstancesMethods {
     ///   type that defines the structure of the custom object instance.
     /// - customObjectInstanceId: The Intercom defined id of the custom object
     ///   instance
-    public static func deleteCustomObjectInstancesByExternalId(config: ClientConfig, customObjectTypeIdentifier: String, customObjectInstanceId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> CustomObjectInstanceDeleted {
-        return try (await sdkRequest("DELETE", ["/custom_object_instances/", sdkEncodePathSegment(sdkWireString(customObjectTypeIdentifier)), "/", sdkEncodePathSegment(sdkWireString(customObjectInstanceId))].joined(), config: config, decoder: .json, operationId: "deleteCustomObjectInstancesByExternalId", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).sdkResource()
+    static func deleteCustomObjectInstancesByExternalId(
+        config: ClientConfig,
+        customObjectTypeIdentifier: String,
+        customObjectInstanceId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CustomObjectInstanceDeleted {
+        try await (sdkRequest(
+            "DELETE",
+            [
+                "/custom_object_instances/",
+                sdkEncodePathSegment(sdkWireString(customObjectTypeIdentifier)),
+                "/",
+                sdkEncodePathSegment(sdkWireString(customObjectInstanceId)),
+            ].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "deleteCustomObjectInstancesByExternalId",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).sdkResource()
     }
 }

@@ -6,16 +6,34 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DataEventsMethods {
-    /// Lists data events associated with a user or lead, identified by `user_id`, `email`, or `intercom_user_id`. Set `type` to `user` and use `summary` to request a summary response. You can list individual events only when they are less than 90 days old; summaries can include older events.
+public extension DataEventsMethods {
+    /// Lists data events associated with a user or lead, identified by `user_id`, `email`, or `intercom_user_id`. Set
+    /// `type` to `user` and use `summary` to request a summary response. You can list individual events only when they
+    /// are less than 90 days old; summaries can include older events.
     ///
-    /// > 🚧 > > Please note that you can only 'list' events that are less than 90 days old. Event counts and summaries will still include your events older than 90 days but you cannot 'list' these events individually if they are older than 90 days The events belonging to a customer can be listed by sending a GET request to `https://api.intercom.io/events` with a user or lead identifier along with a `type` parameter. The identifier parameter can be one of `user_id`, `email` or `intercom_user_id`. The `type` parameter value must be `user`. - `https://api.intercom.io/events?type=user&user_id={user_id}` - `https://api.intercom.io/events?type=user&email={email}` - `https://api.intercom.io/events?type=user&intercom_user_id={id}` (this call can be used to list leads) The `email` parameter value should be [url encoded](http://en.wikipedia.org/wiki/Percent-encoding) when sending. You can optionally define the result page size as well with the `per_page` parameter.
+    /// > 🚧 > > Please note that you can only 'list' events that are less than 90 days old. Event counts and summaries
+    /// will still include your events older than 90 days but you cannot 'list' these events individually if they are
+    /// older than 90 days The events belonging to a customer can be listed by sending a GET request to
+    /// `https://api.intercom.io/events` with a user or lead identifier along with a `type` parameter. The identifier
+    /// parameter can be one of `user_id`, `email` or `intercom_user_id`. The `type` parameter value must be `user`. -
+    /// `https://api.intercom.io/events?type=user&user_id={user_id}` -
+    /// `https://api.intercom.io/events?type=user&email={email}` -
+    /// `https://api.intercom.io/events?type=user&intercom_user_id={id}` (this call can be used to list leads) The
+    /// `email` parameter value should be [url encoded](http://en.wikipedia.org/wiki/Percent-encoding) when sending. You
+    /// can optionally define the result page size as well with the `per_page` parameter.
     ///
     /// - Parameters:
     /// - type: The value must be user
     /// - summary: summary flag
-    public static func listDataEvents(config: ClientConfig, filter: [String: JSONValue], type: String, summary: Bool? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DataEventSummary {
-        return try (await sdkRequest("GET", "/events", config: config, query: [
+    static func listDataEvents(
+        config: ClientConfig,
+        filter: [String: JSONValue],
+        type: String,
+        summary: Bool? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DataEventSummary {
+        try await (sdkRequest("GET", "/events", config: config, query: [
             SdkQueryParameter("filter", object: filter, style: "form", explode: true),
             SdkQueryParameter("type", value: type),
             SdkQueryParameter("summary", value: summary),

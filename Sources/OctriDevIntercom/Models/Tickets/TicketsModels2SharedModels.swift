@@ -3,7 +3,7 @@
 
 import Foundation
 
-// TaggedModelsTickets domain models
+/// TaggedModelsTickets domain models
 /// Tickets are how you track requests from your users.
 public struct Ticket: Codable {
     /// Always ticket
@@ -85,40 +85,60 @@ public struct Ticket: Codable {
     }
 
     init() {
-        (self.type, self.id, self.ticketId, self.category, self.channel) = (nil, nil, nil, nil, nil)
-        (self.ticketAttributes, self.ticketState, self.ticketType, self.contacts, self.adminAssigneeId) = (nil, nil, nil, nil, nil)
-        (self.teamAssigneeId, self.createdAt, self.updatedAt, self.open, self.snoozedUntil) = (nil, nil, nil, nil, nil)
-        (self.linkedObjects, self.ticketParts, self.isShared, self.previousTicketStateId) = (nil, nil, nil, nil)
+        (type, id, ticketId, category, channel) = (nil, nil, nil, nil, nil)
+        (ticketAttributes, ticketState, ticketType, contacts, adminAssigneeId) = (nil, nil, nil, nil, nil)
+        (teamAssigneeId, createdAt, updatedAt, open, snoozedUntil) = (nil, nil, nil, nil, nil)
+        (linkedObjects, ticketParts, isShared, previousTicketStateId) = (nil, nil, nil, nil)
     }
 }
 
-extension Ticket {
-    public init(from decoder: Decoder) throws {
+public extension Ticket {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.ticketId = try container.sdkDecodeIfPresent(.ticketId)
-        self.category = try container.sdkDecodeIfPresent(.category)
-        self.channel = try container.sdkDecodeIfPresent(.channel)
-        self.ticketAttributes = try container.sdkDecodeIfPresent(.ticketAttributes)
-        self.ticketState = try container.sdkDecodeIfPresent(.ticketState)
-        self.ticketType = try container.sdkDecodeIfPresent(.ticketType)
-        self.contacts = try container.sdkDecodeIfPresent(.contacts)
-        self.adminAssigneeId = try container.sdkDecodeIfPresent(.adminAssigneeId)
-        self.teamAssigneeId = try container.sdkDecodeIfPresent(.teamAssigneeId)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.open = try container.sdkDecodeIfPresent(.open)
-        self.snoozedUntil = try container.sdkDecodeIfPresent(.snoozedUntil)
-        self.linkedObjects = try container.sdkDecodeIfPresent(.linkedObjects)
-        self.ticketParts = try container.sdkDecodeIfPresent(.ticketParts)
-        self.isShared = try container.sdkDecodeIfPresent(.isShared)
-        self.previousTicketStateId = try container.sdkDecodeIfPresent(.previousTicketStateId)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        ticketId = try container.sdkDecodeIfPresent(.ticketId)
+        category = try container.sdkDecodeIfPresent(.category)
+        channel = try container.sdkDecodeIfPresent(.channel)
+        ticketAttributes = try container.sdkDecodeIfPresent(.ticketAttributes)
+        ticketState = try container.sdkDecodeIfPresent(.ticketState)
+        ticketType = try container.sdkDecodeIfPresent(.ticketType)
+        contacts = try container.sdkDecodeIfPresent(.contacts)
+        adminAssigneeId = try container.sdkDecodeIfPresent(.adminAssigneeId)
+        teamAssigneeId = try container.sdkDecodeIfPresent(.teamAssigneeId)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        open = try container.sdkDecodeIfPresent(.open)
+        snoozedUntil = try container.sdkDecodeIfPresent(.snoozedUntil)
+        linkedObjects = try container.sdkDecodeIfPresent(.linkedObjects)
+        ticketParts = try container.sdkDecodeIfPresent(.ticketParts)
+        isShared = try container.sdkDecodeIfPresent(.isShared)
+        previousTicketStateId = try container.sdkDecodeIfPresent(.previousTicketStateId)
     }
 }
 
-extension Ticket {
-    public init(type: TicketTypeX4ef5b118? = nil, id: String? = nil, ticketId: String? = nil, category: TicketCategory? = nil, channel: String? = nil, ticketAttributes: TicketCustomAttributes? = nil, ticketState: TicketState? = nil, ticketType: TicketType? = nil, contacts: TicketContacts? = nil, adminAssigneeId: Int? = nil, teamAssigneeId: Int? = nil, createdAt: Int? = nil, updatedAt: Int? = nil, open: Bool? = nil, snoozedUntil: Int? = nil, linkedObjects: LinkedObjectList? = nil, ticketParts: TicketParts? = nil, isShared: Bool? = nil, previousTicketStateId: String? = nil) {
+public extension Ticket {
+    init(
+        type: TicketTypeX4ef5b118? = nil,
+        id: String? = nil,
+        ticketId: String? = nil,
+        category: TicketCategory? = nil,
+        channel: String? = nil,
+        ticketAttributes: TicketCustomAttributes? = nil,
+        ticketState: TicketState? = nil,
+        ticketType: TicketType? = nil,
+        contacts: TicketContacts? = nil,
+        adminAssigneeId: Int? = nil,
+        teamAssigneeId: Int? = nil,
+        createdAt: Int? = nil,
+        updatedAt: Int? = nil,
+        open: Bool? = nil,
+        snoozedUntil: Int? = nil,
+        linkedObjects: LinkedObjectList? = nil,
+        ticketParts: TicketParts? = nil,
+        isShared: Bool? = nil,
+        previousTicketStateId: String? = nil
+    ) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.ticketId, self.category) = (ticketId, category)
@@ -149,29 +169,47 @@ public struct TicketPartUpdatedAttributeDataValue: Codable {
         case label
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension TicketPartUpdatedAttributeDataValue {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.id) else {
-            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
-        }
-        guard container.contains(.label) else {
-            throw SdkValidationError(field: "label", code: "required", message: "Validation failed for 'label': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.id = try container.sdkDecodeNullable(.id)
-        self.label = try container.sdkDecodeRequired(.label)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension TicketPartUpdatedAttributeDataValue {
-    public init(type: TicketPartUpdatedAttributeDataValueType, id: TicketPartUpdatedAttributeDataValueId?, label: TicketPartUpdatedAttributeDataValueLabel) {
+public extension TicketPartUpdatedAttributeDataValue {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.id) else {
+            throw SdkValidationError(
+                field: "id",
+                code: "required",
+                message: "Validation failed for 'id': value is required"
+            )
+        }
+        guard container.contains(.label) else {
+            throw SdkValidationError(
+                field: "label",
+                code: "required",
+                message: "Validation failed for 'label': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        id = try container.sdkDecodeNullable(.id)
+        label = try container.sdkDecodeRequired(.label)
+    }
+}
+
+public extension TicketPartUpdatedAttributeDataValue {
+    init(
+        type: TicketPartUpdatedAttributeDataValueType,
+        id: TicketPartUpdatedAttributeDataValueId?,
+        label: TicketPartUpdatedAttributeDataValueLabel
+    ) {
         (self.type, self.id) = (type, id)
         self.label = label
     }
@@ -183,22 +221,32 @@ public indirect enum TicketPartUpdatedAttributeDataValueLabel {
 }
 
 extension TicketPartUpdatedAttributeDataValueLabel: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for TicketPartUpdatedAttributeDataValueLabel")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for TicketPartUpdatedAttributeDataValueLabel"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension TicketPartUpdatedAttributeDataValueLabel {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode([String].self) { return .stringList(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container.decode([String].self) {
+            return .stringList(value)
+        }
         return nil
     }
 }
@@ -227,20 +275,20 @@ public struct TicketTypeTicketStates: Codable {
     }
 
     init() {
-        (self.type, self.data) = (nil, nil)
+        (type, data) = (nil, nil)
     }
 }
 
-extension TicketTypeTicketStates {
-    public init(from decoder: Decoder) throws {
+public extension TicketTypeTicketStates {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        type = try container.sdkDecodeIfPresent(.type)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension TicketTypeTicketStates {
-    public init(type: String? = nil, data: [TicketState?]? = nil) {
+public extension TicketTypeTicketStates {
+    init(type: String? = nil, data: [TicketState?]? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
     }
@@ -332,39 +380,58 @@ public struct TicketPart: Codable {
     }
 
     init() {
-        (self.type, self.id, self.partType, self.body, self.previousTicketState) = (nil, nil, nil, nil, nil)
-        (self.ticketState, self.createdAt, self.updatedAt, self.assignedTo, self.adminAssigneeId) = (nil, nil, nil, nil, nil)
-        (self.teamAssigneeId, self.author, self.attachments, self.externalId, self.redacted) = (nil, nil, nil, nil, nil)
-        (self.appPackageCode, self.translations, self.updatedAttributeData) = (nil, nil, nil)
+        (type, id, partType, body, previousTicketState) = (nil, nil, nil, nil, nil)
+        (ticketState, createdAt, updatedAt, assignedTo, adminAssigneeId) = (nil, nil, nil, nil, nil)
+        (teamAssigneeId, author, attachments, externalId, redacted) = (nil, nil, nil, nil, nil)
+        (appPackageCode, translations, updatedAttributeData) = (nil, nil, nil)
     }
 }
 
-extension TicketPart {
-    public init(from decoder: Decoder) throws {
+public extension TicketPart {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.partType = try container.sdkDecodeIfPresent(.partType)
-        self.body = try container.sdkDecodeIfPresent(.body)
-        self.previousTicketState = try container.sdkDecodeIfPresent(.previousTicketState)
-        self.ticketState = try container.sdkDecodeIfPresent(.ticketState)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.assignedTo = try container.sdkDecodeIfPresent(.assignedTo)
-        self.adminAssigneeId = try container.sdkDecodeIfPresent(.adminAssigneeId)
-        self.teamAssigneeId = try container.sdkDecodeIfPresent(.teamAssigneeId)
-        self.author = try container.sdkDecodeIfPresent(.author)
-        self.attachments = try container.sdkDecodeIfPresent(.attachments)
-        self.externalId = try container.sdkDecodeIfPresent(.externalId)
-        self.redacted = try container.sdkDecodeIfPresent(.redacted)
-        self.appPackageCode = try container.sdkDecodeIfPresent(.appPackageCode)
-        self.translations = try container.sdkDecodeIfPresent(.translations)
-        self.updatedAttributeData = try container.sdkDecodeIfPresent(.updatedAttributeData)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        partType = try container.sdkDecodeIfPresent(.partType)
+        body = try container.sdkDecodeIfPresent(.body)
+        previousTicketState = try container.sdkDecodeIfPresent(.previousTicketState)
+        ticketState = try container.sdkDecodeIfPresent(.ticketState)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        assignedTo = try container.sdkDecodeIfPresent(.assignedTo)
+        adminAssigneeId = try container.sdkDecodeIfPresent(.adminAssigneeId)
+        teamAssigneeId = try container.sdkDecodeIfPresent(.teamAssigneeId)
+        author = try container.sdkDecodeIfPresent(.author)
+        attachments = try container.sdkDecodeIfPresent(.attachments)
+        externalId = try container.sdkDecodeIfPresent(.externalId)
+        redacted = try container.sdkDecodeIfPresent(.redacted)
+        appPackageCode = try container.sdkDecodeIfPresent(.appPackageCode)
+        translations = try container.sdkDecodeIfPresent(.translations)
+        updatedAttributeData = try container.sdkDecodeIfPresent(.updatedAttributeData)
     }
 }
 
-extension TicketPart {
-    public init(type: String? = nil, id: String? = nil, partType: String? = nil, body: String? = nil, previousTicketState: TicketPartPreviousTicketState? = nil, ticketState: TicketPartTicketState? = nil, createdAt: Int? = nil, updatedAt: Int? = nil, assignedTo: Reference? = nil, adminAssigneeId: Int? = nil, teamAssigneeId: Int? = nil, author: TicketPartAuthor? = nil, attachments: [PartAttachment]? = nil, externalId: String? = nil, redacted: Bool? = nil, appPackageCode: String? = nil, translations: TicketPartTranslations? = nil, updatedAttributeData: TicketPartUpdatedAttributeData? = nil) {
+public extension TicketPart {
+    init(
+        type: String? = nil,
+        id: String? = nil,
+        partType: String? = nil,
+        body: String? = nil,
+        previousTicketState: TicketPartPreviousTicketState? = nil,
+        ticketState: TicketPartTicketState? = nil,
+        createdAt: Int? = nil,
+        updatedAt: Int? = nil,
+        assignedTo: Reference? = nil,
+        adminAssigneeId: Int? = nil,
+        teamAssigneeId: Int? = nil,
+        author: TicketPartAuthor? = nil,
+        attachments: [PartAttachment]? = nil,
+        externalId: String? = nil,
+        redacted: Bool? = nil,
+        appPackageCode: String? = nil,
+        translations: TicketPartTranslations? = nil,
+        updatedAttributeData: TicketPartUpdatedAttributeData? = nil
+    ) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.partType, self.body) = (partType, body)
@@ -396,29 +463,43 @@ public struct TicketPartUpdatedAttributeDataAttribute: Codable {
         case label
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension TicketPartUpdatedAttributeDataAttribute {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.id) else {
-            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
-        }
-        guard container.contains(.label) else {
-            throw SdkValidationError(field: "label", code: "required", message: "Validation failed for 'label': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.id = try container.sdkDecodeRequired(.id)
-        self.label = try container.sdkDecodeRequired(.label)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension TicketPartUpdatedAttributeDataAttribute {
-    public init(type: TicketPartUpdatedAttributeDataAttributeType, id: String, label: String) {
+public extension TicketPartUpdatedAttributeDataAttribute {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.id) else {
+            throw SdkValidationError(
+                field: "id",
+                code: "required",
+                message: "Validation failed for 'id': value is required"
+            )
+        }
+        guard container.contains(.label) else {
+            throw SdkValidationError(
+                field: "label",
+                code: "required",
+                message: "Validation failed for 'label': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        id = try container.sdkDecodeRequired(.id)
+        label = try container.sdkDecodeRequired(.label)
+    }
+}
+
+public extension TicketPartUpdatedAttributeDataAttribute {
+    init(type: TicketPartUpdatedAttributeDataAttributeType, id: String, label: String) {
         (self.type, self.id) = (type, id)
         self.label = label
     }
@@ -430,22 +511,32 @@ public indirect enum TicketPartUpdatedAttributeDataValueId {
 }
 
 extension TicketPartUpdatedAttributeDataValueId: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = Self.decodeGroup1(from: container) { self = value; return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No variant matched for TicketPartUpdatedAttributeDataValueId")
+        if let value = Self.decodeGroup1(from: container) {
+            self = value; return
+        }
+        throw DecodingError.dataCorruptedError(
+            in: container,
+            debugDescription: "No variant matched for TicketPartUpdatedAttributeDataValueId"
+        )
     }
 
     public func encode(to encoder: Encoder) throws {
-        if try encodeGroup1(to: encoder) { return }
+        if try encodeGroup1(to: encoder) {
+            return
+        }
     }
 }
 
 extension TicketPartUpdatedAttributeDataValueId {
     static func decodeGroup1(from container: SingleValueDecodingContainer) -> Self? {
-        if let value = try? container.decode(String.self) { return .stringValue(value) }
-        if let value = try? container.decode([Int].self) { return .intList(value) }
+        if let value = try? container.decode(String.self) {
+            return .stringValue(value)
+        }
+        if let value = try? container.decode([Int].self) {
+            return .intList(value)
+        }
         return nil
     }
 }

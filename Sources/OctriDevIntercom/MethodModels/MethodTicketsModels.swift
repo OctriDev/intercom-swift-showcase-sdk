@@ -7,7 +7,7 @@ import Foundation
     import FoundationNetworking
 #endif
 
-// Canonical tickets operation model declarations
+/// Canonical tickets operation model declarations
 /// Optional object value serialized in the `assignment` wire field.
 public struct EnqueueCreateTicketRequestBodyAssignment: Codable {
     /// The ID of the admin to which the ticket is assigned. If not provided, the ticket will be unassigned.
@@ -23,20 +23,20 @@ public struct EnqueueCreateTicketRequestBodyAssignment: Codable {
     }
 
     init() {
-        (self.adminAssigneeId, self.teamAssigneeId) = (nil, nil)
+        (adminAssigneeId, teamAssigneeId) = (nil, nil)
     }
 }
 
-extension EnqueueCreateTicketRequestBodyAssignment {
-    public init(from decoder: Decoder) throws {
+public extension EnqueueCreateTicketRequestBodyAssignment {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.adminAssigneeId = try container.sdkDecodeIfPresent(.adminAssigneeId)
-        self.teamAssigneeId = try container.sdkDecodeIfPresent(.teamAssigneeId)
+        adminAssigneeId = try container.sdkDecodeIfPresent(.adminAssigneeId)
+        teamAssigneeId = try container.sdkDecodeIfPresent(.teamAssigneeId)
     }
 }
 
-extension EnqueueCreateTicketRequestBodyAssignment {
-    public init(adminAssigneeId: String? = nil, teamAssigneeId: String? = nil) {
+public extension EnqueueCreateTicketRequestBodyAssignment {
+    init(adminAssigneeId: String? = nil, teamAssigneeId: String? = nil) {
         self.init()
         (self.adminAssigneeId, self.teamAssigneeId) = (adminAssigneeId, teamAssigneeId)
     }
@@ -57,20 +57,20 @@ public struct CreateTicketRequestBodyAssignment: Codable {
     }
 
     init() {
-        (self.adminAssigneeId, self.teamAssigneeId) = (nil, nil)
+        (adminAssigneeId, teamAssigneeId) = (nil, nil)
     }
 }
 
-extension CreateTicketRequestBodyAssignment {
-    public init(from decoder: Decoder) throws {
+public extension CreateTicketRequestBodyAssignment {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.adminAssigneeId = try container.sdkDecodeIfPresent(.adminAssigneeId)
-        self.teamAssigneeId = try container.sdkDecodeIfPresent(.teamAssigneeId)
+        adminAssigneeId = try container.sdkDecodeIfPresent(.adminAssigneeId)
+        teamAssigneeId = try container.sdkDecodeIfPresent(.teamAssigneeId)
     }
 }
 
-extension CreateTicketRequestBodyAssignment {
-    public init(adminAssigneeId: String? = nil, teamAssigneeId: String? = nil) {
+public extension CreateTicketRequestBodyAssignment {
+    init(adminAssigneeId: String? = nil, teamAssigneeId: String? = nil) {
         self.init()
         (self.adminAssigneeId, self.teamAssigneeId) = (adminAssigneeId, teamAssigneeId)
     }

@@ -55,9 +55,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.dynamicContent.get(
-            id: decoded("\"123\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                id: decoded("\"123\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -103,9 +103,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.aiContent.getExternalPage(
-            pageId: decoded("\"page-1\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                pageId: decoded("\"page-1\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -150,8 +150,8 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.ipAllowlist.get(
-            intercomVersion: decoded("\"2.17\"")
-        )
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -197,9 +197,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.macros.get(
-            id: decoded("\"123\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                id: decoded("\"123\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -246,10 +246,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.officeHours.getException(
-            officeHoursScheduleId: decoded("\"123\""),
-            id: decoded("\"456\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                officeHoursScheduleId: decoded("\"123\""),
+                id: decoded("\"456\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -295,9 +295,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.officeHours.getSchedule(
-            id: decoded("\"123\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                id: decoded("\"123\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -345,11 +345,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.reportingDataExport.getReportingData(
-            jobIdentifier: decoded("\"job_identifier\""),
-            appId: decoded("\"app-1\""),
-            clientId: decoded("\"client-1\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                jobIdentifier: decoded("\"job_identifier\""),
+                appId: decoded("\"app-1\""),
+                clientId: decoded("\"client-1\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 404)
@@ -390,11 +390,11 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.reportingDataExport.getReportingData2(
-            jobIdentifier: decoded("\"job_identifier\""),
-            appId: decoded("\"app-1\""),
-            accept: decoded("\"application/octet-stream\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                jobIdentifier: decoded("\"job_identifier\""),
+                appId: decoded("\"app-1\""),
+                accept: decoded("\"application/octet-stream\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 404)
@@ -441,10 +441,10 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.teams.getMetrics(
-            teamId: decoded("\"42\""),
-            idleThreshold: decoded("1800"),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                teamId: decoded("\"42\""),
+                idleThreshold: decoded("1800"),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -490,9 +490,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.tickets.get(
-            ticketId: decoded("\"ticket-1\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                ticketId: decoded("\"ticket-1\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)
@@ -538,9 +538,9 @@ extension SdkMethodTests {
         )
         do {
             _ = try await client.ticketTypes.get(
-            ticketTypeId: decoded("\"ticket_type-1\""),
-            intercomVersion: decoded("\"2.17\"")
-        )
+                ticketTypeId: decoded("\"ticket_type-1\""),
+                intercomVersion: decoded("\"2.17\"")
+            )
             XCTFail("did not raise its declared error")
         } catch let error as SdkHttpError {
             XCTAssertEqual(error.statusCode, 401)

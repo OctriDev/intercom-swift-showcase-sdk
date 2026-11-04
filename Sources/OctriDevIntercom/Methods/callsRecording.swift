@@ -6,16 +6,31 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension CallsMethods {
-    /// Retrieves a call recording when one is available. Use the `call_id` path parameter to identify the call; the response redirects to a signed recording URL.
+public extension CallsMethods {
+    /// Retrieves a call recording when one is available. Use the `call_id` path parameter to identify the call; the
+    /// response redirects to a signed recording URL.
     ///
     /// Redirects to a signed URL for the call's recording if it exists.
     ///
     /// - Parameters:
     /// - callId: The id of the call
-    public static func showCallRecording(config: ClientConfig, callId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try (await sdkRequest("GET", ["/calls/", sdkEncodePathSegment(sdkWireString(callId)), "/recording"].joined(), config: config, decoder: .empty, operationId: "showCallRecording", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
+    static func showCallRecording(
+        config: ClientConfig,
+        callId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await (sdkRequest(
+            "GET",
+            ["/calls/", sdkEncodePathSegment(sdkWireString(callId)), "/recording"].joined(),
+            config: config,
+            decoder: .empty,
+            operationId: "showCallRecording",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).data
     }
 }

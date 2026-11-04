@@ -8,13 +8,27 @@ import Foundation
 #endif
 public enum SubscriptionTypesMethods {}
 
-extension SubscriptionTypesMethods {
-    /// Lists the subscription types associated with your workspace. Use this endpoint to retrieve the available communication consent types and their translations.
+public extension SubscriptionTypesMethods {
+    /// Lists the subscription types associated with your workspace. Use this endpoint to retrieve the available
+    /// communication consent types and their translations.
     ///
     /// You can list all subscription types. A list of subscription type objects will be returned.
-    public static func listSubscriptionTypes(config: ClientConfig, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> SubscriptionTypeList {
-        return try (await sdkRequest("GET", "/subscription_types", config: config, decoder: .json, operationId: "listSubscriptionTypes", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self])).sdkResource()
+    static func listSubscriptionTypes(
+        config: ClientConfig,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SubscriptionTypeList {
+        try await (sdkRequest(
+            "GET",
+            "/subscription_types",
+            config: config,
+            decoder: .json,
+            operationId: "listSubscriptionTypes",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self]
+        )).sdkResource()
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-// TaggedModelsTickets domain models
+/// TaggedModelsTickets domain models
 /// A ticket state, used to define the state of a ticket.
 public struct TicketStateDetailed: Codable {
     /// String representing the object's type. Always has the value `ticket_state`.
@@ -38,26 +38,34 @@ public struct TicketStateDetailed: Codable {
     }
 
     init() {
-        (self.type, self.id, self.category, self.internalLabel, self.externalLabel) = (nil, nil, nil, nil, nil)
-        (self.archived, self.ticketTypes) = (nil, nil)
+        (type, id, category, internalLabel, externalLabel) = (nil, nil, nil, nil, nil)
+        (archived, ticketTypes) = (nil, nil)
     }
 }
 
-extension TicketStateDetailed {
-    public init(from decoder: Decoder) throws {
+public extension TicketStateDetailed {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.category = try container.sdkDecodeIfPresent(.category)
-        self.internalLabel = try container.sdkDecodeIfPresent(.internalLabel)
-        self.externalLabel = try container.sdkDecodeIfPresent(.externalLabel)
-        self.archived = try container.sdkDecodeIfPresent(.archived)
-        self.ticketTypes = try container.sdkDecodeIfPresent(.ticketTypes)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        category = try container.sdkDecodeIfPresent(.category)
+        internalLabel = try container.sdkDecodeIfPresent(.internalLabel)
+        externalLabel = try container.sdkDecodeIfPresent(.externalLabel)
+        archived = try container.sdkDecodeIfPresent(.archived)
+        ticketTypes = try container.sdkDecodeIfPresent(.ticketTypes)
     }
 }
 
-extension TicketStateDetailed {
-    public init(type: String? = nil, id: String? = nil, category: TicketStateDetailedCategory? = nil, internalLabel: String? = nil, externalLabel: String? = nil, archived: Bool? = nil, ticketTypes: TicketStateDetailedTicketTypes? = nil) {
+public extension TicketStateDetailed {
+    init(
+        type: String? = nil,
+        id: String? = nil,
+        category: TicketStateDetailedCategory? = nil,
+        internalLabel: String? = nil,
+        externalLabel: String? = nil,
+        archived: Bool? = nil,
+        ticketTypes: TicketStateDetailedTicketTypes? = nil
+    ) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.category, self.internalLabel) = (category, internalLabel)
@@ -80,20 +88,20 @@ public struct TicketStateDetailedTicketTypes: Codable {
     }
 
     init() {
-        (self.type, self.data) = (nil, nil)
+        (type, data) = (nil, nil)
     }
 }
 
-extension TicketStateDetailedTicketTypes {
-    public init(from decoder: Decoder) throws {
+public extension TicketStateDetailedTicketTypes {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.data = try container.sdkDecodeIfPresent(.data)
+        type = try container.sdkDecodeIfPresent(.type)
+        data = try container.sdkDecodeIfPresent(.data)
     }
 }
 
-extension TicketStateDetailedTicketTypes {
-    public init(type: String? = nil, data: [TicketType?]? = nil) {
+public extension TicketStateDetailedTicketTypes {
+    init(type: String? = nil, data: [TicketType?]? = nil) {
         self.init()
         (self.type, self.data) = (type, data)
     }
@@ -103,7 +111,10 @@ extension TicketStateDetailedTicketTypes {
 public struct TicketStateDetailedCategory: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let submitted = TicketStateDetailedCategory(rawValue: "submitted")
     public static let inProgress = TicketStateDetailedCategory(rawValue: "in_progress")
     public static let waitingOnCustomer = TicketStateDetailedCategory(rawValue: "waiting_on_customer")
@@ -111,7 +122,7 @@ public struct TicketStateDetailedCategory: RawRepresentable, Hashable, Codable, 
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

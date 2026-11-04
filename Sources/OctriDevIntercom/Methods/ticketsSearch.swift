@@ -6,20 +6,54 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension TicketsMethods {
-    /// Searches tickets by their attributes and other searchable fields. Supply a `query` filter using values and operators compatible with the selected field, and combine filters with `AND` or `OR` within the documented nesting and group limits. Use `pagination.starting_after` to retrieve subsequent result pages; the default page size is 20.
+public extension TicketsMethods {
+    /// Searches tickets by their attributes and other searchable fields. Supply a `query` filter using values and
+    /// operators compatible with the selected field, and combine filters with `AND` or `OR` within the documented
+    /// nesting and group limits. Use `pagination.starting_after` to retrieve subsequent result pages; the default page
+    /// size is 20.
     ///
-    /// You can search for multiple tickets by the value of their attributes in order to fetch exactly which ones you want. To search for tickets, you send a `POST` request to `https://api.intercom.io/tickets/search`. This will accept a query object in the body which will define your filters. {% admonition type="warning" name="Optimizing search queries" %} Search queries can be complex, so optimizing them can help the performance of your search. Use the `AND` and `OR` operators to combine multiple filters to get the exact results you need and utilize pagination to limit the number of results returned. The default is `20` results per page. See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#example-search-conversations-request) for more details on how to use the `starting_after` param. {% /admonition %} ### Nesting & Limitations You can nest these filters in order to get even more granular insights that pinpoint exactly what you need. Example: (1 OR 2) AND (3 OR 4). There are some limitations to the amount of multiples there can be: - There's a limit of max 2 nested filters - There's a limit of max 15 filters for each AND or OR group ### Accepted Fields Most keys listed as part of the Ticket model are searchable, whether writeable or not. The value you search for has to match the accepted type, otherwise the query will fail (ie. as `created_at` accepts a date, the `value` cannot be a string such as `"foobar"`). The `source.body` field is unique as the search will not be performed against the entire value, but instead against every element of the value separately. For example, when searching for a conversation with a `"I need support"` body - the query should contain a `=` operator with the value `"support"` for such conversation to be returned. A query with a `=` operator and a `"need support"` value will not yield a result. | Field | Type | | :---------------------------------------- |…
+    /// You can search for multiple tickets by the value of their attributes in order to fetch exactly which ones you
+    /// want. To search for tickets, you send a `POST` request to `https://api.intercom.io/tickets/search`. This will
+    /// accept a query object in the body which will define your filters. {% admonition type="warning" name="Optimizing
+    /// search queries" %} Search queries can be complex, so optimizing them can help the performance of your search.
+    /// Use the `AND` and `OR` operators to combine multiple filters to get the exact results you need and utilize
+    /// pagination to limit the number of results returned. The default is `20` results per page. See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#example-search-conversations-request)
+    /// for more details on how to use the `starting_after` param. {% /admonition %} ### Nesting & Limitations You can
+    /// nest these filters in order to get even more granular insights that pinpoint exactly what you need. Example: (1
+    /// OR 2) AND (3 OR 4). There are some limitations to the amount of multiples there can be: - There's a limit of max
+    /// 2 nested filters - There's a limit of max 15 filters for each AND or OR group ### Accepted Fields Most keys
+    /// listed as part of the Ticket model are searchable, whether writeable or not. The value you search for has to
+    /// match the accepted type, otherwise the query will fail (ie. as `created_at` accepts a date, the `value` cannot
+    /// be a string such as `"foobar"`). The `source.body` field is unique as the search will not be performed against
+    /// the entire value, but instead against every element of the value separately. For example, when searching for a
+    /// conversation with a `"I need support"` body - the query should contain a `=` operator with the value `"support"`
+    /// for such conversation to be returned. A query with a `=` operator and a `"need support"` value will not yield a
+    /// result. | Field | Type | | :---------------------------------------- |…
     ///
     /// - Parameters:
     /// - query: Required API value serialized in the `query` wire field.
     /// - pagination: Optional object value serialized in the `pagination` wire
     ///   field.
-    public static func searchTickets(config: ClientConfig, query: SearchRequestQuery, intercomVersion: IntercomVersion? = nil, pagination: SdkOptional<StartingAfterPaging>? = nil, requestOptions: RequestOptions? = nil) async throws -> TicketList {
+    static func searchTickets(
+        config: ClientConfig,
+        query: SearchRequestQuery,
+        intercomVersion: IntercomVersion? = nil,
+        pagination: SdkOptional<StartingAfterPaging>? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> TicketList {
         let requestBody = SearchTicketsRequestBody(query: query, pagination: pagination)
 
-        return try (await sdkRequest("POST", "/tickets/search", config: config, body: requestBody, decoder: .json, operationId: "searchTickets", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions)).sdkResource()
+        return try await (sdkRequest(
+            "POST",
+            "/tickets/search",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "searchTickets",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions
+        )).sdkResource()
     }
 }

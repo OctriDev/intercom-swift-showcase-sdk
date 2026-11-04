@@ -6,10 +6,20 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ContactsMethods {
-    /// Merges a lead contact into a user contact. Supply the source contact in `from` and the destination contact in `into`; set `skip_duplicate_validation` to true only when merging contacts that do not share a matching email or phone. After the merge, use the target contact's identifier because the source contact is removed from the active contact list.
+public extension ContactsMethods {
+    /// Merges a lead contact into a user contact. Supply the source contact in `from` and the destination contact in
+    /// `into`; set `skip_duplicate_validation` to true only when merging contacts that do not share a matching email or
+    /// phone. After the merge, use the target contact's identifier because the source contact is removed from the
+    /// active contact list.
     ///
-    /// You can merge a contact with a `role` of `lead` into a contact with a `role` of `user`. {% admonition type="warning" name="Merged contacts are not retrievable via the API" %} Once a merge is completed, the source contact (`from`) is permanently removed from the active contact list. This means: - **GET /contacts/{id}** — Requesting the source contact by its original ID will return a `404 Not Found` error. - **POST /contacts/search** — The source contact will not appear in search results, including queries filtered by `updated_at`. - **GET /contacts** — The source contact will not appear in list results. Only the target contact (`into`) remains accessible. If your application stores contact IDs, update them to use the target contact's ID after a merge. {% /admonition %}
+    /// You can merge a contact with a `role` of `lead` into a contact with a `role` of `user`. {% admonition
+    /// type="warning" name="Merged contacts are not retrievable via the API" %} Once a merge is completed, the source
+    /// contact (`from`) is permanently removed from the active contact list. This means: - **GET /contacts/{id}** —
+    /// Requesting the source contact by its original ID will return a `404 Not Found` error. - **POST
+    /// /contacts/search** — The source contact will not appear in search results, including queries filtered by
+    /// `updated_at`. - **GET /contacts** — The source contact will not appear in list results. Only the target contact
+    /// (`into`) remains accessible. If your application stores contact IDs, update them to use the target contact's ID
+    /// after a merge. {% /admonition %}
     ///
     /// - Parameters:
     /// - from: The unique identifier for the contact to merge away from. Must be a
@@ -20,10 +30,22 @@ extension ContactsMethods {
     ///   role.
     /// - skipDuplicateValidation: Set to `true` to merge two contacts that are not
     ///   duplicates (they share no matching email or phone).
-    public static func mergeContact(config: ClientConfig, from: String, into: String, includeMergeHistory: Bool? = nil, intercomVersion: IntercomVersion? = nil, skipDuplicateValidation: Bool? = nil, requestOptions: RequestOptions? = nil) async throws -> MergeContactResponse {
-        let requestBody = MergeContactRequestBody(from: from, into: into, skipDuplicateValidation: skipDuplicateValidation)
+    static func mergeContact(
+        config: ClientConfig,
+        from: String,
+        into: String,
+        includeMergeHistory: Bool? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        skipDuplicateValidation: Bool? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> MergeContactResponse {
+        let requestBody = MergeContactRequestBody(
+            from: from,
+            into: into,
+            skipDuplicateValidation: skipDuplicateValidation
+        )
 
-        return try (await sdkRequest("POST", "/contacts/merge", config: config, query: [
+        return try await (sdkRequest("POST", "/contacts/merge", config: config, query: [
             SdkQueryParameter("include_merge_history", value: includeMergeHistory),
         ], body: requestBody, decoder: .json, operationId: "MergeContact", extraHeaders: sdkHeaders([
             ("Intercom-Version", sdkHeaderValue(intercomVersion)),

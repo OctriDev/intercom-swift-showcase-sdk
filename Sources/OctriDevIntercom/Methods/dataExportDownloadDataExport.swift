@@ -6,16 +6,34 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension DataExportMethods {
-    /// Downloads the data for a completed content export job as a continuously streamed, gzipped CSV file. Use the `job_identifier` for a job with a completed status and send the `Accept: application/octet-stream` header. Download the file within two days of the job completing.
+public extension DataExportMethods {
+    /// Downloads the data for a completed content export job as a continuously streamed, gzipped CSV file. Use the
+    /// `job_identifier` for a job with a completed status and send the `Accept: application/octet-stream` header.
+    /// Download the file within two days of the job completing.
     ///
-    /// When a job has a status of complete, and thus a filled download_url, you can download your data by hitting that provided URL, formatted like so: https://api.intercom.io/download/content/data/xyz1234. Your exported message data will be streamed continuously back down to you in a gzipped CSV format. > 📘 Octet header required > > You will have to specify the header Accept: `application/octet-stream` when hitting this endpoint.
+    /// When a job has a status of complete, and thus a filled download_url, you can download your data by hitting that
+    /// provided URL, formatted like so: https://api.intercom.io/download/content/data/xyz1234. Your exported message
+    /// data will be streamed continuously back down to you in a gzipped CSV format. > 📘 Octet header required > > You
+    /// will have to specify the header Accept: `application/octet-stream` when hitting this endpoint.
     ///
     /// - Parameters:
     /// - jobIdentifier: job_identifier
-    public static func downloadDataExport(config: ClientConfig, jobIdentifier: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> SdkEmptyResponse {
-        return try (await sdkRequest("GET", ["/download/content/data/", sdkEncodePathSegment(sdkWireString(jobIdentifier))].joined(), config: config, decoder: .empty, operationId: "downloadDataExport", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions)).data
+    static func downloadDataExport(
+        config: ClientConfig,
+        jobIdentifier: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SdkEmptyResponse {
+        try await (sdkRequest(
+            "GET",
+            ["/download/content/data/", sdkEncodePathSegment(sdkWireString(jobIdentifier))].joined(),
+            config: config,
+            decoder: .empty,
+            operationId: "downloadDataExport",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions
+        )).data
     }
 }

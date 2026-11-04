@@ -6,10 +6,23 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ContentMethods {
-    /// Triggers a bulk action on up to 1,000 Knowledge Hub content items, including publishing, deleting, changing availability or audiences, and updating tags. Supply `action` and `content_ids`; include the action-specific `audience`, `availability`, or `tags` object when required. Work is enqueued asynchronously, and the 202 response contains a placeholder envelope rather than per-item results.
+public extension ContentMethods {
+    /// Triggers a bulk action on up to 1,000 Knowledge Hub content items, including publishing, deleting, changing
+    /// availability or audiences, and updating tags. Supply `action` and `content_ids`; include the action-specific
+    /// `audience`, `availability`, or `tags` object when required. Work is enqueued asynchronously, and the 202
+    /// response contains a placeholder envelope rather than per-item results.
     ///
-    /// Asynchronously run a bulk action over up to 1,000 Knowledge Hub content items. Six actions are supported: * `publish` and `unpublish` — apply to `article_content` only. * `delete` — permanently delete content (excludes synced sources and `external_content`). * `set_availability` — toggle Fin AI Agent, Copilot, and Sales Agent availability flags. * `set_audience` — manage segment membership on content. * `update_tags` — apply and/or remove existing tags on content. Unlike the other actions, `update_tags` addresses articles by the parent `article` id, not `article_content`. Tags must already exist and not be archived; supply at least one of `add_tag_ids` / `remove_tag_ids`. The endpoint validates the request, enqueues background work, and returns 202 with a placeholder envelope. Items whose `type` is not in the action's allowlist are silently dropped before processing. Articles imported from synced sources (Confluence, Notion, Zendesk, Salesforce Knowledge, etc.) are silently skipped on `delete` — they can only be removed by disconnecting the underlying import source. Requires the `write_content` OAuth scope.
+    /// Asynchronously run a bulk action over up to 1,000 Knowledge Hub content items. Six actions are supported: *
+    /// `publish` and `unpublish` — apply to `article_content` only. * `delete` — permanently delete content (excludes
+    /// synced sources and `external_content`). * `set_availability` — toggle Fin AI Agent, Copilot, and Sales Agent
+    /// availability flags. * `set_audience` — manage segment membership on content. * `update_tags` — apply and/or
+    /// remove existing tags on content. Unlike the other actions, `update_tags` addresses articles by the parent
+    /// `article` id, not `article_content`. Tags must already exist and not be archived; supply at least one of
+    /// `add_tag_ids` / `remove_tag_ids`. The endpoint validates the request, enqueues background work, and returns 202
+    /// with a placeholder envelope. Items whose `type` is not in the action's allowlist are silently dropped before
+    /// processing. Articles imported from synced sources (Confluence, Notion, Zendesk, Salesforce Knowledge, etc.) are
+    /// silently skipped on `delete` — they can only be removed by disconnecting the underlying import source. Requires
+    /// the `write_content` OAuth scope.
     ///
     /// - Parameters:
     /// - action: The bulk action to perform. Allowed `content_ids[].type` values
@@ -31,13 +44,39 @@ extension ContentMethods {
     ///   `remove_tag_ids` combined. Tag IDs must reference existing, non-archived
     ///   tags; exceeding the limit or referencing unknown or archived IDs is rejected
     ///   with `parameter_invalid` (HTTP 422).
-    public static func bulkContentActions(config: ClientConfig, action: ContentBulkActionRequestAction, contentIds: [ContentBulkActionRequestContentIdsItem], intercomVersion: IntercomVersion? = nil, availability: ContentBulkActionRequestAvailability? = nil, audience: ContentBulkActionRequestAudience? = nil, tags: ContentBulkActionRequestTags? = nil, requestOptions: RequestOptions? = nil) async throws -> ContentBulkActionResponse {
+    static func bulkContentActions(
+        config: ClientConfig,
+        action: ContentBulkActionRequestAction,
+        contentIds: [ContentBulkActionRequestContentIdsItem],
+        intercomVersion: IntercomVersion? = nil,
+        availability: ContentBulkActionRequestAvailability? = nil,
+        audience: ContentBulkActionRequestAudience? = nil,
+        tags: ContentBulkActionRequestTags? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContentBulkActionResponse {
         try validateItems("content_ids", contentIds, max: 1000)
 
-        let requestBody = BulkContentActionsRequestBody(action: action, contentIds: contentIds, availability: availability, audience: audience, tags: tags)
+        let requestBody = BulkContentActionsRequestBody(
+            action: action,
+            contentIds: contentIds,
+            availability: availability,
+            audience: audience,
+            tags: tags
+        )
 
-        return try (await sdkRequest("POST", "/content/bulk_actions", config: config, body: requestBody, decoder: .json, operationId: "bulkContentActions", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "403": Error2.self, "422": Error2.self])).sdkResource()
+        return try await (sdkRequest(
+            "POST",
+            "/content/bulk_actions",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "bulkContentActions",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "403": Error2.self, "422": Error2.self]
+        ))
+        .sdkResource()
     }
 }

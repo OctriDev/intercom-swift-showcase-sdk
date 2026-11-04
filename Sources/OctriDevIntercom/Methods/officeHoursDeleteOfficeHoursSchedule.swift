@@ -6,29 +6,60 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension OfficeHoursMethods {
-    /// Deletes an office hours schedule. Use this operation when the schedule is no longer needed for the workspace. The response indicates whether the schedule was deleted and identifies the deleted object.
+public extension OfficeHoursMethods {
+    /// Deletes an office hours schedule. Use this operation when the schedule is no longer needed for the workspace.
+    /// The response indicates whether the schedule was deleted and identifies the deleted object.
     ///
     /// You can delete a single office hours schedule.
     ///
     /// - Parameters:
     /// - id: The unique identifier for the office hours schedule.
-    public static func deleteOfficeHoursSchedule(config: ClientConfig, id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DeleteOfficeHoursScheduleResponse {
-        return try (await sdkRequest("DELETE", ["/office_hours_schedules/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "deleteOfficeHoursSchedule", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
+    static func deleteOfficeHoursSchedule(
+        config: ClientConfig,
+        id: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DeleteOfficeHoursScheduleResponse {
+        try await (sdkRequest(
+            "DELETE",
+            ["/office_hours_schedules/", sdkEncodePathSegment(sdkWireString(id))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "deleteOfficeHoursSchedule",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).data
     }
 
-    /// Lists the office hours schedules configured for the workspace. Use this endpoint to view the recurring schedules and their weekly hours.
+    /// Lists the office hours schedules configured for the workspace. Use this endpoint to view the recurring schedules
+    /// and their weekly hours.
     ///
     /// You can fetch a list of all office hours schedules for the workspace.
-    public static func listOfficeHoursSchedules(config: ClientConfig, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> OfficeHoursScheduleList {
-        return try (await sdkRequest("GET", "/office_hours_schedules", config: config, decoder: .json, operationId: "listOfficeHoursSchedules", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self])).sdkResource()
+    static func listOfficeHoursSchedules(
+        config: ClientConfig,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> OfficeHoursScheduleList {
+        try await (sdkRequest(
+            "GET",
+            "/office_hours_schedules",
+            config: config,
+            decoder: .json,
+            operationId: "listOfficeHoursSchedules",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self]
+        )).sdkResource()
     }
 
-    /// Creates a new office hours schedule for the workspace. Provide its `name`, `time_zone_name`, and weekly `time_intervals`; interval start and end values must fall on 15-minute boundaries. The response contains the created schedule and its generated identifier.
+    /// Creates a new office hours schedule for the workspace. Provide its `name`, `time_zone_name`, and weekly
+    /// `time_intervals`; interval start and end values must fall on 15-minute boundaries. The response contains the
+    /// created schedule and its generated identifier.
     ///
     /// You can create a new office hours schedule for the workspace.
     ///
@@ -37,11 +68,32 @@ extension OfficeHoursMethods {
     /// - timeZoneName: The IANA time zone the schedule's hours are evaluated in.
     /// - timeIntervals: The open intervals for the schedule. `start_minute` and
     ///   `end_minute` must be on a 15-minute boundary.
-    public static func createOfficeHoursSchedule(config: ClientConfig, name: String, timeZoneName: String, timeIntervals: [OfficeHoursTimeIntervalRequest], intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> OfficeHoursSchedule {
-        let requestBody = CreateOfficeHoursScheduleRequestBody(name: name, timeZoneName: timeZoneName, timeIntervals: timeIntervals)
+    static func createOfficeHoursSchedule(
+        config: ClientConfig,
+        name: String,
+        timeZoneName: String,
+        timeIntervals: [OfficeHoursTimeIntervalRequest],
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> OfficeHoursSchedule {
+        let requestBody = CreateOfficeHoursScheduleRequestBody(
+            name: name,
+            timeZoneName: timeZoneName,
+            timeIntervals: timeIntervals
+        )
 
-        return try (await sdkRequest("POST", "/office_hours_schedules", config: config, body: requestBody, decoder: .json, operationId: "createOfficeHoursSchedule", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "422": Error2.self])).sdkResource()
+        return try await (sdkRequest(
+            "POST",
+            "/office_hours_schedules",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "createOfficeHoursSchedule",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "422": Error2.self]
+        )).sdkResource()
     }
 }

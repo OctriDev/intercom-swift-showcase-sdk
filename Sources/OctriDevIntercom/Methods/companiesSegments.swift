@@ -6,17 +6,32 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension CompaniesMethods {
-    /// Lists the segments associated with a company identified by `company_id`. Use this endpoint to inspect the company's attached segments; the response includes segment records.
+public extension CompaniesMethods {
+    /// Lists the segments associated with a company identified by `company_id`. Use this endpoint to inspect the
+    /// company's attached segments; the response includes segment records.
     ///
     /// You can fetch a list of all segments that belong to a company.
     ///
     /// - Parameters:
     /// - companyId: The unique identifier for the company which is given by
     ///   Intercom
-    public static func listCompaniesAttachedSegments(config: ClientConfig, companyId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> CompanyAttachedSegments {
-        return try (await sdkRequest("GET", ["/companies/", sdkEncodePathSegment(sdkWireString(companyId)), "/segments"].joined(), config: config, decoder: .json, operationId: "listCompaniesAttachedSegments", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).sdkResource()
+    static func listCompaniesAttachedSegments(
+        config: ClientConfig,
+        companyId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CompanyAttachedSegments {
+        try await (sdkRequest(
+            "GET",
+            ["/companies/", sdkEncodePathSegment(sdkWireString(companyId)), "/segments"].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "listCompaniesAttachedSegments",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).sdkResource()
     }
 }

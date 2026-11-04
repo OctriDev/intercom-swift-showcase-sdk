@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Conversations domain models
+/// Conversations domain models
 /// Payload of the request to snooze a conversation
 public struct SnoozeConversationRequest: Codable {
     /// Required enumerated value serialized in the `message_type` wire field.
@@ -22,33 +22,55 @@ public struct SnoozeConversationRequest: Codable {
         case snoozedUntil = "snoozed_until"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension SnoozeConversationRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.messageType) else {
-            throw SdkValidationError(field: "message_type", code: "required", message: "Validation failed for 'message_type': value is required")
-        }
-        guard container.contains(.adminId) else {
-            throw SdkValidationError(field: "admin_id", code: "required", message: "Validation failed for 'admin_id': value is required")
-        }
-        guard container.contains(.snoozedUntil) else {
-            throw SdkValidationError(field: "snoozed_until", code: "required", message: "Validation failed for 'snoozed_until': value is required")
-        }
-        self.messageType = try container.sdkDecodeRequired(.messageType)
-        self.adminId = try container.sdkDecodeRequired(.adminId)
-        self.snoozedUntil = try container.sdkDecodeRequired(.snoozedUntil)
-            try sdkValidateRawEnum("message_type", self.messageType, SnoozeConversationRequestMessageType.allCases.map(\.rawValue))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension SnoozeConversationRequest {
-    public init(messageType: SnoozeConversationRequestMessageType, adminId: String, snoozedUntil: Int) throws {
+public extension SnoozeConversationRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.messageType) else {
+            throw SdkValidationError(
+                field: "message_type",
+                code: "required",
+                message: "Validation failed for 'message_type': value is required"
+            )
+        }
+        guard container.contains(.adminId) else {
+            throw SdkValidationError(
+                field: "admin_id",
+                code: "required",
+                message: "Validation failed for 'admin_id': value is required"
+            )
+        }
+        guard container.contains(.snoozedUntil) else {
+            throw SdkValidationError(
+                field: "snoozed_until",
+                code: "required",
+                message: "Validation failed for 'snoozed_until': value is required"
+            )
+        }
+        messageType = try container.sdkDecodeRequired(.messageType)
+        adminId = try container.sdkDecodeRequired(.adminId)
+        snoozedUntil = try container.sdkDecodeRequired(.snoozedUntil)
+        try sdkValidateRawEnum(
+            "message_type",
+            messageType,
+            SnoozeConversationRequestMessageType.allCases.map(\.rawValue)
+        )
+    }
+}
+
+public extension SnoozeConversationRequest {
+    init(messageType: SnoozeConversationRequestMessageType, adminId: String, snoozedUntil: Int) throws {
         (self.messageType, self.adminId) = (messageType, adminId)
         self.snoozedUntil = snoozedUntil
-            try sdkValidateRawEnum("message_type", self.messageType, SnoozeConversationRequestMessageType.allCases.map(\.rawValue))
+        try sdkValidateRawEnum(
+            "message_type",
+            self.messageType,
+            SnoozeConversationRequestMessageType.allCases.map(\.rawValue)
+        )
     }
 }
 
@@ -66,28 +88,42 @@ public struct OpenConversationRequest: Codable {
         case adminId = "admin_id"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension OpenConversationRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.messageType) else {
-            throw SdkValidationError(field: "message_type", code: "required", message: "Validation failed for 'message_type': value is required")
-        }
-        guard container.contains(.adminId) else {
-            throw SdkValidationError(field: "admin_id", code: "required", message: "Validation failed for 'admin_id': value is required")
-        }
-        self.messageType = try container.sdkDecodeRequired(.messageType)
-        self.adminId = try container.sdkDecodeRequired(.adminId)
-            try sdkValidateRawEnum("message_type", self.messageType, OpenConversationRequestMessageType.allCases.map(\.rawValue))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension OpenConversationRequest {
-    public init(messageType: OpenConversationRequestMessageType, adminId: String) throws {
+public extension OpenConversationRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.messageType) else {
+            throw SdkValidationError(
+                field: "message_type",
+                code: "required",
+                message: "Validation failed for 'message_type': value is required"
+            )
+        }
+        guard container.contains(.adminId) else {
+            throw SdkValidationError(
+                field: "admin_id",
+                code: "required",
+                message: "Validation failed for 'admin_id': value is required"
+            )
+        }
+        messageType = try container.sdkDecodeRequired(.messageType)
+        adminId = try container.sdkDecodeRequired(.adminId)
+        try sdkValidateRawEnum("message_type", messageType, OpenConversationRequestMessageType.allCases.map(\.rawValue))
+    }
+}
+
+public extension OpenConversationRequest {
+    init(messageType: OpenConversationRequestMessageType, adminId: String) throws {
         (self.messageType, self.adminId) = (messageType, adminId)
-            try sdkValidateRawEnum("message_type", self.messageType, OpenConversationRequestMessageType.allCases.map(\.rawValue))
+        try sdkValidateRawEnum(
+            "message_type",
+            self.messageType,
+            OpenConversationRequestMessageType.allCases.map(\.rawValue)
+        )
     }
 }
 
@@ -124,40 +160,73 @@ public struct AssignConversationRequest: Codable {
         case skipReopen = "skip_reopen"
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension AssignConversationRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.messageType) else {
-            throw SdkValidationError(field: "message_type", code: "required", message: "Validation failed for 'message_type': value is required")
-        }
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.adminId) else {
-            throw SdkValidationError(field: "admin_id", code: "required", message: "Validation failed for 'admin_id': value is required")
-        }
-        guard container.contains(.assigneeId) else {
-            throw SdkValidationError(field: "assignee_id", code: "required", message: "Validation failed for 'assignee_id': value is required")
-        }
-        self.messageType = try container.sdkDecodeRequired(.messageType)
-        self.type = try container.sdkDecodeRequired(.type)
-        self.adminId = try container.sdkDecodeRequired(.adminId)
-        self.assigneeId = try container.sdkDecodeRequired(.assigneeId)
-        self.body = try container.sdkDecodeIfPresent(.body)
-        self.skipReopen = try container.sdkDecodeIfPresent(.skipReopen)
-            try sdkValidateRawEnum("message_type", self.messageType, AssignConversationRequestMessageType.allCases.map(\.rawValue))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension AssignConversationRequest {
-    public init(messageType: AssignConversationRequestMessageType, type: AssignConversationRequestType, adminId: String, assigneeId: String, body: String? = nil, skipReopen: Bool? = nil) throws {
+public extension AssignConversationRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.messageType) else {
+            throw SdkValidationError(
+                field: "message_type",
+                code: "required",
+                message: "Validation failed for 'message_type': value is required"
+            )
+        }
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.adminId) else {
+            throw SdkValidationError(
+                field: "admin_id",
+                code: "required",
+                message: "Validation failed for 'admin_id': value is required"
+            )
+        }
+        guard container.contains(.assigneeId) else {
+            throw SdkValidationError(
+                field: "assignee_id",
+                code: "required",
+                message: "Validation failed for 'assignee_id': value is required"
+            )
+        }
+        messageType = try container.sdkDecodeRequired(.messageType)
+        type = try container.sdkDecodeRequired(.type)
+        adminId = try container.sdkDecodeRequired(.adminId)
+        assigneeId = try container.sdkDecodeRequired(.assigneeId)
+        body = try container.sdkDecodeIfPresent(.body)
+        skipReopen = try container.sdkDecodeIfPresent(.skipReopen)
+        try sdkValidateRawEnum(
+            "message_type",
+            messageType,
+            AssignConversationRequestMessageType.allCases.map(\.rawValue)
+        )
+    }
+}
+
+public extension AssignConversationRequest {
+    init(
+        messageType: AssignConversationRequestMessageType,
+        type: AssignConversationRequestType,
+        adminId: String,
+        assigneeId: String,
+        body: String? = nil,
+        skipReopen: Bool? = nil
+    ) throws {
         (self.messageType, self.type) = (messageType, type)
         (self.adminId, self.assigneeId) = (adminId, assigneeId)
         (self.body, self.skipReopen) = (body, skipReopen)
-            try sdkValidateRawEnum("message_type", self.messageType, AssignConversationRequestMessageType.allCases.map(\.rawValue))
+        try sdkValidateRawEnum(
+            "message_type",
+            self.messageType,
+            AssignConversationRequestMessageType.allCases.map(\.rawValue)
+        )
     }
 }
 
@@ -184,34 +253,61 @@ public struct CloseConversationRequest: Codable {
         case body
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension CloseConversationRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.messageType) else {
-            throw SdkValidationError(field: "message_type", code: "required", message: "Validation failed for 'message_type': value is required")
-        }
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.adminId) else {
-            throw SdkValidationError(field: "admin_id", code: "required", message: "Validation failed for 'admin_id': value is required")
-        }
-        self.messageType = try container.sdkDecodeRequired(.messageType)
-        self.type = try container.sdkDecodeRequired(.type)
-        self.adminId = try container.sdkDecodeRequired(.adminId)
-        self.body = try container.sdkDecodeIfPresent(.body)
-            try sdkValidateRawEnum("message_type", self.messageType, CloseConversationRequestMessageType.allCases.map(\.rawValue))
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension CloseConversationRequest {
-    public init(messageType: CloseConversationRequestMessageType, type: CloseConversationRequestType, adminId: String, body: String? = nil) throws {
+public extension CloseConversationRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.messageType) else {
+            throw SdkValidationError(
+                field: "message_type",
+                code: "required",
+                message: "Validation failed for 'message_type': value is required"
+            )
+        }
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.adminId) else {
+            throw SdkValidationError(
+                field: "admin_id",
+                code: "required",
+                message: "Validation failed for 'admin_id': value is required"
+            )
+        }
+        messageType = try container.sdkDecodeRequired(.messageType)
+        type = try container.sdkDecodeRequired(.type)
+        adminId = try container.sdkDecodeRequired(.adminId)
+        body = try container.sdkDecodeIfPresent(.body)
+        try sdkValidateRawEnum(
+            "message_type",
+            messageType,
+            CloseConversationRequestMessageType.allCases.map(\.rawValue)
+        )
+    }
+}
+
+public extension CloseConversationRequest {
+    init(
+        messageType: CloseConversationRequestMessageType,
+        type: CloseConversationRequestType,
+        adminId: String,
+        body: String? = nil
+    ) throws {
         (self.messageType, self.type) = (messageType, type)
         (self.adminId, self.body) = (adminId, body)
-            try sdkValidateRawEnum("message_type", self.messageType, CloseConversationRequestMessageType.allCases.map(\.rawValue))
+        try sdkValidateRawEnum(
+            "message_type",
+            self.messageType,
+            CloseConversationRequestMessageType.allCases.map(\.rawValue)
+        )
     }
 }
 
@@ -219,12 +315,15 @@ extension CloseConversationRequest {
 public struct CloseConversationRequestType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let admin = CloseConversationRequestType(rawValue: "admin")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -273,13 +372,16 @@ public enum OpenConversationRequestMessageType: String, CaseIterable, Codable {
 public struct AssignConversationRequestType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let admin = AssignConversationRequestType(rawValue: "admin")
     public static let team = AssignConversationRequestType(rawValue: "team")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

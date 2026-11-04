@@ -3,9 +3,22 @@
 
 import Foundation
 
-// SharedConversation domain models
-extension ConversationSource {
-    public init(type: String? = nil, id: String? = nil, deliveredAs: String? = nil, recipients: [ConversationSourceRecipientsItem]? = nil, replyTo: [ConversationSourceReplyToItem]? = nil, subject: String? = nil, body: String? = nil, author: ConversationSourceAuthor? = nil, attachments: [PartAttachment]? = nil, url: String? = nil, redacted: Bool? = nil, emailMessageMetadata: SourceEmailMessageMetadata? = nil) {
+/// SharedConversation domain models
+public extension ConversationSource {
+    init(
+        type: String? = nil,
+        id: String? = nil,
+        deliveredAs: String? = nil,
+        recipients: [ConversationSourceRecipientsItem]? = nil,
+        replyTo: [ConversationSourceReplyToItem]? = nil,
+        subject: String? = nil,
+        body: String? = nil,
+        author: ConversationSourceAuthor? = nil,
+        attachments: [PartAttachment]? = nil,
+        url: String? = nil,
+        redacted: Bool? = nil,
+        emailMessageMetadata: SourceEmailMessageMetadata? = nil
+    ) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.deliveredAs, self.recipients) = (deliveredAs, recipients)
@@ -27,19 +40,19 @@ public struct ConversationAttributeUpdatedByWorkflowValue: Codable {
     }
 
     init() {
-        self.name = nil
+        name = nil
     }
 }
 
-extension ConversationAttributeUpdatedByWorkflowValue {
-    public init(from decoder: Decoder) throws {
+public extension ConversationAttributeUpdatedByWorkflowValue {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension ConversationAttributeUpdatedByWorkflowValue {
-    public init(name: String? = nil) {
+public extension ConversationAttributeUpdatedByWorkflowValue {
+    init(name: String? = nil) {
         self.init()
         self.name = name
     }
@@ -60,23 +73,23 @@ public struct ConversationSourceReplyToItem: Codable {
     }
 
     init() {
-        (self.email, self.name) = (nil, nil)
+        (email, name) = (nil, nil)
     }
 }
 
-extension ConversationSourceReplyToItem {
-    public init(from decoder: Decoder) throws {
+public extension ConversationSourceReplyToItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.email = try container.sdkDecodeIfPresent(.email)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        if let value = self.email {
+        email = try container.sdkDecodeIfPresent(.email)
+        name = try container.sdkDecodeIfPresent(.name)
+        if let value = email {
             try sdkValidateEmail("email", value)
         }
     }
 }
 
-extension ConversationSourceReplyToItem {
-    public init(email: String? = nil, name: String? = nil) throws {
+public extension ConversationSourceReplyToItem {
+    init(email: String? = nil, name: String? = nil) throws {
         self.init()
         (self.email, self.name) = (email, name)
         if let value = self.email {
@@ -102,20 +115,20 @@ public struct ConversationChannel: Codable {
     }
 
     init() {
-        (self.initial, self.current) = (nil, nil)
+        (initial, current) = (nil, nil)
     }
 }
 
-extension ConversationChannel {
-    public init(from decoder: Decoder) throws {
+public extension ConversationChannel {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.initial = try container.sdkDecodeIfPresent(.initial)
-        self.current = try container.sdkDecodeIfPresent(.current)
+        initial = try container.sdkDecodeIfPresent(.initial)
+        current = try container.sdkDecodeIfPresent(.current)
     }
 }
 
-extension ConversationChannel {
-    public init(initial: String? = nil, current: String? = nil) {
+public extension ConversationChannel {
+    init(initial: String? = nil, current: String? = nil) {
         self.init()
         (self.initial, self.current) = (initial, current)
     }
@@ -219,45 +232,88 @@ public struct ConversationStatistics: Codable {
     }
 
     init() {
-        (self.type, self.timeToAssignment, self.timeToAdminReply, self.timeToFirstClose, self.timeToLastClose) = (nil, nil, nil, nil, nil)
-        (self.medianTimeToReply, self.firstContactReplyAt, self.firstAssignmentAt, self.firstAdminReplyAt, self.firstCloseAt) = (nil, nil, nil, nil, nil)
-        (self.lastAssignmentAt, self.lastAssignmentAdminReplyAt, self.lastContactReplyAt, self.lastAdminReplyAt, self.lastCloseAt) = (nil, nil, nil, nil, nil)
-        (self.lastClosedById, self.countReopens, self.countAssignments, self.countConversationParts, self.assignedTeamFirstResponseTime) = (nil, nil, nil, nil, nil)
-        (self.assignedTeamFirstResponseTimeInOfficeHours, self.handlingTime, self.adjustedHandlingTime) = (nil, nil, nil)
+        (type, timeToAssignment, timeToAdminReply, timeToFirstClose, timeToLastClose) = (nil, nil, nil, nil, nil)
+        (medianTimeToReply, firstContactReplyAt, firstAssignmentAt, firstAdminReplyAt, firstCloseAt) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        (lastAssignmentAt, lastAssignmentAdminReplyAt, lastContactReplyAt, lastAdminReplyAt, lastCloseAt) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        (lastClosedById, countReopens, countAssignments, countConversationParts, assignedTeamFirstResponseTime) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        (assignedTeamFirstResponseTimeInOfficeHours, handlingTime, adjustedHandlingTime) = (nil, nil, nil)
     }
 }
 
-extension ConversationStatistics {
-    public init(from decoder: Decoder) throws {
+public extension ConversationStatistics {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.timeToAssignment = try container.sdkDecodeIfPresent(.timeToAssignment)
-        self.timeToAdminReply = try container.sdkDecodeIfPresent(.timeToAdminReply)
-        self.timeToFirstClose = try container.sdkDecodeIfPresent(.timeToFirstClose)
-        self.timeToLastClose = try container.sdkDecodeIfPresent(.timeToLastClose)
-        self.medianTimeToReply = try container.sdkDecodeIfPresent(.medianTimeToReply)
-        self.firstContactReplyAt = try container.sdkDecodeIfPresent(.firstContactReplyAt)
-        self.firstAssignmentAt = try container.sdkDecodeIfPresent(.firstAssignmentAt)
-        self.firstAdminReplyAt = try container.sdkDecodeIfPresent(.firstAdminReplyAt)
-        self.firstCloseAt = try container.sdkDecodeIfPresent(.firstCloseAt)
-        self.lastAssignmentAt = try container.sdkDecodeIfPresent(.lastAssignmentAt)
-        self.lastAssignmentAdminReplyAt = try container.sdkDecodeIfPresent(.lastAssignmentAdminReplyAt)
-        self.lastContactReplyAt = try container.sdkDecodeIfPresent(.lastContactReplyAt)
-        self.lastAdminReplyAt = try container.sdkDecodeIfPresent(.lastAdminReplyAt)
-        self.lastCloseAt = try container.sdkDecodeIfPresent(.lastCloseAt)
-        self.lastClosedById = try container.sdkDecodeIfPresent(.lastClosedById)
-        self.countReopens = try container.sdkDecodeIfPresent(.countReopens)
-        self.countAssignments = try container.sdkDecodeIfPresent(.countAssignments)
-        self.countConversationParts = try container.sdkDecodeIfPresent(.countConversationParts)
-        self.assignedTeamFirstResponseTime = try container.sdkDecodeIfPresent(.assignedTeamFirstResponseTime)
-        self.assignedTeamFirstResponseTimeInOfficeHours = try container.sdkDecodeIfPresent(.assignedTeamFirstResponseTimeInOfficeHours)
-        self.handlingTime = try container.sdkDecodeIfPresent(.handlingTime)
-        self.adjustedHandlingTime = try container.sdkDecodeIfPresent(.adjustedHandlingTime)
+        type = try container.sdkDecodeIfPresent(.type)
+        timeToAssignment = try container.sdkDecodeIfPresent(.timeToAssignment)
+        timeToAdminReply = try container.sdkDecodeIfPresent(.timeToAdminReply)
+        timeToFirstClose = try container.sdkDecodeIfPresent(.timeToFirstClose)
+        timeToLastClose = try container.sdkDecodeIfPresent(.timeToLastClose)
+        medianTimeToReply = try container.sdkDecodeIfPresent(.medianTimeToReply)
+        firstContactReplyAt = try container.sdkDecodeIfPresent(.firstContactReplyAt)
+        firstAssignmentAt = try container.sdkDecodeIfPresent(.firstAssignmentAt)
+        firstAdminReplyAt = try container.sdkDecodeIfPresent(.firstAdminReplyAt)
+        firstCloseAt = try container.sdkDecodeIfPresent(.firstCloseAt)
+        lastAssignmentAt = try container.sdkDecodeIfPresent(.lastAssignmentAt)
+        lastAssignmentAdminReplyAt = try container.sdkDecodeIfPresent(.lastAssignmentAdminReplyAt)
+        lastContactReplyAt = try container.sdkDecodeIfPresent(.lastContactReplyAt)
+        lastAdminReplyAt = try container.sdkDecodeIfPresent(.lastAdminReplyAt)
+        lastCloseAt = try container.sdkDecodeIfPresent(.lastCloseAt)
+        lastClosedById = try container.sdkDecodeIfPresent(.lastClosedById)
+        countReopens = try container.sdkDecodeIfPresent(.countReopens)
+        countAssignments = try container.sdkDecodeIfPresent(.countAssignments)
+        countConversationParts = try container.sdkDecodeIfPresent(.countConversationParts)
+        assignedTeamFirstResponseTime = try container.sdkDecodeIfPresent(.assignedTeamFirstResponseTime)
+        assignedTeamFirstResponseTimeInOfficeHours = try container
+            .sdkDecodeIfPresent(.assignedTeamFirstResponseTimeInOfficeHours)
+        handlingTime = try container.sdkDecodeIfPresent(.handlingTime)
+        adjustedHandlingTime = try container.sdkDecodeIfPresent(.adjustedHandlingTime)
     }
 }
 
-extension ConversationStatistics {
-    public init(type: String? = nil, timeToAssignment: Int? = nil, timeToAdminReply: Int? = nil, timeToFirstClose: Int? = nil, timeToLastClose: Int? = nil, medianTimeToReply: Int? = nil, firstContactReplyAt: Int? = nil, firstAssignmentAt: Int? = nil, firstAdminReplyAt: Int? = nil, firstCloseAt: Int? = nil, lastAssignmentAt: Int? = nil, lastAssignmentAdminReplyAt: Int? = nil, lastContactReplyAt: Int? = nil, lastAdminReplyAt: Int? = nil, lastCloseAt: Int? = nil, lastClosedById: String? = nil, countReopens: Int? = nil, countAssignments: Int? = nil, countConversationParts: Int? = nil, assignedTeamFirstResponseTime: [ConversationResponseTime]? = nil, assignedTeamFirstResponseTimeInOfficeHours: [ConversationResponseTime]? = nil, handlingTime: Int? = nil, adjustedHandlingTime: Int? = nil) {
+public extension ConversationStatistics {
+    init(
+        type: String? = nil,
+        timeToAssignment: Int? = nil,
+        timeToAdminReply: Int? = nil,
+        timeToFirstClose: Int? = nil,
+        timeToLastClose: Int? = nil,
+        medianTimeToReply: Int? = nil,
+        firstContactReplyAt: Int? = nil,
+        firstAssignmentAt: Int? = nil,
+        firstAdminReplyAt: Int? = nil,
+        firstCloseAt: Int? = nil,
+        lastAssignmentAt: Int? = nil,
+        lastAssignmentAdminReplyAt: Int? = nil,
+        lastContactReplyAt: Int? = nil,
+        lastAdminReplyAt: Int? = nil,
+        lastCloseAt: Int? = nil,
+        lastClosedById: String? = nil,
+        countReopens: Int? = nil,
+        countAssignments: Int? = nil,
+        countConversationParts: Int? = nil,
+        assignedTeamFirstResponseTime: [ConversationResponseTime]? = nil,
+        assignedTeamFirstResponseTimeInOfficeHours: [ConversationResponseTime]? = nil,
+        handlingTime: Int? = nil,
+        adjustedHandlingTime: Int? = nil
+    ) {
         self.init()
         (self.type, self.timeToAssignment) = (type, timeToAssignment)
         (self.timeToAdminReply, self.timeToFirstClose) = (timeToAdminReply, timeToFirstClose)
@@ -280,14 +336,17 @@ extension ConversationStatistics {
 public struct ConversationPartState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let open = ConversationPartState(rawValue: "open")
     public static let closed = ConversationPartState(rawValue: "closed")
     public static let snoozed = ConversationPartState(rawValue: "snoozed")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -300,12 +359,15 @@ public struct ConversationPartState: RawRepresentable, Hashable, Codable, Sendab
 public struct ConversationPartsType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let conversationPartList = ConversationPartsType(rawValue: "conversation_part.list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -318,7 +380,10 @@ public struct ConversationPartsType: RawRepresentable, Hashable, Codable, Sendab
 public struct ConversationRatingTeammateType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let admin = ConversationRatingTeammateType(rawValue: "admin")
     public static let team = ConversationRatingTeammateType(rawValue: "team")
     public static let bot = ConversationRatingTeammateType(rawValue: "bot")
@@ -326,7 +391,7 @@ public struct ConversationRatingTeammateType: RawRepresentable, Hashable, Codabl
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -339,12 +404,15 @@ public struct ConversationRatingTeammateType: RawRepresentable, Hashable, Codabl
 public struct ConversationContactsType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let contactList = ConversationContactsType(rawValue: "contact.list")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {

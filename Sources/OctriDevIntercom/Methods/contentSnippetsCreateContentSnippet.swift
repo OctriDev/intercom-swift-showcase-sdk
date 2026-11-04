@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ContentSnippetsMethods {
-    public struct CreateContentSnippetOptions: Codable {
+public extension ContentSnippetsMethods {
+    struct CreateContentSnippetOptions: Codable {
         public var title: String
         public var intercomVersion: IntercomVersion?
         public var jsonBlocks: [[String: JSONValue]]?
@@ -23,7 +23,9 @@ extension ContentSnippetsMethods {
         }
     }
 
-    /// Creates a reusable content snippet for AI agents and Copilot. Provide a `title` and either `json_blocks` or `body_markdown` for the snippet content; those content fields are mutually exclusive. You can optionally set the snippet's locale, availability, and audience targeting.
+    /// Creates a reusable content snippet for AI agents and Copilot. Provide a `title` and either `json_blocks` or
+    /// `body_markdown` for the snippet content; those content fields are mutually exclusive. You can optionally set the
+    /// snippet's locale, availability, and audience targeting.
     ///
     /// You can create a new content snippet.
     ///
@@ -44,13 +46,27 @@ extension ContentSnippetsMethods {
     ///   AI Copilot. Defaults to false.
     /// - aiSalesAgentAvailability: Whether the content snippet should be available
     ///   for AI Sales Agent. Defaults to false.
-    public static func createContentSnippet(config: ClientConfig, options: CreateContentSnippetOptions, requestOptions: RequestOptions? = nil) async throws -> ContentSnippet {
+    static func createContentSnippet(
+        config: ClientConfig,
+        options: CreateContentSnippetOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ContentSnippet {
         try validateLength("title", options.title, max: 255)
 
         let requestBody = CreateContentSnippetRequestBody(options: options)
 
-        return try (await sdkRequest("POST", "/content_snippets", config: config, body: requestBody, decoder: .json, operationId: "createContentSnippet", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
-        ]), options: requestOptions, errors: ["404": Error2.self, "422": Error2.self])).sdkResource()
+        return try await (sdkRequest(
+            "POST",
+            "/content_snippets",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "createContentSnippet",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["404": Error2.self, "422": Error2.self]
+        )).sdkResource()
     }
 }

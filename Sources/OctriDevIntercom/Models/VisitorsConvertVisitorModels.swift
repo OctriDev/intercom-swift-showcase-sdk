@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Visitors domain models
+/// Visitors domain models
 /// The unique identifiers retained after converting or merging.
 public struct ConvertVisitorRequestUser: Codable {
     /// The unique identifier for the contact which is given by Intercom.
@@ -23,21 +23,21 @@ public struct ConvertVisitorRequestUser: Codable {
     }
 
     init() {
-        (self.id, self.userId, self.email) = (nil, nil, nil)
+        (id, userId, email) = (nil, nil, nil)
     }
 }
 
-extension ConvertVisitorRequestUser {
-    public init(from decoder: Decoder) throws {
+public extension ConvertVisitorRequestUser {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.userId = try container.sdkDecodeIfPresent(.userId)
-        self.email = try container.sdkDecodeIfPresent(.email)
+        id = try container.sdkDecodeIfPresent(.id)
+        userId = try container.sdkDecodeIfPresent(.userId)
+        email = try container.sdkDecodeIfPresent(.email)
     }
 }
 
-extension ConvertVisitorRequestUser {
-    public init(id: String? = nil, userId: String? = nil, email: String? = nil) {
+public extension ConvertVisitorRequestUser {
+    init(id: String? = nil, userId: String? = nil, email: String? = nil) {
         self.init()
         (self.id, self.userId) = (id, userId)
         self.email = email
@@ -60,29 +60,43 @@ public struct ConvertVisitorRequest: Codable {
         case visitor
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ConvertVisitorRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.type) else {
-            throw SdkValidationError(field: "type", code: "required", message: "Validation failed for 'type': value is required")
-        }
-        guard container.contains(.user) else {
-            throw SdkValidationError(field: "user", code: "required", message: "Validation failed for 'user': value is required")
-        }
-        guard container.contains(.visitor) else {
-            throw SdkValidationError(field: "visitor", code: "required", message: "Validation failed for 'visitor': value is required")
-        }
-        self.type = try container.sdkDecodeRequired(.type)
-        self.user = try container.sdkDecodeRequired(.user)
-        self.visitor = try container.sdkDecodeRequired(.visitor)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ConvertVisitorRequest {
-    public init(type: String, user: ConvertVisitorRequestUser, visitor: ConvertVisitorRequestVisitor) {
+public extension ConvertVisitorRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.type) else {
+            throw SdkValidationError(
+                field: "type",
+                code: "required",
+                message: "Validation failed for 'type': value is required"
+            )
+        }
+        guard container.contains(.user) else {
+            throw SdkValidationError(
+                field: "user",
+                code: "required",
+                message: "Validation failed for 'user': value is required"
+            )
+        }
+        guard container.contains(.visitor) else {
+            throw SdkValidationError(
+                field: "visitor",
+                code: "required",
+                message: "Validation failed for 'visitor': value is required"
+            )
+        }
+        type = try container.sdkDecodeRequired(.type)
+        user = try container.sdkDecodeRequired(.user)
+        visitor = try container.sdkDecodeRequired(.visitor)
+    }
+}
+
+public extension ConvertVisitorRequest {
+    init(type: String, user: ConvertVisitorRequestUser, visitor: ConvertVisitorRequestVisitor) {
         (self.type, self.user) = (type, user)
         self.visitor = visitor
     }
@@ -107,21 +121,21 @@ public struct ConvertVisitorRequestVisitor: Codable {
     }
 
     init() {
-        (self.id, self.userId, self.email) = (nil, nil, nil)
+        (id, userId, email) = (nil, nil, nil)
     }
 }
 
-extension ConvertVisitorRequestVisitor {
-    public init(from decoder: Decoder) throws {
+public extension ConvertVisitorRequestVisitor {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.userId = try container.sdkDecodeIfPresent(.userId)
-        self.email = try container.sdkDecodeIfPresent(.email)
+        id = try container.sdkDecodeIfPresent(.id)
+        userId = try container.sdkDecodeIfPresent(.userId)
+        email = try container.sdkDecodeIfPresent(.email)
     }
 }
 
-extension ConvertVisitorRequestVisitor {
-    public init(id: String? = nil, userId: String? = nil, email: String? = nil) {
+public extension ConvertVisitorRequestVisitor {
+    init(id: String? = nil, userId: String? = nil, email: String? = nil) {
         self.init()
         (self.id, self.userId) = (id, userId)
         self.email = email

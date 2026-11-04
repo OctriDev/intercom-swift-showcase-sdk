@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Contacts domain models
+/// Contacts domain models
 /// Required object value serialized in the `contacts[]` wire field.
 public struct BulkDeleteContactsRequestContactsItem: Codable {
     /// The unique identifier for the contact.
@@ -14,21 +14,27 @@ public struct BulkDeleteContactsRequestContactsItem: Codable {
         case id
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension BulkDeleteContactsRequestContactsItem {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.id) else {
-            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
-        }
-        self.id = try container.sdkDecodeRequired(.id)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension BulkDeleteContactsRequestContactsItem {
-    public init(id: String) {
+public extension BulkDeleteContactsRequestContactsItem {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.id) else {
+            throw SdkValidationError(
+                field: "id",
+                code: "required",
+                message: "Validation failed for 'id': value is required"
+            )
+        }
+        id = try container.sdkDecodeRequired(.id)
+    }
+}
+
+public extension BulkDeleteContactsRequestContactsItem {
+    init(id: String) {
         self.id = id
     }
 }
@@ -45,25 +51,31 @@ public struct BulkDeleteContactsRequest: Codable {
         case job
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension BulkDeleteContactsRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.contacts) else {
-            throw SdkValidationError(field: "contacts", code: "required", message: "Validation failed for 'contacts': value is required")
-        }
-        self.contacts = try container.sdkDecodeRequired(.contacts)
-        self.job = try container.sdkDecodeIfPresent(.job)
-            try validateItems("contacts", self.contacts, min: nil, max: 100)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension BulkDeleteContactsRequest {
-    public init(contacts: [BulkDeleteContactsRequestContactsItem], job: BulkDeleteContactsRequestJob? = nil) throws {
+public extension BulkDeleteContactsRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.contacts) else {
+            throw SdkValidationError(
+                field: "contacts",
+                code: "required",
+                message: "Validation failed for 'contacts': value is required"
+            )
+        }
+        contacts = try container.sdkDecodeRequired(.contacts)
+        job = try container.sdkDecodeIfPresent(.job)
+        try validateItems("contacts", contacts, min: nil, max: 100)
+    }
+}
+
+public extension BulkDeleteContactsRequest {
+    init(contacts: [BulkDeleteContactsRequestContactsItem], job: BulkDeleteContactsRequestJob? = nil) throws {
         (self.contacts, self.job) = (contacts, job)
-            try validateItems("contacts", self.contacts, min: nil, max: 100)
+        try validateItems("contacts", self.contacts, min: nil, max: 100)
     }
 }
 
@@ -78,19 +90,19 @@ public struct BulkDeleteContactsRequestJob: Codable {
     }
 
     init() {
-        self.id = nil
+        id = nil
     }
 }
 
-extension BulkDeleteContactsRequestJob {
-    public init(from decoder: Decoder) throws {
+public extension BulkDeleteContactsRequestJob {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
+        id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-extension BulkDeleteContactsRequestJob {
-    public init(id: String? = nil) {
+public extension BulkDeleteContactsRequestJob {
+    init(id: String? = nil) {
         self.init()
         self.id = id
     }

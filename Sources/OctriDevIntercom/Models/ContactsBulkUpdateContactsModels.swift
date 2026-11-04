@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Contacts domain models
+/// Contacts domain models
 /// Request body for bulk updating contacts.
 public struct BulkUpdateContactsRequest: Codable {
     /// An array of contact objects to update. Each must include an `id` and the fields to update. Maximum 100
@@ -17,25 +17,31 @@ public struct BulkUpdateContactsRequest: Codable {
         case job
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension BulkUpdateContactsRequest {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.contacts) else {
-            throw SdkValidationError(field: "contacts", code: "required", message: "Validation failed for 'contacts': value is required")
-        }
-        self.contacts = try container.sdkDecodeRequired(.contacts)
-        self.job = try container.sdkDecodeIfPresent(.job)
-            try validateItems("contacts", self.contacts, min: nil, max: 100)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension BulkUpdateContactsRequest {
-    public init(contacts: [BulkUpdateContactsRequestContactsItem], job: BulkUpdateContactsRequestJob? = nil) throws {
+public extension BulkUpdateContactsRequest {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.contacts) else {
+            throw SdkValidationError(
+                field: "contacts",
+                code: "required",
+                message: "Validation failed for 'contacts': value is required"
+            )
+        }
+        contacts = try container.sdkDecodeRequired(.contacts)
+        job = try container.sdkDecodeIfPresent(.job)
+        try validateItems("contacts", contacts, min: nil, max: 100)
+    }
+}
+
+public extension BulkUpdateContactsRequest {
+    init(contacts: [BulkUpdateContactsRequestContactsItem], job: BulkUpdateContactsRequestJob? = nil) throws {
         (self.contacts, self.job) = (contacts, job)
-            try validateItems("contacts", self.contacts, min: nil, max: 100)
+        try validateItems("contacts", self.contacts, min: nil, max: 100)
     }
 }
 
@@ -57,23 +63,29 @@ public struct BulkUpdateContactsRequestContactsItemCompaniesItem: Codable {
         case remove
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension BulkUpdateContactsRequestContactsItemCompaniesItem {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.companyId) else {
-            throw SdkValidationError(field: "company_id", code: "required", message: "Validation failed for 'company_id': value is required")
-        }
-        self.companyId = try container.sdkDecodeRequired(.companyId)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.remove = try container.sdkDecodeIfPresent(.remove)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension BulkUpdateContactsRequestContactsItemCompaniesItem {
-    public init(companyId: String, name: String? = nil, remove: Bool? = nil) {
+public extension BulkUpdateContactsRequestContactsItemCompaniesItem {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.companyId) else {
+            throw SdkValidationError(
+                field: "company_id",
+                code: "required",
+                message: "Validation failed for 'company_id': value is required"
+            )
+        }
+        companyId = try container.sdkDecodeRequired(.companyId)
+        name = try container.sdkDecodeIfPresent(.name)
+        remove = try container.sdkDecodeIfPresent(.remove)
+    }
+}
+
+public extension BulkUpdateContactsRequestContactsItemCompaniesItem {
+    init(companyId: String, name: String? = nil, remove: Bool? = nil) {
         (self.companyId, self.name) = (companyId, name)
         self.remove = remove
     }
@@ -141,33 +153,53 @@ public struct BulkUpdateContactsRequestContactsItem: Codable {
         case tags
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension BulkUpdateContactsRequestContactsItem {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.id) else {
-            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
-        }
-        self.id = try container.sdkDecodeRequired(.id)
-        self.externalId = try container.sdkDecodeIfPresent(.externalId)
-        self.email = try container.sdkDecodeIfPresent(.email)
-        self.emailVerified = try container.sdkDecodeIfPresent(.emailVerified)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.phone = try container.sdkDecodeIfPresent(.phone)
-        self.avatar = try container.sdkDecodeIfPresent(.avatar)
-        self.ownerId = try container.sdkDecodeIfPresent(.ownerId)
-        self.unsubscribedFromEmails = try container.sdkDecodeIfPresent(.unsubscribedFromEmails)
-        self.languageOverride = try container.sdkDecodeIfPresent(.languageOverride)
-        self.customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
-        self.companies = try container.sdkDecodeIfPresent(.companies)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension BulkUpdateContactsRequestContactsItem {
-    public init(id: String, externalId: String? = nil, email: String? = nil, emailVerified: Bool? = nil, name: String? = nil, phone: String? = nil, avatar: String? = nil, ownerId: String? = nil, unsubscribedFromEmails: Bool? = nil, languageOverride: String? = nil, customAttributes: [String: JSONValue]? = nil, companies: [BulkUpdateContactsRequestContactsItemCompaniesItem]? = nil, tags: BulkUpdateContactsRequestContactsItemTags? = nil) {
+public extension BulkUpdateContactsRequestContactsItem {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.id) else {
+            throw SdkValidationError(
+                field: "id",
+                code: "required",
+                message: "Validation failed for 'id': value is required"
+            )
+        }
+        id = try container.sdkDecodeRequired(.id)
+        externalId = try container.sdkDecodeIfPresent(.externalId)
+        email = try container.sdkDecodeIfPresent(.email)
+        emailVerified = try container.sdkDecodeIfPresent(.emailVerified)
+        name = try container.sdkDecodeIfPresent(.name)
+        phone = try container.sdkDecodeIfPresent(.phone)
+        avatar = try container.sdkDecodeIfPresent(.avatar)
+        ownerId = try container.sdkDecodeIfPresent(.ownerId)
+        unsubscribedFromEmails = try container.sdkDecodeIfPresent(.unsubscribedFromEmails)
+        languageOverride = try container.sdkDecodeIfPresent(.languageOverride)
+        customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
+        companies = try container.sdkDecodeIfPresent(.companies)
+        tags = try container.sdkDecodeIfPresent(.tags)
+    }
+}
+
+public extension BulkUpdateContactsRequestContactsItem {
+    init(
+        id: String,
+        externalId: String? = nil,
+        email: String? = nil,
+        emailVerified: Bool? = nil,
+        name: String? = nil,
+        phone: String? = nil,
+        avatar: String? = nil,
+        ownerId: String? = nil,
+        unsubscribedFromEmails: Bool? = nil,
+        languageOverride: String? = nil,
+        customAttributes: [String: JSONValue]? = nil,
+        companies: [BulkUpdateContactsRequestContactsItemCompaniesItem]? = nil,
+        tags: BulkUpdateContactsRequestContactsItemTags? = nil
+    ) {
         (self.id, self.externalId) = (id, externalId)
         (self.email, self.emailVerified) = (email, emailVerified)
         (self.name, self.phone) = (name, phone)
@@ -188,21 +220,27 @@ public struct BulkUpdateContactsRequestContactsItemTagsAddItem: Codable {
         case id
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension BulkUpdateContactsRequestContactsItemTagsAddItem {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.id) else {
-            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
-        }
-        self.id = try container.sdkDecodeRequired(.id)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension BulkUpdateContactsRequestContactsItemTagsAddItem {
-    public init(id: String) {
+public extension BulkUpdateContactsRequestContactsItemTagsAddItem {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.id) else {
+            throw SdkValidationError(
+                field: "id",
+                code: "required",
+                message: "Validation failed for 'id': value is required"
+            )
+        }
+        id = try container.sdkDecodeRequired(.id)
+    }
+}
+
+public extension BulkUpdateContactsRequestContactsItemTagsAddItem {
+    init(id: String) {
         self.id = id
     }
 }
@@ -217,21 +255,27 @@ public struct BulkUpdateContactsRequestContactsItemTagsRemoveItem: Codable {
         case id
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension BulkUpdateContactsRequestContactsItemTagsRemoveItem {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.id) else {
-            throw SdkValidationError(field: "id", code: "required", message: "Validation failed for 'id': value is required")
-        }
-        self.id = try container.sdkDecodeRequired(.id)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension BulkUpdateContactsRequestContactsItemTagsRemoveItem {
-    public init(id: String) {
+public extension BulkUpdateContactsRequestContactsItemTagsRemoveItem {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.id) else {
+            throw SdkValidationError(
+                field: "id",
+                code: "required",
+                message: "Validation failed for 'id': value is required"
+            )
+        }
+        id = try container.sdkDecodeRequired(.id)
+    }
+}
+
+public extension BulkUpdateContactsRequestContactsItemTagsRemoveItem {
+    init(id: String) {
         self.id = id
     }
 }
@@ -247,19 +291,19 @@ public struct BulkUpdateContactsRequestJob: Codable {
     }
 
     init() {
-        self.id = nil
+        id = nil
     }
 }
 
-extension BulkUpdateContactsRequestJob {
-    public init(from decoder: Decoder) throws {
+public extension BulkUpdateContactsRequestJob {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.sdkDecodeIfPresent(.id)
+        id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-extension BulkUpdateContactsRequestJob {
-    public init(id: String? = nil) {
+public extension BulkUpdateContactsRequestJob {
+    init(id: String? = nil) {
         self.init()
         self.id = id
     }
@@ -280,20 +324,23 @@ public struct BulkUpdateContactsRequestContactsItemTags: Codable {
     }
 
     init() {
-        (self.add, self.remove) = (nil, nil)
+        (add, remove) = (nil, nil)
     }
 }
 
-extension BulkUpdateContactsRequestContactsItemTags {
-    public init(from decoder: Decoder) throws {
+public extension BulkUpdateContactsRequestContactsItemTags {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.add = try container.sdkDecodeIfPresent(.add)
-        self.remove = try container.sdkDecodeIfPresent(.remove)
+        add = try container.sdkDecodeIfPresent(.add)
+        remove = try container.sdkDecodeIfPresent(.remove)
     }
 }
 
-extension BulkUpdateContactsRequestContactsItemTags {
-    public init(add: [BulkUpdateContactsRequestContactsItemTagsAddItem]? = nil, remove: [BulkUpdateContactsRequestContactsItemTagsRemoveItem]? = nil) {
+public extension BulkUpdateContactsRequestContactsItemTags {
+    init(
+        add: [BulkUpdateContactsRequestContactsItemTagsAddItem]? = nil,
+        remove: [BulkUpdateContactsRequestContactsItemTagsRemoveItem]? = nil
+    ) {
         self.init()
         (self.add, self.remove) = (add, remove)
     }

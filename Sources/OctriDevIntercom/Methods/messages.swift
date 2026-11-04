@@ -8,8 +8,8 @@ import Foundation
 #endif
 public enum MessagesMethods {}
 
-extension MessagesMethods {
-    public struct CreateMessageOptions: Codable {
+public extension MessagesMethods {
+    struct CreateMessageOptions: Codable {
         public var intercomVersion: IntercomVersion?
         public var messageType: CreateMessageRequestMessageType?
         public var subject: String?
@@ -25,9 +25,20 @@ extension MessagesMethods {
         public init() {}
     }
 
-    /// Creates an admin-initiated message for a recipient by email, in-app messaging, or WhatsApp. Supply the fields required for the selected `message_type`, including `body` for email and in-app messages. Use an admin in `from`; to create a contact-initiated conversation, use POST /conversations.
+    /// Creates an admin-initiated message for a recipient by email, in-app messaging, or WhatsApp. Supply the fields
+    /// required for the selected `message_type`, including `body` for email and in-app messages. Use an admin in
+    /// `from`; to create a contact-initiated conversation, use POST /conversations.
     ///
-    /// You can create a message that has been initiated by an admin. The conversation can be either an in-app message, an email or whatsapp. > 🚧 Sending for visitors > > There can be a short delay between when a contact is created and when a contact becomes available to be messaged through the API. A 404 Not Found error will be returned in this case. This will return the Message model that has been created. > 🚧 Retrieving Associated Conversations > > As this is a message, there will be no conversation present until the contact responds. Once they do, you will have to search for a contact's conversations with the id of the message. {% admonition type="warning" name="Messages from contacts" %} `from` should be an admin. A request with a user or lead as `from` is not rejected: it creates a conversation initiated by that contact, as the Create a conversation endpoint (`POST /conversations`) does, and the `to`, `cc` and `bcc` fields are ignored. To create a conversation initiated by a contact, use `POST /conversations`. {% /admonition %}
+    /// You can create a message that has been initiated by an admin. The conversation can be either an in-app message,
+    /// an email or whatsapp. > 🚧 Sending for visitors > > There can be a short delay between when a contact is created
+    /// and when a contact becomes available to be messaged through the API. A 404 Not Found error will be returned in
+    /// this case. This will return the Message model that has been created. > 🚧 Retrieving Associated Conversations > >
+    /// As this is a message, there will be no conversation present until the contact responds. Once they do, you will
+    /// have to search for a contact's conversations with the id of the message. {% admonition type="warning"
+    /// name="Messages from contacts" %} `from` should be an admin. A request with a user or lead as `from` is not
+    /// rejected: it creates a conversation initiated by that contact, as the Create a conversation endpoint (`POST
+    /// /conversations`) does, and the `to`, `cc` and `bcc` fields are ignored. To create a conversation initiated by a
+    /// contact, use `POST /conversations`. {% /admonition %}
     ///
     /// - Parameters:
     /// - messageType: The kind of message being created. Values: `in_app`, `email`
@@ -46,11 +57,25 @@ extension MessagesMethods {
     /// - createConversationWithoutContactReply: Whether a conversation should be
     ///   opened in the inbox for the message without the contact replying. Defaults
     ///   to false if not provided.
-    public static func createMessage(config: ClientConfig, options: CreateMessageOptions, requestOptions: RequestOptions? = nil) async throws -> Message {
+    static func createMessage(
+        config: ClientConfig,
+        options: CreateMessageOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Message {
         let requestBody = CreateMessageRequestBody(options: options)
 
-        return try (await sdkRequest("POST", "/messages", config: config, body: requestBody, decoder: .json, operationId: "createMessage", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
-        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self, "403": Error2.self, "422": Error2.self])).sdkResource()
+        return try await (sdkRequest(
+            "POST",
+            "/messages",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "createMessage",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["400": Error2.self, "401": Error2.self, "403": Error2.self, "422": Error2.self]
+        )).sdkResource()
     }
 }

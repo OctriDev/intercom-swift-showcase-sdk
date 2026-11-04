@@ -3,9 +3,16 @@
 
 import Foundation
 
-// SharedConversation domain models
-extension ConversationPartAuthor {
-    public init(type: String? = nil, id: String? = nil, name: String? = nil, email: String? = nil, fromAiAgent: Bool? = nil, isAiAnswer: Bool? = nil) throws {
+/// SharedConversation domain models
+public extension ConversationPartAuthor {
+    init(
+        type: String? = nil,
+        id: String? = nil,
+        name: String? = nil,
+        email: String? = nil,
+        fromAiAgent: Bool? = nil,
+        isAiAnswer: Bool? = nil
+    ) throws {
         self.init()
         (self.type, self.id) = (type, id)
         (self.name, self.email) = (name, email)
@@ -36,21 +43,21 @@ public struct ConversationFirstContactReply: Codable {
     }
 
     init() {
-        (self.createdAt, self.type, self.url) = (nil, nil, nil)
+        (createdAt, type, url) = (nil, nil, nil)
     }
 }
 
-extension ConversationFirstContactReply {
-    public init(from decoder: Decoder) throws {
+public extension ConversationFirstContactReply {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.url = try container.sdkDecodeIfPresent(.url)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        type = try container.sdkDecodeIfPresent(.type)
+        url = try container.sdkDecodeIfPresent(.url)
     }
 }
 
-extension ConversationFirstContactReply {
-    public init(createdAt: Int? = nil, type: String? = nil, url: String? = nil) {
+public extension ConversationFirstContactReply {
+    init(createdAt: Int? = nil, type: String? = nil, url: String? = nil) {
         self.init()
         (self.createdAt, self.type) = (createdAt, type)
         self.url = url
@@ -73,20 +80,20 @@ public struct ConversationContacts: Codable {
     }
 
     init() {
-        (self.type, self.contacts) = (nil, nil)
+        (type, contacts) = (nil, nil)
     }
 }
 
-extension ConversationContacts {
-    public init(from decoder: Decoder) throws {
+public extension ConversationContacts {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.contacts = try container.sdkDecodeIfPresent(.contacts)
+        type = try container.sdkDecodeIfPresent(.type)
+        contacts = try container.sdkDecodeIfPresent(.contacts)
     }
 }
 
-extension ConversationContacts {
-    public init(type: ConversationContactsType? = nil, contacts: [ContactReference]? = nil) {
+public extension ConversationContacts {
+    init(type: ConversationContactsType? = nil, contacts: [ContactReference]? = nil) {
         self.init()
         (self.type, self.contacts) = (type, contacts)
     }
@@ -106,20 +113,20 @@ public struct ConversationTeammates: Codable {
     }
 
     init() {
-        (self.type, self.teammates) = (nil, nil)
+        (type, teammates) = (nil, nil)
     }
 }
 
-extension ConversationTeammates {
-    public init(from decoder: Decoder) throws {
+public extension ConversationTeammates {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.teammates = try container.sdkDecodeIfPresent(.teammates)
+        type = try container.sdkDecodeIfPresent(.type)
+        teammates = try container.sdkDecodeIfPresent(.teammates)
     }
 }
 
-extension ConversationTeammates {
-    public init(type: String? = nil, teammates: [Reference]? = nil) {
+public extension ConversationTeammates {
+    init(type: String? = nil, teammates: [Reference]? = nil) {
         self.init()
         (self.type, self.teammates) = (type, teammates)
     }
@@ -140,20 +147,20 @@ public struct ConversationAttributeUpdatedByUserValue: Codable {
     }
 
     init() {
-        (self.name, self.previous) = (nil, nil)
+        (name, previous) = (nil, nil)
     }
 }
 
-extension ConversationAttributeUpdatedByUserValue {
-    public init(from decoder: Decoder) throws {
+public extension ConversationAttributeUpdatedByUserValue {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.previous = try container.sdkDecodeIfPresent(.previous)
+        name = try container.sdkDecodeIfPresent(.name)
+        previous = try container.sdkDecodeIfPresent(.previous)
     }
 }
 
-extension ConversationAttributeUpdatedByUserValue {
-    public init(name: String? = nil, previous: String? = nil) {
+public extension ConversationAttributeUpdatedByUserValue {
+    init(name: String? = nil, previous: String? = nil) {
         self.init()
         (self.name, self.previous) = (name, previous)
     }
@@ -178,21 +185,21 @@ public struct ConversationAttachmentFiles: Codable {
     }
 
     init() {
-        (self.contentType, self.data, self.name) = (nil, nil, nil)
+        (contentType, data, name) = (nil, nil, nil)
     }
 }
 
-extension ConversationAttachmentFiles {
-    public init(from decoder: Decoder) throws {
+public extension ConversationAttachmentFiles {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.contentType = try container.sdkDecodeIfPresent(.contentType)
-        self.data = try container.sdkDecodeIfPresent(.data)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        contentType = try container.sdkDecodeIfPresent(.contentType)
+        data = try container.sdkDecodeIfPresent(.data)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension ConversationAttachmentFiles {
-    public init(contentType: String? = nil, data: String? = nil, name: String? = nil) {
+public extension ConversationAttachmentFiles {
+    init(contentType: String? = nil, data: String? = nil, name: String? = nil) {
         self.init()
         (self.contentType, self.data) = (contentType, data)
         self.name = name
@@ -210,19 +217,19 @@ public struct ConversationAttributeUpdatedByWorkflowWorkflow: Codable {
     }
 
     init() {
-        self.name = nil
+        name = nil
     }
 }
 
-extension ConversationAttributeUpdatedByWorkflowWorkflow {
-    public init(from decoder: Decoder) throws {
+public extension ConversationAttributeUpdatedByWorkflowWorkflow {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension ConversationAttributeUpdatedByWorkflowWorkflow {
-    public init(name: String? = nil) {
+public extension ConversationAttributeUpdatedByWorkflowWorkflow {
+    init(name: String? = nil) {
         self.init()
         self.name = name
     }
@@ -248,20 +255,20 @@ public struct ConversationExternalReference: Codable {
     }
 
     init() {
-        (self.type, self.id) = (nil, nil)
+        (type, id) = (nil, nil)
     }
 }
 
-extension ConversationExternalReference {
-    public init(from decoder: Decoder) throws {
+public extension ConversationExternalReference {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
     }
 }
 
-extension ConversationExternalReference {
-    public init(type: String? = nil, id: String? = nil) {
+public extension ConversationExternalReference {
+    init(type: String? = nil, id: String? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
     }
@@ -284,30 +291,40 @@ public struct ConversationPartMetadataQuickReplyOptionsItem: Codable {
         case translations
     }
 
-    private init(sdkCopy value: Self) { self = value }
-}
-
-extension ConversationPartMetadataQuickReplyOptionsItem {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard container.contains(.text) else {
-            throw SdkValidationError(field: "text", code: "required", message: "Validation failed for 'text': value is required")
-        }
-        guard container.contains(.uuid) else {
-            throw SdkValidationError(field: "uuid", code: "required", message: "Validation failed for 'uuid': value is required")
-        }
-        self.text = try container.sdkDecodeRequired(.text)
-        self.uuid = try container.sdkDecodeRequired(.uuid)
-        self.translations = try container.sdkDecodeIfPresent(.translations)
-            try sdkValidateUuid("uuid", self.uuid)
+    private init(sdkCopy value: Self) {
+        self = value
     }
 }
 
-extension ConversationPartMetadataQuickReplyOptionsItem {
-    public init(text: String, uuid: String, translations: [String: JSONValue]? = nil) throws {
+public extension ConversationPartMetadataQuickReplyOptionsItem {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.text) else {
+            throw SdkValidationError(
+                field: "text",
+                code: "required",
+                message: "Validation failed for 'text': value is required"
+            )
+        }
+        guard container.contains(.uuid) else {
+            throw SdkValidationError(
+                field: "uuid",
+                code: "required",
+                message: "Validation failed for 'uuid': value is required"
+            )
+        }
+        text = try container.sdkDecodeRequired(.text)
+        uuid = try container.sdkDecodeRequired(.uuid)
+        translations = try container.sdkDecodeIfPresent(.translations)
+        try sdkValidateUuid("uuid", uuid)
+    }
+}
+
+public extension ConversationPartMetadataQuickReplyOptionsItem {
+    init(text: String, uuid: String, translations: [String: JSONValue]? = nil) throws {
         (self.text, self.uuid) = (text, uuid)
         self.translations = translations
-            try sdkValidateUuid("uuid", self.uuid)
+        try sdkValidateUuid("uuid", self.uuid)
     }
 }
 
@@ -325,23 +342,26 @@ public struct ConversationPartMetadata: Codable {
     }
 
     init() {
-        (self.quickReplyOptions, self.quickReplyUuid) = (nil, nil)
+        (quickReplyOptions, quickReplyUuid) = (nil, nil)
     }
 }
 
-extension ConversationPartMetadata {
-    public init(from decoder: Decoder) throws {
+public extension ConversationPartMetadata {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.quickReplyOptions = try container.sdkDecodeIfPresent(.quickReplyOptions)
-        self.quickReplyUuid = try container.sdkDecodeIfPresent(.quickReplyUuid)
-        if let value = self.quickReplyUuid {
+        quickReplyOptions = try container.sdkDecodeIfPresent(.quickReplyOptions)
+        quickReplyUuid = try container.sdkDecodeIfPresent(.quickReplyUuid)
+        if let value = quickReplyUuid {
             try sdkValidateUuid("quick_reply_uuid", value)
         }
     }
 }
 
-extension ConversationPartMetadata {
-    public init(quickReplyOptions: [ConversationPartMetadataQuickReplyOptionsItem]? = nil, quickReplyUuid: String? = nil) throws {
+public extension ConversationPartMetadata {
+    init(
+        quickReplyOptions: [ConversationPartMetadataQuickReplyOptionsItem]? = nil,
+        quickReplyUuid: String? = nil
+    ) throws {
         self.init()
         (self.quickReplyOptions, self.quickReplyUuid) = (quickReplyOptions, quickReplyUuid)
         if let value = self.quickReplyUuid {
@@ -361,19 +381,19 @@ public struct ConversationAttributeUpdatedByWorkflowAttribute: Codable {
     }
 
     init() {
-        self.name = nil
+        name = nil
     }
 }
 
-extension ConversationAttributeUpdatedByWorkflowAttribute {
-    public init(from decoder: Decoder) throws {
+public extension ConversationAttributeUpdatedByWorkflowAttribute {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension ConversationAttributeUpdatedByWorkflowAttribute {
-    public init(name: String? = nil) {
+public extension ConversationAttributeUpdatedByWorkflowAttribute {
+    init(name: String? = nil) {
         self.init()
         self.name = name
     }
@@ -399,21 +419,21 @@ public struct ConversationParts: Codable {
     }
 
     init() {
-        (self.type, self.conversationParts, self.totalCount) = (nil, nil, nil)
+        (type, conversationParts, totalCount) = (nil, nil, nil)
     }
 }
 
-extension ConversationParts {
-    public init(from decoder: Decoder) throws {
+public extension ConversationParts {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.conversationParts = try container.sdkDecodeIfPresent(.conversationParts)
-        self.totalCount = try container.sdkDecodeIfPresent(.totalCount)
+        type = try container.sdkDecodeIfPresent(.type)
+        conversationParts = try container.sdkDecodeIfPresent(.conversationParts)
+        totalCount = try container.sdkDecodeIfPresent(.totalCount)
     }
 }
 
-extension ConversationParts {
-    public init(type: ConversationPartsType? = nil, conversationParts: [ConversationPart]? = nil, totalCount: Int? = nil) {
+public extension ConversationParts {
+    init(type: ConversationPartsType? = nil, conversationParts: [ConversationPart]? = nil, totalCount: Int? = nil) {
         self.init()
         (self.type, self.conversationParts) = (type, conversationParts)
         self.totalCount = totalCount
@@ -439,21 +459,21 @@ public struct ConversationResponseTime: Codable {
     }
 
     init() {
-        (self.teamId, self.teamName, self.responseTime) = (nil, nil, nil)
+        (teamId, teamName, responseTime) = (nil, nil, nil)
     }
 }
 
-extension ConversationResponseTime {
-    public init(from decoder: Decoder) throws {
+public extension ConversationResponseTime {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.teamId = try container.sdkDecodeIfPresent(.teamId)
-        self.teamName = try container.sdkDecodeIfPresent(.teamName)
-        self.responseTime = try container.sdkDecodeIfPresent(.responseTime)
+        teamId = try container.sdkDecodeIfPresent(.teamId)
+        teamName = try container.sdkDecodeIfPresent(.teamName)
+        responseTime = try container.sdkDecodeIfPresent(.responseTime)
     }
 }
 
-extension ConversationResponseTime {
-    public init(teamId: Int? = nil, teamName: String? = nil, responseTime: Int? = nil) {
+public extension ConversationResponseTime {
+    init(teamId: Int? = nil, teamName: String? = nil, responseTime: Int? = nil) {
         self.init()
         (self.teamId, self.teamName) = (teamId, teamName)
         self.responseTime = responseTime
@@ -471,19 +491,19 @@ public struct ConversationAttributeUpdatedByUserAttribute: Codable {
     }
 
     init() {
-        self.name = nil
+        name = nil
     }
 }
 
-extension ConversationAttributeUpdatedByUserAttribute {
-    public init(from decoder: Decoder) throws {
+public extension ConversationAttributeUpdatedByUserAttribute {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
+        name = try container.sdkDecodeIfPresent(.name)
     }
 }
 
-extension ConversationAttributeUpdatedByUserAttribute {
-    public init(name: String? = nil) {
+public extension ConversationAttributeUpdatedByUserAttribute {
+    init(name: String? = nil) {
         self.init()
         self.name = name
     }
@@ -503,20 +523,23 @@ public struct ConversationAttributeUpdatedByAdmin: Codable {
     }
 
     init() {
-        (self.attribute, self.value) = (nil, nil)
+        (attribute, value) = (nil, nil)
     }
 }
 
-extension ConversationAttributeUpdatedByAdmin {
-    public init(from decoder: Decoder) throws {
+public extension ConversationAttributeUpdatedByAdmin {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.attribute = try container.sdkDecodeIfPresent(.attribute)
-        self.value = try container.sdkDecodeIfPresent(.value)
+        attribute = try container.sdkDecodeIfPresent(.attribute)
+        value = try container.sdkDecodeIfPresent(.value)
     }
 }
 
-extension ConversationAttributeUpdatedByAdmin {
-    public init(attribute: ConversationAttributeUpdatedByAdminAttribute? = nil, value: ConversationAttributeUpdatedByAdminValue? = nil) {
+public extension ConversationAttributeUpdatedByAdmin {
+    init(
+        attribute: ConversationAttributeUpdatedByAdminAttribute? = nil,
+        value: ConversationAttributeUpdatedByAdminValue? = nil
+    ) {
         self.init()
         (self.attribute, self.value) = (attribute, value)
     }
@@ -573,26 +596,26 @@ public struct ConversationSource: Codable {
     }
 
     init() {
-        (self.type, self.id, self.deliveredAs, self.recipients, self.replyTo) = (nil, nil, nil, nil, nil)
-        (self.subject, self.body, self.author, self.attachments, self.url) = (nil, nil, nil, nil, nil)
-        (self.redacted, self.emailMessageMetadata) = (nil, nil)
+        (type, id, deliveredAs, recipients, replyTo) = (nil, nil, nil, nil, nil)
+        (subject, body, author, attachments, url) = (nil, nil, nil, nil, nil)
+        (redacted, emailMessageMetadata) = (nil, nil)
     }
 }
 
-extension ConversationSource {
-    public init(from decoder: Decoder) throws {
+public extension ConversationSource {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.deliveredAs = try container.sdkDecodeIfPresent(.deliveredAs)
-        self.recipients = try container.sdkDecodeIfPresent(.recipients)
-        self.replyTo = try container.sdkDecodeIfPresent(.replyTo)
-        self.subject = try container.sdkDecodeIfPresent(.subject)
-        self.body = try container.sdkDecodeIfPresent(.body)
-        self.author = try container.sdkDecodeIfPresent(.author)
-        self.attachments = try container.sdkDecodeIfPresent(.attachments)
-        self.url = try container.sdkDecodeIfPresent(.url)
-        self.redacted = try container.sdkDecodeIfPresent(.redacted)
-        self.emailMessageMetadata = try container.sdkDecodeIfPresent(.emailMessageMetadata)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        deliveredAs = try container.sdkDecodeIfPresent(.deliveredAs)
+        recipients = try container.sdkDecodeIfPresent(.recipients)
+        replyTo = try container.sdkDecodeIfPresent(.replyTo)
+        subject = try container.sdkDecodeIfPresent(.subject)
+        body = try container.sdkDecodeIfPresent(.body)
+        author = try container.sdkDecodeIfPresent(.author)
+        attachments = try container.sdkDecodeIfPresent(.attachments)
+        url = try container.sdkDecodeIfPresent(.url)
+        redacted = try container.sdkDecodeIfPresent(.redacted)
+        emailMessageMetadata = try container.sdkDecodeIfPresent(.emailMessageMetadata)
     }
 }

@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension NewsMethods {
-    public struct UpdateNewsItemOptions: Codable {
+public extension NewsMethods {
+    struct UpdateNewsItemOptions: Codable {
         public var newsItemId: Int
         public var title: String
         public var senderId: Int
@@ -26,7 +26,9 @@ extension NewsMethods {
         }
     }
 
-    /// Updates a news item identified by its unique identifier. Supply `title` and `sender_id`, and include any other fields you want to set, such as `body`, `state`, or newsfeed assignments. Set `state` to `live` for visibility in assigned newsfeeds.
+    /// Updates a news item identified by its unique identifier. Supply `title` and `sender_id`, and include any other
+    /// fields you want to set, such as `body`, `state`, or newsfeed assignments. Set `state` to `live` for visibility
+    /// in assigned newsfeeds.
     ///
     /// - Parameters:
     /// - newsItemId: The unique identifier for the news item which is given by
@@ -44,11 +46,25 @@ extension NewsMethods {
     ///   reactions are disabled.
     /// - newsfeedAssignments: A list of newsfeed_assignments to assign to the
     ///   specified newsfeed.
-    public static func updateNewsItem(config: ClientConfig, options: UpdateNewsItemOptions, requestOptions: RequestOptions? = nil) async throws -> NewsItem {
+    static func updateNewsItem(
+        config: ClientConfig,
+        options: UpdateNewsItemOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> NewsItem {
         let requestBody = UpdateNewsItemRequestBody(options: options)
 
-        return try (await sdkRequest("PUT", ["/news/news_items/", sdkEncodePathSegment(sdkWireString(options.newsItemId))].joined(), config: config, body: requestBody, decoder: .json, operationId: "updateNewsItem", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).sdkResource()
+        return try await (sdkRequest(
+            "PUT",
+            ["/news/news_items/", sdkEncodePathSegment(sdkWireString(options.newsItemId))].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "updateNewsItem",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).sdkResource()
     }
 }

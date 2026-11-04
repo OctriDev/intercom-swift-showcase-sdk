@@ -9,24 +9,64 @@ public class SubscriptionTypesNamespace {
         self.config = config
     }
 
-/// Adds a subscription type preference to a contact. Provide the subscription type `id` and `consent_type` to opt the contact in or out of messages for that subscription. The response contains the subscription type added to the contact.
+    /// Adds a subscription type preference to a contact. Provide the subscription type `id` and `consent_type` to opt
+    /// the contact in or out of messages for that subscription. The response contains the subscription type added to
+    /// the contact.
     ///
-    /// You can add a specific subscription to a contact. In Intercom, we have two different subscription types based on user consent - opt-out and opt-in: 1.Attaching a contact to an opt-out subscription type will opt that user out from receiving messages related to that subscription type. 2.Attaching a contact to an opt-in subscription type will opt that user in to receiving messages related to that subscription type. This will return a subscription type model for the subscription type that was added to the contact.
-    public func attachToContact(contactId: String, id: String, consentType: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> SubscriptionType {
-        return try await SubscriptionTypesMethods.attachSubscriptionTypeToContact(config: config, contactId: contactId, id: id, consentType: consentType, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// You can add a specific subscription to a contact. In Intercom, we have two different subscription types based on
+    /// user consent - opt-out and opt-in: 1.Attaching a contact to an opt-out subscription type will opt that user out
+    /// from receiving messages related to that subscription type. 2.Attaching a contact to an opt-in subscription type
+    /// will opt that user in to receiving messages related to that subscription type. This will return a subscription
+    /// type model for the subscription type that was added to the contact.
+    public func attachToContact(
+        contactId: String,
+        id: String,
+        consentType: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SubscriptionType {
+        try await SubscriptionTypesMethods.attachSubscriptionTypeToContact(
+            config: config,
+            contactId: contactId,
+            id: id,
+            consentType: consentType,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Removes a subscription type preference from a contact. Use `contact_id` and `subscription_id` to identify the contact and subscription to detach. The response contains the subscription type that was removed.
+    /// Removes a subscription type preference from a contact. Use `contact_id` and `subscription_id` to identify the
+    /// contact and subscription to detach. The response contains the subscription type that was removed.
     ///
-    /// You can remove a specific subscription from a contact. This will return a subscription type model for the subscription type that was removed from the contact.
-    public func detachToContact(contactId: String, subscriptionId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> SubscriptionType {
-        return try await SubscriptionTypesMethods.detachSubscriptionTypeToContact(config: config, contactId: contactId, subscriptionId: subscriptionId, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    /// You can remove a specific subscription from a contact. This will return a subscription type model for the
+    /// subscription type that was removed from the contact.
+    public func detachToContact(
+        contactId: String,
+        subscriptionId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SubscriptionType {
+        try await SubscriptionTypesMethods.detachSubscriptionTypeToContact(
+            config: config,
+            contactId: contactId,
+            subscriptionId: subscriptionId,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 
-/// Lists the subscription types associated with your workspace. Use this endpoint to retrieve the available communication consent types and their translations.
+    /// Lists the subscription types associated with your workspace. Use this endpoint to retrieve the available
+    /// communication consent types and their translations.
     ///
     /// You can list all subscription types. A list of subscription type objects will be returned.
-    public func list(intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> SubscriptionTypeList {
-        return try await SubscriptionTypesMethods.listSubscriptionTypes(config: config, intercomVersion: intercomVersion, requestOptions: requestOptions)
+    public func list(
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SubscriptionTypeList {
+        try await SubscriptionTypesMethods.listSubscriptionTypes(
+            config: config,
+            intercomVersion: intercomVersion,
+            requestOptions: requestOptions
+        )
     }
 }

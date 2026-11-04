@@ -7,15 +7,30 @@ import Foundation
     import FoundationNetworking
 #endif
 public enum JobsMethods {
-    /// Retrieves the execution status of a specific job. Use `job_id` to identify the job and check whether it is pending, successful, or failed.
+    /// Retrieves the execution status of a specific job. Use `job_id` to identify the job and check whether it is
+    /// pending, successful, or failed.
     ///
     /// Retrieve the status of job execution.
     ///
     /// - Parameters:
     /// - jobId: The unique identifier for the job which is given by Intercom
-    public static func jobsStatus(config: ClientConfig, jobId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> Jobs {
-        return try (await sdkRequest("GET", ["/jobs/status/", sdkEncodePathSegment(sdkWireString(jobId))].joined(), config: config, decoder: .json, operationId: "jobsStatus", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).sdkResource()
+    public static func jobsStatus(
+        config: ClientConfig,
+        jobId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Jobs {
+        try await (sdkRequest(
+            "GET",
+            ["/jobs/status/", sdkEncodePathSegment(sdkWireString(jobId))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "jobsStatus",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).sdkResource()
     }
 }

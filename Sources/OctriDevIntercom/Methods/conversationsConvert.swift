@@ -6,8 +6,9 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension ConversationsMethods {
-    /// Converts a conversation into a ticket. Supply `ticket_type_id` to select the ticket type, and optionally provide ticket attributes or a ticket state.
+public extension ConversationsMethods {
+    /// Converts a conversation into a ticket. Supply `ticket_type_id` to select the ticket type, and optionally provide
+    /// ticket attributes or a ticket state.
     ///
     /// You can convert a conversation to a ticket.
     ///
@@ -25,11 +26,33 @@ extension ConversationsMethods {
     ///   type has an attribute called `priority` of type `list`, the key should be
     ///   `priority` and the value of the attribute should be the guid of the list
     ///   item (e.g. `de1825a0-0164-4070-8ca6-13e22462fa7e`).
-    public static func convertConversationToTicket(config: ClientConfig, conversationId: Int, ticketTypeId: String, intercomVersion: IntercomVersion? = nil, ticketStateId: String? = nil, attributes: TicketRequestCustomAttributes? = nil, requestOptions: RequestOptions? = nil) async throws -> Ticket {
-        let requestBody = ConvertConversationToTicketRequestBody(ticketTypeId: ticketTypeId, ticketStateId: ticketStateId, attributes: attributes)
+    static func convertConversationToTicket(
+        config: ClientConfig,
+        conversationId: Int,
+        ticketTypeId: String,
+        intercomVersion: IntercomVersion? = nil,
+        ticketStateId: String? = nil,
+        attributes: TicketRequestCustomAttributes? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> Ticket {
+        let requestBody = ConvertConversationToTicketRequestBody(
+            ticketTypeId: ticketTypeId,
+            ticketStateId: ticketStateId,
+            attributes: attributes
+        )
 
-        return try (await sdkRequest("POST", ["/conversations/", sdkEncodePathSegment(sdkWireString(conversationId)), "/convert"].joined(), config: config, body: requestBody, decoder: .json, operationId: "convertConversationToTicket", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["400": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/conversations/", sdkEncodePathSegment(sdkWireString(conversationId)), "/convert"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "convertConversationToTicket",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["400": Error2.self]
+        )).data
     }
 }

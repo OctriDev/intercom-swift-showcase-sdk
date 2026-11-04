@@ -6,8 +6,9 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension OfficeHoursMethods {
-    /// Deletes a specific office hours exception from an office hours schedule. Use `office_hours_schedule_id` and `id` to identify the schedule and exception to remove. The response confirms whether the exception was deleted.
+public extension OfficeHoursMethods {
+    /// Deletes a specific office hours exception from an office hours schedule. Use `office_hours_schedule_id` and `id`
+    /// to identify the schedule and exception to remove. The response confirms whether the exception was deleted.
     ///
     /// You can delete a single office hours exception.
     ///
@@ -15,22 +16,62 @@ extension OfficeHoursMethods {
     /// - officeHoursScheduleId: The unique identifier for the office hours
     ///   schedule.
     /// - id: The unique identifier for the office hours exception.
-    public static func deleteOfficeHoursException(config: ClientConfig, officeHoursScheduleId: String, id: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> DeleteOfficeHoursExceptionResponse {
-        return try (await sdkRequest("DELETE", ["/office_hours_schedules/", sdkEncodePathSegment(sdkWireString(officeHoursScheduleId)), "/office_hours_exceptions/", sdkEncodePathSegment(sdkWireString(id))].joined(), config: config, decoder: .json, operationId: "deleteOfficeHoursException", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
+    static func deleteOfficeHoursException(
+        config: ClientConfig,
+        officeHoursScheduleId: String,
+        id: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> DeleteOfficeHoursExceptionResponse {
+        try await (sdkRequest(
+            "DELETE",
+            [
+                "/office_hours_schedules/",
+                sdkEncodePathSegment(sdkWireString(officeHoursScheduleId)),
+                "/office_hours_exceptions/",
+                sdkEncodePathSegment(sdkWireString(id)),
+            ].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "deleteOfficeHoursException",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).data
     }
 
-    /// Lists the exceptions for an office hours schedule. Use this endpoint to retrieve the dates and exception settings that override the schedule's regular hours. The response includes the exception records in a `data` array.
+    /// Lists the exceptions for an office hours schedule. Use this endpoint to retrieve the dates and exception
+    /// settings that override the schedule's regular hours. The response includes the exception records in a `data`
+    /// array.
     ///
     /// You can fetch a list of all exceptions for an office hours schedule.
     ///
     /// - Parameters:
     /// - officeHoursScheduleId: The unique identifier for the office hours
     ///   schedule.
-    public static func listOfficeHoursExceptions(config: ClientConfig, officeHoursScheduleId: String, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> OfficeHoursExceptionList {
-        return try (await sdkRequest("GET", ["/office_hours_schedules/", sdkEncodePathSegment(sdkWireString(officeHoursScheduleId)), "/office_hours_exceptions"].joined(), config: config, decoder: .json, operationId: "listOfficeHoursExceptions", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).sdkResource()
+    static func listOfficeHoursExceptions(
+        config: ClientConfig,
+        officeHoursScheduleId: String,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> OfficeHoursExceptionList {
+        try await (sdkRequest(
+            "GET",
+            [
+                "/office_hours_schedules/",
+                sdkEncodePathSegment(sdkWireString(officeHoursScheduleId)),
+                "/office_hours_exceptions",
+            ].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "listOfficeHoursExceptions",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).sdkResource()
     }
 }

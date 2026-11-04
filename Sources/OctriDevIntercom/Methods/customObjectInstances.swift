@@ -8,8 +8,10 @@ import Foundation
 #endif
 public enum CustomObjectInstancesMethods {}
 
-extension CustomObjectInstancesMethods {
-    /// Creates or updates an instance of a custom object type. Supply `custom_attributes` and, when available, the instance's external identifier and external-system timestamps. The response contains the instance's Intercom-defined identifier and its custom attributes.
+public extension CustomObjectInstancesMethods {
+    /// Creates or updates an instance of a custom object type. Supply `custom_attributes` and, when available, the
+    /// instance's external identifier and external-system timestamps. The response contains the instance's
+    /// Intercom-defined identifier and its custom attributes.
     ///
     /// Create or update a custom object instance
     ///
@@ -24,11 +26,35 @@ extension CustomObjectInstancesMethods {
     ///   updated in the external system it originated from.
     /// - customAttributes: The custom attributes which are set for the Custom
     ///   Object instance.
-    public static func createCustomObjectInstances(config: ClientConfig, customObjectTypeIdentifier: String, intercomVersion: IntercomVersion? = nil, externalId: String? = nil, externalCreatedAt: SdkOptional<Int>? = nil, externalUpdatedAt: SdkOptional<Int>? = nil, customAttributes: SdkOptional<[String: String]>? = nil, requestOptions: RequestOptions? = nil) async throws -> CustomObjectInstance {
-        let requestBody = CreateCustomObjectInstancesRequestBody(externalId: externalId, externalCreatedAt: externalCreatedAt, externalUpdatedAt: externalUpdatedAt, customAttributes: customAttributes)
+    static func createCustomObjectInstances(
+        config: ClientConfig,
+        customObjectTypeIdentifier: String,
+        intercomVersion: IntercomVersion? = nil,
+        externalId: String? = nil,
+        externalCreatedAt: SdkOptional<Int>? = nil,
+        externalUpdatedAt: SdkOptional<Int>? = nil,
+        customAttributes: SdkOptional<[String: String]>? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> CustomObjectInstance {
+        let requestBody = CreateCustomObjectInstancesRequestBody(
+            externalId: externalId,
+            externalCreatedAt: externalCreatedAt,
+            externalUpdatedAt: externalUpdatedAt,
+            customAttributes: customAttributes
+        )
 
-        return try (await sdkRequest("POST", ["/custom_object_instances/", sdkEncodePathSegment(sdkWireString(customObjectTypeIdentifier))].joined(), config: config, body: requestBody, decoder: .json, operationId: "createCustomObjectInstances", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/custom_object_instances/", sdkEncodePathSegment(sdkWireString(customObjectTypeIdentifier))].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "createCustomObjectInstances",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).data
     }
 }

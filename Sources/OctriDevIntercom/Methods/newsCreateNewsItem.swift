@@ -6,8 +6,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension NewsMethods {
-    public struct CreateNewsItemOptions: Codable {
+public extension NewsMethods {
+    struct CreateNewsItemOptions: Codable {
         public var title: String
         public var senderId: Int
         public var intercomVersion: IntercomVersion?
@@ -24,7 +24,9 @@ extension NewsMethods {
         }
     }
 
-    /// Creates a news item for announcing product updates, company news, promotions, events, or other content to customers. Supply `title` and `sender_id`; set `state` to `live` for visibility in assigned newsfeeds, or leave it as `draft`. You can assign the item to newsfeeds and configure labels, reactions, and silent delivery.
+    /// Creates a news item for announcing product updates, company news, promotions, events, or other content to
+    /// customers. Supply `title` and `sender_id`; set `state` to `live` for visibility in assigned newsfeeds, or leave
+    /// it as `draft`. You can assign the item to newsfeeds and configure labels, reactions, and silent delivery.
     ///
     /// You can create a news item
     ///
@@ -42,11 +44,25 @@ extension NewsMethods {
     ///   reactions are disabled.
     /// - newsfeedAssignments: A list of newsfeed_assignments to assign to the
     ///   specified newsfeed.
-    public static func createNewsItem(config: ClientConfig, options: CreateNewsItemOptions, requestOptions: RequestOptions? = nil) async throws -> NewsItem {
+    static func createNewsItem(
+        config: ClientConfig,
+        options: CreateNewsItemOptions,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> NewsItem {
         let requestBody = CreateNewsItemRequestBody(options: options)
 
-        return try (await sdkRequest("POST", "/news/news_items", config: config, body: requestBody, decoder: .json, operationId: "createNewsItem", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self])).sdkResource()
+        return try await (sdkRequest(
+            "POST",
+            "/news/news_items",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "createNewsItem",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(options.intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self]
+        )).sdkResource()
     }
 }

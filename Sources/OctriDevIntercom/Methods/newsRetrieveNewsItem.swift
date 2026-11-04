@@ -6,17 +6,32 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension NewsMethods {
-    /// Retrieves the details of a single news item by its unique identifier. Use this operation to fetch the item's content, state, and newsfeed assignments. The response includes the item's metadata and timestamps.
+public extension NewsMethods {
+    /// Retrieves the details of a single news item by its unique identifier. Use this operation to fetch the item's
+    /// content, state, and newsfeed assignments. The response includes the item's metadata and timestamps.
     ///
     /// You can fetch the details of a single news item.
     ///
     /// - Parameters:
     /// - newsItemId: The unique identifier for the news item which is given by
     ///   Intercom.
-    public static func retrieveNewsItem(config: ClientConfig, newsItemId: Int, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> NewsItem {
-        return try (await sdkRequest("GET", ["/news/news_items/", sdkEncodePathSegment(sdkWireString(newsItemId))].joined(), config: config, decoder: .json, operationId: "retrieveNewsItem", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["401": Error2.self, "404": Error2.self])).sdkResource()
+    static func retrieveNewsItem(
+        config: ClientConfig,
+        newsItemId: Int,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> NewsItem {
+        try await (sdkRequest(
+            "GET",
+            ["/news/news_items/", sdkEncodePathSegment(sdkWireString(newsItemId))].joined(),
+            config: config,
+            decoder: .json,
+            operationId: "retrieveNewsItem",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["401": Error2.self, "404": Error2.self]
+        )).sdkResource()
     }
 }

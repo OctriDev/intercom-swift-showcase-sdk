@@ -3,7 +3,7 @@
 
 import Foundation
 
-// TaggedModelsConversation domain models
+/// TaggedModelsConversation domain models
 /// A deleted conversation record containing its ID, metrics retained status and deletion timestamp.
 public struct DeletedConversationItem: Codable {
     /// String representing the object's type. Always has the value `conversation`.
@@ -27,22 +27,22 @@ public struct DeletedConversationItem: Codable {
     }
 
     init() {
-        (self.type, self.id, self.metricsRetained, self.deletedAt) = (nil, nil, nil, nil)
+        (type, id, metricsRetained, deletedAt) = (nil, nil, nil, nil)
     }
 }
 
-extension DeletedConversationItem {
-    public init(from decoder: Decoder) throws {
+public extension DeletedConversationItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.metricsRetained = try container.sdkDecodeIfPresent(.metricsRetained)
-        self.deletedAt = try container.sdkDecodeIfPresent(.deletedAt)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        metricsRetained = try container.sdkDecodeIfPresent(.metricsRetained)
+        deletedAt = try container.sdkDecodeIfPresent(.deletedAt)
     }
 }
 
-extension DeletedConversationItem {
-    public init(type: String? = nil, id: String? = nil, metricsRetained: Bool? = nil, deletedAt: Int? = nil) {
+public extension DeletedConversationItem {
+    init(type: String? = nil, id: String? = nil, metricsRetained: Bool? = nil, deletedAt: Int? = nil) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.metricsRetained, self.deletedAt) = (metricsRetained, deletedAt)

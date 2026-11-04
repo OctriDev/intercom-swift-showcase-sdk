@@ -6,10 +6,19 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension FinAgentMethods {
-    /// Triggers a specified Fin procedure on a new conversation, guaranteeing that Fin runs the named procedure rather than routing the request among procedures. Provide `procedure_id`, `conversation_id`, and `user`; the message is optional. Fin reports progress asynchronously through events or Server-Sent Events, and you can send a user's reply through `/fin/reply` if the procedure pauses for input.
+public extension FinAgentMethods {
+    /// Triggers a specified Fin procedure on a new conversation, guaranteeing that Fin runs the named procedure rather
+    /// than routing the request among procedures. Provide `procedure_id`, `conversation_id`, and `user`; the message is
+    /// optional. Fin reports progress asynchronously through events or Server-Sent Events, and you can send a user's
+    /// reply through `/fin/reply` if the procedure pauses for input.
     ///
-    /// Deterministically run a specific procedure on a new conversation. Calling this endpoint guarantees that the named procedure runs — there is no non-deterministic routing. Fin's progress is delivered asynchronously via events or Server-Sent Events. If the procedure pauses for user input, the conversation status becomes `awaiting_user_reply` — send the user's response with `/fin/reply`. {% admonition type="warning" %} To request access to the Fin Agent API, go to **Settings > Integrations > Fin Agent API** in your workspace and tell us about your use case. Once access is granted, **Fin Agent API** appears under **Fin AI Agent > Deploy**. {% /admonition %}
+    /// Deterministically run a specific procedure on a new conversation. Calling this endpoint guarantees that the
+    /// named procedure runs — there is no non-deterministic routing. Fin's progress is delivered asynchronously via
+    /// events or Server-Sent Events. If the procedure pauses for user input, the conversation status becomes
+    /// `awaiting_user_reply` — send the user's response with `/fin/reply`. {% admonition type="warning" %} To request
+    /// access to the Fin Agent API, go to **Settings > Integrations > Fin Agent API** in your workspace and tell us
+    /// about your use case. Once access is granted, **Fin Agent API** appears under **Fin AI Agent > Deploy**. {%
+    /// /admonition %}
     ///
     /// - Parameters:
     /// - procedureId: The ID of the procedure to run.
@@ -25,11 +34,37 @@ extension FinAgentMethods {
     ///   as `messenger_environment` in your Messenger installation. Defaults to the
     ///   workspace's default environment; an identifier that matches no environment
     ///   is rejected.
-    public static func runFinProcedure(config: ClientConfig, procedureId: String, conversationId: String, user: FinAgentUser, intercomVersion: IntercomVersion? = nil, message: FinAgentMessage? = nil, conversationMetadata: RunFinProcedureRequestBodyConversationMetadata? = nil, environment: String? = nil, requestOptions: RequestOptions? = nil) async throws -> RunFinProcedureResponse {
-        let requestBody = RunFinProcedureRequestBody(conversationId: conversationId, user: user, message: message, conversationMetadata: conversationMetadata, environment: environment)
+    static func runFinProcedure(
+        config: ClientConfig,
+        procedureId: String,
+        conversationId: String,
+        user: FinAgentUser,
+        intercomVersion: IntercomVersion? = nil,
+        message: FinAgentMessage? = nil,
+        conversationMetadata: RunFinProcedureRequestBodyConversationMetadata? = nil,
+        environment: String? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> RunFinProcedureResponse {
+        let requestBody = RunFinProcedureRequestBody(
+            conversationId: conversationId,
+            user: user,
+            message: message,
+            conversationMetadata: conversationMetadata,
+            environment: environment
+        )
 
-        return try (await sdkRequest("POST", ["/fin/procedures/", sdkEncodePathSegment(sdkWireString(procedureId)), "/run"].joined(), config: config, body: requestBody, decoder: .json, operationId: "runFinProcedure", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            ["/fin/procedures/", sdkEncodePathSegment(sdkWireString(procedureId)), "/run"].joined(),
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "runFinProcedure",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["400": Error2.self, "401": Error2.self]
+        )).data
     }
 }

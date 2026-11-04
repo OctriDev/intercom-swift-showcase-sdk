@@ -3,7 +3,7 @@
 
 import Foundation
 
-// Companies domain models
+/// Companies domain models
 /// You can update a Company
 public struct UpdateCompanyRequest: Codable {
     /// The name of the Company
@@ -42,26 +42,34 @@ public struct UpdateCompanyRequest: Codable {
     }
 
     init() {
-        (self.name, self.plan, self.size, self.website, self.industry) = (nil, nil, nil, nil, nil)
-        (self.customAttributes, self.monthlySpend) = (nil, nil)
+        (name, plan, size, website, industry) = (nil, nil, nil, nil, nil)
+        (customAttributes, monthlySpend) = (nil, nil)
     }
 }
 
-extension UpdateCompanyRequest {
-    public init(from decoder: Decoder) throws {
+public extension UpdateCompanyRequest {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.sdkDecodeIfPresent(.name)
-        self.plan = try container.sdkDecodeIfPresent(.plan)
-        self.size = try container.sdkDecodeIfPresent(.size)
-        self.website = try container.sdkDecodeIfPresent(.website)
-        self.industry = try container.sdkDecodeIfPresent(.industry)
-        self.customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
-        self.monthlySpend = try container.sdkDecodeIfPresent(.monthlySpend)
+        name = try container.sdkDecodeIfPresent(.name)
+        plan = try container.sdkDecodeIfPresent(.plan)
+        size = try container.sdkDecodeIfPresent(.size)
+        website = try container.sdkDecodeIfPresent(.website)
+        industry = try container.sdkDecodeIfPresent(.industry)
+        customAttributes = try container.sdkDecodeIfPresent(.customAttributes)
+        monthlySpend = try container.sdkDecodeIfPresent(.monthlySpend)
     }
 }
 
-extension UpdateCompanyRequest {
-    public init(name: String? = nil, plan: String? = nil, size: Int? = nil, website: String? = nil, industry: String? = nil, customAttributes: [String: String]? = nil, monthlySpend: Int? = nil) {
+public extension UpdateCompanyRequest {
+    init(
+        name: String? = nil,
+        plan: String? = nil,
+        size: Int? = nil,
+        website: String? = nil,
+        industry: String? = nil,
+        customAttributes: [String: String]? = nil,
+        monthlySpend: Int? = nil
+    ) {
         self.init()
         (self.name, self.plan) = (name, plan)
         (self.size, self.website) = (size, website)

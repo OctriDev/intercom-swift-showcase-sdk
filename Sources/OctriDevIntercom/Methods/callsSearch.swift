@@ -6,21 +6,39 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension CallsMethods {
-    /// Lists calls associated with the supplied conversation identifiers and includes transcripts when available. Provide between 1 and 20 identifiers in `conversation_ids`; the response can include calls without transcripts when none are available.
+public extension CallsMethods {
+    /// Lists calls associated with the supplied conversation identifiers and includes transcripts when available.
+    /// Provide between 1 and 20 identifiers in `conversation_ids`; the response can include calls without transcripts
+    /// when none are available.
     ///
-    /// Retrieve calls by a list of conversation ids and include transcripts when available. A maximum of 20 `conversation_ids` can be provided. If none are provided or more than 20 are provided, a 400 error is returned.
+    /// Retrieve calls by a list of conversation ids and include transcripts when available. A maximum of 20
+    /// `conversation_ids` can be provided. If none are provided or more than 20 are provided, a 400 error is returned.
     ///
     /// - Parameters:
     /// - conversationIds: A list of conversation ids to fetch calls for. Maximum
     ///   20.
-    public static func listCallsWithTranscripts(config: ClientConfig, conversationIds: [String], intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> ListCallsWithTranscriptsResponse {
+    static func listCallsWithTranscripts(
+        config: ClientConfig,
+        conversationIds: [String],
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> ListCallsWithTranscriptsResponse {
         try validateItems("conversation_ids", conversationIds, min: 1, max: 20)
 
         let requestBody = ListCallsWithTranscriptsRequestBody(conversationIds: conversationIds)
 
-        return try (await sdkRequest("POST", "/calls/search", config: config, body: requestBody, decoder: .json, operationId: "listCallsWithTranscripts", extraHeaders: sdkHeaders([
-            ("Intercom-Version", sdkHeaderValue(intercomVersion)),
-        ]), options: requestOptions, errors: ["400": Error2.self, "401": Error2.self])).data
+        return try await (sdkRequest(
+            "POST",
+            "/calls/search",
+            config: config,
+            body: requestBody,
+            decoder: .json,
+            operationId: "listCallsWithTranscripts",
+            extraHeaders: sdkHeaders([
+                ("Intercom-Version", sdkHeaderValue(intercomVersion)),
+            ]),
+            options: requestOptions,
+            errors: ["400": Error2.self, "401": Error2.self]
+        )).data
     }
 }

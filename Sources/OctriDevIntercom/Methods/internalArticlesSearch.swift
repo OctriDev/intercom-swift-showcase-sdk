@@ -6,16 +6,23 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-extension InternalArticlesMethods {
-    /// Searches internal articles and returns matching results. Use `folder_id` to limit results to a folder and its descendant folders; the response includes the matching article count and pagination metadata.
+public extension InternalArticlesMethods {
+    /// Searches internal articles and returns matching results. Use `folder_id` to limit results to a folder and its
+    /// descendant folders; the response includes the matching article count and pagination metadata.
     ///
-    /// You can search for internal articles by making a GET request to `https://api.intercom.io/internal_articles/search`.
+    /// You can search for internal articles by making a GET request to
+    /// `https://api.intercom.io/internal_articles/search`.
     ///
     /// - Parameters:
     /// - folderId: The ID of the folder to search in. Results will include articles
     ///   from this folder and all its descendant folders.
-    public static func searchInternalArticles(config: ClientConfig, folderId: Int? = nil, intercomVersion: IntercomVersion? = nil, requestOptions: RequestOptions? = nil) async throws -> InternalArticleSearchResponse {
-        return try (await sdkRequest("GET", "/internal_articles/search", config: config, query: [
+    static func searchInternalArticles(
+        config: ClientConfig,
+        folderId: Int? = nil,
+        intercomVersion: IntercomVersion? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> InternalArticleSearchResponse {
+        try await (sdkRequest("GET", "/internal_articles/search", config: config, query: [
             SdkQueryParameter("folder_id", value: folderId),
         ], decoder: .json, operationId: "searchInternalArticles", extraHeaders: sdkHeaders([
             ("Intercom-Version", sdkHeaderValue(intercomVersion)),

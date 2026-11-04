@@ -3,7 +3,7 @@
 
 import Foundation
 
-// TaggedModelsArticles domain models
+/// TaggedModelsArticles domain models
 /// The data returned about your articles when you list them.
 public struct ArticleListItem: Codable {
     /// The type of object - `article`.
@@ -141,51 +141,92 @@ public struct ArticleListItem: Codable {
     }
 
     init() {
-        (self.type, self.id, self.workspaceId, self.title, self.description) = (nil, nil, nil, nil, nil)
-        (self.body, self.bodyMarkdown, self.authorId, self.state, self.createdAt) = (nil, nil, nil, nil, nil)
-        (self.updatedAt, self.hasUnpublishedChanges, self.draftUpdatedAt, self.url, self.parentIds) = (nil, nil, nil, nil, nil)
-        (self.aiChatbotAvailability, self.aiCopilotAvailability, self.aiSalesAgentAvailability, self.createdById, self.updatedById) = (nil, nil, nil, nil, nil)
-        (self.excludeFromArticleSuggestions, self.helpCenterAudience, self.scheduledPublishAt, self.scheduledUnpublishAt, self.defaultLocale) = (nil, nil, nil, nil, nil)
-        (self.translatedContent, self.tags, self.folderId) = (nil, nil, nil)
+        (type, id, workspaceId, title, description) = (nil, nil, nil, nil, nil)
+        (body, bodyMarkdown, authorId, state, createdAt) = (nil, nil, nil, nil, nil)
+        (updatedAt, hasUnpublishedChanges, draftUpdatedAt, url, parentIds) = (nil, nil, nil, nil, nil)
+        (aiChatbotAvailability, aiCopilotAvailability, aiSalesAgentAvailability, createdById, updatedById) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        (excludeFromArticleSuggestions, helpCenterAudience, scheduledPublishAt, scheduledUnpublishAt, defaultLocale) = (
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        (translatedContent, tags, folderId) = (nil, nil, nil)
     }
 }
 
-extension ArticleListItem {
-    public init(from decoder: Decoder) throws {
+public extension ArticleListItem {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.sdkDecodeIfPresent(.type)
-        self.id = try container.sdkDecodeIfPresent(.id)
-        self.workspaceId = try container.sdkDecodeIfPresent(.workspaceId)
-        self.title = try container.sdkDecodeIfPresent(.title)
-        self.description = try container.sdkDecodeIfPresent(.description)
-        self.body = try container.sdkDecodeIfPresent(.body)
-        self.bodyMarkdown = try container.sdkDecodeIfPresent(.bodyMarkdown)
-        self.authorId = try container.sdkDecodeIfPresent(.authorId)
-        self.state = try container.sdkDecodeIfPresent(.state)
-        self.createdAt = try container.sdkDecodeIfPresent(.createdAt)
-        self.updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
-        self.hasUnpublishedChanges = try container.sdkDecodeIfPresent(.hasUnpublishedChanges)
-        self.draftUpdatedAt = try container.sdkDecodeIfPresent(.draftUpdatedAt)
-        self.url = try container.sdkDecodeIfPresent(.url)
-        self.parentIds = try container.sdkDecodeIfPresent(.parentIds)
-        self.aiChatbotAvailability = try container.sdkDecodeIfPresent(.aiChatbotAvailability)
-        self.aiCopilotAvailability = try container.sdkDecodeIfPresent(.aiCopilotAvailability)
-        self.aiSalesAgentAvailability = try container.sdkDecodeIfPresent(.aiSalesAgentAvailability)
-        self.createdById = try container.sdkDecodeIfPresent(.createdById)
-        self.updatedById = try container.sdkDecodeIfPresent(.updatedById)
-        self.excludeFromArticleSuggestions = try container.sdkDecodeIfPresent(.excludeFromArticleSuggestions)
-        self.helpCenterAudience = try container.sdkDecodeIfPresent(.helpCenterAudience)
-        self.scheduledPublishAt = try container.sdkDecodeIfPresent(.scheduledPublishAt)
-        self.scheduledUnpublishAt = try container.sdkDecodeIfPresent(.scheduledUnpublishAt)
-        self.defaultLocale = try container.sdkDecodeIfPresent(.defaultLocale)
-        self.translatedContent = try container.sdkDecodeIfPresent(.translatedContent)
-        self.tags = try container.sdkDecodeIfPresent(.tags)
-        self.folderId = try container.sdkDecodeIfPresent(.folderId)
+        type = try container.sdkDecodeIfPresent(.type)
+        id = try container.sdkDecodeIfPresent(.id)
+        workspaceId = try container.sdkDecodeIfPresent(.workspaceId)
+        title = try container.sdkDecodeIfPresent(.title)
+        description = try container.sdkDecodeIfPresent(.description)
+        body = try container.sdkDecodeIfPresent(.body)
+        bodyMarkdown = try container.sdkDecodeIfPresent(.bodyMarkdown)
+        authorId = try container.sdkDecodeIfPresent(.authorId)
+        state = try container.sdkDecodeIfPresent(.state)
+        createdAt = try container.sdkDecodeIfPresent(.createdAt)
+        updatedAt = try container.sdkDecodeIfPresent(.updatedAt)
+        hasUnpublishedChanges = try container.sdkDecodeIfPresent(.hasUnpublishedChanges)
+        draftUpdatedAt = try container.sdkDecodeIfPresent(.draftUpdatedAt)
+        url = try container.sdkDecodeIfPresent(.url)
+        parentIds = try container.sdkDecodeIfPresent(.parentIds)
+        aiChatbotAvailability = try container.sdkDecodeIfPresent(.aiChatbotAvailability)
+        aiCopilotAvailability = try container.sdkDecodeIfPresent(.aiCopilotAvailability)
+        aiSalesAgentAvailability = try container.sdkDecodeIfPresent(.aiSalesAgentAvailability)
+        createdById = try container.sdkDecodeIfPresent(.createdById)
+        updatedById = try container.sdkDecodeIfPresent(.updatedById)
+        excludeFromArticleSuggestions = try container.sdkDecodeIfPresent(.excludeFromArticleSuggestions)
+        helpCenterAudience = try container.sdkDecodeIfPresent(.helpCenterAudience)
+        scheduledPublishAt = try container.sdkDecodeIfPresent(.scheduledPublishAt)
+        scheduledUnpublishAt = try container.sdkDecodeIfPresent(.scheduledUnpublishAt)
+        defaultLocale = try container.sdkDecodeIfPresent(.defaultLocale)
+        translatedContent = try container.sdkDecodeIfPresent(.translatedContent)
+        tags = try container.sdkDecodeIfPresent(.tags)
+        folderId = try container.sdkDecodeIfPresent(.folderId)
     }
 }
 
-extension ArticleListItem {
-    public init(type: ArticleListItemType? = nil, id: String? = nil, workspaceId: String? = nil, title: String? = nil, description: String? = nil, body: String? = nil, bodyMarkdown: String? = nil, authorId: Int? = nil, state: ArticleListItemState? = nil, createdAt: Int? = nil, updatedAt: Int? = nil, hasUnpublishedChanges: Bool? = nil, draftUpdatedAt: Int? = nil, url: String? = nil, parentIds: [Int]? = nil, aiChatbotAvailability: Bool? = nil, aiCopilotAvailability: Bool? = nil, aiSalesAgentAvailability: Bool? = nil, createdById: Int? = nil, updatedById: Int? = nil, excludeFromArticleSuggestions: Bool? = nil, helpCenterAudience: ArticleListItemHelpCenterAudience? = nil, scheduledPublishAt: Int? = nil, scheduledUnpublishAt: Int? = nil, defaultLocale: String? = nil, translatedContent: ArticleTranslatedContent? = nil, tags: Tags? = nil, folderId: Int? = nil) {
+public extension ArticleListItem {
+    init(
+        type: ArticleListItemType? = nil,
+        id: String? = nil,
+        workspaceId: String? = nil,
+        title: String? = nil,
+        description: String? = nil,
+        body: String? = nil,
+        bodyMarkdown: String? = nil,
+        authorId: Int? = nil,
+        state: ArticleListItemState? = nil,
+        createdAt: Int? = nil,
+        updatedAt: Int? = nil,
+        hasUnpublishedChanges: Bool? = nil,
+        draftUpdatedAt: Int? = nil,
+        url: String? = nil,
+        parentIds: [Int]? = nil,
+        aiChatbotAvailability: Bool? = nil,
+        aiCopilotAvailability: Bool? = nil,
+        aiSalesAgentAvailability: Bool? = nil,
+        createdById: Int? = nil,
+        updatedById: Int? = nil,
+        excludeFromArticleSuggestions: Bool? = nil,
+        helpCenterAudience: ArticleListItemHelpCenterAudience? = nil,
+        scheduledPublishAt: Int? = nil,
+        scheduledUnpublishAt: Int? = nil,
+        defaultLocale: String? = nil,
+        translatedContent: ArticleTranslatedContent? = nil,
+        tags: Tags? = nil,
+        folderId: Int? = nil
+    ) {
         self.init()
         (self.type, self.id) = (type, id)
         (self.workspaceId, self.title) = (workspaceId, title)
@@ -211,13 +252,16 @@ extension ArticleListItem {
 public struct ArticleListItemState: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let published = ArticleListItemState(rawValue: "published")
     public static let draft = ArticleListItemState(rawValue: "draft")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -230,12 +274,15 @@ public struct ArticleListItemState: RawRepresentable, Hashable, Codable, Sendabl
 public struct ArticleListItemType: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let article = ArticleListItemType(rawValue: "article")
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -250,7 +297,10 @@ public struct ArticleListItemType: RawRepresentable, Hashable, Codable, Sendable
 public struct ArticleListItemHelpCenterAudience: RawRepresentable, Hashable, Codable, Sendable, SdkWireConvertible {
     public let rawValue: String
 
-    public init(rawValue: String) { self.rawValue = rawValue }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
     public static let everyone = ArticleListItemHelpCenterAudience(rawValue: "everyone")
     public static let allUsers = ArticleListItemHelpCenterAudience(rawValue: "all_users")
     public static let allVisitors = ArticleListItemHelpCenterAudience(rawValue: "all_visitors")
@@ -260,7 +310,7 @@ public struct ArticleListItemHelpCenterAudience: RawRepresentable, Hashable, Cod
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.init(rawValue: try container.decode(String.self))
+        try self.init(rawValue: container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
